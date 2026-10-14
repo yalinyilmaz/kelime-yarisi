@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "kelime-yarisi-yalin"
-  }
+    "default": "kelime-yarisi-yalin",
+    "dev": "kelime-yarisi-yalin",
+    "prod": "kelime-yarisi-prod"
+  },
+  "targets": {},
+  "etags": {}
 }

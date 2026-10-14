@@ -12,6 +12,10 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
+    buildFeatures {
+        resValues = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -36,6 +40,19 @@ android {
         release {
             // Intentionally not signed with the debug key. Configure a private
             // release/upload keystore before producing a store build.
+        }
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            resValue("string", "app_name", "Kelime Yarışı Dev")
+        }
+        create("prod") {
+            dimension = "environment"
+            resValue("string", "app_name", "Kelime Yarışı")
         }
     }
 }

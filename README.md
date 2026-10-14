@@ -38,7 +38,7 @@ State management için `flutter_bloc` ve Cubit kullanılır. Yalnızca gerçek b
 
 ## Şu anki durum
 
-Step 3 oyun motoru eklendi. Android ve iOS uygulamaları `kelime-yarisi-yalin` Firebase projesine bağlıdır. Oyuncular anonim oturumla oda oluşturabilir veya oda koduyla katılabilir; oyuncu, bağlantı ve hazır bilgileri Realtime Database üzerinden tüm cihazlarda canlı güncellenir. Oda dolup herkes hazır olduğunda sunucu saatine bağlı ortak geri sayım başlar; lobi oyun ekranına geçer.
+Step 3 oyun motoru eklendi. Android ve iOS uygulamaları seçilen `dev` veya `prod` flavor'ının Firebase projesine bağlıdır. Oyuncular anonim oturumla oda oluşturabilir veya oda koduyla katılabilir; oyuncu, bağlantı ve hazır bilgileri Realtime Database üzerinden tüm cihazlarda canlı güncellenir. Oda dolup herkes hazır olduğunda sunucu saatine bağlı ortak geri sayım başlar; lobi oyun ekranına geçer.
 
 Klasik mod `classic-v1` ile 14 soru / 5 dakika 50 saniye, hızlı mod `quick-v1` ile 7 soru / 2 dakika 55 saniye oynatır. Her soru 25 saniyedir. Soru seti ve `gameplayVersion: sync-v1`, geri sayım başlatılırken odaya bağlanır. Soru bankası uygulamada bulunur; set içeriği değiştirilirse yeni bir soru seti sürümü kullanılmalıdır.
 
@@ -55,8 +55,45 @@ Kurallar oyuncu sahipliğini, oy sayısını ve sırasını, soru başına zaman
 Bu strateji değişikliğinin `sync-v1` kuralları, kullanıcı onayıyla 14 Ekim 2026’da `kelime-yarisi-yalin` projesine deploy edildi. Eski uygulama sürümleri oda başlatamaz; test için bütün cihazlar güncellenmeli ve yeni oda açılmalıdır. Sonraki kural güncellemelerinin deploy komutu:
 
 ```sh
-firebase deploy --only database --project kelime-yarisi-yalin
+npx -y firebase-tools@latest deploy --only database --project dev
 ```
+
+## Dev ve prod ortamları
+
+- **Dev:** `kelime-yarisi-yalin` / Firebase adı `Kelime Yarisi Dev`. Mevcut veriler ve kullanıcılar bu ortamda kalır. Telefon uygulamasının adı `Kelime Yarışı Dev`; Android kimliği `com.yalinyilmaz.kelime_yarisi.dev`, iOS kimliği `com.yalinyilmaz.kelimeYarisi.dev`.
+- **Prod:** `kelime-yarisi-prod` / Firebase adı `Kelime Yarisi`. Telefon uygulamasının adı `Kelime Yarışı`; Android kimliği `com.yalinyilmaz.kelime_yarisi`, iOS kimliği `com.yalinyilmaz.kelimeYarisi`.
+
+Firebase proje kimlikleri değiştirilemez; Console proje adlarında Türkçe karakter ve alt çizgi kabul edilmediği için yukarıdaki adlar kullanılır. İki ortam bağımsız anonim oturum ve Realtime Database kullanır. Prod veritabanı `europe-west1` bölgesindedir; anonim giriş ve mevcut `database.rules.json` kuralları prod'a deploy edilmiştir.
+
+Tek giriş dosyası `lib/main.dart` kullanılır. Firebase seçenekleri Android flavor JSON'undan ve iOS scheme için seçilen plist'ten yüklenir. iOS derlemesi, dosyanın proje ve bundle kimliği ortamla eşleşmezse durur. Ayrı uygulama kimlikleri sayesinde dev ve prod aynı telefonda birlikte kurulabilir.
+
+```sh
+flutter run --flavor dev
+flutter run --flavor prod
+```
+
+`flutter run` varsayılan olarak dev kullanır. VS Code Run and Debug menüsünde `Dev — Run`, `Prod — Run` ve `Prod — Release` seçenekleri vardır. Debug/release derleme modu ortamdan bağımsızdır; `Prod — Run` prod veritabanını debug modunda kullanır. Android release çalıştırması için release keystore yapılandırması gerekir.
+
+Firebase istemci dosyaları Git tarafından izlenmez. Yeni checkout için dosyaları şu komutlarla indir:
+
+```sh
+mkdir -p android/app/src/dev android/app/src/prod ios/config/dev ios/config/prod
+npx -y firebase-tools@latest apps:sdkconfig ANDROID 1:173227658652:android:12b605e7e0831485004c59 --project dev --out android/app/src/dev/google-services.json
+npx -y firebase-tools@latest apps:sdkconfig ANDROID 1:817504723813:android:52f091edbb46b3c725f78c --project prod --out android/app/src/prod/google-services.json
+npx -y firebase-tools@latest apps:sdkconfig IOS 1:173227658652:ios:c6e3ba382101755e004c59 --project dev --out ios/config/dev/GoogleService-Info.plist
+npx -y firebase-tools@latest apps:sdkconfig IOS 1:817504723813:ios:139356a75102162925f78c --project prod --out ios/config/prod/GoogleService-Info.plist
+```
+
+Eski `lib/firebase_options.dart` ve kökteki native Firebase dosyaları kullanılmaz. Kuralların tek kaynağı `database.rules.json`'dır; her ortama açıkça deploy edilir:
+
+```sh
+npx -y firebase-tools@latest deploy --only database,auth --project dev
+npx -y firebase-tools@latest deploy --only database,auth --project prod
+```
+
+Her iki ortamın Android uygulaması Play Integrity, iOS uygulaması App Attest ile App Check'e kayıtlıdır. Debug derlemeleri iki platformda da debug provider kullanır. Cihazın loglarında çıkan debug token'ını **seçtiğin ortamın ve uygulamanın** Firebase Console → App Check → Manage debug tokens bölümüne kaydet. Token'lar repoya eklenmez. Release Android için yayınlama sırasında gerçek upload/Play App Signing SHA-256 sertifikası Firebase'e eklenmelidir. App Check enforcement henüz açılmamıştır.
+
+iOS `Debug`, `Debug-dev` ve `Debug-prod` yapılandırmalarında App Attest entitlement'ı yoktur; Personal Team ile fiziksel cihazda debug çalıştırılabilir. `Profile` ve `Release` yapılandırmalarında App Attest entitlement'ı production ortamını kullanır. Bunları fiziksel cihaz için imzalamak, App Attest destekleyen ücretli Apple Developer Program takımı ve bu yetkiyi içeren provisioning profile gerektirir. Firebase ortamı ile debug/release derleme modu birbirinden bağımsızdır; `Prod — Run` da Personal Team ile debug çalıştırılabilir.
 
 Oyun/ekran testleri `flutter test` ile çalışır. Güvenlik testleri yalnızca `demo-kelime-yarisi` emulator projesini kullanır. Realtime Database emulator 127.0.0.1:9000 üzerinde çalışırken:
 
@@ -71,7 +108,7 @@ Strateji değişikliği 1. adımı (ortak soru süresi ve harf oylaması), 2. ad
 
 - Firebase istemci yapılandırmaları yalnızca yerelde tutulur ve Git tarafından izlenmez.
 - Realtime Database kuralları üretime gönderilmeden önce emulator üzerinde doğrulanmalıdır. Kurallar `firebase deploy --only database` komutu çalıştırılana kadar canlı projeyi değiştirmez.
-- App Check kod tarafında etkindir. Android için Play Integrity, Apple platformları için App Attest + DeviceCheck fallback kullanılır. Debug token'ları Firebase Console'a elle kaydedilmeli ve repoya eklenmemelidir.
+- App Check kod tarafında etkindir. Release Android için Play Integrity, iOS için App Attest; debug derlemelerinde iki platformda da debug provider kullanılır. Debug token'ları ilgili ortamın Firebase Console'una elle kaydedilmeli ve repoya eklenmemelidir.
 - Kısıtlı Android/iOS Firebase API anahtarlarının izin listesinde `firebaseappcheck.googleapis.com` bulunmalıdır; aksi durumda debug token değişimi `403 API_KEY_SERVICE_BLOCKED` ile reddedilir.
 - App Check enforcement, geçerli istek metrikleri kontrol edildikten sonra Firebase Console'dan açılmalıdır.
 - Store build alınmadan önce Android release/upload keystore yapılandırılmalıdır. Release sürümü bilerek debug anahtarıyla imzalanmaz.

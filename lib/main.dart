@@ -5,16 +5,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'app/app.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Native flavors bundle the matching Firebase configuration for each app.
+  await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate(
-    providerAndroid: const AndroidPlayIntegrityProvider(),
+    providerAndroid: kDebugMode
+        ? const AndroidDebugProvider()
+        : const AndroidPlayIntegrityProvider(),
     providerApple: kDebugMode
         ? const AppleDebugProvider()
-        : const AppleAppAttestWithDeviceCheckFallbackProvider(),
+        : const AppleAppAttestProvider(),
   );
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   runApp(const KelimeYarisiApp());
