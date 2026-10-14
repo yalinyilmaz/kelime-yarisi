@@ -6,6 +6,7 @@ import '../../../room/data/firebase_room_service.dart';
 import '../../../room/domain/entities/game_room.dart';
 import '../../data/question_bank.dart';
 import '../../domain/game_progress.dart';
+import '../../domain/game_answer_feedback.dart';
 import '../../domain/game_question.dart';
 import 'game_state.dart';
 
@@ -113,6 +114,11 @@ class GameCubit extends Cubit<GameState> {
       );
       return;
     }
+    if (GameQuestion.normalizeAnswer(input).length !=
+        state.question!.letterCount) {
+      emit(state.copyWith(errorMessage: 'Tüm boş harfleri doldur.'));
+      return;
+    }
     await _resolve(
       state.question!.accepts(input)
           ? AnswerOutcome.correct
@@ -120,8 +126,9 @@ class GameCubit extends Cubit<GameState> {
     );
   }
 
-  Future<void> giveUp() async {
+  Future<void> giveUp({int? questionIndex}) async {
     _tick();
+    if (questionIndex != null && questionIndex != state.questionIndex) return;
     if (state.canAct) await _resolve(AnswerOutcome.wrong);
   }
 
@@ -142,17 +149,34 @@ class GameCubit extends Cubit<GameState> {
         revealedCount: revealedCount,
       ),
       feedback: feedback,
+      answerFeedback: GameAnswerFeedback(
+        questionIndex: index,
+        question: question,
+        outcome: outcome,
+        scoreDelta: correct ? value : -value,
+      ),
     );
   }
 
-  Future<bool> _save(GameProgress next, {required String feedback}) async {
+  Future<bool> _save(
+    GameProgress next, {
+    required String feedback,
+    required GameAnswerFeedback answerFeedback,
+  }) async {
     if (state.isSaving || isClosed) return false;
     final previous = state.progress;
     emit(state.copyWith(isSaving: true, clearError: true));
     try {
       await _service.saveProgress(state.room.id, next);
       if (isClosed) return false;
-      emit(state.copyWith(progress: next, isSaving: false, feedback: feedback));
+      emit(
+        state.copyWith(
+          progress: next,
+          isSaving: false,
+          feedback: feedback,
+          answerFeedback: answerFeedback,
+        ),
+      );
       return true;
     } catch (_) {
       if (isClosed) return false;

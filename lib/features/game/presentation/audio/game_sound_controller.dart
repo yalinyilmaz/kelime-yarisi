@@ -2,21 +2,38 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 import '../../../room/domain/entities/game_room.dart';
+import '../../domain/game_progress.dart';
 import '../cubit/game_state.dart';
 
 class GameSoundController {
-  GameSoundController({AudioPlayer? hintPlayer, AudioPlayer? tickPlayer})
-    : _hintPlayer = hintPlayer ?? AudioPlayer(),
-      _tickPlayer = tickPlayer ?? AudioPlayer();
+  GameSoundController({
+    AudioPlayer? hintPlayer,
+    AudioPlayer? tickPlayer,
+    AudioPlayer? correctPlayer,
+    AudioPlayer? wrongPlayer,
+    Future<void> Function()? hintHaptic,
+    Future<void> Function()? wrongHaptic,
+  }) : _hintPlayer = hintPlayer ?? AudioPlayer(),
+       _tickPlayer = tickPlayer ?? AudioPlayer(),
+       _correctPlayer = correctPlayer ?? AudioPlayer(),
+       _wrongPlayer = wrongPlayer ?? AudioPlayer(),
+       _hintHaptic = hintHaptic ?? HapticFeedback.lightImpact,
+       _wrongHaptic = wrongHaptic ?? HapticFeedback.vibrate;
 
   final AudioPlayer _hintPlayer;
   final AudioPlayer _tickPlayer;
+  final AudioPlayer _correctPlayer;
+  final AudioPlayer _wrongPlayer;
+  final Future<void> Function() _hintHaptic;
+  final Future<void> Function() _wrongHaptic;
   GameState? _previous;
   Future<void>? _initialization;
   int? _lastTickSecond;
   int _observedHintCount = 0;
+  int _observedAnswerIndex = -1;
   int _playbackGeneration = 0;
   bool _ready = false;
   bool _disposed = false;
@@ -40,6 +57,8 @@ class GameSoundController {
       for (final entry in {
         _hintPlayer: ('audio/letter_reveal.wav', 0.55),
         _tickPlayer: ('audio/clock_tick.wav', 0.4),
+        _correctPlayer: ('audio/answer_correct.wav', 0.6),
+        _wrongPlayer: ('audio/answer_wrong.wav', 0.55),
       }.entries) {
         if (_disposed) return;
         await entry.key.setAudioContext(context);
@@ -70,18 +89,31 @@ class GameSoundController {
     if (previous == null || previous.questionIndex != state.questionIndex) {
       _playbackGeneration++;
       _observedHintCount = state.hints.revealedCount;
+      _observedAnswerIndex = state.answerFeedback?.questionIndex ?? -1;
       _lastTickSecond = null;
       if (previous != null || !_active(state)) unawaited(_silence());
       return;
     }
     final openedLetter = state.hints.revealedCount > _observedHintCount;
     if (openedLetter) _observedHintCount = state.hints.revealedCount;
+    final result = state.answerFeedback;
+    final answered =
+        result != null && result.questionIndex > _observedAnswerIndex;
+    if (answered) _observedAnswerIndex = result.questionIndex;
     if (!_active(state)) {
       if (_active(previous)) {
         _playbackGeneration++;
         unawaited(_silence());
       }
       return;
+    }
+    if (_foreground && state.isConnected && previous.isConnected) {
+      if (!previous.isVoting && state.isVoting) {
+        unawaited(_vibrate(_hintHaptic));
+      }
+      if (answered && result.outcome == AnswerOutcome.wrong) {
+        unawaited(_vibrate(_wrongHaptic));
+      }
     }
     final seconds = state.remainingSeconds;
     final tick =
@@ -96,6 +128,22 @@ class GameSoundController {
       unawaited(_play(_hintPlayer));
     }
     if (tick) unawaited(_play(_tickPlayer));
+    if (answered && previous.isConnected && state.isConnected) {
+      if (result.outcome == AnswerOutcome.correct) {
+        unawaited(_play(_correctPlayer));
+      } else if (result.outcome == AnswerOutcome.wrong) {
+        unawaited(_play(_wrongPlayer));
+      }
+    }
+  }
+
+  Future<void> _vibrate(Future<void> Function() effect) async {
+    if (_disposed || !_foreground) return;
+    try {
+      await effect();
+    } catch (_) {
+      // Unsupported hardware or a platform failure must not affect gameplay.
+    }
   }
 
   Future<void> _play(AudioPlayer player) async {
@@ -131,7 +179,12 @@ class GameSoundController {
   Future<void> _silence() async {
     if (_disposed) return;
     try {
-      await Future.wait([_hintPlayer.stop(), _tickPlayer.stop()]);
+      await Future.wait([
+        _hintPlayer.stop(),
+        _tickPlayer.stop(),
+        _correctPlayer.stop(),
+        _wrongPlayer.stop(),
+      ]);
     } catch (_) {
       // A backend that failed to initialize may also reject stop().
     }
@@ -141,7 +194,12 @@ class GameSoundController {
     if (_disposed) return;
     _disposed = true;
     await _initialization;
-    for (final player in [_hintPlayer, _tickPlayer]) {
+    for (final player in [
+      _hintPlayer,
+      _tickPlayer,
+      _correctPlayer,
+      _wrongPlayer,
+    ]) {
       try {
         await player.dispose();
       } catch (_) {

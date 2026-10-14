@@ -11,6 +11,7 @@ import 'package:kelime_yarisi/features/game/presentation/cubit/game_state.dart';
 import 'package:kelime_yarisi/features/game/presentation/cubit/game_cubit.dart';
 import 'package:kelime_yarisi/features/game/presentation/pages/game_page.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.dart';
+import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cell.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
 
@@ -35,6 +36,73 @@ class FakeGameSounds extends Fake implements GameSoundController {
 }
 
 void main() {
+  for (final correct in [true, false]) {
+    testWidgets(
+      'Answer feedback colors every letter and preserves keyboard: correct=$correct',
+      (tester) async {
+        final service = FakeRoomService();
+        final room = testRoom().copyWith(
+          startsAtMs: DateTime.now().millisecondsSinceEpoch - 1000,
+        );
+        service.room = room;
+        await tester.pumpWidget(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp(
+              theme: AppTheme.dark.copyWith(platform: TargetPlatform.iOS),
+              home: GamePage(room: room, sounds: FakeGameSounds()),
+            ),
+          ),
+        );
+        service.offsets.add(0);
+        service.connections.add(true);
+        await tester.pump();
+        await tester.enterText(
+          find.byType(TextField),
+          correct ? 'kapi' : 'aaaa',
+        );
+        await tester.pump();
+        final focus = tester
+            .widget<TextField>(find.byType(TextField))
+            .focusNode!;
+        await tester.tap(find.byKey(const ValueKey('answer-action')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 900));
+        expect(focus.hasFocus, isTrue);
+        expect(tester.testTextInput.isVisible, isTrue);
+        final cells = tester.widgetList<WordLetterCell>(
+          find.byType(WordLetterCell),
+        );
+        expect(cells.map((cell) => cell.character).join(), 'KAPI');
+        expect(
+          cells.every(
+            (cell) =>
+                cell.outcome ==
+                (correct ? AnswerOutcome.correct : AnswerOutcome.wrong),
+          ),
+          isTrue,
+        );
+        expect(service.saves.single.score, correct ? 400 : -400);
+        expect(
+          find.text(correct ? 'Doğru cevap!' : 'Yanlış cevap'),
+          findsOneWidget,
+        );
+        if (!correct) expect(find.text('Doğru cevap: KAPI'), findsOneWidget);
+        await tester.enterText(find.byType(TextField), 'zzzz');
+        expect(
+          tester.widget<TextField>(find.byType(TextField)).controller!.text,
+          correct ? 'KAPI' : 'AAAA',
+        );
+        await tester.tap(find.byTooltip('Sesi kapat'));
+        await tester.pump();
+        expect(focus.hasFocus, isFalse);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        await service.disposeStreams();
+      },
+    );
+  }
+
   testWidgets(
     'iOS voting keeps the same editable connection; clock-only ticks do not rebuild the input',
     (tester) async {
@@ -69,7 +137,7 @@ void main() {
         same(inputWidget),
       );
       final cubit = tester.element(find.byType(WordPinInput)).read<GameCubit>();
-      final request = cubit.revealLetter();
+      await tester.tap(find.byKey(const ValueKey('hint-action')));
       await tester.pump();
       expect(cubit.state.isVoting, isTrue);
       expect(
@@ -82,7 +150,6 @@ void main() {
       );
       expect(focus.hasFocus, isTrue);
       pending.complete();
-      await request;
       await tester.pump();
       expect(cubit.state.hints.revealedCount, 1);
       expect(focus.hasFocus, isTrue);
@@ -170,7 +237,7 @@ void main() {
         await tap.up();
         await tester.pump();
         expect(service.saves.single.score, 400);
-        expect(focus.hasFocus, isFalse);
+        expect(focus.hasFocus, isTrue);
         await tester.scrollUntilVisible(
           find.text('SORU 1 / 7'),
           -200,
@@ -183,7 +250,7 @@ void main() {
         );
         expect(
           tester.widget<TextField>(find.byType(TextField)).readOnly,
-          isTrue,
+          isFalse,
         );
         tester.view.resetViewInsets();
         await tester.pump();
@@ -201,7 +268,7 @@ void main() {
         );
         await tester.pump();
         await tester.scrollUntilVisible(
-          find.text('CANLI PUANLAR'),
+          find.text('-400'),
           300,
           scrollable: find.byType(Scrollable).first,
         );

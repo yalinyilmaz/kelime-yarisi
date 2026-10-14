@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../room/domain/entities/game_room.dart';
+import '../../../room/domain/entities/room_player.dart';
 import '../../../room/domain/entities/room_game_mode.dart';
 import '../../domain/game_progress.dart';
+import '../../domain/game_answer_feedback.dart';
 import '../../domain/game_question.dart';
 import '../../domain/shared_hints.dart';
 
@@ -20,6 +22,7 @@ class GameState extends Equatable {
     this.isLeaving = false,
     this.feedback,
     this.errorMessage,
+    this.answerFeedback,
   });
 
   final GameRoom room;
@@ -34,6 +37,7 @@ class GameState extends Equatable {
   final bool isLeaving;
   final String? feedback;
   final String? errorMessage;
+  final GameAnswerFeedback? answerFeedback;
 
   int get questionIndex => !clockReady || room.startsAtMs == null
       ? 0
@@ -87,6 +91,36 @@ class GameState extends Equatable {
 
   bool get canAct => canEditAnswer && !isVoting;
 
+  bool get isHost => room.hostId == currentUserId;
+
+  List<({RoomPlayer player, GameProgress progress, int rank})> get standings {
+    GameProgress progressFor(String id) => id == currentUserId
+        ? progress
+        : room.progress[id] ?? const GameProgress();
+    final players = [...room.players]
+      ..sort((a, b) {
+        final order = progressFor(b.id).score
+            .compareTo(progressFor(a.id).score);
+        return order == 0 ? a.id.compareTo(b.id) : order;
+      });
+    return [
+      for (final player in players)
+        (
+          player: player,
+          progress: progressFor(player.id),
+          rank:
+              1 +
+              players
+                  .where(
+                    (other) =>
+                        progressFor(other.id).score >
+                        progressFor(player.id).score,
+                  )
+                  .length,
+        ),
+    ];
+  }
+
   GameState copyWith({
     GameRoom? room,
     GameProgress? progress,
@@ -98,6 +132,7 @@ class GameState extends Equatable {
     bool? isLeaving,
     String? feedback,
     String? errorMessage,
+    GameAnswerFeedback? answerFeedback,
     bool clearError = false,
     bool clearFeedback = false,
   }) => GameState(
@@ -113,6 +148,7 @@ class GameState extends Equatable {
     isLeaving: isLeaving ?? this.isLeaving,
     feedback: clearFeedback ? null : feedback ?? this.feedback,
     errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
+    answerFeedback: answerFeedback ?? this.answerFeedback,
   );
 
   @override
@@ -129,5 +165,6 @@ class GameState extends Equatable {
     isLeaving,
     feedback,
     errorMessage,
+    answerFeedback,
   ];
 }

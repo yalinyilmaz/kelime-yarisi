@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../cubit/room_setup_state.dart';
-import 'room_setup_page.dart';
 
 class RoomHomePage extends StatelessWidget {
   const RoomHomePage({super.key});
@@ -103,8 +103,6 @@ class RoomHomePage extends StatelessWidget {
   }
 
   void _openSetup(BuildContext context, RoomSetupFlow flow) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute<void>(builder: (_) => RoomSetupPage(flow: flow)));
+    context.go(flow == RoomSetupFlow.create ? '/create' : '/join');
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../core/theme/app_colors.dart';
+import '../../domain/game_progress.dart';
 import '../../domain/game_question.dart';
+import 'word_letter_cell.dart';
+import 'word_letter_formatter.dart';
 
 class WordPinInput extends StatefulWidget {
   const WordPinInput({
@@ -12,9 +14,11 @@ class WordPinInput extends StatefulWidget {
     required this.enabled,
     required this.answerController,
     required this.onSubmitted,
+    this.outcome,
     super.key,
   });
 
+  final AnswerOutcome? outcome;
   final GameQuestion question;
   final int questionIndex;
   final int revealedMask;
@@ -167,8 +171,13 @@ class _WordPinInputState extends State<WordPinInput>
             runSpacing: 8,
             children: [
               for (var i = 0; i < widget.question.letterCount; i++)
-                _LetterCell(
-                  character: (widget.revealedMask & (1 << i)) != 0
+                WordLetterCell(
+                  key: ValueKey('${widget.questionIndex}-$i'),
+                  index: i,
+                  outcome: widget.outcome,
+                  character:
+                      widget.outcome != null ||
+                          (widget.revealedMask & (1 << i)) != 0
                       ? widget.question.answer[i]
                       : hiddenPositions.indexOf(i) < _text.text.length
                       ? _text.text[hiddenPositions.indexOf(i)]
@@ -192,7 +201,7 @@ class _WordPinInputState extends State<WordPinInput>
             // away from the finger before its tap completes.
             onTapOutside: (_) {},
             onTapUpOutside: (_) => _focus.unfocus(),
-            readOnly: !widget.enabled,
+            readOnly: !widget.enabled && !_focus.hasFocus,
             showCursor: false,
             enableInteractiveSelection: false,
             autocorrect: false,
@@ -215,7 +224,9 @@ class _WordPinInputState extends State<WordPinInput>
               disabledBorder: InputBorder.none,
             ),
             inputFormatters: [
-              _WordLetterFormatter(widget.question, hiddenPositions),
+              if (!widget.enabled)
+                TextInputFormatter.withFunction((oldValue, _) => oldValue),
+              WordLetterFormatter(widget.question, hiddenPositions),
               LengthLimitingTextInputFormatter(hiddenPositions.length),
             ],
             onEditingComplete: () {},
@@ -227,73 +238,4 @@ class _WordPinInputState extends State<WordPinInput>
       ],
     );
   }
-}
-
-class _WordLetterFormatter extends TextInputFormatter {
-  _WordLetterFormatter(this.question, this.hiddenPositions);
-
-  final GameQuestion question;
-  final List<int> hiddenPositions;
-
-  String _formatLetters(String input) {
-    final text = GameQuestion.normalizeAnswer(input)
-        .replaceAll(RegExp('[^A-ZÇĞİÖŞÜ]'), '');
-    return [
-      for (var i = 0; i < text.length; i++)
-        i < hiddenPositions.length
-            ? question.normalizeLetter(text[i], hiddenPositions[i])
-            : text[i],
-    ].join();
-  }
-
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    if (!newValue.composing.isCollapsed) return newValue;
-    final text = _formatLetters(newValue.text);
-    final prefix = newValue.selection.extentOffset < 0
-        ? newValue.text
-        : newValue.text.substring(0, newValue.selection.extentOffset);
-    final offset = _formatLetters(prefix).length;
-    return TextEditingValue(
-      text: text,
-      selection: TextSelection.collapsed(offset: offset),
-    );
-  }
-}
-
-class _LetterCell extends StatelessWidget {
-  const _LetterCell({
-    required this.character,
-    required this.revealed,
-    required this.focused,
-  });
-  final String? character;
-  final bool revealed;
-  final bool focused;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: 32,
-    height: 44,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      color: revealed ? AppColors.paper : AppColors.surfaceMuted,
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        color: focused ? AppColors.cyan : Colors.transparent,
-        width: 2,
-      ),
-    ),
-    child: Text(
-      character ?? (focused ? '│' : '·'),
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w800,
-        color: revealed ? AppColors.onPaper : AppColors.textPrimary,
-      ),
-    ),
-  );
 }
