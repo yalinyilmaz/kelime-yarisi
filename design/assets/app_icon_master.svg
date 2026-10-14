@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>Kelime Yarışı app icon master</title>
+  <desc>Opaque iOS master. Android adaptive exports use the background and foreground groups separately.</desc>
+  <!-- Full-bleed, fully opaque background for the iOS 1024 px source. -->
+  <g id="background">
+    <rect width="1024" height="1024" fill="#0C1024"/>
+  </g>
+
+  <!-- Foreground is bounded by x=260..764 and y=252..762 for adaptive-icon mask safety. -->
+  <g id="foreground">
+    <path
+      d="M352 252H672C729 252 764 287 764 344V568C764 625 729 660 672 660H494L364 762V660H352C295 660 260 625 260 568V344C260 287 295 252 352 252Z"
+      fill="#3867FF"
+    />
+    <path
+      d="M352 300H672C700 300 716 316 716 344V568C716 596 700 612 672 612H478L412 666V612H352C324 612 308 596 308 568V344C308 316 324 300 352 300Z"
+      fill="#161C33"
+    />
+
+    <rect x="344" y="374" width="108" height="124" rx="26" fill="#39D0E8"/>
+    <rect x="458" y="374" width="108" height="124" rx="26" fill="#F7F1E7"/>
+    <rect x="572" y="374" width="108" height="124" rx="26" fill="#39D0E8"/>
+
+    <!-- Custom path keeps the only letter independent of fonts during export. -->
+    <path d="M482 402H504V426L530 402H558L522 436L560 472H531L504 445V472H482Z" fill="#0C1024"/>
+  </g>
+</svg>

@@ -1,3 +1,4 @@
+import '../../game/domain/game_progress.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
 import '../domain/entities/room_player.dart';
@@ -9,9 +10,11 @@ abstract final class FirebaseRoomMapper {
       'code': room.code,
       'hostId': room.hostId,
       'targetPlayerCount': room.targetPlayerCount,
+      'playerCount': room.players.length,
       'gameMode': room.gameMode.name,
       'status': room.status.name,
       'startsAtMs': room.startsAtMs,
+      'questionSetId': room.questionSetId,
       'createdAt': {'.sv': 'timestamp'},
       'players': {
         for (final player in room.players) player.id: playerToMap(player),
@@ -56,6 +59,11 @@ abstract final class FirebaseRoomMapper {
         map['status'] as String? ?? RoomStatus.lobby.name,
       ),
       startsAtMs: (map['startsAtMs'] as num?)?.toInt(),
+      questionSetId: map['questionSetId'] as String?,
+      progress: Map.unmodifiable(
+        _asMap(map['progress'])
+            .map((uid, value) => MapEntry(uid, GameProgress.fromMap(value))),
+      ),
     );
   }
 

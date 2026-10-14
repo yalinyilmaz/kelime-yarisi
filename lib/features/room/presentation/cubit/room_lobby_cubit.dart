@@ -70,6 +70,13 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
     } else {
       _countdownTimer?.cancel();
     }
+    if (room.status == RoomStatus.playing ||
+        room.status == RoomStatus.results) {
+      // The game Cubit owns the room and clock subscriptions from this point on.
+      unawaited(_roomSubscription?.cancel());
+      unawaited(_offsetSubscription?.cancel());
+      return;
+    }
 
     final isHost = room.hostId == _roomService.currentUserId;
     if (isHost && room.status == RoomStatus.lobby && room.everyoneIsReady) {
@@ -84,6 +91,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       await _roomService.startCountdown(
         state.room.id,
         serverTimeOffsetMs: state.serverTimeOffsetMs,
+        gameMode: state.room.gameMode,
       );
     } catch (_) {
       emit(state.copyWith(errorMessage: 'Geri sayım başlatılamadı.'));
@@ -110,12 +118,22 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       unawaited(
         _roomService
             .markPlaying(state.room.id)
+            .catchError((Object error) {
+              if (!isClosed) {
+                emit(
+                  state.copyWith(
+                    errorMessage: 'Oyun başlatılamadı. Tekrar deneniyor.',
+                  ),
+                );
+              }
+            })
             .whenComplete(() => _isMarkingPlaying = false),
       );
     }
   }
 
   void _streamFailed(Object error, StackTrace stackTrace) {
+    if (isClosed || state.isLeaving) return;
     final message = error is RoomServiceException
         ? error.message
         : 'Oda bağlantısı kesildi.';

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import '../../game/data/question_bank.dart';
+import '../../game/domain/game_progress.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
 import '../domain/entities/room_player.dart';
@@ -58,16 +60,14 @@ class FirebaseRoomService {
         gameMode: gameMode,
         players: [player],
       );
-      final result = await _roomRef(roomId).runTransaction(
-        (currentValue) => currentValue == null
-            ? Transaction.success(FirebaseRoomMapper.toMap(room))
-            : Transaction.abort(),
-        applyLocally: false,
-      );
-      if (!result.committed) continue;
-
-      await beginPresence(roomId);
-      return FirebaseRoomMapper.fromMap(roomId, result.snapshot.value);
+      try {
+        await _roomRef(roomId).set(FirebaseRoomMapper.toMap(room));
+        await beginPresence(roomId);
+        return room;
+      } on FirebaseException catch (error) {
+        if (error.code == 'permission-denied') continue;
+        rethrow;
+      }
     }
 
     throw const RoomServiceException(
@@ -84,65 +84,32 @@ class FirebaseRoomService {
     final uid = _requireUserId();
     final roomId = _roomId(roomCode);
     final roomRef = _roomRef(roomId);
-    final snapshot = await roomRef.get();
-    if (!snapshot.exists) {
-      throw const RoomServiceException(
-        'room-not-found',
-        'Bu kodla eşleşen bir oda bulunamadı.',
-      );
-    }
+    final player = RoomPlayer(id: uid, displayName: displayName.trim());
 
-    RoomServiceException? rejection;
-    final result = await roomRef.runTransaction((currentValue) {
-      if (currentValue == null) {
-        rejection = const RoomServiceException(
+    try {
+      await roomRef.update({
+        'players/$uid': FirebaseRoomMapper.playerToMap(player),
+        'playerCount': ServerValue.increment(1),
+      });
+      final snapshot = await roomRef.get();
+      if (!snapshot.exists) {
+        throw const RoomServiceException(
           'room-not-found',
           'Bu kodla eşleşen bir oda bulunamadı.',
         );
-        return Transaction.abort();
       }
 
-      final currentRoom = FirebaseRoomMapper.fromMap(roomId, currentValue);
-      RoomPlayer? existingPlayer;
-      for (final player in currentRoom.players) {
-        if (player.id == uid) {
-          existingPlayer = player;
-          break;
-        }
-      }
-      if (currentRoom.status != RoomStatus.lobby && existingPlayer == null) {
-        rejection = const RoomServiceException(
-          'game-already-started',
-          'Bu odadaki oyun başlamış.',
+      await beginPresence(roomId);
+      return FirebaseRoomMapper.fromMap(roomId, snapshot.value);
+    } on FirebaseException catch (error) {
+      if (error.code == 'permission-denied') {
+        throw const RoomServiceException(
+          'join-rejected',
+          'Oda bulunamadı, dolu veya oyun başlamış olabilir.',
         );
-        return Transaction.abort();
       }
-      if (currentRoom.isFull && existingPlayer == null) {
-        rejection = const RoomServiceException('room-full', 'Bu oda dolu.');
-        return Transaction.abort();
-      }
-
-      final roomData = _copyMap(currentValue);
-      final playersData = _copyMap(roomData['players']);
-      final player = RoomPlayer(
-        id: uid,
-        displayName: displayName.trim(),
-        isHost: existingPlayer?.isHost ?? false,
-      );
-      playersData[uid] = FirebaseRoomMapper.playerToMap(player);
-      roomData['players'] = playersData;
-      return Transaction.success(roomData);
-    }, applyLocally: false);
-    if (!result.committed) {
-      throw rejection ??
-          const RoomServiceException(
-            'join-failed',
-            'Odaya katılım tamamlanamadı.',
-          );
+      rethrow;
     }
-
-    await beginPresence(roomId);
-    return FirebaseRoomMapper.fromMap(roomId, result.snapshot.value);
   }
 
   Stream<GameRoom> watchRoom(String roomId) {
@@ -164,6 +131,19 @@ class FirebaseRoomService {
         .map((event) => (event.snapshot.value as num?)?.toInt() ?? 0);
   }
 
+  Stream<bool> watchConnection() => _database
+      .ref('.info/connected')
+      .onValue
+      .map((event) => event.snapshot.value == true);
+
+  Future<void> saveProgress(String roomId, GameProgress progress) =>
+      _roomRef(roomId)
+          .child('progress/${_requireUserId()}')
+          .set(progress.toMap());
+
+  Future<void> markResults(String roomId) =>
+      _roomRef(roomId).child('status').set(RoomStatus.results.name);
+
   Future<void> setReady(String roomId, {required bool isReady}) async {
     final uid = _requireUserId();
     await _roomRef(roomId).child('players/$uid').update({
@@ -176,12 +156,15 @@ class FirebaseRoomService {
   Future<void> startCountdown(
     String roomId, {
     required int serverTimeOffsetMs,
+    required RoomGameMode gameMode,
   }) async {
     final startsAtMs =
         DateTime.now().millisecondsSinceEpoch + serverTimeOffsetMs + 4000;
-    await _roomRef(
-      roomId,
-    ).update({'startsAtMs': startsAtMs, 'status': RoomStatus.countdown.name});
+    await _roomRef(roomId).update({
+      'startsAtMs': startsAtMs,
+      'questionSetId': QuestionBank.setIdFor(gameMode),
+      'status': RoomStatus.countdown.name,
+    });
   }
 
   Future<void> markPlaying(String roomId) async {
@@ -206,7 +189,14 @@ class FirebaseRoomService {
     _presenceSubscription = null;
     _presenceRoomId = null;
 
-    final roomSnapshot = await _roomRef(roomId).get();
+    DataSnapshot roomSnapshot;
+    try {
+      roomSnapshot = await _roomRef(roomId).get();
+    } on FirebaseException catch (error) {
+      // A deleted room revokes read access before its listener can deliver null.
+      if (error.code == 'permission-denied') return;
+      rethrow;
+    }
     if (!roomSnapshot.exists) return;
     final room = FirebaseRoomMapper.fromMap(roomId, roomSnapshot.value);
     final playerRef = _roomRef(roomId).child('players/$uid');
@@ -214,7 +204,10 @@ class FirebaseRoomService {
     if (room.hostId == uid) {
       await _roomRef(roomId).remove();
     } else {
-      await playerRef.remove();
+      await _roomRef(roomId).update({
+        'players/$uid': null,
+        'playerCount': ServerValue.increment(-1),
+      });
     }
   }
 
@@ -256,11 +249,6 @@ class FirebaseRoomService {
 
   String _roomId(String code) =>
       code.replaceAll(RegExp('[^A-Za-z0-9]'), '').toLowerCase();
-
-  Map<String, Object?> _copyMap(Object? value) {
-    if (value is! Map) return {};
-    return value.map((key, item) => MapEntry(key.toString(), item));
-  }
 }
 
 class RoomServiceException implements Exception {

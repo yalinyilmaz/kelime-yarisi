@@ -15,7 +15,8 @@ class KelimeYarisiApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Kelime Yarışı',
         debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
+        theme: AppTheme.dark,
+        themeMode: ThemeMode.dark,
         home: const RoomHomePage(),
       ),
     );

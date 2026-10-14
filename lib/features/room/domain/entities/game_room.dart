@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../game/domain/game_progress.dart';
 import 'room_game_mode.dart';
 import 'room_player.dart';
 
@@ -16,6 +17,8 @@ class GameRoom extends Equatable {
     required this.players,
     this.status = RoomStatus.lobby,
     this.startsAtMs,
+    this.questionSetId,
+    this.progress = const {},
   });
 
   final String id;
@@ -27,6 +30,12 @@ class GameRoom extends Equatable {
   final List<RoomPlayer> players;
   final RoomStatus status;
   final int? startsAtMs;
+  final String? questionSetId;
+  final Map<String, GameProgress> progress;
+
+  int? get endsAtMs => startsAtMs == null
+      ? null
+      : startsAtMs! + gameMode.duration.inMilliseconds;
 
   bool get isFull => players.length >= targetPlayerCount;
   bool get everyoneIsReady =>
@@ -36,6 +45,8 @@ class GameRoom extends Equatable {
     List<RoomPlayer>? players,
     RoomStatus? status,
     int? startsAtMs,
+    String? questionSetId,
+    Map<String, GameProgress>? progress,
   }) {
     return GameRoom(
       id: id,
@@ -47,6 +58,8 @@ class GameRoom extends Equatable {
       players: players ?? this.players,
       status: status ?? this.status,
       startsAtMs: startsAtMs ?? this.startsAtMs,
+      questionSetId: questionSetId ?? this.questionSetId,
+      progress: progress ?? this.progress,
     );
   }
 
@@ -61,5 +74,7 @@ class GameRoom extends Equatable {
     players,
     status,
     startsAtMs,
+    questionSetId,
+    progress,
   ];
 }
