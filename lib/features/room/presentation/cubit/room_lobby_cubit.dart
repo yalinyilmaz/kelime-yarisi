@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/firebase_room_service.dart';
@@ -25,6 +26,16 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   Timer? _countdownTimer;
   bool _isStartingCountdown = false;
   bool _isMarkingPlaying = false;
+
+  Future<void> startDebugGame() async {
+    if (!kDebugMode ||
+        state.isLeaving ||
+        state.room.status != RoomStatus.lobby ||
+        state.room.hostId != _roomService.currentUserId) {
+      return;
+    }
+    await _startCountdown();
+  }
 
   Future<void> toggleCurrentPlayerReady() async {
     RoomPlayer? currentPlayer;

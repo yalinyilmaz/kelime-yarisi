@@ -1,4 +1,5 @@
 import '../../game/domain/game_progress.dart';
+import '../../game/domain/shared_hints.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
 import '../domain/entities/room_player.dart';
@@ -15,6 +16,7 @@ abstract final class FirebaseRoomMapper {
       'status': room.status.name,
       'startsAtMs': room.startsAtMs,
       'questionSetId': room.questionSetId,
+      'gameplayVersion': room.gameplayVersion,
       'createdAt': {'.sv': 'timestamp'},
       'players': {
         for (final player in room.players) player.id: playerToMap(player),
@@ -60,6 +62,13 @@ abstract final class FirebaseRoomMapper {
       ),
       startsAtMs: (map['startsAtMs'] as num?)?.toInt(),
       questionSetId: map['questionSetId'] as String?,
+      gameplayVersion: map['gameplayVersion'] as String?,
+      hints: Map.unmodifiable(
+        _asMap(map['hints']).map(
+          (index, value) =>
+              MapEntry(int.parse(index), SharedHints.fromMap(value)),
+        ),
+      ),
       progress: Map.unmodifiable(
         _asMap(map['progress'])
             .map((uid, value) => MapEntry(uid, GameProgress.fromMap(value))),
@@ -79,6 +88,13 @@ abstract final class FirebaseRoomMapper {
   }
 
   static Map<String, Object?> _asMap(Object? value) {
+    // RTDB represents dense numeric children (hints/0, hints/1, ...) as a list.
+    if (value is List) {
+      return {
+        for (var i = 0; i < value.length; i++)
+          if (value[i] != null) '$i': value[i],
+      };
+    }
     if (value is! Map) return const {};
     return value.map((key, item) => MapEntry(key.toString(), item));
   }

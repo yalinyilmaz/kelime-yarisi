@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 import '../../game/data/question_bank.dart';
 import '../../game/domain/game_progress.dart';
+import '../../game/domain/shared_hints.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
 import '../domain/entities/room_player.dart';
@@ -144,6 +145,34 @@ class FirebaseRoomService {
   Future<void> markResults(String roomId) =>
       _roomRef(roomId).child('status').set(RoomStatus.results.name);
 
+  Future<SharedHints?> requestHint(
+    String roomId, {
+    required int questionIndex,
+    required int expectedRevealedCount,
+    required int requiredVotes,
+    required int letterCount,
+  }) async {
+    final uid = _requireUserId();
+    final hintRef = _roomRef(roomId).child('hints/$questionIndex');
+    final snapshot = await hintRef.get();
+    final result = await hintRef.runTransaction((value) {
+      // The first callback can be null even after get(); retries use server data.
+      final hints = SharedHints.fromMap(value ?? snapshot.value);
+      if (hints.revealedCount != expectedRevealedCount) {
+        return Transaction.abort();
+      }
+      final next = hints.vote(
+        uid,
+        requiredVotes: requiredVotes,
+        letterCount: letterCount,
+      );
+      return next == null
+          ? Transaction.abort()
+          : Transaction.success(next.toMap(questionIndex));
+    }, applyLocally: false);
+    return result.committed ? SharedHints.fromMap(result.snapshot.value) : null;
+  }
+
   Future<void> setReady(String roomId, {required bool isReady}) async {
     final uid = _requireUserId();
     await _roomRef(roomId).child('players/$uid').update({
@@ -163,6 +192,7 @@ class FirebaseRoomService {
     await _roomRef(roomId).update({
       'startsAtMs': startsAtMs,
       'questionSetId': QuestionBank.setIdFor(gameMode),
+      'gameplayVersion': 'sync-v1',
       'status': RoomStatus.countdown.name,
     });
   }

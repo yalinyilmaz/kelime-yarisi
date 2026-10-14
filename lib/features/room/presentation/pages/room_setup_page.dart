@@ -104,6 +104,7 @@ class _RoomSetupView extends StatelessWidget {
                                 ButtonSegment(value: 3, label: Text('3')),
                                 ButtonSegment(value: 4, label: Text('4')),
                                 ButtonSegment(value: 5, label: Text('5')),
+                                ButtonSegment(value: 6, label: Text('6')),
                               ],
                               selected: {state.targetPlayerCount},
                               showSelectedIcon: false,

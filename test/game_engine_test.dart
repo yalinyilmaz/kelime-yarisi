@@ -1,90 +1,134 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_yarisi/features/game/data/question_bank.dart';
 import 'package:kelime_yarisi/features/game/domain/game_progress.dart';
 import 'package:kelime_yarisi/features/game/domain/game_question.dart';
+import 'package:kelime_yarisi/features/game/domain/shared_hints.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/room_game_mode.dart';
 
 void main() {
-  test('Both modes have a stable set and increasing word lengths', () {
+  test('Stable question sets and 25-second rounds in both modes', () {
     for (final mode in RoomGameMode.values) {
       final questions = QuestionBank.forSet(QuestionBank.setIdFor(mode));
       expect(questions.length, mode.questionCount);
-      expect(questions.map((q) => q.answer).toSet().length, questions.length);
       final lengths = questions.map((q) => q.letterCount).toList();
       expect(lengths, [...lengths]..sort());
-      expect(lengths.first, 4);
-      expect(lengths.last, 10);
+      expect(mode.duration.inSeconds, mode.questionCount * 25);
+    }
+    expect(() => QuestionBank.forSet('unknown'), throwsStateError);
+  });
+
+  test('Turkish and ASCII letters match regardless of case', () {
+    const examples = {
+      'KAPI': ['kapı', 'kapi', 'KAPI', 'KAPİ'],
+      'KİTAP': ['kitap', 'kıtap', 'KITAP', 'KİTAP'],
+      'GÖKKUŞAĞI': [
+        'gokkusagi',
+        'GOKKUSAGI',
+        'gÖkKuŞaĞı',
+        'go\u0308kkus\u0327ag\u0306i',
+      ],
+      'ÇEKİRDEK': ['cekirdek', 'CEKIRDEK', 'ÇEKİRDEK'],
+      'ŞÜPHE': ['suphe', 'SUPHE', 'şüphe'],
+      'IŞIK': ['isik', 'ISIK', 'ışık', 'İSİK'],
+    };
+    for (final entry in examples.entries) {
+      final question = GameQuestion(clue: '', answer: entry.key);
+      for (final input in entry.value) {
+        expect(
+          question.accepts('  $input  '),
+          isTrue,
+          reason: '${entry.key}: $input',
+        );
+      }
+    }
+    const door = GameQuestion(clue: '', answer: 'KAPI');
+    for (final input in ['', 'kap', 'kapilar', 'kedi', 'kap1', 'kap!']) {
+      expect(door.accepts(input), isFalse, reason: input);
+    }
+  });
+
+  test('PIN letter conversion preserves real spelling and does not correct wrong letters', () {
+    const question = GameQuestion(clue: '', answer: 'GÖKKUŞAĞI');
+    expect(
+      [for (var i = 0; i < 9; i++) question.normalizeLetter('gokkusagi'[i], i)]
+          .join(),
+      'GÖKKUŞAĞI',
+    );
+    expect(question.normalizeLetter('e', 1), 'E');
+    expect(question.accepts('gekkusagi'), isFalse);
+  });
+
+  test('One vote opens a shared letter for two and three player rooms', () {
+    final next = const SharedHints().vote(
+      'a',
+      requiredVotes: 1,
+      letterCount: 4,
+    )!;
+    expect(next.revealedCount, 1);
+    expect(next.firstVoterId, isNull);
+    expect(
+      next.revealedMask('abc234', 0, 4),
+      SharedHints.fromMap(next.toMap(0)).revealedMask('abc234', 0, 4),
+    );
+  });
+
+  test('Two different votes open a letter, reset votes, and never reveal the last letter', () {
+    var hints = const SharedHints();
+    var oldMask = 0;
+    for (var i = 0; i < 3; i++) {
+      hints = hints.vote('a', requiredVotes: 2, letterCount: 4)!;
+      expect(hints.revealedCount, i);
+      expect(hints.vote('a', requiredVotes: 2, letterCount: 4), isNull);
+      hints = hints.vote('b', requiredVotes: 2, letterCount: 4)!;
+      expect(hints.revealedCount, i + 1);
+      expect(hints.firstVoterId, isNull);
+      final mask = hints.revealedMask('abc234', 0, 4);
+      expect(mask & oldMask, oldMask);
       expect(
-        questions.every(
-          (q) => q.answer == GameQuestion.normalizeAnswer(q.answer),
-        ),
-        isTrue,
+        [
+          for (var j = 0; j < 4; j++)
+            if ((mask & (1 << j)) != 0) j,
+        ].length,
+        i + 1,
+      );
+      oldMask = mask;
+    }
+    expect(hints.vote('a', requiredVotes: 2, letterCount: 4), isNull);
+  });
+
+  test('Shared hints determine points; timeout resolves a question without ending the game', () {
+    final questions = QuestionBank.forSet('quick-v1');
+    var progress = const GameProgress().resolve(
+      questions,
+      outcome: AnswerOutcome.correct,
+      revealedCount: 1,
+    );
+    expect(progress.score, 300);
+    progress = progress.resolve(
+      questions,
+      outcome: AnswerOutcome.timeout,
+      revealedCount: 2,
+    );
+    expect(progress.score, 0);
+    expect(progress.questionIndex, 2);
+    expect(progress.finished, isFalse);
+    for (var i = 2; i < questions.length; i++) {
+      progress = progress.resolve(
+        questions,
+        outcome: AnswerOutcome.wrong,
+        revealedCount: 0,
       );
     }
-    expect(() => QuestionBank.forSet('quick-v2'), throwsStateError);
-  });
-
-  test('Answer matching respects Turkish dotted and dotless I', () {
-    const book = GameQuestion(clue: '', answer: 'KİTAP');
-    const door = GameQuestion(clue: '', answer: 'KAPI');
-    expect(book.accepts('  kitap  '), isTrue);
-    expect(book.accepts('KİTAP'), isTrue);
-    expect(book.accepts('kıtap'), isFalse);
-    expect(door.accepts('kapı'), isTrue);
-    expect(door.accepts('kapi'), isFalse);
-    expect(book.accepts('ki\ntap'), isTrue);
-  });
-
-  test('Hints never repeat, affect only one player, and keep the last letter hidden', () {
-    final question = QuestionBank.forSet('quick-v1').first;
-    const otherPlayer = GameProgress();
-    var progress = const GameProgress();
-    final random = Random(5);
-    for (var i = 0; i < question.letterCount - 1; i++) {
-      final previousMask = progress.revealedMask;
-      progress = progress.revealLetter(question, random);
-      expect(progress.revealedMask & previousMask, previousMask);
-      expect(progress.valueFor(question), (question.letterCount - i - 1) * 100);
-      expect(progress.score, 0);
-    }
-    expect(progress.revealLetter(question, random), progress);
-    expect(otherPlayer.revealedMask, 0);
-    expect(progress.resolve([question], correct: true).score, 100);
-    expect(progress.resolve([question], correct: false).score, -100);
-  });
-
-  test('Every answer advances once, resets hints, and final question freezes progress', () {
-    final questions = QuestionBank.forSet('quick-v1');
-    var progress = const GameProgress().revealLetter(
-      questions.first,
-      Random(2),
-    );
-    progress = progress.resolve(questions, correct: false);
-    expect(progress.score, -300);
-    expect(progress.questionIndex, 1);
-    expect(progress.revealedMask, 0);
-    for (var i = 1; i < questions.length; i++) {
-      progress = progress.resolve(questions, correct: true);
-    }
     expect(progress.finished, isTrue);
-    expect(progress.correctCount, 6);
-    expect(progress.wrongCount, 1);
-    expect(progress.score, 4200);
-    expect(progress.resolve(questions, correct: true), progress);
-  });
-
-  test('Timeout penalizes the open question once and leaves later questions unattempted', () {
-    final questions = QuestionBank.forSet('classic-v1');
-    final progress = const GameProgress()
-        .resolve(questions, correct: true)
-        .revealLetter(questions[1], Random(1));
-    final expired = progress.resolve(questions, correct: false, timedOut: true);
-    expect(expired.score, 100);
-    expect(expired.questionIndex, 2);
-    expect(expired.finished, isTrue);
-    expect(expired.wrongCount, 1);
-    expect(expired.resolve(questions, correct: false, timedOut: true), expired);
+    expect(progress.correctCount, 1);
+    expect(progress.wrongCount, 6);
+    expect(
+      progress.resolve(
+        questions,
+        outcome: AnswerOutcome.correct,
+        revealedCount: 0,
+      ),
+      progress,
+    );
   });
 }

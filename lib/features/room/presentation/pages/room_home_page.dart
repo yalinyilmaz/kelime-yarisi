@@ -79,7 +79,7 @@ class RoomHomePage extends StatelessWidget {
                               SizedBox(width: 6),
                               Flexible(
                                 child: Text(
-                                  '2–5 oyuncu · Aynı anda canlı oyun',
+                                  '2–6 oyuncu · Aynı anda canlı oyun',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: AppColors.textSecondary,

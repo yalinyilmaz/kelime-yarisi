@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -125,7 +126,7 @@ class _RoomLobbyView extends StatelessWidget {
                           ),
                           ...List.generate(
                             (room.targetPlayerCount - room.players.length)
-                                .clamp(0, 5),
+                                .clamp(0, 6),
                             (_) => const _EmptyPlayerTile(),
                           ),
                           const SizedBox(height: 20),
@@ -168,6 +169,20 @@ class _RoomLobbyView extends StatelessWidget {
                               RoomStatus.results => 'Oyun tamamlandı',
                             }),
                           ),
+                          if (kDebugMode && room.hostId == currentUserId) ...[
+                            const SizedBox(height: 12),
+                            OutlinedButton.icon(
+                              onPressed:
+                                  room.status == RoomStatus.lobby &&
+                                      !state.isLeaving
+                                  ? context
+                                        .read<RoomLobbyCubit>()
+                                        .startDebugGame
+                                  : null,
+                              icon: const Icon(Icons.play_arrow_rounded),
+                              label: const Text('Oyunu Başlat · Debug'),
+                            ),
+                          ],
                           const SizedBox(height: 12),
                           Text(
                             _statusText(room),

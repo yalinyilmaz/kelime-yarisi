@@ -8,8 +8,8 @@ enum RoomGameMode {
   };
 
   String get description => switch (this) {
-    RoomGameMode.quick => '7 soru · 2 dakika',
-    RoomGameMode.classic => '14 soru · 4 dakika',
+    RoomGameMode.quick => '7 soru · Soru başına 25 saniye',
+    RoomGameMode.classic => '14 soru · Soru başına 25 saniye',
   };
 
   int get questionCount => switch (this) {
@@ -17,8 +17,7 @@ enum RoomGameMode {
     RoomGameMode.classic => 14,
   };
 
-  Duration get duration => switch (this) {
-    RoomGameMode.quick => const Duration(minutes: 2),
-    RoomGameMode.classic => const Duration(minutes: 4),
-  };
+  static const questionDuration = Duration(seconds: 25);
+
+  Duration get duration => questionDuration * questionCount;
 }

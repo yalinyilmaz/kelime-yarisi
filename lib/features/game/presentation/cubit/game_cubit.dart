@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,21 +10,16 @@ import '../../domain/game_question.dart';
 import 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit(
-    this._service,
-    GameRoom room, {
-    Random? random,
-    int Function()? nowMs,
-  }) : _random = random ?? Random(),
-       _nowMs = nowMs ?? (() => DateTime.now().millisecondsSinceEpoch),
-       super(_initialState(_service, room)) {
+  GameCubit(this._service, GameRoom room, {int Function()? nowMs})
+    : _nowMs = nowMs ?? (() => DateTime.now().millisecondsSinceEpoch),
+      super(_initialState(_service, room)) {
     _roomSubscription = _service
         .watchRoom(room.id)
         .listen(_roomChanged, onError: _streamFailed);
     _clockSubscription = _service.watchServerTimeOffset().listen((offset) {
       if (isClosed) return;
       _offsetMs = offset;
-      emit(state.copyWith(clockReady: true, serverNowMs: _nowMs() + offset));
+      emit(state.copyWith(clockReady: true));
       _tick();
     }, onError: _streamFailed);
     _connectionSubscription = _service.watchConnection().listen((connected) {
@@ -37,7 +31,6 @@ class GameCubit extends Cubit<GameState> {
   }
 
   final FirebaseRoomService _service;
-  final Random _random;
   final int Function() _nowMs;
   StreamSubscription<GameRoom>? _roomSubscription;
   StreamSubscription<int>? _clockSubscription;
@@ -53,7 +46,8 @@ class GameCubit extends Cubit<GameState> {
     try {
       questions = QuestionBank.forSet(room.questionSetId);
       if (questions.length != room.gameMode.questionCount ||
-          room.startsAtMs == null) {
+          room.startsAtMs == null ||
+          room.gameplayVersion != 'sync-v1') {
         throw StateError('Oyun verisi eksik. Yeni bir oda oluşturun.');
       }
     } on StateError catch (e) {
@@ -64,20 +58,48 @@ class GameCubit extends Cubit<GameState> {
       room: room,
       questions: questions,
       progress: room.progress[service.currentUserId] ?? const GameProgress(),
+      currentUserId: service.currentUserId,
       errorMessage: error,
     );
   }
 
   Future<void> revealLetter() async {
     _tick();
-    if (!state.canAct) return;
-    final next = state.progress.revealLetter(state.question!, _random);
-    if (next == state.progress) return;
-    await _save(
-      next,
-      feedback:
-          'Harf açıldı. Soru değeri ${next.valueFor(state.question!)} puan.',
-    );
+    if (!state.canVote) return;
+    final index = state.questionIndex;
+    emit(state.copyWith(isVoting: true, clearError: true));
+    try {
+      final hints = await _service.requestHint(
+        state.room.id,
+        questionIndex: index,
+        expectedRevealedCount: state.hints.revealedCount,
+        requiredVotes: state.room.requiredHintVotes,
+        letterCount: state.question!.letterCount,
+      );
+      if (isClosed) return;
+      final existing = state.room.hints[index];
+      if (hints != null &&
+          (existing == null || hints.revealedCount >= existing.revealedCount)) {
+        emit(
+          state.copyWith(
+            room: state.room.copyWith(
+              hints: {...state.room.hints, index: hints},
+            ),
+          ),
+        );
+      }
+      emit(state.copyWith(isVoting: false));
+    } catch (_) {
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            isVoting: false,
+            errorMessage: 'Harf oyu kaydedilemedi. Tekrar dene.',
+          ),
+        );
+      }
+    }
+    _tick();
   }
 
   Future<void> submitAnswer(String input) async {
@@ -91,41 +113,49 @@ class GameCubit extends Cubit<GameState> {
       );
       return;
     }
-    await _resolve(correct: state.question!.accepts(input));
+    await _resolve(
+      state.question!.accepts(input)
+          ? AnswerOutcome.correct
+          : AnswerOutcome.wrong,
+    );
   }
 
   Future<void> giveUp() async {
     _tick();
-    if (state.canAct) await _resolve(correct: false);
+    if (state.canAct) await _resolve(AnswerOutcome.wrong);
   }
 
-  Future<void> _resolve({required bool correct, bool timedOut = false}) async {
-    final question = state.question;
-    if (question == null) return;
-    final value = state.progress.valueFor(question);
+  Future<bool> _resolve(AnswerOutcome outcome) async {
+    final index = state.progress.questionIndex;
+    if (index >= state.questions.length) return false;
+    final question = state.questions[index];
+    final revealedCount = state.room.hints[index]?.revealedCount ?? 0;
+    final value = (question.letterCount - revealedCount) * 100;
+    final correct = outcome == AnswerOutcome.correct;
     final feedback = correct
         ? 'Doğru! +$value puan.'
-        : '${timedOut ? 'Süre doldu' : 'Bilemedin'}. Cevap: ${question.answer}. −$value puan.';
-    await _save(
+        : '${outcome == AnswerOutcome.timeout ? 'Süre doldu' : 'Bilemedin'}. −$value puan.';
+    return _save(
       state.progress.resolve(
         state.questions,
-        correct: correct,
-        timedOut: timedOut,
+        outcome: outcome,
+        revealedCount: revealedCount,
       ),
       feedback: feedback,
     );
   }
 
-  Future<void> _save(GameProgress next, {required String feedback}) async {
-    if (state.isSaving || isClosed) return;
+  Future<bool> _save(GameProgress next, {required String feedback}) async {
+    if (state.isSaving || isClosed) return false;
     final previous = state.progress;
     emit(state.copyWith(isSaving: true, clearError: true));
     try {
       await _service.saveProgress(state.room.id, next);
-      if (isClosed) return;
+      if (isClosed) return false;
       emit(state.copyWith(progress: next, isSaving: false, feedback: feedback));
+      return true;
     } catch (_) {
-      if (isClosed) return;
+      if (isClosed) return false;
       // Firebase streams emit pending local writes too; restore the last acknowledged state.
       emit(
         state.copyWith(
@@ -136,6 +166,7 @@ class GameCubit extends Cubit<GameState> {
         ),
       );
       _retryAtMs = _nowMs() + 3000;
+      return false;
     }
   }
 
@@ -154,14 +185,18 @@ class GameCubit extends Cubit<GameState> {
 
   void _tick() {
     if (isClosed || state.isLeaving) return;
-    emit(state.copyWith(serverNowMs: _nowMs() + _offsetMs));
-    if (state.hasExpired &&
+    final previousIndex = state.questionIndex;
+    final next = state.copyWith(serverNowMs: _nowMs() + _offsetMs);
+    emit(next.copyWith(clearFeedback: next.questionIndex != previousIndex));
+    if (state.clockReady &&
         state.isConnected &&
         !state.isSaving &&
+        !state.isVoting &&
         !_isCompleting &&
         _nowMs() >= _retryAtMs &&
         state.questions.isNotEmpty &&
-        (!state.progress.finished || state.room.status != RoomStatus.results)) {
+        ((state.progress.questionIndex < state.questionIndex) ||
+            (state.hasExpired && state.room.status != RoomStatus.results))) {
       unawaited(_completeRound());
     }
   }
@@ -169,10 +204,16 @@ class GameCubit extends Cubit<GameState> {
   Future<void> _completeRound() async {
     _isCompleting = true;
     try {
-      if (!state.progress.finished) {
-        await _resolve(correct: false, timedOut: true);
+      while (!isClosed &&
+          !state.isLeaving &&
+          state.isConnected &&
+          state.progress.questionIndex < state.questionIndex &&
+          !state.progress.finished) {
+        if (!await _resolve(AnswerOutcome.timeout)) break;
       }
       if (!isClosed &&
+          !state.isLeaving &&
+          state.hasExpired &&
           state.progress.finished &&
           state.room.status != RoomStatus.results) {
         await _service.markResults(state.room.id);

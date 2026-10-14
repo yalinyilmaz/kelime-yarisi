@@ -31,7 +31,10 @@ class RoomSetupState extends Equatable {
   bool get canSubmit {
     if (displayName.trim().length < 2) return false;
     return switch (flow) {
-      RoomSetupFlow.create => roomName.trim().length >= 2,
+      RoomSetupFlow.create =>
+        roomName.trim().length >= 2 &&
+            targetPlayerCount >= 2 &&
+            targetPlayerCount <= 6,
       RoomSetupFlow.join => roomCode.replaceAll('-', '').trim().length == 6,
     };
   }
