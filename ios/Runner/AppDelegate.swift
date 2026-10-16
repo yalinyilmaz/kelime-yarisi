@@ -1,4 +1,5 @@
 import Flutter
+import FirebaseCore
 import UIKit
 
 @main
@@ -8,6 +9,10 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    #if DEBUG
+      // App Check includes its debug secret in warning logs. Keep errors visible.
+      FirebaseConfiguration.shared.setLoggerLevel(.error)
+    #endif
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

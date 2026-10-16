@@ -7,7 +7,11 @@
       "type": "dart",
       "program": "lib/main.dart",
       "flutterMode": "debug",
-      "toolArgs": ["--flavor", "dev", "--dart-define=QUESTION_POOL_ENABLED=true"]
+      "toolArgs": [
+        "--flavor",
+        "dev",
+        "--dart-define=QUESTION_POOL_ENABLED=true"
+      ]
     },
     {
       "name": "Dev — Run",
@@ -40,33 +44,6 @@
       "toolArgs": [
         "--flavor",
         "prod"
-      ]
-    },
-    {
-      "name": "Dev — Question Pool (iOS Simulator)",
-      "request": "launch",
-      "type": "dart",
-      "program": "lib/main.dart",
-      "flutterMode": "debug",
-      "toolArgs": [
-        "--flavor",
-        "dev",
-        "--dart-define=QUESTION_POOL_ENABLED=true",
-        "--dart-define=USE_FIREBASE_EMULATORS=true"
-      ]
-    },
-    {
-      "name": "Dev — Question Pool (Android Emulator)",
-      "request": "launch",
-      "type": "dart",
-      "program": "lib/main.dart",
-      "flutterMode": "debug",
-      "toolArgs": [
-        "--flavor",
-        "dev",
-        "--dart-define=QUESTION_POOL_ENABLED=true",
-        "--dart-define=USE_FIREBASE_EMULATORS=true",
-        "--dart-define=FIREBASE_EMULATOR_HOST=10.0.2.2"
       ]
     }
   ]

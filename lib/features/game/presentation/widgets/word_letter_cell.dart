@@ -24,6 +24,12 @@ class WordLetterCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final correct = outcome == AnswerOutcome.correct;
+    final beaten = outcome == AnswerOutcome.beaten;
+    final color = correct
+        ? AppColors.ready
+        : beaten
+        ? AppColors.warning
+        : AppColors.danger;
     final base = revealed ? AppColors.paper : AppColors.surfaceMuted;
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     return TweenAnimationBuilder<double>(
@@ -37,21 +43,19 @@ class WordLetterCell extends StatelessWidget {
           1.0,
         );
         final motion =
-            math.sin(progress * math.pi * (correct ? 1 : 4)) * (1 - progress);
+            math.sin(progress * math.pi * (correct || beaten ? 1 : 4)) *
+            (1 - progress);
         return Transform.translate(
-          offset: Offset(correct ? 0 : motion * 7, correct ? -motion * 6 : 0),
+          offset: Offset(
+            correct || beaten ? 0 : motion * 7,
+            correct || beaten ? -motion * 6 : 0,
+          ),
           child: Container(
             width: 32,
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: outcome == null
-                  ? base
-                  : Color.lerp(
-                      base,
-                      correct ? AppColors.ready : AppColors.danger,
-                      progress,
-                    ),
+              color: outcome == null ? base : Color.lerp(base, color, progress),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: focused && outcome == null
@@ -63,8 +67,7 @@ class WordLetterCell extends StatelessWidget {
                   ? null
                   : [
                       BoxShadow(
-                        color: (correct ? AppColors.ready : AppColors.danger)
-                            .withValues(alpha: 0.25 * (1 - progress)),
+                        color: color.withValues(alpha: 0.25 * (1 - progress)),
                         blurRadius: 12,
                       ),
                     ],

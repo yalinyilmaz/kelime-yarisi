@@ -7,6 +7,7 @@ import {defineSecret} from 'firebase-functions/params';
 import {QuestionService, ServiceError} from './question_service.js';
 import {CloudQuestionGenerator} from './cloud_generation.js';
 import {loadPublishedPool} from './published_pool.js';
+import {RaceService} from './race.js';
 
 const emulator = process.env.FUNCTIONS_EMULATOR === 'true';
 const projectId=process.env.GCLOUD_PROJECT??JSON.parse(process.env.FIREBASE_CONFIG??'{}').projectId;
@@ -28,6 +29,11 @@ const callable = action => onCall(options, async request => {
 });
 export const prepareQuestionHistory = callable((uid, data) => service.prepare(uid, data));
 export const startQuestionGame = callable((uid, data) => service.start(uid, data));
+const raceService = new RaceService({database: getDatabase(),
+  demoQuestions: JSON.parse(readFileSync(new URL('../content/demo.json', import.meta.url))),
+  allowDebugSolo: emulator || projectId === 'kelime-yarisi-yalin'});
+export const startDemoRaceGame = callable((uid, data) => raceService.startDemo(uid, data));
+export const playRace = callable((uid, data) => raceService.play(uid, data));
 export const cleanupQuestionReservations = onSchedule({schedule: 'every 10 minutes', region: 'europe-west1', maxInstances: 1}, () => service.cleanup());
 
 const generationKey=defineSecret('OPENAI_API_KEY');

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'game_question.dart';
 
-enum AnswerOutcome { correct, wrong, timeout }
+enum AnswerOutcome { correct, wrong, timeout, beaten }
 
 class GameProgress extends Equatable {
   const GameProgress({
@@ -10,8 +10,10 @@ class GameProgress extends Equatable {
     this.score = 0,
     this.correctCount = 0,
     this.wrongCount = 0,
+    this.skippedCount = 0,
     this.finished = false,
     this.lastOutcome,
+    this.lastScoreDelta,
   });
 
   // Number of resolved questions; the active question comes from the shared clock.
@@ -19,8 +21,10 @@ class GameProgress extends Equatable {
   final int score;
   final int correctCount;
   final int wrongCount;
+  final int skippedCount;
   final bool finished;
   final AnswerOutcome? lastOutcome;
+  final int? lastScoreDelta;
 
   GameProgress resolve(
     List<GameQuestion> questions, {
@@ -35,9 +39,17 @@ class GameProgress extends Equatable {
     final nextIndex = questionIndex + 1;
     return GameProgress(
       questionIndex: nextIndex,
-      score: score + (correct ? value : -value),
+      score:
+          score +
+          (correct
+              ? value
+              : outcome == AnswerOutcome.beaten
+              ? 0
+              : -value),
       correctCount: correctCount + (correct ? 1 : 0),
-      wrongCount: wrongCount + (correct ? 0 : 1),
+      wrongCount:
+          wrongCount + (correct || outcome == AnswerOutcome.beaten ? 0 : 1),
+      skippedCount: skippedCount + (outcome == AnswerOutcome.beaten ? 1 : 0),
       finished: nextIndex == questions.length,
       lastOutcome: outcome,
     );
@@ -48,6 +60,7 @@ class GameProgress extends Equatable {
     'score': score,
     'correctCount': correctCount,
     'wrongCount': wrongCount,
+    if (skippedCount > 0) 'skippedCount': skippedCount,
     'finished': finished,
     'lastOutcome': lastOutcome?.name,
     'updatedAtMs': {'.sv': 'timestamp'},
@@ -61,10 +74,12 @@ class GameProgress extends Equatable {
       score: (map['score'] as num?)?.toInt() ?? 0,
       correctCount: (map['correctCount'] as num?)?.toInt() ?? 0,
       wrongCount: (map['wrongCount'] as num?)?.toInt() ?? 0,
+      skippedCount: (map['skippedCount'] as num?)?.toInt() ?? 0,
       finished: map['finished'] as bool? ?? false,
       lastOutcome: outcome == null
           ? null
           : AnswerOutcome.values.byName(outcome),
+      lastScoreDelta: (map['lastScoreDelta'] as num?)?.toInt(),
     );
   }
 
@@ -74,7 +89,9 @@ class GameProgress extends Equatable {
     score,
     correctCount,
     wrongCount,
+    skippedCount,
     finished,
     lastOutcome,
+    lastScoreDelta,
   ];
 }

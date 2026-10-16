@@ -117,6 +117,27 @@ void main() {
   });
   tearDown(() => sounds.dispose());
 
+  test('A remote winner plays the reveal cue once without a wrong-answer sound or vibration', () async {
+    sounds.update(soundState());
+    sounds.update(soundState(outcome: AnswerOutcome.beaten));
+    sounds.update(soundState(outcome: AnswerOutcome.beaten));
+    await flush();
+    expect(hint.plays, 1);
+    expect(wrong.plays, 0);
+    expect(correct.plays, 0);
+    expect(wrongVibrations, 0);
+    expect(hintVibrations, 0);
+    // A player who previously answered incorrectly still hears the shared reveal.
+    sounds.update(soundState(questionIndex: 1));
+    sounds.update(soundState(questionIndex: 1, outcome: AnswerOutcome.wrong));
+    await flush();
+    sounds.update(soundState(questionIndex: 1, outcome: AnswerOutcome.beaten));
+    await flush();
+    expect(hint.plays, 2);
+    expect(wrong.plays, 1);
+    expect(wrongVibrations, 1);
+  });
+
   test('Accepted answers sound once; only wrong answers vibrate; stale snapshots and timeouts do not replay', () async {
     expect(correct.asset, 'audio/answer_correct.wav');
     expect(wrong.asset, 'audio/answer_wrong.wav');

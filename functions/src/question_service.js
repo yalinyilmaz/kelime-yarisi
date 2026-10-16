@@ -73,7 +73,8 @@ export class QuestionService {
           JSON.stringify(Object.keys(current.players ?? {}).sort()) !== JSON.stringify(participantIds) ||
           (!solo && participantIds.some(id => !current.players[id].isReady || !current.players[id].isOnline))) return undefined;
       return {...current, questionSetId: `pool-v1:${sessionId}`, questions: session.questions,
-        startsAtMs: session.startsAtMs, gameplayVersion: 'sync-v1', status: 'countdown',
+        startsAtMs: session.startsAtMs, gameplayVersion: 'race-v1', status: 'countdown',
+        race: {questionIndex: 0, startedAtMs: session.startsAtMs},
         questionFingerprint: session.fingerprint, questionOrigin: this.includeExamples ? 'example' : 'production'};
     });
     if (!committed.committed) {

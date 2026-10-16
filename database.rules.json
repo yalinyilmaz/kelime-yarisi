@@ -30,7 +30,7 @@
           ".validate": "newData.val() === 'quick' || newData.val() === 'classic'"
         },
         "status": {
-          ".write": "(auth != null && (data.parent().child('hostId').val() === auth.uid || (data.parent().child('players').child(auth.uid).exists() && newData.val() === 'results' && now >= data.parent().child('startsAtMs').val() + (data.parent().child('gameMode').val() === 'quick' ? 175000 : 350000)))) && (newData.val() !== 'countdown' || data.parent().child('questionEngine').val() !== 'pool-v1')",
+          ".write": "((auth != null && (data.parent().child('hostId').val() === auth.uid || (data.parent().child('players').child(auth.uid).exists() && newData.val() === 'results' && now >= data.parent().child('startsAtMs').val() + (data.parent().child('gameMode').val() === 'quick' ? 175000 : 350000)))) && (newData.val() !== 'countdown' || data.parent().child('questionEngine').val() !== 'pool-v1')) && (data.parent().child('gameplayVersion').val() !== 'race-v1' || (data.val() === 'countdown' && newData.val() === 'playing'))",
           ".validate": "(!data.exists() && newData.val() === 'lobby') || (data.val() === 'lobby' && newData.val() === 'countdown' && newData.parent().child('startsAtMs').isNumber() && newData.parent().child('questionSetId').isString() && newData.parent().child('gameplayVersion').val() === 'sync-v1') || (data.val() === 'countdown' && newData.val() === 'playing' && now >= data.parent().child('startsAtMs').val()) || ((data.val() === 'playing' || data.val() === 'results') && newData.val() === 'results' && now >= data.parent().child('startsAtMs').val() + (data.parent().child('gameMode').val() === 'quick' ? 175000 : 350000))"
         },
         "startsAtMs": {
@@ -136,6 +136,10 @@
           ".validate": false
         },
         "questionOrigin": {
+          ".write": false,
+          ".validate": false
+        },
+        "race": {
           ".write": false,
           ".validate": false
         }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../../../room/domain/entities/game_room.dart';
 import '../../domain/game_progress.dart';
+import '../../domain/game_answer_feedback.dart';
 import '../cubit/game_state.dart';
 
 class GameSoundController {
@@ -33,7 +34,7 @@ class GameSoundController {
   Future<void>? _initialization;
   int? _lastTickSecond;
   int _observedHintCount = 0;
-  int _observedAnswerIndex = -1;
+  GameAnswerFeedback? _observedAnswer;
   int _playbackGeneration = 0;
   bool _ready = false;
   bool _disposed = false;
@@ -89,7 +90,7 @@ class GameSoundController {
     if (previous == null || previous.questionIndex != state.questionIndex) {
       _playbackGeneration++;
       _observedHintCount = state.hints.revealedCount;
-      _observedAnswerIndex = state.answerFeedback?.questionIndex ?? -1;
+      _observedAnswer = state.answerFeedback;
       _lastTickSecond = null;
       if (previous != null || !_active(state)) unawaited(_silence());
       return;
@@ -98,8 +99,10 @@ class GameSoundController {
     if (openedLetter) _observedHintCount = state.hints.revealedCount;
     final result = state.answerFeedback;
     final answered =
-        result != null && result.questionIndex > _observedAnswerIndex;
-    if (answered) _observedAnswerIndex = result.questionIndex;
+        result != null &&
+        result != _observedAnswer &&
+        result.questionIndex == state.questionIndex;
+    if (answered) _observedAnswer = result;
     if (!_active(state)) {
       if (_active(previous)) {
         _playbackGeneration++;
@@ -133,6 +136,8 @@ class GameSoundController {
         unawaited(_play(_correctPlayer));
       } else if (result.outcome == AnswerOutcome.wrong) {
         unawaited(_play(_wrongPlayer));
+      } else if (result.outcome == AnswerOutcome.beaten) {
+        unawaited(_play(_hintPlayer));
       }
     }
   }

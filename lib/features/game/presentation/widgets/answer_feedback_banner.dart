@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/game_answer_feedback.dart';
+import '../../domain/game_progress.dart';
 
 class AnswerFeedbackBanner extends StatelessWidget {
   const AnswerFeedbackBanner({
@@ -15,7 +16,12 @@ class AnswerFeedbackBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = result.isCorrect ? AppColors.ready : AppColors.danger;
+    final beaten = result.outcome == AnswerOutcome.beaten;
+    final color = result.isCorrect
+        ? AppColors.ready
+        : beaten
+        ? AppColors.warning
+        : AppColors.danger;
     return Semantics(
       liveRegion: true,
       child: TweenAnimationBuilder<double>(
@@ -44,6 +50,8 @@ class AnswerFeedbackBanner extends StatelessWidget {
               Icon(
                 result.isCorrect
                     ? Icons.check_circle_rounded
+                    : beaten
+                    ? Icons.emoji_events_rounded
                     : Icons.cancel_rounded,
                 color: color,
               ),
@@ -71,7 +79,9 @@ class AnswerFeedbackBanner extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                '${result.scoreDelta > 0 ? '+' : '−'}${result.scoreDelta.abs()}',
+                result.scoreDelta == 0
+                    ? '0'
+                    : '${result.scoreDelta > 0 ? '+' : '−'}${result.scoreDelta.abs()}',
                 style: TextStyle(
                   color: color,
                   fontWeight: FontWeight.w900,

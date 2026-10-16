@@ -43,13 +43,21 @@ class GameState extends Equatable {
   bool get isHistoryReady =>
       !room.usesQuestionPool || recordedQuestionIndices.contains(questionIndex);
 
-  int get questionIndex => !clockReady || room.startsAtMs == null
+  int get questionIndex => room.isRace
+      ? room.race?.questionIndex ?? 0
+      : !clockReady || room.startsAtMs == null
       ? 0
       : ((serverNowMs - room.startsAtMs!) ~/
                 RoomGameMode.questionDuration.inMilliseconds)
             .clamp(0, questions.length);
 
-  int get remainingSeconds => !clockReady || room.startsAtMs == null
+  int get remainingSeconds => room.isRace
+      ? !clockReady || room.race == null || room.race!.isResolved
+            ? 0
+            : ((room.race!.startedAtMs + 25000 - serverNowMs) / 1000)
+                  .ceil()
+                  .clamp(0, 25)
+      : !clockReady || room.startsAtMs == null
       ? 25
       : hasExpired
       ? 0
@@ -74,8 +82,9 @@ class GameState extends Equatable {
               (1 << index)) !=
           0;
 
-  bool get hasExpired =>
-      clockReady && room.endsAtMs != null && serverNowMs >= room.endsAtMs!;
+  bool get hasExpired => room.isRace
+      ? questionIndex >= questions.length || room.status == RoomStatus.results
+      : clockReady && room.endsAtMs != null && serverNowMs >= room.endsAtMs!;
 
   GameQuestion? get question =>
       questionIndex >= questions.length || !isHistoryReady
@@ -92,7 +101,12 @@ class GameState extends Equatable {
       room.status == RoomStatus.playing &&
       serverNowMs >= (room.startsAtMs ?? serverNowMs + 1) &&
       progress.questionIndex == questionIndex &&
-      room.gameplayVersion == 'sync-v1' &&
+      (room.isRace
+          ? room.race != null &&
+                !room.race!.isResolved &&
+                serverNowMs >= room.race!.startedAtMs &&
+                remainingSeconds > 0
+          : room.gameplayVersion == 'sync-v1') &&
       question != null;
 
   bool get canAct => canEditAnswer && !isVoting;

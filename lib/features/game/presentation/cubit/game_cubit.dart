@@ -53,7 +53,8 @@ class GameCubit extends Cubit<GameState> {
           : QuestionBank.forSet(room.questionSetId);
       if (questions.length != room.gameMode.questionCount ||
           room.startsAtMs == null ||
-          room.gameplayVersion != 'sync-v1') {
+          (!room.isRace && room.gameplayVersion != 'sync-v1') ||
+          (room.isRace && room.race == null)) {
         throw StateError('Oyun verisi eksik. Yeni bir oda oluşturun.');
       }
       if (room.usesQuestionPool) {
@@ -89,6 +90,10 @@ class GameCubit extends Cubit<GameState> {
   Future<void> revealLetter() async {
     _tick();
     if (!state.canVote) return;
+    if (state.room.isRace) {
+      await _raceAction('hint');
+      return;
+    }
     final index = state.questionIndex;
     emit(state.copyWith(isVoting: true, clearError: true));
     try {
@@ -141,6 +146,10 @@ class GameCubit extends Cubit<GameState> {
       emit(state.copyWith(errorMessage: 'Tüm boş harfleri doldur.'));
       return;
     }
+    if (state.room.isRace) {
+      await _raceAction('answer', input: input);
+      return;
+    }
     await _resolve(
       state.question!.accepts(input)
           ? AnswerOutcome.correct
@@ -151,7 +160,39 @@ class GameCubit extends Cubit<GameState> {
   Future<void> giveUp({int? questionIndex}) async {
     _tick();
     if (questionIndex != null && questionIndex != state.questionIndex) return;
-    if (state.canAct) await _resolve(AnswerOutcome.wrong);
+    if (state.canAct) {
+      if (state.room.isRace) {
+        await _raceAction('giveUp');
+      } else {
+        await _resolve(AnswerOutcome.wrong);
+      }
+    }
+  }
+
+  Future<void> _raceAction(String action, {String? input}) async {
+    final voting = action == 'hint';
+    emit(state.copyWith(isSaving: !voting, isVoting: voting, clearError: true));
+    try {
+      await _service.playRace(
+        state.room.id,
+        action: action,
+        questionIndex: state.questionIndex,
+        input: input,
+        expectedRevealedCount: voting ? state.hints.revealedCount : null,
+      );
+    } catch (error) {
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            errorMessage: error is RoomServiceException
+                ? error.message
+                : 'İşlem kaydedilemedi. Bağlantını kontrol edip tekrar dene.',
+          ),
+        );
+      }
+    } finally {
+      if (!isClosed) emit(state.copyWith(isSaving: false, isVoting: false));
+    }
   }
 
   Future<bool> _resolve(AnswerOutcome outcome) async {
@@ -218,6 +259,51 @@ class GameCubit extends Cubit<GameState> {
 
   void _roomChanged(GameRoom room) {
     if (isClosed || state.isLeaving) return;
+    if (room.isRace) {
+      final progress =
+          room.progress[_service.currentUserId] ?? const GameProgress();
+      final index = room.race?.questionIndex ?? 0;
+      GameAnswerFeedback? feedback;
+      if (index < state.questions.length) {
+        final race = room.race!;
+        final ownAnswer = progress.questionIndex > index;
+        final outcome = race.winnerId != null
+            ? race.winnerId == state.currentUserId
+                  ? AnswerOutcome.correct
+                  : AnswerOutcome.beaten
+            : race.isResolved
+            ? AnswerOutcome.timeout
+            : ownAnswer
+            ? progress.lastOutcome
+            : null;
+        if (outcome != null) {
+          final value =
+              (state.questions[index].letterCount -
+                  (room.hints[index]?.revealedCount ?? 0)) *
+              100;
+          feedback = GameAnswerFeedback(
+            questionIndex: index,
+            question: state.questions[index],
+            outcome: outcome,
+            scoreDelta: outcome == AnswerOutcome.beaten
+                ? 0
+                : outcome == AnswerOutcome.correct
+                ? value
+                : progress.lastScoreDelta ?? -value,
+            winnerName: race.winnerName,
+          );
+        }
+      }
+      emit(
+        state.copyWith(
+          room: room,
+          progress: progress,
+          answerFeedback: feedback,
+        ),
+      );
+      _tick();
+      return;
+    }
     emit(
       state.copyWith(
         room: room,
@@ -235,6 +321,21 @@ class GameCubit extends Cubit<GameState> {
     final next = state.copyWith(serverNowMs: _nowMs() + _offsetMs);
     emit(next.copyWith(clearFeedback: next.questionIndex != previousIndex));
     _recordVisibleQuestion();
+    if (state.room.isRace) {
+      final race = state.room.race;
+      if (race != null &&
+          state.clockReady &&
+          state.isConnected &&
+          !state.hasExpired &&
+          !_isCompleting &&
+          !state.isSaving &&
+          !state.isVoting &&
+          _nowMs() >= _retryAtMs &&
+          state.serverNowMs >= (race.nextAtMs ?? race.startedAtMs + 25000)) {
+        unawaited(_syncRace());
+      }
+      return;
+    }
     if (state.clockReady &&
         state.isConnected &&
         !state.isSaving &&
@@ -245,6 +346,25 @@ class GameCubit extends Cubit<GameState> {
         ((state.progress.questionIndex < state.questionIndex) ||
             (state.hasExpired && state.room.status != RoomStatus.results))) {
       unawaited(_completeRound());
+    }
+  }
+
+  Future<void> _syncRace() async {
+    _isCompleting = true;
+    try {
+      await _service.playRace(state.room.id);
+      _retryAtMs = _nowMs() + 1000;
+    } catch (_) {
+      _retryAtMs = _nowMs() + 3000;
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            errorMessage: 'Ortak soru durumu güncellenemedi. Tekrar deneniyor.',
+          ),
+        );
+      }
+    } finally {
+      _isCompleting = false;
     }
   }
 

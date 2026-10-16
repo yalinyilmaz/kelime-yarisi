@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../game/domain/game_progress.dart';
 import '../../../game/domain/game_question.dart';
 import '../../../game/domain/shared_hints.dart';
+import '../../../game/domain/question_race.dart';
 import 'room_game_mode.dart';
 import 'room_player.dart';
 
@@ -26,6 +27,7 @@ class GameRoom extends Equatable {
     this.questions = const [],
     this.questionEngine = 'demo-v1',
     this.questionOrigin = 'example',
+    this.race,
   });
 
   final String id;
@@ -44,6 +46,8 @@ class GameRoom extends Equatable {
   final List<GameQuestion> questions;
   final String questionEngine;
   final String questionOrigin;
+  final QuestionRace? race;
+  bool get isRace => gameplayVersion == 'race-v1';
   bool get usesQuestionPool => questionSetId?.startsWith('pool-v1:') ?? false;
 
   int get requiredHintVotes => targetPlayerCount <= 3 ? 1 : 2;
@@ -64,6 +68,7 @@ class GameRoom extends Equatable {
     Map<String, GameProgress>? progress,
     Map<int, SharedHints>? hints,
     String? gameplayVersion,
+    QuestionRace? race,
   }) {
     return GameRoom(
       id: id,
@@ -82,6 +87,7 @@ class GameRoom extends Equatable {
       questionEngine: questionEngine,
       questionOrigin: questionOrigin,
       gameplayVersion: gameplayVersion ?? this.gameplayVersion,
+      race: race ?? this.race,
     );
   }
 
@@ -103,5 +109,6 @@ class GameRoom extends Equatable {
     questions,
     questionEngine,
     questionOrigin,
+    race,
   ];
 }

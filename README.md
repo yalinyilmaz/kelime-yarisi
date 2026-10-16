@@ -40,22 +40,18 @@ State management için `flutter_bloc` ve Cubit kullanılır. Yalnızca gerçek b
 
 Step 3 oyun motoru eklendi. Android ve iOS uygulamaları seçilen `dev` veya `prod` flavor'ının Firebase projesine bağlıdır. Oyuncular anonim oturumla oda oluşturabilir veya oda koduyla katılabilir; oyuncu, bağlantı ve hazır bilgileri Realtime Database üzerinden tüm cihazlarda canlı güncellenir. Oda dolup herkes hazır olduğunda sunucu saatine bağlı ortak geri sayım başlar; lobi oyun ekranına geçer.
 
-Klasik mod `classic-v1` ile 14 soru / 5 dakika 50 saniye, hızlı mod `quick-v1` ile 7 soru / 2 dakika 55 saniye oynatır. Her soru 25 saniyedir. Soru seti ve `gameplayVersion: sync-v1`, geri sayım başlatılırken odaya bağlanır. Soru bankası uygulamada bulunur; set içeriği değiştirilirse yeni bir soru seti sürümü kullanılmalıdır.
+Yeni odalar `gameplayVersion: race-v1` ile oynar. Klasik mod 14, hızlı mod 7 sorudur. Her sorunun süresi en fazla 25 saniyedir. İlk doğru cevabı sunucu transaction'ı kabul eder; sadece kazanan soru puanını alır. Diğer oyuncularda cevap kutulara yerleşir, **gerçek oyuncu adı** ile “<oyuncu> bildi 😔” bildirimi ve açılma sesi görünür. Cevap 2 saniye gösterildikten sonra herkes sonraki soruya geçer. Son sorudan sonra da 2 saniyelik gösterimle sonuçlar açılır. Yanlış cevap ve “Bilemiyorum” tek denemeyi tüketir ve soru değerini düşürür; başka birinin bilmesi ek ceza getirmez. Kimse bilemezse süre sonunda cevapsız oyunculara timeout cezası uygulanır ve cevap 2 saniye gösterilir. Toplam oyun süresi doğru cevapların hızına bağlıdır; sabit toplam süre kullanılmaz.
 
-Aktif soru, Firebase sunucu saati ve odanın `startsAtMs` değerinden hesaplanır. Host her soruda geçiş yazmaz; tüm cihazlar aynı 25 saniyelik aralığı kullanır. Cevap göndermek veya “Bilemiyorum” seçmek oyuncuyu sonraki soruya geçirmez. Oyuncu ortak sürenin bitmesini bekler. Yanlış cevap veren oyuncunun kutuları kırmızı yanar ve kendi ekranında doğru kelime gösterilir; doğru cevapta kutular yeşil dalgayla vurgulanır. Süre dolunca önceki sorunun doğru cevabı 3 saniyelik bir panelde gösterilir; ortak saat ve sonraki soru bekletilmez. Süre dolunca cevapsız soru bilememiş sayılır. Pas yoktur.
+Cevap doğrulama (Türkçe/ASCII toleransı ve kabul edilmiş eş anlamlılar dahil), puanlama, ortak harf oyu ve geçişler `playRace` callable üzerinden sunucuda yönetilir. Oda snapshot'ı bütün cihazlarda aynı kazananı, puanı ve soru saatini taşır. Cevap/harf butonları klavyeyi kapatmaz. Ortak harf kuralları aynı: 2–3 kişide bir oy, 4–6 kişide iki farklı oy; son harf kapalı kalır. Eşzamanlı eski harf istekleri bir sonraki harfi açmaz.
 
-Harf oylaması `rooms/$roomId/hints/$questionIndex` altında transaction ile tutulur. Odanın başlangıçtaki hedef oyuncu sayısı 2–3 ise bir oy harf açar; 4–6 ise iki farklı oyuncu gerekir. İlk oy kaydolur, aynı kişinin tekrar basması ikinci oy sayılmaz. Harf açılınca oylar sıfırlanır. Transaction tekrarları başka bir harfin oylamasına taşınmaz. Aynı oda/soru/harf sırası için bütün cihazlar aynı harf konumunu hesaplar. Son harf kapalı kalır. Cevabını gönderen oyuncunun o soruda yeni oy vermesi engellenir. Oyuncu ayrılması oy eşiğini değiştirmez.
+Her bağlı istemci yalnızca soru süresi veya cevap gösterimi bittiğinde sunucudan senkronizasyon ister; host gerekli değildir. Bağlantı geri geldiğinde sunucu geçmiş süreleri aynı sabit son tarihlerle tamamlar. Geçiş hataları gecikmeli tekrar denenir. Yerel soru geçmişi görünür sorular için kaydedilmeye devam eder. Eski `sync-v1` odaları eski akışla bitirilebilir; yeni yarış için tüm cihazları güncelleyip yeni oda açın.
 
-Her kapalı harf 100 puandır. Ortak açılan her harf soru değerini herkes için 100 azaltır. Doğru cevap o anki soru değerini ekler; yanlış cevap, “Bilemiyorum” veya süre dolması soru değerini düşürür. Daha önce kabul edilmiş cevabın puanı sonraki harf açılışlarından etkilenmez. Eşit puanlı oyuncular aynı sırayı paylaşır.
+Örnek setli odaları artık `startDemoRaceGame`, havuz odalarını `startQuestionGame` başlatır. Her iki mod için Functions gerekir. Debug tek kişilik örnek oyun yalnızca dev/emulator sunucusunda açık olan izinle başlatılır; prod sunucusu bu isteği reddeder. Yarış alanı, puanlar ve harfler istemciden doğrudan değiştirilemez. Sorular mevcut mimaride oda üyelerine snapshot içinde gönderilir; sunucuda puanlama doğrulaması, değiştirilmiş istemcilerin cevabı önceden okumasını engellemez.
 
-Oyuncunun ilerlemesi `rooms/$roomId/progress/$uid` altında tutulur. Sunucu saati ve bağlantı alınmadan işlemler kapalıdır. İlerleme kaydı onaylanmadan yeni işlem yapılmaz. Geri bağlanan oyuncunun geçmiş cevapsız soruları, kapanmış ortak harf kayıtlarına göre sırayla timeout olarak kaydedilir. Toplam sürenin sonunda bağlı bir oda üyesi `results` durumuna geçirebilir. Tam oda geri yükleme ve sunucuda çevrimdışı oyuncuyu otomatik tamamlama Step 4 kapsamındadır.
-
-Kurallar oyuncu sahipliğini, oy sayısını ve sırasını, soru başına zaman sınırını, ortak harf sayısına göre puan değişimini ve tamamlanmış sonuçların değiştirilememesini kontrol eder. **Doğru cevap olup olmadığı hâlâ istemcide doğrulanır; public matchmaking öncesi server-authoritative cevap doğrulaması gerekir.**
-
-Bu strateji değişikliğinin `sync-v1` kuralları, kullanıcı onayıyla 14 Ekim 2026’da `kelime-yarisi-yalin` projesine deploy edildi. Eski uygulama sürümleri oda başlatamaz; test için bütün cihazlar güncellenmeli ve yeni oda açılmalıdır. Sonraki kural güncellemelerinin deploy komutu:
+Bu değişiklik 16 Ekim 2026’da `kelime-yarisi-yalin` dev projesine deploy edildi. `playRace`, `startDemoRaceGame`, `startQuestionGame` ve RTDB kuralları birlikte yayımlandı; kurallar sunucudan geri okunarak yerel dosyayla birebir eşleştiği doğrulandı. Prod değiştirilmedi. Yeniden deploy için:
 
 ```sh
-npx -y firebase-tools@latest deploy --only database --project dev
+firebase deploy --only functions:question-pool:playRace,functions:question-pool:startDemoRaceGame,functions:question-pool:startQuestionGame,database --project kelime-yarisi-yalin
 ```
 
 ## Dev ve prod ortamları
@@ -91,11 +87,13 @@ npx -y firebase-tools@latest deploy --only database,auth --project dev
 npx -y firebase-tools@latest deploy --only database,auth --project prod
 ```
 
-Her iki ortamın Android uygulaması Play Integrity, iOS uygulaması App Attest ile App Check'e kayıtlıdır. Debug derlemeleri iki platformda da debug provider kullanır. Cihazın loglarında çıkan debug token'ını **seçtiğin ortamın ve uygulamanın** Firebase Console → App Check → Manage debug tokens bölümüne kaydet. Token'lar repoya eklenmez. Release Android için yayınlama sırasında gerçek upload/Play App Signing SHA-256 sertifikası Firebase'e eklenmelidir. App Check enforcement henüz açılmamıştır.
+Android, debug dahil tüm derlemelerde Play Integrity kullanır; Android debug token kaydı kullanılmaz. iOS debug derlemeleri debug provider, diğer derlemeler App Attest kullanır. iOS debug token'ını ilgili Firebase uygulamasının App Check → Manage debug tokens bölümüne kaydet; token'lar repoya eklenmez. Android Play Integrity için kullanılan imzalama sertifikasının SHA-256 parmak izi ilgili Firebase uygulamasına kaydedilmelidir. Play üzerinden dağıtımda Play App Signing sertifikası kullanılır. Callable fonksiyonlar App Check doğrulamasını zorunlu tutar.
+
+Android dev uygulaması `flutter run` ile Google Play dışından yüklenir. Firebase Console → App Check → dev Android uygulaması → Play Integrity gelişmiş ayarlarında bu dağıtım için `PLAY_RECOGNIZED` ve `LICENSED` zorunlu olmamalı, minimum cihaz bütünlüğü `Device integrity` olmalıdır. Play Integrity API'nin bağlı Cloud projesi `kelime-yarisi-yalin` olmalıdır. Bu ayarlar prod'a otomatik uygulanmaz. [Firebase Play Integrity kurulum rehberi](https://firebase.google.com/docs/app-check/android/play-integrity-provider).
 
 iOS `Debug`, `Debug-dev` ve `Debug-prod` yapılandırmalarında App Attest entitlement'ı yoktur; Personal Team ile fiziksel cihazda debug çalıştırılabilir. `Profile` ve `Release` yapılandırmalarında App Attest entitlement'ı production ortamını kullanır. Bunları fiziksel cihaz için imzalamak, App Attest destekleyen ücretli Apple Developer Program takımı ve bu yetkiyi içeren provisioning profile gerektirir. Firebase ortamı ile debug/release derleme modu birbirinden bağımsızdır; `Prod — Run` da Personal Team ile debug çalıştırılabilir.
 
-Oyun/ekran testleri `flutter test` ile çalışır. Güvenlik testleri yalnızca `demo-kelime-yarisi` emulator projesini kullanır. Realtime Database emulator 127.0.0.1:9000 üzerinde çalışırken:
+Oyun/ekran testleri `flutter test` ile çalışır. İzole güvenlik testleri teknik olarak gerekiyorsa gerekçesi açıklanır ve proje `AGENTS.md` kurallarına uyulur; bu testler yalnızca `demo-kelime-yarisi` projesini kullanır. Bu özel doğrulama için Realtime Database emulator 127.0.0.1:9000 üzerinde çalışırken:
 
 ```sh
 npm install --prefix /tmp/kelime-yarisi-rules-test @firebase/rules-unit-testing firebase
@@ -104,15 +102,15 @@ NODE_PATH=/tmp/kelime-yarisi-rules-test/node_modules node test/firebase/database
 
 Strateji değişikliği 1. adımı (ortak soru süresi ve harf oylaması), 2. adımı (autofocus ile PIN tarzı kelime girişi), 3. adımı (İngilizce/Türkçe karakter toleransı) ve 4. adımı (ses efektleri) tamamlandı. PIN görünümü, tek ve sabit bir standart Flutter TextField/FocusNode ile oluşturulur. iOS odak isteği sayfa geçişi tamamlandıktan sonra ve soru başına bir kez yapılır; harf oylaması giriş bağlantısını kilitlemez. Sayaç ayrı BlocSelector ile güncellenir; sesler GameAudioCubit üzerinden yönetilir. Oyuncu doğrudan kelime kutularında yalnızca boş harfleri yazar; ortak açılan harfler sabittir. Yeni harf açılırken diğer kutulara yazılanlar korunur. Firebase mapper, sayısal soru anahtarlarının hem map hem liste biçimini destekler; ortak harfler bütün cihazlara taşınır. Yeni soruda giriş temizlenip odaklanır. Cevap, “Cevapla” veya klavyedeki tamam tuşuyla gönderilir; eksik giriş puan kaybettirmez. Cevap doğrulaması büyük/küçük harf ile c/ç, g/ğ, i/ı/İ/I, o/ö, s/ş, u/ü ayrımı yapmaz. Örneğin kapi → KAPI, gokkusagi → GÖKKUŞAĞI doğru kabul edilir. PIN girişinde eşdeğer harfler kelimedeki konumuna göre gerçek Türkçe yazıma çevrilir; yanlış harfler otomatik düzeltilmez. Harf Al’a basınca hafif titreşim, harf gerçekten açıldığında kısa bir mekanik kasa açılışı ve zil efekti çalar; soru süresinin son 5 saniyesinde saniyede bir tik-tak çalar. Bekleyen oylar ve eski Firebase kayıtları ses çaldırmaz. Oyun ekranındaki hoparlör düğmesi oyuncunun sesini açar/kapatır; tercih o ekran oturumu boyunca geçerlidir. Arka plana geçişte ve odadan çıkışta sesler durur. Efektler `assets/audio/` altında projeye özel üretilmiş WAV dosyalarıdır ve `audioplayers` ile yerel olarak çalınır. Doğru cevap kabul edilince kısa bir çift zil sesi, yanlış cevap kabul edilince alçalan bir uyarı sesi ve sistem titreşimi tetiklenir. Doğru cevap titreşim yapmaz. Eksik giriş, başarısız kayıt ve süre dolması cevap efekti üretmez. Ses kapatma titreşimi kapatmaz; arka planda ikisi de çalışmaz. Eski cevaplar ve yinelenen snapshot’lar efektleri tekrar çaldırmaz. Ses veya titreşim hatası oyun akışını kesmez. Ardından Step 4: rövanş, yeniden oynama ve tam oda geri yükleme. Birden fazla fiziksel cihazla yeni strateji henüz doğrulanmadı.
 
-## Soru havuzu — yerel/emulator aşaması
+## Soru havuzu — dev bulut ve gerçek cihaz testi
 
-Çekirdek uygulandı: bağımsız soru kayıtları, kaynak/izin bilgisi, editör onayı, yayın artefaktı, cihaz geçmişi, kurallı ortak set seçimi, geçici rezervasyon ve kapasite raporu. Canlı Firebase projelerine bu çalışma için deploy yapılmadı. Mevcut `Dev — Run` ve `Prod — Run` sabit örnek soruları kullanır; havuz modu ayrı çalıştırılır.
+Çekirdek ve dev bulut backend’i uygulandı: bağımsız soru kayıtları, kaynak/izin bilgisi, editör onayı, yayın artefaktı, cihaz geçmişi, kurallı ortak set seçimi, geçici rezervasyon ve kapasite raporu. Mevcut `Dev — Run` ve `Prod — Run` sabit örnek soruları kullanır; dev havuzu `Dev — Cloud Question Pool` profiliyle gerçek cihazlarda çalıştırılır. Prod ayrı kalır.
 
 Klasik mod 14 soru ve 4–10 harften ikişer cevap kullanır. Mevcut hızlı mod 7 soru ve her uzunluktan bir cevap olarak korundu. Her modda en az 3 konu ve 3 zorluk seviyesi bulunur; bir konu toplamın en fazla üçte birini yukarı yuvarlanmış olarak, bir zorluk seviyesi toplamın en fazla yarısını yukarı yuvarlanmış olarak kaplar. Harf uzunluğu zorluk yerine geçmez. Aynı cevap, aynı kök ailesi veya editörün ilişkili işaretlediği cevaplar aynı sete alınmaz. Seçim başarısız olduğunda bu sınırlar ve tekrar kuralı gevşetilmez.
 
 **Yerel yayın kapasitesi: 336 kaynaklı, AI editör kontrolünden geçirilmiş farklı ana cevap; her uzunlukta 48.** İlk 140 soruya kullanıcının onayladığı 14 set / 196 soru eklendi. `content/questions.json` çalışma havuzu; `functions/content/published.json` backend yayın artefaktıdır. Kontrol türü `ai-self-review` olarak kaydedilir; insan editör onayı değildir. Teorik üst sınır 24 klasik oyundur; konu/zorluk/kök dengesi gerçek kapasiteyi azaltabilir. 90 gün × 3 oyun senaryosu için her uzunlukta en az 492 yeni cevap daha gerekir. Kaynaklar, atıflar, editör kararları ve yeni parti akışı [content/README.md](content/README.md) içinde açıklanır.
 
-`functions/content/examples.json` içindeki 42 eski fixture ayrı kalır; 336 gerçek kayda eklenmez. Örnekler sadece demo emulator ortamında `QUESTION_POOL_EXAMPLES=true` ile seçilebilir ve deploy paketinden çıkarılır. Normal emulator profili artık gerçek yayın havuzunu kullanır. Prod ayrı kalır; dev havuzu yalnız açık proje hedefiyle dağıtılır.
+`functions/content/examples.json` içindeki 42 eski fixture ayrı kalır; 336 gerçek kayda eklenmez. Örnekler sadece demo emulator ortamında `QUESTION_POOL_EXAMPLES=true` ile seçilebilir ve deploy paketinden çıkarılır. Mobil uygulamada emulator yönlendirmesi bulunmaz. Prod ayrı kalır; dev havuzu yalnız açık proje hedefiyle dağıtılır.
 
 ### Cihaz geçmişi ve boyut
 
@@ -124,22 +122,27 @@ Geçmiş hesap bazında değildir; o telefonda/app kurulumunda kalır. Uygulama 
 
 64 karakterli hash kimlikleriyle iki `WITHOUT ROWID` tablo ölçümü: 3.780 cevap + 3.780 soru yaklaşık 0,68 MiB; 10.000 + 10.000 yaklaşık 1,75 MiB; 50.000 + 50.000 yaklaşık 8,71 MiB. Bunlar çalışma sırasında oluşan veri boyutlarıdır, indirme/bundle boyutu değildir. Soru havuzunu genişletmek uygulamanın içine ek metin eklemez.
 
-### Emulator ile çalıştırma
+### Gerçek cihaz ile çalıştırma
 
-Functions Node 22 kullanır; en güncel JavaScript test SDK'sı Node 24 gerektirir. Aşağıdaki `npx` komutları sistemdeki Node sürümünü değiştirmeden gerekli çalışma zamanlarını kullanır. Java 21+ gerekir.
-
-```sh
-npm ci --prefix functions
-npx -y -p node@22 -p firebase-tools@latest firebase emulators:start --only auth,database,functions --project demo-kelime-yarisi
-```
-
-Emulator açıkken VS Code'da `Dev — Question Pool (iOS Simulator)` veya `Dev — Question Pool (Android Emulator)` seç. iOS simulator localhost'u; Android emulator `10.0.2.2` adresini kullanır. Bunlar simulator/emulator profilleridir; fiziksel telefonda localhost bilgisayarı göstermez. `functions/.env.local` içinde `QUESTION_POOL_EXAMPLES=false` ile 336 soruluk gerçek havuz açılır. Eski 42 fixture için açıkça `true` seçilebilir. Havuz değişince Functions emulator'ını yeniden başlat. Boş havuzun tükenme davranışı ayrı entegrasyon testinde kontrol edilir. Backend emulator, `demo-kelime-yarisi` dışındaki proje adlarını reddeder. Mobil emulator bağlantısı da yalnızca dev debug için kabul edilir; dev/prod native Firebase cache'inden ayrı bir named app kullanılır.
+Uygulama flavor’ın yerel Firebase yapılandırmasıyla açılır. `main.dart` içinde named demo app, sahte anahtar, emulator adresi veya `USE_FIREBASE_EMULATORS` seçeneği yoktur. Android/iOS cihazını bağlayıp VS Code’da **Dev — Cloud Question Pool** profilini seç veya cihaz kimliğini açıkça ver:
 
 ```sh
-flutter run --flavor dev --dart-define=QUESTION_POOL_ENABLED=true --dart-define=USE_FIREBASE_EMULATORS=true
+flutter run --flavor dev -d DEVICE_ID --dart-define=QUESTION_POOL_ENABLED=true
 ```
 
-Backend sadece oda sahibinin başlatmasına ve oda üyelerinin geçmiş hazırlığına izin verir. Her cihaz kendi yerel kimlik listesini geçici olarak iletir; tüm oyuncuların görülmüş/ayrılmış cevapları ortak seçimden çıkarılır. Hazırlık 25 saniye geçerlidir; başlamazsa hazır durumu yenilenir. Kalıcı sunucu geçmişi tutulmaz. Aktif set rezervasyonu oyunun süresi + 30 saniye için geçerlidir; süresi dolan kayıtlar seçimden hemen çıkarılır ve periyodik temizlenir. Aynı oda/kurulum kimliği ile yinelenen başlatma istekleri aynı kaydedilmiş seti kullanır. Oda silinirse tamamlanmamış seçim odayı yeniden yaratmaz.
+Android Play Integrity için dev imzasının SHA-256 parmak izi Firebase'de kayıtlı olmalı. Android API anahtarının uygulama izin listesinde ayrıca **dev paket adı ve cihazda kullanılan debug imzasının SHA-1’i** bulunmalı. iOS debug App Check tokenı ilgili dev Firebase uygulamasında kayıtlı olmalı. Prod için ayrı anahtar/uygulama ayarları korunur. API servis izin listesinde `firebaseappcheck.googleapis.com`, `identitytoolkit.googleapis.com` ve `securetoken.googleapis.com` tutulur. Token değerlerini repoya veya test loglarına yazma.
+
+iOS debug tokenı cihazdaki uygulama kurulumuna aittir. Uygulama silinirse veya verileri temizlenirse token değişebilir; yeni token aynı dev uygulamasında yeniden kaydedilmelidir. Normal `flutter run` için uygulama verilerini temizleme. App Check ayarları tamamlandıktan sonra `Too many attempts` sürerse uygulamayı kapatıp yeniden aç; sürekli token yenileme/istek döngüsü ekleme.
+
+Gerçek cihaz kabul testi, dev proje ve havuz bayrağı doğrulandıktan sonra App Check tokenını, oda oluşturmayı ve bulut soru havuzuna callable erişimini sınar. Test kendi odasını kapatır; görülen soru geçmişini silmez/değiştirmez. Testin oluşturduğu geçici `questionPreparations` kaydı da yalnız testteki kullanıcı/oda kimliği eşleşiyorsa iş sonunda yönetici erişimiyle temizlenmelidir:
+
+```sh
+flutter test integration_test/question_pool_device_test.dart --flavor dev -d DEVICE_ID --dart-define=QUESTION_POOL_ENABLED=true
+```
+
+Test/build sonunda bu çalışma için üretilen gereksiz APK/IPA, build çıktıları ve geçici logları temizle. Proje özelindeki ayrıntılar `AGENTS.md` içindedir. Backend’in izole güvenlik testleri saklanır; emulator kullanımı günlük cihaz akışının parçası değildir ve yalnız teknik olarak gerekli özel bir doğrulama için geçici olarak çalıştırılır.
+
+Backend sadece oda sahibinin başlatmasına ve oda üyelerinin geçmiş hazırlığına izin verir. Her cihaz kendi yerel kimlik listesini geçici olarak iletir; tüm oyuncuların görülmüş/ayrılmış cevapları ortak seçimden çıkarılır. Hazırlık 25 saniye geçerlidir; başlamazsa hazır durumu yenilenir. Kalıcı sunucu geçmişi tutulmaz. Aktif set rezervasyonu soruların azami toplam süresi + 30 saniye için geçerlidir (14 × 2 saniyelik gösterim de bu payın içindedir); süresi dolan kayıtlar seçimden hemen çıkarılır ve periyodik temizlenir. Aynı oda/kurulum kimliği ile yinelenen başlatma istekleri aynı kaydedilmiş seti kullanır. Oda silinirse tamamlanmamış seçim odayı yeniden yaratmaz.
 
 Başlangıç sürümünde aktif rezervasyonlar tek atomik RTDB transaction ile seçilir ve 300 eşzamanlı rezervasyonla sınırlandırılır; yoğunlukta açık hata döner. Bu seçim katmanı yük altında ölçülmeden büyük trafik garantisi verilmez. Set parmak izi sıralanmış cevap kimliklerinden üretilir; farklı kullanıcı gruplarında global set benzersizliği zorlanmaz. Aynı soru farklı kullanıcılarda kullanılabilir. Yerel geçmiş kullanıcı cihazından geldiği için hesabın tüm cihazlarında tekrar engeli veya hileye karşı sunucu geçmişi garantisi verilmez.
 
@@ -175,22 +178,16 @@ Dev bulut üreticisi günde 42 onaylı soru, her uzunluktan altı adet hedefler.
 flutter analyze
 flutter test
 npm test --prefix functions
-npx -y -p node@22 -p firebase-tools@latest firebase emulators:exec --only auth,database,functions --project demo-kelime-yarisi 'npx -y -p node@24 node --test --test-force-exit functions/test/emulator.integration.js && NODE_PATH=functions/node_modules npx -y -p node@24 node test/firebase/database_rules_test.cjs'
 ```
 
-Mobil entegrasyon testi de aynı emulator oturumunda çalıştırılabilir:
 
-```sh
-flutter test integration_test/question_pool_emulator_test.dart --flavor dev -d IOS_SIMULATOR_ID --dart-define=QUESTION_POOL_ENABLED=true --dart-define=USE_FIREBASE_EMULATORS=true
-```
-
-Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Dev App Check debug token’ları Firebase Console’da kayıtlı olmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Normal Dev/Prod profillerinin havuz bayrağı korunur. Mevcut puan/cevap doğrulamasının istemciye güvenme sınırı devam eder.
+Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Android dev Play Integrity ayarları ve iOS dev App Check debug token kayıtları tamamlanmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Normal Dev/Prod profillerinin havuz bayrağı korunur. Yarış puan/cevap doğrulaması sunucudadır; mevcut oda snapshot’ında cevaplar üyelere gönderilmeye devam eder.
 
 ## Güvenlik ve canlıya çıkış
 
 - Firebase istemci yapılandırmaları yalnızca yerelde tutulur ve Git tarafından izlenmez.
-- Realtime Database kuralları üretime gönderilmeden önce emulator üzerinde doğrulanmalıdır. Kurallar `firebase deploy --only database` komutu çalıştırılana kadar canlı projeyi değiştirmez.
-- App Check kod tarafında etkindir. Release Android için Play Integrity, iOS için App Attest; debug derlemelerinde iki platformda da debug provider kullanılır. Debug token'ları ilgili ortamın Firebase Console'una elle kaydedilmeli ve repoya eklenmemelidir.
+- Realtime Database kuralları üretime gönderilmeden önce kapsamına uygun kontrollerle doğrulanmalıdır. İzole emulator doğrulaması gerekiyorsa gerekçesi açıklanır ve kullanım sonrası süreç/çıktılar temizlenir. Kurallar `firebase deploy --only database` komutu çalıştırılana kadar canlı projeyi değiştirmez.
+- App Check kod tarafında etkindir. Android tüm derlemelerde Play Integrity kullanır. iOS debug derlemelerinde debug provider, diğer derlemelerde App Attest kullanılır. Yalnız iOS debug token'ları ilgili ortamın Firebase Console'una elle kaydedilir; token'lar repoya eklenmez.
 - Kısıtlı Android/iOS Firebase API anahtarlarının izin listesinde `firebaseappcheck.googleapis.com` bulunmalıdır; aksi durumda debug token değişimi `403 API_KEY_SERVICE_BLOCKED` ile reddedilir.
 - App Check enforcement, geçerli istek metrikleri kontrol edildikten sonra Firebase Console'dan açılmalıdır.
 - Store build alınmadan önce Android release/upload keystore yapılandırılmalıdır. Release sürümü bilerek debug anahtarıyla imzalanmaz.

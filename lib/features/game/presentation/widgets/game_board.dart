@@ -78,8 +78,12 @@ class GameBoard extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       if (state.hasAnsweredCurrent)
-                        const GameNotice(
-                          'Cevabın kaydedildi. Süre bitince herkes aynı anda sonraki soruya geçecek.',
+                        GameNotice(
+                          state.room.isRace
+                              ? state.room.race!.isResolved
+                                    ? 'Bir sonraki soru geliyor…'
+                                    : 'Cevabın kaydedildi. Diğer oyuncular yarışıyor.'
+                              : 'Cevabın kaydedildi. Süre bitince herkes aynı anda sonraki soruya geçecek.',
                         ),
                       Text(
                         '${state.room.requiredHintVotes} farklı oyuncunun oyuyla aynı harf herkeste açılır. '
@@ -95,11 +99,13 @@ class GameBoard extends StatelessWidget {
                         onPressed: state.canAct ? onGiveUp : null,
                         child: const Text('Bilemiyorum · Puan kaybet'),
                       ),
-                      const Text(
-                        'Doğru cevap: +soru değeri. Yanlış cevap veya bilemiyorum: −soru değeri. '
-                        'Cevap sonrası sorunun bitmesi beklenir. Süre dolunca cevapsız soru bilememiş sayılır. Pas yok.',
+                      Text(
+                        state.room.isRace
+                            ? 'İlk doğru cevap soruyu kapatır ve puanı kazanır. Diğer oyuncular bu yüzden puan kaybetmez. Yanlış cevap, bilemiyorum veya süre aşımı: −soru değeri.'
+                            : 'Doğru cevap: +soru değeri. Yanlış cevap veya bilemiyorum: −soru değeri. '
+                                  'Cevap sonrası sorunun bitmesi beklenir. Süre dolunca cevapsız soru bilememiş sayılır. Pas yok.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.textSecondary,
                           fontSize: 12,
                         ),
@@ -131,7 +137,8 @@ class GameBoard extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                '${state.progress.correctCount} doğru · ${state.progress.wrongCount} bilemedin',
+                                '${state.progress.correctCount} doğru · ${state.progress.wrongCount} bilemedin'
+                                '${state.progress.skippedCount > 0 ? ' · ${state.progress.skippedCount} başkası bildi' : ''}',
                               ),
                               const SizedBox(height: 8),
                               Text(

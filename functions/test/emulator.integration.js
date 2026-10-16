@@ -12,6 +12,7 @@ import {roomKey} from '../src/allocation.js';
 import {CloudQuestionGenerator} from '../src/cloud_generation.js';
 import {loadPublishedPool} from '../src/published_pool.js';
 import {callStructured} from '../src/content_generation.js';
+import {RaceService} from '../src/race.js';
 import {approveQuestion,reviewDigest,REVIEW_CHECKS} from '../src/content.js';
 
 const projectId = 'demo-kelime-yarisi';
@@ -73,7 +74,8 @@ test('cloud generator uses real RTDB leases/counters, private publication and dy
   }
   await room('abc234',[host,guest]);
   const report=(await httpsCallable(host.functions,'prepareQuestionHistory')({roomId:'abc234',history:empty})).data;
-  assert.equal(report.groups.find(g=>g.length===5).publishedAnswers,21);
+  const bundledFive = new Set(pool.filter(q => q.letterCount === 5).map(q => q.answerId)).size;
+  assert.equal(report.groups.find(g=>g.length===5).publishedAnswers,bundledFive + 1);
 });
 
 test('callable auth, shared 14-question snapshot, guest history exclusion, no metadata forgery', async () => {
@@ -93,6 +95,8 @@ test('callable auth, shared 14-question snapshot, guest history exclusion, no me
   assert.deepEqual(h.questions, g.questions);
   assert.equal(h.questions.length, 14);
   assert.equal(h.questionOrigin, 'production');
+  assert.equal(h.gameplayVersion, 'race-v1');
+  assert.equal(h.race.questionIndex, 0);
   assert(!h.questions.some(q => [pool[0].answerId,pool[1].answerId].includes(q.answerId)));
   await assert.rejects(set(ref(host.database, 'rooms/abc234/questions/0/answer'), 'HİLE'));
   await assert.rejects(get(ref(host.database, 'questionPreparations')));
@@ -104,6 +108,59 @@ test('callable auth, shared 14-question snapshot, guest history exclusion, no me
   const fn=getFunctions(unauth,'europe-west1');connectFunctionsEmulator(fn,'127.0.0.1',5001);
   await assert.rejects(httpsCallable(fn,'prepareQuestionHistory')({roomId:'abc234',history:empty}),e=>e.code==='functions/unauthenticated');
   await deleteApp(unauth);
+});
+
+test('race callables atomically select one winner, block direct forgery and advance all clients after reveal', async () => {
+  await db.ref().set(null);
+  const host = await client('race-host'), guest = await client('race-guest'), outsider = await client('race-outsider');
+  await room('abc234', [host,guest]);
+  const questions = JSON.parse(readFileSync(new URL('../content/demo.json', import.meta.url))).filter((_,i)=>i%2===0);
+  await db.ref('rooms/abc234').update({status:'playing',questions,gameplayVersion:'race-v1',
+    startsAtMs:Date.now()-100, race:{questionIndex:0,startedAtMs:Date.now()-100}});
+  const play = (user, data) => httpsCallable(user.functions,'playRace')({roomId:'abc234',...data});
+  await assert.rejects(play(outsider,{action:'answer',questionIndex:0,input:'kapi'}),e=>e.code==='functions/permission-denied');
+  await assert.rejects(play(host,{action:'answer',questionIndex:0,input:{toString:'KAPI'}}),e=>e.code==='functions/invalid-argument');
+  for (const [path,value] of [['race/winnerId',host.uid],['progress/'+host.uid,{score:9999}],['hints/0',{questionIndex:0,revealedCount:1}],['status','results']]) {
+    await assert.rejects(set(ref(host.database,`rooms/abc234/${path}`),value));
+  }
+  const answers = await Promise.all([play(host,{action:'answer',questionIndex:0,input:'kapi'}),play(guest,{action:'answer',questionIndex:0,input:'kapı'})]);
+  assert(answers.every(r=>r.data.committed));
+  const h=(await get(ref(host.database,'rooms/abc234'))).val();
+  const g=(await get(ref(guest.database,'rooms/abc234'))).val();
+  assert.deepEqual(h,g);
+  assert.equal(h.race.questionIndex,0);
+  assert.equal(h.race.nextAtMs-h.race.resolvedAtMs,2000);
+  assert.equal(Object.values(h.progress).filter(p=>p.correctCount===1).length,1);
+  assert.deepEqual(Object.values(h.progress).map(p=>p.score).sort((a,b)=>a-b),[0,400]);
+  assert.equal(Object.values(h.progress).reduce((s,p)=>s+p.wrongCount,0),0);
+  await play(host,{action:'hint',questionIndex:0,expectedRevealedCount:0});
+  assert.equal((await db.ref('rooms/abc234/hints').get()).exists(),false);
+  // Use an injected server clock to test the exact boundary without sleeping.
+  const service=new RaceService({database:db,now:()=>h.race.nextAtMs});
+  await Promise.all([service.play(host.uid,{roomId:'abc234',action:'sync'}),service.play(guest.uid,{roomId:'abc234',action:'sync'})]);
+  const next=(await db.ref('rooms/abc234').get()).val();
+  assert.equal(next.race.questionIndex,1);
+  assert.equal(next.race.startedAtMs,h.race.nextAtMs);
+  await service.play(guest.uid,{roomId:'abc234',action:'answer',questionIndex:0,input:'kapi'});
+  assert.deepEqual((await db.ref('rooms/abc234/progress').get()).val(),h.progress);
+});
+
+test('demo start uses server questions and supports dev solo only when explicitly requested', async () => {
+  await db.ref().set(null);
+  const host=await client('demo-race-host'), guest=await client('demo-race-guest');
+  await room('abc234',[host,guest],'quick');
+  await db.ref('rooms/abc234/questionEngine').set('demo-v1');
+  await assert.rejects(httpsCallable(guest.functions,'startDemoRaceGame')({roomId:'abc234'}),e=>e.code==='functions/permission-denied');
+  await httpsCallable(host.functions,'startDemoRaceGame')({roomId:'abc234'});
+  const started=(await get(ref(host.database,'rooms/abc234'))).val();
+  assert.equal(started.gameplayVersion,'race-v1');assert.equal(started.questions.length,7);
+  const demoQuestions=JSON.parse(readFileSync(new URL('../content/demo.json',import.meta.url)));
+  await room('def234',[host],'quick');
+  await db.ref('rooms/def234').update({questionEngine:'demo-v1',targetPlayerCount:2});
+  const prod=new RaceService({database:db,demoQuestions});
+  await assert.rejects(prod.startDemo(host.uid,{roomId:'def234',debugSolo:true}),e=>e.code==='failed-precondition');
+  await httpsCallable(host.functions,'startDemoRaceGame')({roomId:'def234',debugSolo:true});
+  assert.equal((await db.ref('rooms/def234/status').get()).val(),'countdown');
 });
 
 test('actual RTDB transactions reserve distinct answers for simultaneous games with overlapping players', async () => {

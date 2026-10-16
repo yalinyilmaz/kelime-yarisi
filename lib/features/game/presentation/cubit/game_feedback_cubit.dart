@@ -26,11 +26,11 @@ class GameFeedbackCubit extends Cubit<GameAnswerFeedback?> {
     }
     final result = game.answerFeedback;
     if (result == null || result == _lastSeen) return;
-    _lastSeen = result;
     if (game.room.usesQuestionPool &&
         !game.recordedQuestionIndices.contains(result.questionIndex)) {
       return;
     }
+    _lastSeen = result;
     _timer?.cancel();
     emit(result);
     if (result.questionIndex < game.questionIndex) {

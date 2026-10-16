@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../core/config/question_environment.dart';
-import '../../game/data/question_bank.dart';
 import '../../game/data/question_history_store.dart';
 import '../../game/domain/game_question.dart';
 import '../../game/domain/question_capacity.dart';
@@ -159,6 +159,22 @@ class FirebaseRoomService {
   Future<void> markResults(String roomId) =>
       _roomRef(roomId).child('status').set(RoomStatus.results.name);
 
+  Future<void> playRace(
+    String roomId, {
+    String action = 'sync',
+    int? questionIndex,
+    String? input,
+    int? expectedRevealedCount,
+  }) async {
+    await _callQuestionFunction('playRace', {
+      'roomId': roomId,
+      'action': action,
+      'questionIndex': ?questionIndex,
+      'input': ?input,
+      'expectedRevealedCount': ?expectedRevealedCount,
+    });
+  }
+
   Future<SharedHints?> requestHint(
     String roomId, {
     required int questionIndex,
@@ -209,17 +225,18 @@ class FirebaseRoomService {
       await _callQuestionFunction('startQuestionGame', {'roomId': roomId});
       return;
     }
-    final startsAtMs =
-        DateTime.now().millisecondsSinceEpoch + serverTimeOffsetMs + 4000;
-    await _roomRef(roomId).update({
-      'startsAtMs': startsAtMs,
-      'questionSetId': QuestionBank.setIdFor(gameMode),
-      'gameplayVersion': 'sync-v1',
-      'status': RoomStatus.countdown.name,
+    await _callQuestionFunction('startDemoRaceGame', {
+      'roomId': roomId,
+      'debugSolo': kDebugMode,
     });
   }
 
   Future<void> markPlaying(String roomId) async {
+    if ((await _roomRef(roomId).child('gameplayVersion').get()).value ==
+        'race-v1') {
+      await playRace(roomId);
+      return;
+    }
     await _roomRef(roomId).child('status').set(RoomStatus.playing.name);
   }
 

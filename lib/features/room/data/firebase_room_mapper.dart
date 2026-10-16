@@ -1,6 +1,7 @@
 import '../../game/domain/game_progress.dart';
 import '../../game/domain/game_question.dart';
 import '../../game/domain/shared_hints.dart';
+import '../../game/domain/question_race.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
 import '../domain/entities/room_player.dart';
@@ -67,6 +68,9 @@ abstract final class FirebaseRoomMapper {
       startsAtMs: (map['startsAtMs'] as num?)?.toInt(),
       questionSetId: map['questionSetId'] as String?,
       gameplayVersion: map['gameplayVersion'] as String?,
+      race: map['race'] is Map
+          ? QuestionRace.fromMap(map['race'] as Map)
+          : null,
       questionEngine: map['questionEngine'] as String? ?? 'demo-v1',
       questionOrigin: map['questionOrigin'] as String? ?? 'example',
       questions:

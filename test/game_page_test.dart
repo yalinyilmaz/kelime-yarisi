@@ -91,7 +91,7 @@ void main() {
         await tester.enterText(find.byType(TextField), 'zzzz');
         expect(
           tester.widget<TextField>(find.byType(TextField)).controller!.text,
-          correct ? 'KAPI' : 'AAAA',
+          'KAPI',
         );
         await tester.tap(find.byTooltip('Sesi kapat'));
         await tester.pump();

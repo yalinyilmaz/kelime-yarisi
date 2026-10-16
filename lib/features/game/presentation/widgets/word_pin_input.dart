@@ -43,6 +43,7 @@ class _WordPinInputState extends State<WordPinInput>
     super.initState();
     _text.addListener(_inputChanged);
     _focus.addListener(_focusChanged);
+    if (widget.outcome != null) _fillAnswer();
   }
 
   @override
@@ -127,10 +128,28 @@ class _WordPinInputState extends State<WordPinInput>
       );
       _publishAnswer();
     }
+    if (widget.outcome != null &&
+        (oldWidget.outcome != widget.outcome ||
+            oldWidget.questionIndex != widget.questionIndex)) {
+      _fillAnswer();
+    }
     _scheduleFocus();
   }
 
+  void _fillAnswer() {
+    _setText(
+      _hiddenPositions(widget.revealedMask)
+          .map((i) => widget.question.letters[i])
+          .join(),
+    );
+    widget.answerController.text = widget.question.answer;
+  }
+
   void _publishAnswer() {
+    if (widget.outcome != null) {
+      widget.answerController.text = widget.question.answer;
+      return;
+    }
     var inputIndex = 0;
     final answer = StringBuffer();
     for (var i = 0; i < widget.question.letterCount; i++) {

@@ -164,7 +164,9 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
     if (isClosed) return;
     emit(state.copyWith(nowMs: DateTime.now().millisecondsSinceEpoch));
     final isHost = state.room.hostId == _roomService.currentUserId;
-    if (isHost && state.countdownSeconds == 0 && !_isMarkingPlaying) {
+    if ((isHost || state.room.isRace) &&
+        state.countdownSeconds == 0 &&
+        !_isMarkingPlaying) {
       _isMarkingPlaying = true;
       unawaited(
         _roomService
