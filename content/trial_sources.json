@@ -1,0 +1,362 @@
+[
+  {
+    "id": "tr_5454bae37ed7819ef6cff0ec",
+    "answer": "FLÜT",
+    "answerId": "tr1_5454bae37ed7819ef6cff0ec12d60e1f255348c866e8e499577e6e791a2a2c07",
+    "letterCount": 4,
+    "meaningId": "Q11405_sense",
+    "meaning": "üflemeli çalgı",
+    "clue": "",
+    "topic": "kültür",
+    "difficulty": 2,
+    "rootId": "tr1_5454bae37ed7819ef6cff0ec12d60e1f255348c866e8e499577e6e791a2a2c07",
+    "rootText": "FLÜT",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q11405",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q11405\",\"revision\":2556875366,\"retrievedAt\":\"2026-10-15T06:40:17.766Z\",\"labels\":{\"en\":\"flute\",\"tr\":\"flüt\"},\"descriptions\":{\"en\":\"musical instrument of the woodwind family\",\"tr\":\"üflemeli çalgı\"},\"titles\":{\"enwiki\":\"Flute\",\"trwiki\":\"Flüt\"}},\"encyclopedia\":{\"title\":\"Flute\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1374057000\",\"attribution\":\"Wikipedia contributors, Flute\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"The flute is a member of a family of musical instruments in the woodwind group. Like all woodwinds, flutes are aerophones, producing sound with a vibrating column of air. Flutes produce sound when the player's air flows across an opening. In the Hornbostel–Sachs classification system, flutes are edge-blown aerophones. A musician who plays the flute is called a flautist or flutist.\\nPaleolithic flutes with hand-bored holes are the earliest known identifiable musical instruments. A number of flutes dating to about 53,000 to 45,000 years ago have been found in the Swabian Jura region of present-day Germany, indicating a developed musical tradition from the earliest period of modern human presence in Europe. While the oldest flutes currently known were found in Europe, Asia also has a long history with the instrument. A playable bone flute discovered in China is dated to about 9,000 years ago. The Americas also had an ancient flute culture, with instruments found in Caral, Peru, dating back 5,000 years  and in Labrador dating back about 7,500 years.\\nThe bamboo flute has a long history, especially in China and India. Flutes have been discovered in historical records and artworks starting...\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q11405",
+        "revision": 2556875366,
+        "retrievedAt": "2026-10-15T06:40:17.766Z",
+        "labels": {
+          "en": "flute",
+          "tr": "flüt"
+        },
+        "descriptions": {
+          "en": "musical instrument of the woodwind family",
+          "tr": "üflemeli çalgı"
+        },
+        "titles": {
+          "enwiki": "Flute",
+          "trwiki": "Flüt"
+        }
+      },
+      "encyclopedia": {
+        "title": "Flute",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1374057000",
+        "attribution": "Wikipedia contributors, Flute",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "The flute is a member of a family of musical instruments in the woodwind group. Like all woodwinds, flutes are aerophones, producing sound with a vibrating column of air. Flutes produce sound when the player's air flows across an opening. In the Hornbostel–Sachs classification system, flutes are edge-blown aerophones. A musician who plays the flute is called a flautist or flutist.\nPaleolithic flutes with hand-bored holes are the earliest known identifiable musical instruments. A number of flutes dating to about 53,000 to 45,000 years ago have been found in the Swabian Jura region of present-day Germany, indicating a developed musical tradition from the earliest period of modern human presence in Europe. While the oldest flutes currently known were found in Europe, Asia also has a long history with the instrument. A playable bone flute discovered in China is dated to about 9,000 years ago. The Americas also had an ancient flute culture, with instruments found in Caral, Peru, dating back 5,000 years  and in Labrador dating back about 7,500 years.\nThe bamboo flute has a long history, especially in China and India. Flutes have been discovered in historical records and artworks starting..."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "tr_453e7736842afade4e8b92bd",
+    "answer": "HAVUÇ",
+    "answerId": "tr1_453e7736842afade4e8b92bd3eebbbfb2014383f07b54ed5fc670bfdeb3c4287",
+    "letterCount": 5,
+    "meaningId": "Q81_sense",
+    "meaning": "kök sebze",
+    "clue": "",
+    "topic": "gıda",
+    "difficulty": 1,
+    "rootId": "tr1_453e7736842afade4e8b92bd3eebbbfb2014383f07b54ed5fc670bfdeb3c4287",
+    "rootText": "HAVUÇ",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q81",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q81\",\"revision\":2553199350,\"retrievedAt\":\"2026-10-15T06:40:17.768Z\",\"labels\":{\"en\":\"carrot\",\"tr\":\"havuç\"},\"descriptions\":{\"en\":\"taproot of the domesticated carrot plant\",\"tr\":\"kök sebze\"},\"titles\":{\"enwiki\":\"Carrot\",\"trwiki\":\"Havuç\"}},\"encyclopedia\":{\"title\":\"Carrot\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1379711095\",\"attribution\":\"Wikipedia contributors, Carrot\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"The carrot (Daucus carota subsp. sativus) is a root vegetable in the umbellifer family Apiaceae. Carrots are typically orange in colour due to their beta-carotene content, which makes them a rich source of vitamin A. Heirloom variants may be white, yellow, red, purple, or black. They are biennial plants.\\nThe vegetable is a domesticated form of the wild carrot, native to Europe and Southwestern Asia. The domesticated plant probably originated in Iran where it was cultivated for its leaves and seeds. In 2022, world production of carrots (combined with turnips) topped 42 million tonnes, with China producing 44% of the total.\\nDuring the Second World War, a myth that carrots help people see in the dark was spread as propaganda to explain British pilots' ability to fight in the dark; the real explanation was the introduction of radar.\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q81",
+        "revision": 2553199350,
+        "retrievedAt": "2026-10-15T06:40:17.768Z",
+        "labels": {
+          "en": "carrot",
+          "tr": "havuç"
+        },
+        "descriptions": {
+          "en": "taproot of the domesticated carrot plant",
+          "tr": "kök sebze"
+        },
+        "titles": {
+          "enwiki": "Carrot",
+          "trwiki": "Havuç"
+        }
+      },
+      "encyclopedia": {
+        "title": "Carrot",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1379711095",
+        "attribution": "Wikipedia contributors, Carrot",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "The carrot (Daucus carota subsp. sativus) is a root vegetable in the umbellifer family Apiaceae. Carrots are typically orange in colour due to their beta-carotene content, which makes them a rich source of vitamin A. Heirloom variants may be white, yellow, red, purple, or black. They are biennial plants.\nThe vegetable is a domesticated form of the wild carrot, native to Europe and Southwestern Asia. The domesticated plant probably originated in Iran where it was cultivated for its leaves and seeds. In 2022, world production of carrots (combined with turnips) topped 42 million tonnes, with China producing 44% of the total.\nDuring the Second World War, a myth that carrots help people see in the dark was spread as propaganda to explain British pilots' ability to fight in the dark; the real explanation was the introduction of radar."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "tr_133940ad90c43c5cb6d4e7db",
+    "answer": "ZÜRAFA",
+    "answerId": "tr1_133940ad90c43c5cb6d4e7dbba31bb7b0e3afa3fdc057b7951ecb2a62e6d1160",
+    "letterCount": 6,
+    "meaningId": "Q862089_sense",
+    "meaning": "memeli cinsi",
+    "clue": "",
+    "topic": "doğa",
+    "difficulty": 1,
+    "rootId": "tr1_133940ad90c43c5cb6d4e7dbba31bb7b0e3afa3fdc057b7951ecb2a62e6d1160",
+    "rootText": "ZÜRAFA",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q862089",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q862089\",\"revision\":2556927259,\"retrievedAt\":\"2026-10-15T06:40:17.769Z\",\"labels\":{\"en\":\"giraffe\",\"tr\":\"zürafa\"},\"descriptions\":{\"en\":\"genus of mammals\",\"tr\":\"memeli cinsi\"},\"titles\":{\"enwiki\":\"Giraffe\",\"trwiki\":\"Zürafa\"}},\"encyclopedia\":{\"title\":\"Giraffe\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1380081633\",\"attribution\":\"Wikipedia contributors, Giraffe\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"Giraffes (genus Giraffa) are large African hoofed mammals. They are the tallest living terrestrial animals and the largest ruminants on Earth. They are classified under the family Giraffidae, along with their closest extant relative, the okapi. Traditionally, giraffes have been thought of as one species, Giraffa camelopardalis, with nine subspecies. Most recently, researchers proposed dividing them into four extant species, with seven subspecies, which can be distinguished morphologically by their fur coat patterns. Six valid extinct species of Giraffa are known from the fossil record.\\nThe distinguishing characteristics of giraffes are their extremely long neck and legs, horn-like ossicones, and spotted coat patterns. Their scattered range extends from Chad in the north to South Africa in the south and from Niger in the west to Somalia in the east. Giraffes usually inhabit savannahs and woodlands. Their food source is leaves, fruits, and flowers of woody plants, primarily acacia species, which they browse at heights most other ground-based herbivores cannot reach. Lions, leopards, spotted hyenas, and African wild dogs may prey upon giraffes. Giraffes live in herds of related females...\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q862089",
+        "revision": 2556927259,
+        "retrievedAt": "2026-10-15T06:40:17.769Z",
+        "labels": {
+          "en": "giraffe",
+          "tr": "zürafa"
+        },
+        "descriptions": {
+          "en": "genus of mammals",
+          "tr": "memeli cinsi"
+        },
+        "titles": {
+          "enwiki": "Giraffe",
+          "trwiki": "Zürafa"
+        }
+      },
+      "encyclopedia": {
+        "title": "Giraffe",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1380081633",
+        "attribution": "Wikipedia contributors, Giraffe",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "Giraffes (genus Giraffa) are large African hoofed mammals. They are the tallest living terrestrial animals and the largest ruminants on Earth. They are classified under the family Giraffidae, along with their closest extant relative, the okapi. Traditionally, giraffes have been thought of as one species, Giraffa camelopardalis, with nine subspecies. Most recently, researchers proposed dividing them into four extant species, with seven subspecies, which can be distinguished morphologically by their fur coat patterns. Six valid extinct species of Giraffa are known from the fossil record.\nThe distinguishing characteristics of giraffes are their extremely long neck and legs, horn-like ossicones, and spotted coat patterns. Their scattered range extends from Chad in the north to South Africa in the south and from Niger in the west to Somalia in the east. Giraffes usually inhabit savannahs and woodlands. Their food source is leaves, fruits, and flowers of woody plants, primarily acacia species, which they browse at heights most other ground-based herbivores cannot reach. Lions, leopards, spotted hyenas, and African wild dogs may prey upon giraffes. Giraffes live in herds of related females..."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "tr_6fec12015e3b55cb4b1b7466",
+    "answer": "BİLMECE",
+    "answerId": "tr1_6fec12015e3b55cb4b1b746664352d0a59c8dad28e5bfca59b6476b42176d37e",
+    "letterCount": 7,
+    "meaningId": "Q47054_sense",
+    "meaning": "Bir şeyin adını anmadan niteliklerini üstü kapalı söyleyerek o şeyin ne olduğunu bulmayı dinleyene veya okuyana bırakan oyun",
+    "clue": "",
+    "topic": "kültür",
+    "difficulty": 2,
+    "rootId": "tr1_5e7fc0969f3b5830b013505a1dd7285e69d0b7f92d8c58a3e58c08d8ab30392e",
+    "rootText": "BİL",
+    "relatedAnswerIds": [
+      "tr1_385c9b442c101af51d6373ce5c0e0dd913811d3dd03807a487d71c8755ba2c53"
+    ],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q47054",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q47054\",\"revision\":2556874270,\"retrievedAt\":\"2026-10-15T06:40:17.769Z\",\"labels\":{\"en\":\"riddle\",\"tr\":\"Bilmece\"},\"descriptions\":{\"en\":\"statement or question or phrase having a double or veiled meaning, put forth as a puzzle to be solved\",\"tr\":\"Bir şeyin adını anmadan niteliklerini üstü kapalı söyleyerek o şeyin ne olduğunu bulmayı dinleyene veya okuyana bırakan oyun\"},\"titles\":{\"enwiki\":\"Riddle\",\"trwiki\":\"Bilmece\"}},\"encyclopedia\":{\"title\":\"Riddle\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1378252143\",\"attribution\":\"Wikipedia contributors, Riddle\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"A riddle is a statement, question, or phrase having a double or veiled meaning, put forth as a puzzle to be solved. Riddles are of two types: enigmas, which are problems generally expressed in metaphorical or allegorical language that require ingenuity and careful thinking for their solution, and conundrums, which are questions relying for their effects on punning in either the question or the answer.\\nArcher Taylor says that \\\"we can probably say that riddling is a universal art\\\" and cites riddles from hundreds of different cultures including Finnish, Hungarian, American Indian, Chinese, Russian, Dutch, and Filipino sources amongst many others. Many riddles and riddle-themes are internationally widespread.\\nIn the assessment of Elli Köngäs-Maranda (originally writing about Malaitian riddles, but with an insight that has been taken up more widely), whereas myths serve to encode and establish social norms, \\\"riddles make a point of playing with conceptual boundaries and crossing them for the intellectual pleasure of showing that things are not quite as stable as they seem\\\" — though the point of doing so may still ultimately be to \\\"play with boundaries, but ultimately to affirm them\\\".\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q47054",
+        "revision": 2556874270,
+        "retrievedAt": "2026-10-15T06:40:17.769Z",
+        "labels": {
+          "en": "riddle",
+          "tr": "Bilmece"
+        },
+        "descriptions": {
+          "en": "statement or question or phrase having a double or veiled meaning, put forth as a puzzle to be solved",
+          "tr": "Bir şeyin adını anmadan niteliklerini üstü kapalı söyleyerek o şeyin ne olduğunu bulmayı dinleyene veya okuyana bırakan oyun"
+        },
+        "titles": {
+          "enwiki": "Riddle",
+          "trwiki": "Bilmece"
+        }
+      },
+      "encyclopedia": {
+        "title": "Riddle",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1378252143",
+        "attribution": "Wikipedia contributors, Riddle",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "A riddle is a statement, question, or phrase having a double or veiled meaning, put forth as a puzzle to be solved. Riddles are of two types: enigmas, which are problems generally expressed in metaphorical or allegorical language that require ingenuity and careful thinking for their solution, and conundrums, which are questions relying for their effects on punning in either the question or the answer.\nArcher Taylor says that \"we can probably say that riddling is a universal art\" and cites riddles from hundreds of different cultures including Finnish, Hungarian, American Indian, Chinese, Russian, Dutch, and Filipino sources amongst many others. Many riddles and riddle-themes are internationally widespread.\nIn the assessment of Elli Köngäs-Maranda (originally writing about Malaitian riddles, but with an insight that has been taken up more widely), whereas myths serve to encode and establish social norms, \"riddles make a point of playing with conceptual boundaries and crossing them for the intellectual pleasure of showing that things are not quite as stable as they seem\" — though the point of doing so may still ultimately be to \"play with boundaries, but ultimately to affirm them\"."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "tr_144a3e220dfc3e8e3722b982",
+    "answer": "LABİRENT",
+    "answerId": "tr1_144a3e220dfc3e8e3722b98224848b4409c1fed6c46631279f1a4117d4e096a5",
+    "letterCount": 8,
+    "meaningId": "Q48963_sense",
+    "meaning": "usually a system of narrow corridors designed to confuse those who enter and make finding a correct path difficult",
+    "clue": "",
+    "topic": "kültür",
+    "difficulty": 2,
+    "rootId": "tr1_144a3e220dfc3e8e3722b98224848b4409c1fed6c46631279f1a4117d4e096a5",
+    "rootText": "LABİRENT",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q48963",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q48963\",\"revision\":2550491081,\"retrievedAt\":\"2026-10-15T06:40:17.769Z\",\"labels\":{\"en\":\"labyrinth\",\"tr\":\"Labirent\"},\"descriptions\":{\"en\":\"usually a system of narrow corridors designed to confuse those who enter and make finding a correct path difficult\"},\"titles\":{\"enwiki\":\"Labyrinth\",\"trwiki\":\"Labirent\"}},\"encyclopedia\":{\"title\":\"Labyrinth\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1374358255\",\"attribution\":\"Wikipedia contributors, Labyrinth\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"In Greek mythology, the Labyrinth (Ancient Greek: λαβύρινθος, romanized: Labúrinthos) is an elaborate, confusing structure designed and built by the mythological artificer Daedalus for King Minos of Crete at Knossos. Its function was to hold the Minotaur, the monster eventually killed by the hero Theseus. Daedalus had so cunningly made the Labyrinth that he could barely escape it after he built it.\\nAlthough early Cretan coins occasionally exhibit branching (multicursal) patterns, the single-path (unicursal) seven-course \\\"Classical\\\" design without branching or dead ends became associated with the Labyrinth on coins as early as 430 BC, and similar non-branching patterns became widely used as visual representations of the Labyrinth – even though both logic and literary descriptions make it clear that the Minotaur was trapped in a complex branching maze. Even as the designs became more elaborate, visual depictions of the mythological Labyrinth from the Roman era until the Renaissance are almost invariably unicursal. Branching mazes were reintroduced only when hedge mazes became popular during the Renaissance.\\nIn English, the term labyrinth is generally synonymous with maze. As a result...\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q48963",
+        "revision": 2550491081,
+        "retrievedAt": "2026-10-15T06:40:17.769Z",
+        "labels": {
+          "en": "labyrinth",
+          "tr": "Labirent"
+        },
+        "descriptions": {
+          "en": "usually a system of narrow corridors designed to confuse those who enter and make finding a correct path difficult"
+        },
+        "titles": {
+          "enwiki": "Labyrinth",
+          "trwiki": "Labirent"
+        }
+      },
+      "encyclopedia": {
+        "title": "Labyrinth",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1374358255",
+        "attribution": "Wikipedia contributors, Labyrinth",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "In Greek mythology, the Labyrinth (Ancient Greek: λαβύρινθος, romanized: Labúrinthos) is an elaborate, confusing structure designed and built by the mythological artificer Daedalus for King Minos of Crete at Knossos. Its function was to hold the Minotaur, the monster eventually killed by the hero Theseus. Daedalus had so cunningly made the Labyrinth that he could barely escape it after he built it.\nAlthough early Cretan coins occasionally exhibit branching (multicursal) patterns, the single-path (unicursal) seven-course \"Classical\" design without branching or dead ends became associated with the Labyrinth on coins as early as 430 BC, and similar non-branching patterns became widely used as visual representations of the Labyrinth – even though both logic and literary descriptions make it clear that the Minotaur was trapped in a complex branching maze. Even as the designs became more elaborate, visual depictions of the mythological Labyrinth from the Roman era until the Renaissance are almost invariably unicursal. Branching mazes were reintroduced only when hedge mazes became popular during the Renaissance.\nIn English, the term labyrinth is generally synonymous with maze. As a result..."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "tr_5ab31cdf3b2e8ba9dc3eddca",
+    "answer": "KARABİBER",
+    "answerId": "tr1_5ab31cdf3b2e8ba9dc3eddcab16a2cbfe65204e5ca4db3cd614a73a9c2cc4e61",
+    "letterCount": 9,
+    "meaningId": "Q43084_sense",
+    "meaning": "bitki türü",
+    "clue": "",
+    "topic": "gıda",
+    "difficulty": 2,
+    "rootId": "tr1_5ab31cdf3b2e8ba9dc3eddcab16a2cbfe65204e5ca4db3cd614a73a9c2cc4e61",
+    "rootText": "KARABİBER",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q43084",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q43084\",\"revision\":2550048160,\"retrievedAt\":\"2026-10-15T06:40:17.769Z\",\"labels\":{\"tr\":\"karabiber\",\"en\":\"black pepper\"},\"descriptions\":{\"en\":\"species of plant\",\"tr\":\"bitki türü\"},\"titles\":{\"enwiki\":\"Black pepper\",\"trwiki\":\"Karabiber\"}},\"encyclopedia\":{\"title\":\"Black pepper\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1377161631\",\"attribution\":\"Wikipedia contributors, Black pepper\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"Black pepper (Piper nigrum) is a flowering vine in the family Piperaceae, cultivated for its fruit (the peppercorn), which is usually dried and used as a spice and seasoning. The fruit is a drupe (stonefruit) which is about 5 mm (1⁄4 in) in diameter (fresh and fully mature), dark red, and contains a stone which encloses a single pepper seed. Peppercorns and the ground pepper derived from them may be described simply as pepper, or more precisely as black pepper (cooked and dried unripe fruit), green pepper (dried unripe fruit), or white pepper (ripe fruit seeds).\\nBlack pepper is native to South Asia. Ground, dried, and cooked peppercorns have been used since antiquity, both for flavour and as a traditional medicine. Black pepper is one of the most commonly traded spices in the world. Its spiciness is due to the chemical compound piperine, which is a different kind of spiciness from that of capsaicin characteristic of chilli peppers. It is ubiquitous in the Western world as a seasoning and is often paired with salt and available on dining tables in shakers or mills.\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q43084",
+        "revision": 2550048160,
+        "retrievedAt": "2026-10-15T06:40:17.769Z",
+        "labels": {
+          "tr": "karabiber",
+          "en": "black pepper"
+        },
+        "descriptions": {
+          "en": "species of plant",
+          "tr": "bitki türü"
+        },
+        "titles": {
+          "enwiki": "Black pepper",
+          "trwiki": "Karabiber"
+        }
+      },
+      "encyclopedia": {
+        "title": "Black pepper",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1377161631",
+        "attribution": "Wikipedia contributors, Black pepper",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "Black pepper (Piper nigrum) is a flowering vine in the family Piperaceae, cultivated for its fruit (the peppercorn), which is usually dried and used as a spice and seasoning. The fruit is a drupe (stonefruit) which is about 5 mm (1⁄4 in) in diameter (fresh and fully mature), dark red, and contains a stone which encloses a single pepper seed. Peppercorns and the ground pepper derived from them may be described simply as pepper, or more precisely as black pepper (cooked and dried unripe fruit), green pepper (dried unripe fruit), or white pepper (ripe fruit seeds).\nBlack pepper is native to South Asia. Ground, dried, and cooked peppercorns have been used since antiquity, both for flavour and as a traditional medicine. Black pepper is one of the most commonly traded spices in the world. Its spiciness is due to the chemical compound piperine, which is a different kind of spiciness from that of capsaicin characteristic of chilli peppers. It is ubiquitous in the Western world as a seasoning and is often paired with salt and available on dining tables in shakers or mills."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "tr_172160348fde27958488fbc7",
+    "answer": "MOTOSİKLET",
+    "answerId": "tr1_172160348fde27958488fbc77cf87684a39ccf705a967193400f0748bafff922",
+    "letterCount": 10,
+    "meaningId": "Q34493_sense",
+    "meaning": "Ulaşım aracı",
+    "clue": "",
+    "topic": "ulaşım",
+    "difficulty": 2,
+    "rootId": "tr1_172160348fde27958488fbc77cf87684a39ccf705a967193400f0748bafff922",
+    "rootText": "MOTOSİKLET",
+    "relatedAnswerIds": [
+      "tr1_5a073153ef0d2554b36e12ff6d69092856db51c7178c90c3db58d1e5fa03b7bc"
+    ],
+    "origin": "production",
+    "source": {
+      "reference": "https://www.wikidata.org/wiki/Q34493",
+      "meaningEvidence": "{\"wikidata\":{\"entityId\":\"Q34493\",\"revision\":2553077527,\"retrievedAt\":\"2026-10-15T06:40:17.769Z\",\"labels\":{\"tr\":\"Motosiklet\",\"en\":\"motorcycle\"},\"descriptions\":{\"en\":\"two- or three-wheeled motor vehicle\",\"tr\":\"Ulaşım aracı\"},\"titles\":{\"enwiki\":\"Motorcycle\",\"trwiki\":\"Motosiklet\"}},\"encyclopedia\":{\"title\":\"Motorcycle\",\"reference\":\"https://en.wikipedia.org/w/index.php?oldid=1379167729\",\"attribution\":\"Wikipedia contributors, Motorcycle\",\"license\":\"CC-BY-SA-4.0\",\"termsReference\":\"https://en.wikipedia.org/wiki/Wikipedia:Copyrights\",\"retrievedAt\":\"2026-10-15T06:41:29.178Z\",\"extract\":\"A motorcycle (motorbike, bike, or, if three-wheeled, a trike) is a two or three-wheeled motor vehicle steered by a handlebar from a saddle-style seat.\\nMotorcycle designs vary greatly to suit a range of different purposes: long-distance travel, commuting, cruising, sport (including racing), and off-road riding. Motorcycling is riding a motorcycle and being involved in other related social activities such as joining a motorcycle club and attending motorcycle rallies.\\nThe 1885 Daimler Reitwagen made by Gottlieb Daimler and Wilhelm Maybach in Germany was the first internal combustion petroleum-fueled motorcycle. In 1894, Hildebrand & Wolfmüller became the first series production motorcycle. \\nGlobally, motorcycles are comparable numerically to cars as a method of transport: in 2021, approximately 58.6 million new motorcycles were sold around the world, while 66.7 million cars were sold over the same period.\\nIn 2022, the top four motorcycle producers by volume and type were Honda, Yamaha, Kawasaki, and Suzuki. According to the US Department of Transportation, per 100 million Vehicle Miles Travelled in 2024 in the U.S., the fatality rate for motorcyclists (28.00) was almost 27 times the passenger...\"}}",
+      "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+      "rights": "licensed",
+      "evidence": {
+        "entityId": "Q34493",
+        "revision": 2553077527,
+        "retrievedAt": "2026-10-15T06:40:17.769Z",
+        "labels": {
+          "tr": "Motosiklet",
+          "en": "motorcycle"
+        },
+        "descriptions": {
+          "en": "two- or three-wheeled motor vehicle",
+          "tr": "Ulaşım aracı"
+        },
+        "titles": {
+          "enwiki": "Motorcycle",
+          "trwiki": "Motosiklet"
+        }
+      },
+      "encyclopedia": {
+        "title": "Motorcycle",
+        "reference": "https://en.wikipedia.org/w/index.php?oldid=1379167729",
+        "attribution": "Wikipedia contributors, Motorcycle",
+        "license": "CC-BY-SA-4.0",
+        "termsReference": "https://en.wikipedia.org/wiki/Wikipedia:Copyrights",
+        "retrievedAt": "2026-10-15T06:41:29.178Z",
+        "extract": "A motorcycle (motorbike, bike, or, if three-wheeled, a trike) is a two or three-wheeled motor vehicle steered by a handlebar from a saddle-style seat.\nMotorcycle designs vary greatly to suit a range of different purposes: long-distance travel, commuting, cruising, sport (including racing), and off-road riding. Motorcycling is riding a motorcycle and being involved in other related social activities such as joining a motorcycle club and attending motorcycle rallies.\nThe 1885 Daimler Reitwagen made by Gottlieb Daimler and Wilhelm Maybach in Germany was the first internal combustion petroleum-fueled motorcycle. In 1894, Hildebrand & Wolfmüller became the first series production motorcycle. \nGlobally, motorcycles are comparable numerically to cars as a method of transport: in 2021, approximately 58.6 million new motorcycles were sold around the world, while 66.7 million cars were sold over the same period.\nIn 2022, the top four motorcycle producers by volume and type were Honda, Yamaha, Kawasaki, and Suzuki. According to the US Department of Transportation, per 100 million Vehicle Miles Travelled in 2024 in the U.S., the fatality rate for motorcyclists (28.00) was almost 27 times the passenger..."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  }
+]

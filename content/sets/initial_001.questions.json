@@ -1,0 +1,951 @@
+[
+  {
+    "id": "initial_001_q01",
+    "answer": "VETO",
+    "answerId": "tr1_4fa3fc4beee776c46cb6f3ee1bb9b6ea8e0968e5581845814e9a50cdc2d2515d",
+    "letterCount": 4,
+    "meaningId": "initial_001_sense_1",
+    "meaning": "Yetki kullanarak bir karara karşı çıkıp onu engelleme.",
+    "clue": "Sıradan bir “hayır” oyundan farklı olarak, bir kararı engelleyebilen özel ret yetkisi.",
+    "topic": "siyaset",
+    "difficulty": 1,
+    "rootId": "tr1_4fa3fc4beee776c46cb6f3ee1bb9b6ea8e0968e5581845814e9a50cdc2d2515d",
+    "rootText": "VETO",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=veto",
+      "meaningEvidence": "Yetki kullanarak bir karara karşı çıkıp onu engelleme.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "veto",
+        "entryIds": [
+          "67187"
+        ],
+        "retrievedAt": "2026-10-15T13:09:00.953518+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Yetki kullanarak bir karara karşı çıkıp onu engelleme."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "f6103f24eeba74265409b499b948e50e09867480fd4d9a5684cd82bda50d3e52",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "f6103f24eeba74265409b499b948e50e09867480fd4d9a5684cd82bda50d3e52",
+      "rationale": "Özel ret yetkisi ibaresi, gündelik karşı çıkıştan ayırır.",
+      "sourceSupport": "Yetki kullanarak bir karara karşı çıkıp onu engelleme.",
+      "alternativesRejected": [
+        {
+          "answer": "RET",
+          "reason": "Üç harflidir; ayrıca her ret oyu bir kararı tek başına engellemez."
+        },
+        {
+          "answer": "İTİRAZ",
+          "reason": "Altı harflidir; karşı çıkışı anlatır, tek başına kararı durdurma yetkisini zorunlu kılmaz."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q02",
+    "answer": "KOZA",
+    "answerId": "tr1_f879a8285ef6672a632fd5900d5c4b122cad2a58c5cb4ae57e08869fedefbcf5",
+    "letterCount": 4,
+    "meaningId": "initial_001_sense_2",
+    "meaning": "İpek böceğinin ördüğü ve ipek ipliğinin elde edildiği koruyucu kılıf.",
+    "clue": "İpek böceğinin kendine ördüğü, dokumacının ise iplik elde ettiği kılıf.",
+    "topic": "doğa",
+    "difficulty": 1,
+    "rootId": "tr1_f879a8285ef6672a632fd5900d5c4b122cad2a58c5cb4ae57e08869fedefbcf5",
+    "rootText": "KOZA",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=KOZA",
+      "meaningEvidence": "İpek böceğinin ördüğü ve ipek ipliğinin elde edildiği koruyucu kılıf.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "koza",
+        "entryIds": [
+          "26941"
+        ],
+        "retrievedAt": "2026-10-15T13:10:56.774400+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "İpek böceğinin ördüğü ve ipek ipliğinin elde edildiği koruyucu kılıf."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "7188d2227aa90bb2d6fe1309cccfb2a7e9db9dae4ef4ebf95ce8e4da89af7c82",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "7188d2227aa90bb2d6fe1309cccfb2a7e9db9dae4ef4ebf95ce8e4da89af7c82",
+      "rationale": "Böceğin evresi ile onu saran kılıf ayrıldı; bitki kapsülü anlamı dışlandı.",
+      "sourceSupport": "İpek böceğinin ördüğü ve ipek ipliğinin elde edildiği koruyucu kılıf.",
+      "alternativesRejected": [
+        {
+          "answer": "PUPA",
+          "reason": "Dört harflidir fakat böceğin gelişim evresini belirtir; örülen kılıfı değil."
+        },
+        {
+          "answer": "YUVA",
+          "reason": "Dört harflidir fakat ipek ipliği elde edilen bu özel kılıfın adı değildir."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q03",
+    "answer": "NABIZ",
+    "answerId": "tr1_84d590bbc1275bda4f59b6918a969578e4e5188574bbef071024deb344081ded",
+    "letterCount": 5,
+    "meaningId": "initial_001_sense_3",
+    "meaning": "Atardamarda kalp atımlarıyla duyulan vuru; mecazen bir topluluğun eğilimi.",
+    "clue": "Hekimin bilekten saydığı, mecazen toplumun eğilimini anlamak için de “tuttuğu” şey.",
+    "topic": "sağlık",
+    "difficulty": 1,
+    "rootId": "tr1_84d590bbc1275bda4f59b6918a969578e4e5188574bbef071024deb344081ded",
+    "rootText": "NABIZ",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=nab%C4%B1z",
+      "meaningEvidence": "Atardamarda kalp atımlarıyla duyulan vuru; mecazen bir topluluğun eğilimi.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "nabız",
+        "entryIds": [
+          "52998"
+        ],
+        "retrievedAt": "2026-10-15T13:06:16.064212+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Atardamarda kalp atımlarıyla duyulan vuru; mecazen bir topluluğun eğilimi."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "8343fa36a28b21bbb3cdd5997b848338bcd691af8e1d11b826ffc9af1151fe23",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "8343fa36a28b21bbb3cdd5997b848338bcd691af8e1d11b826ffc9af1151fe23",
+      "rationale": "Bedensel ve mecaz anlam birlikte kullanılarak yalnızca genel atış düzeni sorulmadı.",
+      "sourceSupport": "Atardamarda kalp atımlarıyla duyulan vuru; mecazen bir topluluğun eğilimi.",
+      "alternativesRejected": [
+        {
+          "answer": "RİTİM",
+          "reason": "Beş harflidir; düzenli atımların düzenini anlatabilir fakat toplumun eğilimini tutmak biçimindeki kalıba uymaz."
+        },
+        {
+          "answer": "ATIM",
+          "reason": "Dört harflidir ve mecaz ipucunu karşılamaz."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q04",
+    "answer": "MAKAM",
+    "answerId": "tr1_ee38ce38a88bd5f759d5d23dfcadb0b4d2d4e9dc78568ac4c74f45cb1a0480e1",
+    "letterCount": 5,
+    "meaningId": "initial_001_sense_4",
+    "meaning": "Yüksek görev konumu; klasik Türk müziğinde ezginin işlenişini belirleyen yapı.",
+    "clue": "Bir yöneticinin görev koltuğunu da Türk müziğinde bir ezginin ses düzenini de anlatan sözcük.",
+    "topic": "sanat",
+    "difficulty": 2,
+    "rootId": "tr1_ee38ce38a88bd5f759d5d23dfcadb0b4d2d4e9dc78568ac4c74f45cb1a0480e1",
+    "rootText": "MAKAM",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=makam",
+      "meaningEvidence": "Yüksek görev konumu; klasik Türk müziğinde ezginin işlenişini belirleyen yapı.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "makam",
+        "entryIds": [
+          "45160"
+        ],
+        "retrievedAt": "2026-10-15T13:06:20.010452+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Yüksek görev konumu; klasik Türk müziğinde ezginin işlenişini belirleyen yapı."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "c62e55baadee647aadde281fa85bc04d9745df7c8ec5639c37f672035346e295",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "c62e55baadee647aadde281fa85bc04d9745df7c8ec5639c37f672035346e295",
+      "rationale": "İki ayrı anlam aynı cevapta birleşir; yalnız müzik dizisi sorulmadı.",
+      "sourceSupport": "Yüksek görev konumu; klasik Türk müziğinde ezginin işlenişini belirleyen yapı.",
+      "alternativesRejected": [
+        {
+          "answer": "MEVKİ",
+          "reason": "Beş harflidir; görev konumuna uyar ama müzik anlamını taşımaz."
+        },
+        {
+          "answer": "DÜZEN",
+          "reason": "Beş harflidir; müziğe çağrışım yapabilir ama yöneticinin görev konumunun adı değildir."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q05",
+    "answer": "MERHEM",
+    "answerId": "tr1_b65d6cc50e8a760d9c8b74e153f3019c09dd53a5c607dc42e523c27ba1c90ebd",
+    "letterCount": 6,
+    "meaningId": "initial_001_sense_5",
+    "meaning": "Deriye sürülen yağlı ve koyu kıvamlı ilaç; mecazen bir sorunu gideren çare.",
+    "clue": "Yaraya sürülen koyu kıvamlı ilaç; mecazen de bir derdin çaresi.",
+    "topic": "sağlık",
+    "difficulty": 1,
+    "rootId": "tr1_b65d6cc50e8a760d9c8b74e153f3019c09dd53a5c607dc42e523c27ba1c90ebd",
+    "rootText": "MERHEM",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=merhem",
+      "meaningEvidence": "Deriye sürülen yağlı ve koyu kıvamlı ilaç; mecazen bir sorunu gideren çare.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "merhem",
+        "entryIds": [
+          "41601"
+        ],
+        "retrievedAt": "2026-10-15T13:06:27.303974+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Deriye sürülen yağlı ve koyu kıvamlı ilaç; mecazen bir sorunu gideren çare."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "cf44d894ffba52c35bc64b327bdf287cfe138ef9552603cefcdfb0dd4a5d5c71",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "cf44d894ffba52c35bc64b327bdf287cfe138ef9552603cefcdfb0dd4a5d5c71",
+      "rationale": "Kıvam ile mecaz anlam birlikte ayırt edici kılındı; tedavi önerisi verilmedi.",
+      "sourceSupport": "Deriye sürülen yağlı ve koyu kıvamlı ilaç; mecazen bir sorunu gideren çare.",
+      "alternativesRejected": [
+        {
+          "answer": "LOSYON",
+          "reason": "Altı harflidir fakat sıvı bir üründür; koyu kıvam koşuluna ve yerleşik çare mecazına uymaz."
+        },
+        {
+          "answer": "DERMAN",
+          "reason": "Altı harflidir ve çare anlamını karşılar; deriye sürülen koyu kıvamlı ilacın özel adı değildir."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q06",
+    "answer": "TÖHMET",
+    "answerId": "tr1_d763f0f283dfa89c65298831f15a3025cbd988dcce6c6abbd4d5e375580f9d5b",
+    "letterCount": 6,
+    "meaningId": "initial_001_sense_6",
+    "meaning": "Bir kişiye suç isnadı yönelten zan veya suçlama.",
+    "clue": "Birinin suçlu olabileceği yolundaki zan; “altında bırakmak” sözüyle de kullanılır.",
+    "topic": "dil",
+    "difficulty": 3,
+    "rootId": "tr1_d763f0f283dfa89c65298831f15a3025cbd988dcce6c6abbd4d5e375580f9d5b",
+    "rootText": "TÖHMET",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=t%C3%B6hmet",
+      "meaningEvidence": "Bir kişiye suç isnadı yönelten zan veya suçlama.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "töhmet",
+        "entryIds": [
+          "64135"
+        ],
+        "retrievedAt": "2026-10-15T13:06:22.254635+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Bir kişiye suç isnadı yönelten zan veya suçlama."
+      },
+      "supplemental": [
+        {
+          "reference": "https://islamansiklopedisi.org.tr/tohmet",
+          "author": "Fahrettin Atar",
+          "summary": "Zanna dayalı suç isnadı anlamı ve altında tutmak kullanımı doğrulandı."
+        }
+      ]
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "266a8a825a5817984a7c6b3d0f36ea85cd7e2e93bee97b7dea8b87f831131406",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "266a8a825a5817984a7c6b3d0f36ea85cd7e2e93bee97b7dea8b87f831131406",
+      "rationale": "Zan ile bilerek asılsız suç isnadı ayrıldı; kalıp söz eklenerek hedef daraltıldı.",
+      "sourceSupport": "Bir kişiye suç isnadı yönelten zan veya suçlama.",
+      "alternativesRejected": [
+        {
+          "answer": "İFTİRA",
+          "reason": "Altı harflidir fakat yapılmadığı hâlde yapılmış gibi gösterilen asılsız suçlamayı ifade eder; soruda suçlamanın uydurma olduğu söylenmez, zan sorulur."
+        },
+        {
+          "answer": "İTHAM",
+          "reason": "Beş harflidir; anlamca yakın olsa da uzunluk koşuluna uymaz."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q07",
+    "answer": "İSTİSNA",
+    "answerId": "tr1_1e5c6afd907f9a474fd556bfb0628ea53629e733fc894cd49334aa5b1a02d09b",
+    "letterCount": 7,
+    "meaningId": "initial_001_sense_7",
+    "meaning": "Genel kuraldan ayrı tutulan durum veya kişi.",
+    "clue": "Genel kuralı bozmadığı söylenen, o kuralın dışında kalan özel durum.",
+    "topic": "mantık",
+    "difficulty": 2,
+    "rootId": "tr1_1e5c6afd907f9a474fd556bfb0628ea53629e733fc894cd49334aa5b1a02d09b",
+    "rootText": "İSTİSNA",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=istisna",
+      "meaningEvidence": "Genel kuraldan ayrı tutulan durum veya kişi.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "istisna",
+        "entryIds": [
+          "39651"
+        ],
+        "retrievedAt": "2026-10-15T13:06:22.497903+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Genel kuraldan ayrı tutulan durum veya kişi."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "70d8e1e24dcb752f532659c6386ecf672570d332ba784b9426dca6c148c1659e",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "70d8e1e24dcb752f532659c6386ecf672570d332ba784b9426dca6c148c1659e",
+      "rationale": "Kural dışılık ile ayrıcalık ve bağışıklık ayrıldı; yerleşik söyleyiş destekleyici ipucudur.",
+      "sourceSupport": "Genel kuraldan ayrı tutulan durum veya kişi.",
+      "alternativesRejected": [
+        {
+          "answer": "MUAFİYET",
+          "reason": "Sekiz harflidir; bir yükümlülükten bağışıklığı belirtir, her kural dışı durumu kapsamaz."
+        },
+        {
+          "answer": "AYRICALIK",
+          "reason": "Dokuz harflidir; üstün hak anlamı taşır ve sorunun istediği genel kural dışılık değildir."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q08",
+    "answer": "FERAGAT",
+    "answerId": "tr1_aaf7ad7fac8415c5a67de0c4ae42939588091e06d78c7ce7fcb13c04ac1852db",
+    "letterCount": 7,
+    "meaningId": "initial_001_sense_8",
+    "meaning": "Kişinin sahip olduğu bir haktan gönüllü olarak vazgeçmesi.",
+    "clue": "Hakkı olduğu hâlde onu kullanmamayı seçen kişinin bu gönüllü vazgeçişi.",
+    "topic": "hukuk",
+    "difficulty": 2,
+    "rootId": "tr1_aaf7ad7fac8415c5a67de0c4ae42939588091e06d78c7ce7fcb13c04ac1852db",
+    "rootText": "FERAGAT",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=feragat",
+      "meaningEvidence": "Kişinin sahip olduğu bir haktan gönüllü olarak vazgeçmesi.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "feragat",
+        "entryIds": [
+          "18354"
+        ],
+        "retrievedAt": "2026-10-15T13:06:22.874047+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Kişinin sahip olduğu bir haktan gönüllü olarak vazgeçmesi."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "ed9f2ca29a06e7a783ad79d31ceefd3843e7d478ee139db645ba9cd87e4b1e90",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "ed9f2ca29a06e7a783ad79d31ceefd3843e7d478ee139db645ba9cd87e4b1e90",
+      "rationale": "Bir hakka sahip olma ve kendi isteğiyle bırakma koşulları korundu; zorla hak kaybı sorulmadı.",
+      "sourceSupport": "Kişinin sahip olduğu bir haktan gönüllü olarak vazgeçmesi.",
+      "alternativesRejected": [
+        {
+          "answer": "VAZGEÇİŞ",
+          "reason": "Sekiz harflidir; genel bir bırakma eylemidir, hak vurgusu daha dardır."
+        },
+        {
+          "answer": "İBRA",
+          "reason": "Dört harflidir; borç veya sorumluluktan kurtarma anlamını taşır."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q09",
+    "answer": "ÇEKİMSER",
+    "answerId": "tr1_74cdd0c28da49e7701381f61c28f3d1eb788f50ba806ec6efe5f2b057879d715",
+    "letterCount": 8,
+    "meaningId": "initial_001_sense_9",
+    "meaning": "Oylamada kabul veya ret yönünde tutum bildirmeyen kimse.",
+    "clue": "Oylamada kabul ve ret dışında kalan üçüncü tercihi yapan kimse.",
+    "topic": "siyaset",
+    "difficulty": 2,
+    "rootId": "tr1_418290324252a4ccfc07c78affc31a586b1fc3a2119ff0e0dd267c4d70ee92ba",
+    "rootText": "ÇEK",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=%C3%A7ekimser",
+      "meaningEvidence": "Oylamada kabul veya ret yönünde tutum bildirmeyen kimse.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "çekimser",
+        "entryIds": [
+          "24028"
+        ],
+        "retrievedAt": "2026-10-15T13:09:29.207479+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Oylamada kabul veya ret yönünde tutum bildirmeyen kimse."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "cb07583588a4210be59a635dcab01971f7bc6eb4fa041f17a20f85b1f61f00fa",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "cb07583588a4210be59a635dcab01971f7bc6eb4fa041f17a20f85b1f61f00fa",
+      "rationale": "Kişilik özelliği yerine oylama bağlamı kuruldu; üçüncü tercih ifadesi hedefi daraltır.",
+      "sourceSupport": "Oylamada kabul veya ret yönünde tutum bildirmeyen kimse.",
+      "alternativesRejected": [
+        {
+          "answer": "KARARSIZ",
+          "reason": "Sekiz harflidir; karar veremeyen kişi demektir, oylamadaki üçüncü tutumun yerleşik adı değildir."
+        },
+        {
+          "answer": "TARAFSIZ",
+          "reason": "Sekiz harflidir; taraf tutmamayı anlatır, oylama tercihini tek başına belirlemez."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q10",
+    "answer": "MÜTEVAZI",
+    "answerId": "tr1_168a8ddd6e0e969a716c797bcdb61cdd45431bbfdc530e8acc6b8783ca3b14f3",
+    "letterCount": 8,
+    "meaningId": "initial_001_sense_10",
+    "meaning": "Kendini öne çıkarmayan, alçak gönüllü kimse.",
+    "clue": "Başarısını övünme konusu yapmayan, alçak gönüllü kimse.",
+    "topic": "davranış",
+    "difficulty": 2,
+    "rootId": "tr1_fb34ac15b09bc92a858da08cb953caa7fdf27e519e2189fb0a9ac4b165c77a13",
+    "rootText": "TEVAZU",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=m%C3%BCtevaz%C4%B1",
+      "meaningEvidence": "Kendini öne çıkarmayan, alçak gönüllü kimse.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "mütevazı",
+        "entryIds": [
+          "52913"
+        ],
+        "retrievedAt": "2026-10-15T13:06:32.573831+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Kendini öne çıkarmayan, alçak gönüllü kimse."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "def40806ea6d69f311e8570ab9554cf93f42eea764dcb5c75b7746f7c8affbb2",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "def40806ea6d69f311e8570ab9554cf93f42eea764dcb5c75b7746f7c8affbb2",
+      "rationale": "Anlama uygun son harf noktasız ı olarak doğrulandı. Uygulamanın mevcut ASCII toleransı ayrı tutulur.",
+      "sourceSupport": "Kendini öne çıkarmayan, alçak gönüllü kimse.",
+      "alternativesRejected": [
+        {
+          "answer": "MÜTEVAZİ",
+          "reason": "Sekiz harflidir fakat paralel anlamına gelen farklı sözcüktür; son harf bu anlamda noktasız ı olmalıdır."
+        },
+        {
+          "answer": "GÖSTERİŞSİZ",
+          "reason": "On bir harflidir; kişi yanında nesneleri de niteler ve uzunluğa uymaz."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q11",
+    "answer": "KARABORSA",
+    "answerId": "tr1_15ee3511897a4ab360c4fced2e8660c894bf9847654112394bde59c9c6a543ce",
+    "letterCount": 9,
+    "meaningId": "initial_001_sense_11",
+    "meaning": "Piyasada bulunmayan bir malın gizlice yüksek fiyatla alınıp satılması.",
+    "clue": "Piyasada bulunamayan bir malın el altından yüksek fiyatla satıldığı gizli pazar.",
+    "topic": "ekonomi",
+    "difficulty": 2,
+    "rootId": "tr1_15ee3511897a4ab360c4fced2e8660c894bf9847654112394bde59c9c6a543ce",
+    "rootText": "KARABORSA",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=karaborsa",
+      "meaningEvidence": "Piyasada bulunmayan bir malın gizlice yüksek fiyatla alınıp satılması.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "karaborsa",
+        "entryIds": [
+          "36181"
+        ],
+        "retrievedAt": "2026-10-15T13:09:30.478245+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Piyasada bulunmayan bir malın gizlice yüksek fiyatla alınıp satılması."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "1b4238dc3d03ec0056a17b98a4d0b593f052bf8a96e2ea2511f38e1727e5f9a8",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "1b4238dc3d03ec0056a17b98a4d0b593f052bf8a96e2ea2511f38e1727e5f9a8",
+      "rationale": "Malın bulunamaması, gizli satış ve yüksek fiyat aynı anda verilerek genel kaçak ticaretten ayrıldı.",
+      "sourceSupport": "Piyasada bulunmayan bir malın gizlice yüksek fiyatla alınıp satılması.",
+      "alternativesRejected": [
+        {
+          "answer": "TEFECİLİK",
+          "reason": "Dokuz harflidir; mal kıtlığındaki gizli pazarı değil, yüksek faizli para verme işini anlatır."
+        },
+        {
+          "answer": "KAÇAKÇILIK",
+          "reason": "On harflidir; yasak mal ticareti veya sınırdan kaçırma, bu anlamdaki fiyat ve kıtlık koşullarıyla aynı değildir."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q12",
+    "answer": "AYAKBASTI",
+    "answerId": "tr1_92fd48d74fa4a5dbe26246bddace3913ef31bb61483297e8f44ab8842a91d410",
+    "letterCount": 9,
+    "meaningId": "initial_001_sense_12",
+    "meaning": "Bir yere dışarıdan gelen kişi veya eşyadan alınan vergi; ayakbastı parası.",
+    "clue": "İnsan ya da yükün bir yere girişinde alınan, adında yürümeye bir gönderme bulunan vergi.",
+    "topic": "tarih",
+    "difficulty": 3,
+    "rootId": "tr1_fe3363914a2e0699b5473ecffa94b6cab542dba324a3e47d417df52fdcaba715",
+    "rootText": "BAS",
+    "relatedAnswerIds": [
+      "tr1_d744979506ec423e9a57a9f7115bb63561723389ba5bf27514513ffa525dd506"
+    ],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=ayakbast%C4%B1+paras%C4%B1",
+      "meaningEvidence": "Bir yere dışarıdan gelen kişi veya eşyadan alınan vergi; ayakbastı parası.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "ayakbastı parası",
+        "entryIds": [
+          "92931"
+        ],
+        "retrievedAt": "2026-10-15T13:06:54.427325+00:00",
+        "verificationMethod": "Headword cross-reference and definition of ayakbastı parası",
+        "summary": "Bir yere dışarıdan gelen kişi veya eşyadan alınan vergi; ayakbastı parası."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "a73b5ccb64e50b17a8014afb844a067b40f54ffa55973e0b1ddc41b503fb8d95",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "a73b5ccb64e50b17a8014afb844a067b40f54ffa55973e0b1ddc41b503fb8d95",
+      "rationale": "Şaka yollu ikram isteme taslağı kullanılmadı; doğrulanan vergi anlamına dönüldü.",
+      "sourceSupport": "Bir yere dışarıdan gelen kişi veya eşyadan alınan vergi; ayakbastı parası.",
+      "alternativesRejected": [
+        {
+          "answer": "TOPRAKBASTI",
+          "reason": "On bir harflidir; sözlükte yakın anlamlıdır fakat uzunluk koşuluna uymaz."
+        },
+        {
+          "answer": "GÜMRÜK",
+          "reason": "Altı harflidir; sorunun sözcük yapısı ipucunu ve uzunluğunu karşılamaz."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q13",
+    "answer": "HAZIRCEVAP",
+    "answerId": "tr1_1ae18ed6449f3dd566933fbd7957146feb28b7af9cd22e43bd7e85d2d1107b1d",
+    "letterCount": 10,
+    "meaningId": "initial_001_sense_13",
+    "meaning": "Söylenene çabuk ve yerinde karşılık verebilen kimse.",
+    "clue": "Karşısındakinin sözüne gecikmeden, yerinde ve zekice karşılık verebilen kimse.",
+    "topic": "iletişim",
+    "difficulty": 2,
+    "rootId": "tr1_1a951b4e1d55e1922c1a1cdd41ffe985e9f0fd260bee76a41ad36bd6a84502a3",
+    "rootText": "CEVAP",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=haz%C4%B1rcevap",
+      "meaningEvidence": "Söylenene çabuk ve yerinde karşılık verebilen kimse.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "hazırcevap",
+        "entryIds": [
+          "22832"
+        ],
+        "retrievedAt": "2026-10-15T13:06:47.109434+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Söylenene çabuk ve yerinde karşılık verebilen kimse."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "ca8663dd4eac41d33026d161db64bb096b49ea363e128e9ba6fe6bcdeb860f29",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "ca8663dd4eac41d33026d161db64bb096b49ea363e128e9ba6fe6bcdeb860f29",
+      "rationale": "Hız, uygunluk ve karşılık verme birlikte istendi; yalnızca çok veya esprili konuşma yeterli değildir.",
+      "sourceSupport": "Söylenene çabuk ve yerinde karşılık verebilen kimse.",
+      "alternativesRejected": [
+        {
+          "answer": "NÜKTEDAN",
+          "reason": "Sekiz harflidir; nükte bilme/söyleme niteliği, çabuk karşılık verebilme ile bire bir aynı değildir."
+        },
+        {
+          "answer": "GEVEZE",
+          "reason": "Altı harflidir; çok konuşmayı anlatır, yerinde ve çabuk karşılık verme becerisini değil."
+        }
+      ]
+    },
+    "publication": "published"
+  },
+  {
+    "id": "initial_001_q14",
+    "answer": "KALEMTIRAŞ",
+    "answerId": "tr1_44421fa892e691f8fdfa6da8aad5bb0f34fd49d9a1970bd1d184d9ff639d7e8f",
+    "letterCount": 10,
+    "meaningId": "initial_001_sense_14",
+    "meaning": "Kurşun kalemin ucunu sivrilterek kullanıma açan gereç.",
+    "clue": "Bir yazı aracının boyunu kısaltırken ucunu kullanılır hâle getiren gereç.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_57a6f49f2cfd3d539b203b1262414771e68a1e2284790b4e90741b840a6fed93",
+    "rootText": "KALEM",
+    "relatedAnswerIds": [
+      "tr1_57a6f49f2cfd3d539b203b1262414771e68a1e2284790b4e90741b840a6fed93"
+    ],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kalemt%C4%B1ra%C5%9F",
+      "meaningEvidence": "Kurşun kalemin ucunu sivrilterek kullanıma açan gereç.",
+      "rights": "original",
+      "termsReference": "Project-authored clue and factual meaning summary. Dictionary consulted for verification; dictionary definitions and example sentences are not reproduced. No television question archive used.",
+      "evidence": {
+        "provider": "TDK Güncel Türkçe Sözlük",
+        "lookup": "kalemtıraş",
+        "entryIds": [
+          "37655"
+        ],
+        "retrievedAt": "2026-10-15T13:09:56.810573+00:00",
+        "verificationMethod": "Headword spelling and relevant sense checked",
+        "summary": "Kurşun kalemin ucunu sivrilterek kullanıma açan gereç."
+      }
+    },
+    "generation": {
+      "method": "codex-session-authored",
+      "batchId": "initial_001",
+      "createdAtMs": 1792070053751,
+      "originalWording": true
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792070053751,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "40b164c07670f10eb3cbd572922d65666d441d09e033da17afcf853930095a6a",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "40b164c07670f10eb3cbd572922d65666d441d09e033da17afcf853930095a6a",
+      "rationale": "Kök soruya yazılmadı; uzunluk kalemtraş yazımıyla değil, kalemtıraş biçimiyle on olarak sayıldı.",
+      "sourceSupport": "Kurşun kalemin ucunu sivrilterek kullanıma açan gereç.",
+      "alternativesRejected": [
+        {
+          "answer": "BIÇAK",
+          "reason": "Beş harflidir; genel bir araçtır ve bu işlem için kullanılan özel gerecin adı değildir."
+        },
+        {
+          "answer": "KALEM AÇACAĞI",
+          "reason": "İki sözcüklü ve on iki harflidir; tek sözcük ve on harf koşuluna uymaz."
+        }
+      ]
+    },
+    "publication": "published"
+  }
+]

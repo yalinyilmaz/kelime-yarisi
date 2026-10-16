@@ -1,0 +1,569 @@
+[
+  {
+    "id": "source_mixed_1958b9e224b39d62ba09e32b",
+    "answer": "İÇİN",
+    "answerId": "tr1_1958b9e224b39d62ba09e32bd658bb28812884408519dd6c61d52b1ee8b88813",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "postposition",
+    "meaningId": "source_mixed_1958b9e224b39d62ba09e32b_sense",
+    "meaning": "Amaç veya neden ilişkisi kuran edat.",
+    "clue": "",
+    "topic": "dil",
+    "difficulty": 2,
+    "rootText": "İÇİN",
+    "rootId": "tr1_1958b9e224b39d62ba09e32bd658bb28812884408519dd6c61d52b1ee8b88813",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://ogmmateryal.eba.gov.tr/kitap/telafi-egitimi/egitim-materyalleri/tde/9/tde.pdf",
+      "meaningEvidence": "Amaç veya neden ilişkisi kuran edat.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_f6441718dee37997b016bc4e",
+    "answer": "VEYA",
+    "answerId": "tr1_f6441718dee37997b016bc4ec3ea80ea00b2bf02434cb201550ed6ea70259ad5",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "conjunction",
+    "grammaticalType": "conjunction",
+    "meaningId": "source_mixed_f6441718dee37997b016bc4e_sense",
+    "meaning": "Seçenekler arasında tercih ilişkisi kuran bağlaç.",
+    "clue": "",
+    "topic": "dil",
+    "difficulty": 1,
+    "rootText": "VEYA",
+    "rootId": "tr1_f6441718dee37997b016bc4ec3ea80ea00b2bf02434cb201550ed6ea70259ad5",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://ogmmateryal.eba.gov.tr/kitap/telafi-egitimi/egitim-materyalleri/tde/9/tde.pdf",
+      "meaningEvidence": "Seçenekler arasında tercih ilişkisi kuran bağlaç.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_a48568793cca1bb1b3c28880",
+    "answer": "ÜZERE",
+    "answerId": "tr1_a48568793cca1bb1b3c28880282c42916adabf675571c78d54954137f6dbd7c6",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "postposition",
+    "meaningId": "source_mixed_a48568793cca1bb1b3c28880_sense",
+    "meaning": "Bir eylemin amacını veya gerçekleşeceği koşulu belirten edat.",
+    "clue": "",
+    "topic": "dil",
+    "difficulty": 2,
+    "rootText": "ÜZERE",
+    "rootId": "tr1_a48568793cca1bb1b3c28880282c42916adabf675571c78d54954137f6dbd7c6",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://ogmmateryal.eba.gov.tr/kitap/telafi-egitimi/egitim-materyalleri/tde/9/tde.pdf",
+      "meaningEvidence": "Bir eylemin amacını veya gerçekleşeceği koşulu belirten edat.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_421e6c169afafd68045e7771",
+    "answer": "FAKAT",
+    "answerId": "tr1_421e6c169afafd68045e77715edc2473c31bdad207e97a43af42304dbea8c722",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "conjunction",
+    "grammaticalType": "conjunction",
+    "meaningId": "source_mixed_421e6c169afafd68045e7771_sense",
+    "meaning": "İki yargı arasında karşıtlık kuran bağlaç.",
+    "clue": "",
+    "topic": "dil",
+    "difficulty": 1,
+    "rootText": "FAKAT",
+    "rootId": "tr1_421e6c169afafd68045e77715edc2473c31bdad207e97a43af42304dbea8c722",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://ogmmateryal.eba.gov.tr/kitap/telafi-egitimi/egitim-materyalleri/tde/9/tde.pdf",
+      "meaningEvidence": "İki yargı arasında karşıtlık kuran bağlaç.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_41ee3b966aac98f0fbad7bf8",
+    "answer": "OKUMAK",
+    "answerId": "tr1_41ee3b966aac98f0fbad7bf8cf724e611fb2535e0ff420c34c35b35f5765a33e",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "infinitive",
+    "meaningId": "source_mixed_41ee3b966aac98f0fbad7bf8_sense",
+    "meaning": "Harflerle oluşturulmuş bir metni çözümleyip anlamlandırmak.",
+    "clue": "",
+    "topic": "eylem",
+    "difficulty": 1,
+    "rootText": "OKU",
+    "rootId": "tr1_4cf315826980bb6c2f2670c7b32a9ccf4b5513d34eda4afff4850a8bae6b34bd",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=okumak",
+      "meaningEvidence": "Harflerle oluşturulmuş bir metni çözümleyip anlamlandırmak.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_14ceffd711d0d64491e339f3",
+    "answer": "BİLMEK",
+    "answerId": "tr1_14ceffd711d0d64491e339f35cd4d737e0be629e85d10d920a0ef37b24af37e3",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "infinitive",
+    "meaningId": "source_mixed_14ceffd711d0d64491e339f3_sense",
+    "meaning": "Bir konu hakkında öğrenilmiş bilgiye sahip olmak.",
+    "clue": "",
+    "topic": "zihin",
+    "difficulty": 2,
+    "rootText": "BİL",
+    "rootId": "tr1_5e7fc0969f3b5830b013505a1dd7285e69d0b7f92d8c58a3e58c08d8ab30392e",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=bilmek",
+      "meaningEvidence": "Bir konu hakkında öğrenilmiş bilgiye sahip olmak.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_722010a41bc412c6a9da6317",
+    "answer": "ANLAMAK",
+    "answerId": "tr1_722010a41bc412c6a9da63177fb198f5250e02915029be3f1735dc957c64be4b",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "infinitive",
+    "meaningId": "source_mixed_722010a41bc412c6a9da6317_sense",
+    "meaning": "Bir sözün veya durumun ne ifade ettiğini kavramak.",
+    "clue": "",
+    "topic": "zihin",
+    "difficulty": 2,
+    "rootText": "ANLA",
+    "rootId": "tr1_80539f85653720736e9be6ca00ecfaefa5b2553204164661deca7d6e6310786c",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=anlamak",
+      "meaningEvidence": "Bir sözün veya durumun ne ifade ettiğini kavramak.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_da8f72aca76a5b55ccb9a882",
+    "answer": "DEV GİBİ",
+    "answerId": "tr1_da8f72aca76a5b55ccb9a8824eff9b626efa3e5dd29d99add5e2dff0d29d3631",
+    "letterCount": 7,
+    "wordLengths": [
+      3,
+      4
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "postposition_phrase",
+    "meaningId": "source_mixed_da8f72aca76a5b55ccb9a882_sense",
+    "meaning": "Olağan ölçülerin çok üstünde büyüklüğü benzetmeyle anlatan iki kelimeli ifade.",
+    "clue": "",
+    "topic": "dil",
+    "difficulty": 1,
+    "rootText": "DEV GİBİ",
+    "rootId": "tr1_da8f72aca76a5b55ccb9a8824eff9b626efa3e5dd29d99add5e2dff0d29d3631",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://igdirodm.meb.gov.tr/meb_iys_dosyalar/2021_03/23115604_TURKCE.pdf",
+      "meaningEvidence": "Olağan ölçülerin çok üstünde büyüklüğü benzetmeyle anlatan iki kelimeli ifade.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_2f15f84e43e45c2df75d096c",
+    "answer": "EL KİTABI",
+    "answerId": "tr1_2f15f84e43e45c2df75d096cd24ad88b5140298d61e4210fdb2e92c478f687d8",
+    "letterCount": 8,
+    "wordLengths": [
+      2,
+      6
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "noun",
+    "meaningId": "source_mixed_2f15f84e43e45c2df75d096c_sense",
+    "meaning": "Bir konu veya iş hakkında kısa ve kullanışlı başvuru bilgileri veren eser.",
+    "clue": "",
+    "topic": "eğitim",
+    "difficulty": 2,
+    "rootText": "EL KİTABI",
+    "rootId": "tr1_2f15f84e43e45c2df75d096cd24ad88b5140298d61e4210fdb2e92c478f687d8",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=el%20kitab%C4%B1",
+      "meaningEvidence": "Bir konu veya iş hakkında kısa ve kullanışlı başvuru bilgileri veren eser.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_6f114f7de2020d0327efd78f",
+    "answer": "BEKLEMEK",
+    "answerId": "tr1_6f114f7de2020d0327efd78fdf23cd95e0010394294b32b4f357e73128ef1439",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "infinitive",
+    "meaningId": "source_mixed_6f114f7de2020d0327efd78f_sense",
+    "meaning": "Bir kişi veya olay gerçekleşene kadar belirli bir yerde ya da durumda kalmak.",
+    "clue": "",
+    "topic": "zaman",
+    "difficulty": 1,
+    "rootText": "BEKLE",
+    "rootId": "tr1_d9e8eaab072753e3bea09e10b32af85dc90506bc9783e34e8bb3ef10cf1b0c26",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=beklemek",
+      "meaningEvidence": "Bir kişi veya olay gerçekleşene kadar belirli bir yerde ya da durumda kalmak.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_35c4b4d4b00131ba63f86c88",
+    "answer": "CAN SİMİDİ",
+    "answerId": "tr1_35c4b4d4b00131ba63f86c889def57dc44fa13a79f7ebf26795e4a2b0453e8d5",
+    "letterCount": 9,
+    "wordLengths": [
+      3,
+      6
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "noun",
+    "meaningId": "source_mixed_35c4b4d4b00131ba63f86c88_sense",
+    "meaning": "Suda bulunan kişiye tutunması ve yüzeyde kalması için atılabilen kurtarma aracı.",
+    "clue": "",
+    "topic": "denizcilik",
+    "difficulty": 2,
+    "rootText": "CAN SİMİDİ",
+    "rootId": "tr1_35c4b4d4b00131ba63f86c889def57dc44fa13a79f7ebf26795e4a2b0453e8d5",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sg.gov.tr/can-yelegi-tipleri",
+      "meaningEvidence": "Suda bulunan kişiye tutunması ve yüzeyde kalması için atılabilen kurtarma aracı.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_35232b4a4e20d17d27fa705c",
+    "answer": "NOT TUTMAK",
+    "answerId": "tr1_35232b4a4e20d17d27fa705c74b859353cfda1275271098d4cd4f385c5a7336d",
+    "letterCount": 9,
+    "wordLengths": [
+      3,
+      6
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "verb_phrase",
+    "meaningId": "source_mixed_35232b4a4e20d17d27fa705c_sense",
+    "meaning": "Dinlenen veya okunan bir konunun önemli yerlerini kısa biçimde kaydetmek.",
+    "clue": "",
+    "topic": "eğitim",
+    "difficulty": 1,
+    "rootText": "NOT TUT",
+    "rootId": "tr1_64eb254d42baaa2a82bda708d6e79b07fc56c83d5d426bf0c412a30bfbfc83d7",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=not%20tutmak",
+      "meaningEvidence": "Dinlenen veya okunan bir konunun önemli yerlerini kısa biçimde kaydetmek.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_1b4383e01c4e943e6a582389",
+    "answer": "KÖŞE YAZISI",
+    "answerId": "tr1_1b4383e01c4e943e6a5823893b88c5f5634c2cec4f4c611a4c3b87664ed905c6",
+    "letterCount": 10,
+    "wordLengths": [
+      4,
+      6
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "noun",
+    "meaningId": "source_mixed_1b4383e01c4e943e6a582389_sense",
+    "meaning": "Gazete veya dergide belirli bir bölümde yayımlanan, güncel konulara kişisel yorum getiren metin.",
+    "clue": "",
+    "topic": "edebiyat",
+    "difficulty": 2,
+    "rootText": "KÖŞE YAZISI",
+    "rootId": "tr1_1b4383e01c4e943e6a5823893b88c5f5634c2cec4f4c611a4c3b87664ed905c6",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://meslek.meb.gov.tr/upload/dersmateryali/pdf/G2025GYT111204.pdf",
+      "meaningEvidence": "Gazete veya dergide belirli bir bölümde yayımlanan, güncel konulara kişisel yorum getiren metin.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_d87266a0be62d87c94d20c34",
+    "answer": "HATIRLAMAK",
+    "answerId": "tr1_d87266a0be62d87c94d20c34edc3beb4e9d5dcc9731a9c022edababa7ebbe91c",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "infinitive",
+    "meaningId": "source_mixed_d87266a0be62d87c94d20c34_sense",
+    "meaning": "Önceden öğrenilmiş veya yaşanmış bir şeyi yeniden zihne getirmek.",
+    "clue": "",
+    "topic": "zihin",
+    "difficulty": 1,
+    "rootText": "HATIRLA",
+    "rootId": "tr1_d58edf12a1405ebe6847db000dc22bd4f5a04304bf1101d0fdae742b0148f553",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=hat%C4%B1rlamak",
+      "meaningEvidence": "Önceden öğrenilmiş veya yaşanmış bir şeyi yeniden zihne getirmek.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_16e1a0805d3fd5aed08a392b",
+    "answer": "DEMEK Kİ",
+    "answerId": "tr1_16e1a0805d3fd5aed08a392b64b36c5f88fed721d81e3fa5d39ad7ade4b98bf4",
+    "letterCount": 7,
+    "wordLengths": [
+      5,
+      2
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "conjunction",
+    "meaningId": "source_mixed_16e1a0805d3fd5aed08a392b_sense",
+    "meaning": "Bilinen bir durumdan sonuç çıkaran, açıklama ilgisi kuran iki kelimeli bağlayıcı.",
+    "clue": "",
+    "topic": "dil",
+    "difficulty": 3,
+    "rootText": "DEMEK Kİ",
+    "rootId": "tr1_16e1a0805d3fd5aed08a392b64b36c5f88fed721d81e3fa5d39ad7ade4b98bf4",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://ogmmateryal.eba.gov.tr/kitap/mebi-konu-ozetleri/tyt-turkce/tyt-turkce.pdf",
+      "meaningEvidence": "Bilinen bir durumdan sonuç çıkaran, açıklama ilgisi kuran iki kelimeli bağlayıcı.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Reference supports the target usage; final question requires generator/editor checks."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "source_mixed_00adf5d5115706a91f470e38",
+    "answer": "LAF ATMAK",
+    "answerId": "tr1_00adf5d5115706a91f470e384bb3d532407ae45153c4f42419647a295c40cdff",
+    "letterCount": 8,
+    "wordLengths": [
+      3,
+      5
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "verb_phrase",
+    "meaningId": "source_mixed_00adf5d5115706a91f470e38_sense",
+    "meaning": "Birine takılmak veya sözle ilişmek.",
+    "clue": "",
+    "topic": "iletişim",
+    "difficulty": 2,
+    "rootText": "LAF AT",
+    "rootId": "tr1_f5e23462c2fe504eb6226530e6f6b4975c455251fb348fcfb348f1aecb2c387d",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=laf%20atmak",
+      "meaningEvidence": "Birine takılmak veya sözle ilişmek.",
+      "rights": "original",
+      "termsReference": "Project-authored lexical fact brief; reference definitions and example sentences are not reproduced.",
+      "evidence": {
+        "kind": "authored-lexical-brief",
+        "reviewRequired": true,
+        "note": "Dictionary lookup reference supplied; no new dictionary retrieval claimed. Target meaning is an authored lexical brief for editorial review."
+      }
+    },
+    "review": {
+      "status": "draft"
+    },
+    "publication": "unpublished"
+  }
+]

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../game/domain/question_capacity.dart';
 import '../../data/firebase_room_service.dart';
 import '../../domain/entities/game_room.dart';
 import '../../domain/entities/room_player.dart';
@@ -18,6 +19,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       (offset) => emit(state.copyWith(serverTimeOffsetMs: offset)),
     );
     unawaited(_roomService.beginPresence(room.id));
+    if (room.questionEngine == 'pool-v1') unawaited(loadQuestionCapacity());
   }
 
   final FirebaseRoomService _roomService;
@@ -26,6 +28,27 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   Timer? _countdownTimer;
   bool _isStartingCountdown = false;
   bool _isMarkingPlaying = false;
+
+  Future<void> loadQuestionCapacity() async {
+    try {
+      final report = await _roomService.prepareQuestionHistory(state.room.id);
+      if (!isClosed) {
+        emit(
+          state.copyWith(questionCapacity: QuestionCapacity.fromMap(report)),
+        );
+      }
+    } catch (error) {
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            errorMessage: error is RoomServiceException
+                ? error.message
+                : 'Soru havuzu bilgisi alınamadı.',
+          ),
+        );
+      }
+    }
+  }
 
   Future<void> startDebugGame() async {
     if (!kDebugMode ||
@@ -52,8 +75,14 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         state.room.id,
         isReady: !currentPlayer.isReady,
       );
-    } catch (_) {
-      emit(state.copyWith(errorMessage: 'Hazır durumu güncellenemedi.'));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          errorMessage: error is RoomServiceException
+              ? error.message
+              : 'Hazır durumu güncellenemedi.',
+        ),
+      );
     }
   }
 
@@ -104,8 +133,19 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         serverTimeOffsetMs: state.serverTimeOffsetMs,
         gameMode: state.room.gameMode,
       );
-    } catch (_) {
-      emit(state.copyWith(errorMessage: 'Geri sayım başlatılamadı.'));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          errorMessage: error is RoomServiceException
+              ? error.message
+              : 'Geri sayım başlatılamadı.',
+          questionCapacity: error is RoomServiceException
+              ? error.capacity
+              : null,
+          collectiveCapacity:
+              error is RoomServiceException && error.capacity != null,
+        ),
+      );
     } finally {
       _isStartingCountdown = false;
     }

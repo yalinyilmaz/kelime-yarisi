@@ -1,4 +1,5 @@
 import '../../game/domain/game_progress.dart';
+import '../../game/domain/game_question.dart';
 import '../../game/domain/shared_hints.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
@@ -17,6 +18,9 @@ abstract final class FirebaseRoomMapper {
       'startsAtMs': room.startsAtMs,
       'questionSetId': room.questionSetId,
       'gameplayVersion': room.gameplayVersion,
+      // Legacy live rules reject unknown fields until the pool rules deploy.
+      if (room.questionEngine == 'pool-v1')
+        'questionEngine': room.questionEngine,
       'createdAt': {'.sv': 'timestamp'},
       'players': {
         for (final player in room.players) player.id: playerToMap(player),
@@ -63,6 +67,28 @@ abstract final class FirebaseRoomMapper {
       startsAtMs: (map['startsAtMs'] as num?)?.toInt(),
       questionSetId: map['questionSetId'] as String?,
       gameplayVersion: map['gameplayVersion'] as String?,
+      questionEngine: map['questionEngine'] as String? ?? 'demo-v1',
+      questionOrigin: map['questionOrigin'] as String? ?? 'example',
+      questions:
+          List.unmodifiable(
+                _asMap(map['questions']).entries.toList()..sort(
+                  (a, b) => int.parse(a.key).compareTo(int.parse(b.key)),
+                ),
+              )
+              .map((entry) {
+                final question = _asMap(entry.value);
+                return GameQuestion(
+                  id: question['id'] as String?,
+                  answerId: question['answerId'] as String?,
+                  clue: question['clue'] as String? ?? '',
+                  answer: question['answer'] as String? ?? '',
+                  acceptedAnswers: List.unmodifiable(
+                    (question['acceptedAnswers'] as List? ?? const [])
+                        .cast<String>(),
+                  ),
+                );
+              })
+              .toList(growable: false),
       hints: Map.unmodifiable(
         _asMap(map['hints']).map(
           (index, value) =>

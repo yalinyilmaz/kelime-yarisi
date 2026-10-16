@@ -1,0 +1,32 @@
+{
+  "name": "kelime-yarisi-questions",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "content": "node tools/content.js",
+    "content:sources": "node tools/import_sources.js",
+    "content:enrich": "node tools/enrich_sources.js",
+    "content:replenish": "node tools/replenish.js",
+    "content:quality": "node tools/quality.js",
+    "content:setup": "node tools/setup_generator.js",
+    "content:trial": "node tools/replenish.js --sources content/trial_sources.json --limit 1 --ai-review --trial",
+    "content:daily": "node tools/replenish.js --daily --ai-review",
+    "content:queue": "node tools/build_queue.js",
+    "check:deploy": "node tools/check_deploy.js",
+    "test:emulator": "node --test test/emulator.integration.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^14.5.0",
+    "firebase-functions": "^7.4.0"
+  },
+  "overrides": {"@grpc/grpc-js": "1.14.6"},
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase": "^13.0.0"
+  }
+}

@@ -1,0 +1,3151 @@
+[
+  {
+    "id": "initial_002_q01",
+    "answer": "KARE",
+    "answerId": "tr1_20d39d90d712055383352fcf8ed17bdcd58978b30bbc8403ae31734ec060374d",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q01_sense",
+    "meaning": "Dört kenarı ve dört açısı birbirine eşit olan dörtgen.",
+    "clue": "Yer döşemelerinde sık görülen biçim: dört eş kenar, dört dik açı.",
+    "hint": "İskambil oyununda aynı değerden dört kart bir araya geldiğinde bu ad kullanılır.",
+    "topic": "geometri",
+    "difficulty": 1,
+    "rootText": "KARE",
+    "rootId": "tr1_20d39d90d712055383352fcf8ed17bdcd58978b30bbc8403ae31734ec060374d",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kare",
+      "meaningEvidence": "Dört kenarı ve dört açısı birbirine eşit olan dörtgen.",
+      "hintEvidence": "TDK maddesinde kare, eş kenarlı ve dik açılı dörtgen olarak tanımlanır; iskambil ipucu dört aynı değerli kartın oluşturduğu gruba dayanır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kare",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kare",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "406c2b720ec81f25cf54e1a655d8ac59ace448a8d47e37d101eda7475131ade3",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "406c2b720ec81f25cf54e1a655d8ac59ace448a8d47e37d101eda7475131ade3",
+      "rationale": "Hedef anlam: Dört kenarı ve dört açısı birbirine eşit olan dörtgen. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Dört kenarı ve dört açısı birbirine eşit olan dörtgen.\nTDK maddesinde kare, eş kenarlı ve dik açılı dörtgen olarak tanımlanır; iskambil ipucu dört aynı değerli kartın oluşturduğu gruba dayanır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "DİKDÖRTGEN",
+          "reason": "Harf/kelime düzeni [10]; bu sorunun düzeni [4]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q02",
+    "answer": "DİZE",
+    "answerId": "tr1_5bdeacbe57e9af7dbae1e069fdb5aaa68ddd96e526e165a6cd5343d41d60495e",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q02_sense",
+    "meaning": "Şiirin satırlarından her biri.",
+    "clue": "Şiir kıtasının içindeki her satır kendi başına bu şiir birimidir.",
+    "hint": "Ölçülü şiirde bu satır birimi hece ya da aruz düzeniyle kurulabilir.",
+    "topic": "edebiyat",
+    "difficulty": 1,
+    "rootText": "DİZE",
+    "rootId": "tr1_5bdeacbe57e9af7dbae1e069fdb5aaa68ddd96e526e165a6cd5343d41d60495e",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=dize",
+      "meaningEvidence": "Şiirin satırlarından her biri.",
+      "hintEvidence": "TDK maddesinde dize şiir satırı olarak açıklanır; ipucu ölçülü şiirde hece ve aruz düzeni bilgisini ekler.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=dize",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/dize",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "1b37ba7996e1b02c4ef0a1b75547eb7c09b02ba2a3347e92ecdc0f44f66a7ccf",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "1b37ba7996e1b02c4ef0a1b75547eb7c09b02ba2a3347e92ecdc0f44f66a7ccf",
+      "rationale": "Hedef anlam: Şiirin satırlarından her biri. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Şiirin satırlarından her biri.\nTDK maddesinde dize şiir satırı olarak açıklanır; ipucu ölçülü şiirde hece ve aruz düzeni bilgisini ekler.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "MISRA",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [4]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q03",
+    "answer": "KIVAM",
+    "answerId": "tr1_7dc48d12d732e73c7b578437cfdcf984d1a2bf11509cce6b84ac464009f0bd88",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q03_sense",
+    "meaning": "Sıvıların yoğunluk ve akış bakımından aldığı durum.",
+    "clue": "Muhallebi kaşıktan ağır ağır akıyorsa aşçı, aradığı koyuluk ve akış derecesini yakaladığını anlar.",
+    "hint": "Hazırlanan karışım soğudukça akışkanlığı yeniden değişebilir.",
+    "topic": "mutfak",
+    "difficulty": 1,
+    "rootText": "KIVAM",
+    "rootId": "tr1_7dc48d12d732e73c7b578437cfdcf984d1a2bf11509cce6b84ac464009f0bd88",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=k%C4%B1vam",
+      "meaningEvidence": "Sıvıların yoğunluk ve akış bakımından aldığı durum.",
+      "hintEvidence": "TDK maddesindeki kıvam anlamı sıvıların yoğunluk ve akış durumudur; ipucu soğuma sırasında akışın değişebileceğini belirtir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=k%C4%B1vam",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/k%C4%B1vam",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "1d2492945ed53d4f02c46479c202ee939f97ee321ec03001015291527b5926a2",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "1d2492945ed53d4f02c46479c202ee939f97ee321ec03001015291527b5926a2",
+      "rationale": "Hedef anlam: Sıvıların yoğunluk ve akış bakımından aldığı durum. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Sıvıların yoğunluk ve akış bakımından aldığı durum.\nTDK maddesindeki kıvam anlamı sıvıların yoğunluk ve akış durumudur; ipucu soğuma sırasında akışın değişebileceğini belirtir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "YOĞUNLUK",
+          "reason": "Harf/kelime düzeni [8]; bu sorunun düzeni [5]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q04",
+    "answer": "KORNA",
+    "answerId": "tr1_6af092af94ecf56d4a206b0851b698b3a0a2200e35d57cd5fdde2e996d614b08",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q04_sense",
+    "meaning": "Motorlu taşıtlarda ve bisikletlerde sesle uyarı sağlayan parça.",
+    "clue": "Araçta kısa bir basışla diğer sürücüleri uyaran, yüksek ses çıkaran parça.",
+    "hint": "Bisikletteki sesli uyarı aracına da aynı ad verilir.",
+    "topic": "ulaşım",
+    "difficulty": 1,
+    "rootText": "KORN",
+    "rootId": "tr1_ab5148cb54a40c5aa7700ee6aca01690a340f1eb631638a4eb1ff27d506d7015",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=korna",
+      "meaningEvidence": "Motorlu taşıtlarda ve bisikletlerde sesle uyarı sağlayan parça.",
+      "hintEvidence": "Önceki kaynak notunda bisikletlerde de aynı sesli uyarı aracının kullanıldığı belirtilir; bu tur bağlantı yeniden açılmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=korna",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/korna",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "5c320c815155ca1bd849ba01ced5979f74e9c9b267e0ff56e91526c40a305e09",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "5c320c815155ca1bd849ba01ced5979f74e9c9b267e0ff56e91526c40a305e09",
+      "rationale": "Hedef anlam: Motorlu taşıtlarda ve bisikletlerde sesle uyarı sağlayan parça. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Motorlu taşıtlarda ve bisikletlerde sesle uyarı sağlayan parça.\nÖnceki kaynak notunda bisikletlerde de aynı sesli uyarı aracının kullanıldığı belirtilir; bu tur bağlantı yeniden açılmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "SİREN",
+          "reason": "Acil durum için süreğen veya değişen tonlu uyarı verir; sürücünün kısa uyarısının genel adı farklıdır."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q05",
+    "answer": "ÇARŞAF",
+    "answerId": "tr1_4a9a5be5948be242e7e2a95cca47c67d9cb3d369297a58908838158b179aa3af",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q05_sense",
+    "meaning": "Yatağı örtmek ya da üzerine sermek için kullanılan geniş kumaş.",
+    "clue": "Yatağın üstünde, yatak yüzeyi ile uyuyan kişi arasında serilen geniş kumaş.",
+    "hint": "Aynı sözcük, bazı yörelerde kadınların kullandığı bir dış giysinin adı olarak da geçer.",
+    "topic": "ev yaşamı",
+    "difficulty": 1,
+    "rootText": "ÇARŞAF",
+    "rootId": "tr1_4a9a5be5948be242e7e2a95cca47c67d9cb3d369297a58908838158b179aa3af",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=%C3%A7ar%C5%9Faf",
+      "meaningEvidence": "Yatağı örtmek ya da üzerine sermek için kullanılan geniş kumaş.",
+      "hintEvidence": "Kaynak notunda yatak örtüsü yanında dış giysi anlamı bulunur; yöresel kullanım ayrıntısı bu tur yeniden doğrulanmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=%C3%A7ar%C5%9Faf",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/%C3%A7ar%C5%9Faf",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "f08a5cfe09d63e274c7367836c88571d9006d3388efcd4185c2c363cf0093c42",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "f08a5cfe09d63e274c7367836c88571d9006d3388efcd4185c2c363cf0093c42",
+      "rationale": "Hedef anlam: Yatağı örtmek ya da üzerine sermek için kullanılan geniş kumaş. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Yatağı örtmek ya da üzerine sermek için kullanılan geniş kumaş.\nKaynak notunda yatak örtüsü yanında dış giysi anlamı bulunur; yöresel kullanım ayrıntısı bu tur yeniden doğrulanmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "YASTIK",
+          "reason": "Başın altına konur; sorudaki yatay yüzeyi örten katmanı karşılamaz."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q06",
+    "answer": "PİŞMAN",
+    "answerId": "tr1_d0bb36e2d9278f1d8977e749af7c5ce4d5ec72a3125b098074e95dcac7f4826d",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "adjective",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q06_sense",
+    "meaning": "Yaptığı bir davranışın yanlışlığını veya sonucunu anlayıp üzüntü duyan kimse.",
+    "clue": "Yaptığı seçimden sonra “Keşke öyle yapmasaydım” diyen kişinin niteliği.",
+    "hint": "Kişi, geçmişteki davranışını değiştiremese de sonucundan hoşnut olmadığını dile getirebilir.",
+    "topic": "duygular",
+    "difficulty": 2,
+    "rootText": "PİŞMAN",
+    "rootId": "tr1_d0bb36e2d9278f1d8977e749af7c5ce4d5ec72a3125b098074e95dcac7f4826d",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=pi%C5%9Fman",
+      "meaningEvidence": "TDK anlam notu hedefi, yaptığı davranışın yanlışlığını veya sonucunu anlayıp üzüntü duyan kimse sıfatıyla açıklar; bu tur yeniden okunmadı.",
+      "hintEvidence": "TDK maddesi hedefi yapılan davranışın sonucundan dolayı üzüntü duyan kişi sıfatı olarak verir; ipucu kararın geri alınamaması bağlamını ekler.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=pi%C5%9Fman",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/pi%C5%9Fman",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "7dc44f64b48840ccb2c02c550a0e5e73984526f33c1eaf709470edf8eadfd369",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "7dc44f64b48840ccb2c02c550a0e5e73984526f33c1eaf709470edf8eadfd369",
+      "rationale": "Hedef anlam: Yaptığı bir davranışın yanlışlığını veya sonucunu anlayıp üzüntü duyan kimse. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "TDK anlam notu hedefi, yaptığı davranışın yanlışlığını veya sonucunu anlayıp üzüntü duyan kimse sıfatıyla açıklar; bu tur yeniden okunmadı.\nTDK maddesi hedefi yapılan davranışın sonucundan dolayı üzüntü duyan kişi sıfatı olarak verir; ipucu kararın geri alınamaması bağlamını ekler.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "ÜZÜNTÜ",
+          "reason": "Altı harfli isim duygunun adıdır; metin o duyguyu yaşayan kişiyi sıfatla niteliyor."
+        },
+        {
+          "answer": "ÜZGÜN",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [6]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q07",
+    "answer": "ŞÖVALYE",
+    "answerId": "tr1_3bd9a5b118b171945c123a15e53f7d867d51756e77cdb7cec6493ab863cfcfd1",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q07_sense",
+    "meaning": "Orta Çağ Avrupa’sında özel eğitim görmüş soylu atlı savaşçı.",
+    "clue": "Orta Çağ Avrupa’sında soylu sınıftan, at üzerinde savaşmak üzere yetiştirilmiş kişi.",
+    "hint": "Sözcüğün güncel kullanımlarından biri bir onur nişanının adıdır.",
+    "topic": "tarih",
+    "difficulty": 3,
+    "rootText": "ŞÖVALYE",
+    "rootId": "tr1_3bd9a5b118b171945c123a15e53f7d867d51756e77cdb7cec6493ab863cfcfd1",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=%C5%9F%C3%B6valye",
+      "meaningEvidence": "Orta Çağ Avrupa’sında özel eğitim görmüş soylu atlı savaşçı.",
+      "hintEvidence": "Kaynak notu Orta Çağ’daki soylu atlı savaşçı anlamını ve onur nişanı kullanımını ilişkilendirir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=%C5%9F%C3%B6valye",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/%C5%9F%C3%B6valye",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "9b56853db4267696d8d6792f05eb2d12166a75d473c57d2750b1c0f4d5f1d4be",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "9b56853db4267696d8d6792f05eb2d12166a75d473c57d2750b1c0f4d5f1d4be",
+      "rationale": "Hedef anlam: Orta Çağ Avrupa’sında özel eğitim görmüş soylu atlı savaşçı. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Orta Çağ Avrupa’sında özel eğitim görmüş soylu atlı savaşçı.\nKaynak notu Orta Çağ’daki soylu atlı savaşçı anlamını ve onur nişanı kullanımını ilişkilendirir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "SAVAŞÇI",
+          "reason": "Yedi harfli ve dönem bakımından uygun olsa da soylu sınıf ile özel atlı eğitim koşullarını taşımaz."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q08",
+    "answer": "BİRİKİM",
+    "answerId": "tr1_6110c323a51ae858cf966b178d3b2ef299e3392fccf293c5dcda87bc624b6252",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q08_sense",
+    "meaning": "Gözlem ve deneylerden elde edilen şeylerin bütünü; ayrıca bilim veya sanat alanında sahip olunan bilgi.",
+    "clue": "Bilim ya da sanat alanındaki bilgi toplamı; bir kentin yıllar içinde kazandığı ortak değerler için de kullanılır.",
+    "hint": "Hane bütçesinde kenara ayrılan mal veya para toplamı için de kullanılır.",
+    "topic": "bilgi",
+    "difficulty": 2,
+    "rootText": "BİRİKİM",
+    "rootId": "tr1_6110c323a51ae858cf966b178d3b2ef299e3392fccf293c5dcda87bc624b6252",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=birikim",
+      "meaningEvidence": "Gözlem ve deneylerden elde edilen şeylerin bütünü; ayrıca bilim veya sanat alanında sahip olunan bilgi.",
+      "hintEvidence": "TDK anlam notunda gözlem ve deneylerden edinilen toplam ile ekonomi alanındaki para veya mal toplamı yer alır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=birikim",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/birikim",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "e4213c5b547f01c1415b29311f53521ae332cf3c27e90ee6839666b1077ff88c",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "e4213c5b547f01c1415b29311f53521ae332cf3c27e90ee6839666b1077ff88c",
+      "rationale": "Hedef anlam: Gözlem ve deneylerden elde edilen şeylerin bütünü; ayrıca bilim veya sanat alanında sahip olunan bilgi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Gözlem ve deneylerden elde edilen şeylerin bütünü; ayrıca bilim veya sanat alanında sahip olunan bilgi.\nTDK anlam notunda gözlem ve deneylerden edinilen toplam ile ekonomi alanındaki para veya mal toplamı yer alır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "TECRÜBE",
+          "reason": "Kişisel yaşantıyla edinilen deneyimi öne çıkarır; soru alan içinde toplanmış bilgi bütününü arıyor."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q09",
+    "answer": "GÜZELLİK",
+    "answerId": "tr1_61ed473adfd996a00b8b5516b0764269028d26f16e8bc0fe75b8087249f147f2",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q09_sense",
+    "meaning": "Beğeni ve hoşlanma uyandıran nitelik; ayrıca iyi ve değerli özellikler.",
+    "clue": "Bir manzaranın ya da sanat yapıtının insanda estetik beğeni uyandıran niteliği.",
+    "hint": "İyi ahlaki veya zihinsel özellikler için de aynı sözcük kullanılır.",
+    "topic": "sanat",
+    "difficulty": 2,
+    "rootText": "GÜZEL",
+    "rootId": "tr1_2f5d457bd84f99a57efdd5a6262890727bd48325334cdf4bdfa46bc6dcfe4578",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=g%C3%BCzellik",
+      "meaningEvidence": "Beğeni ve hoşlanma uyandıran nitelik; ayrıca iyi ve değerli özellikler.",
+      "hintEvidence": "Kaynak notunda estetik beğeni uyandıran nitelik ve iyi ahlaki ya da zihinsel özellikler anlamları bulunur.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=g%C3%BCzellik",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/g%C3%BCzellik",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "01f579b021d302735707a4a0e3b7595b6350f11e4db6dd877582f8260c437814",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "01f579b021d302735707a4a0e3b7595b6350f11e4db6dd877582f8260c437814",
+      "rationale": "Hedef anlam: Beğeni ve hoşlanma uyandıran nitelik; ayrıca iyi ve değerli özellikler. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Beğeni ve hoşlanma uyandıran nitelik; ayrıca iyi ve değerli özellikler.\nKaynak notunda estetik beğeni uyandıran nitelik ve iyi ahlaki ya da zihinsel özellikler anlamları bulunur.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "ALBENİ",
+          "reason": "Harf/kelime düzeni [6]; bu sorunun düzeni [8]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q10",
+    "answer": "MÜZİSYEN",
+    "answerId": "tr1_c0d107b6be8431c9c540e6491f8d9b259b22a00c36a9e2a1a2cab5b5e76b4ede",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q10_sense",
+    "meaning": "Müzik eseri yazan, besteleyen veya icra eden kişi.",
+    "clue": "Eser yazan, besteleyen ya da sahnede yorumlayan sanat insanı.",
+    "hint": "Sahnede yorumladığı eseri kendisinin bestelemiş olması gerekmez.",
+    "topic": "müzik",
+    "difficulty": 2,
+    "rootText": "MÜZİK",
+    "rootId": "tr1_d75e21a39c6cb52262e2c1848e5ae40b631ee9a937e12875c7147c195739b646",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=m%C3%BCzisyen",
+      "meaningEvidence": "Müzik eseri yazan, besteleyen veya icra eden kişi.",
+      "hintEvidence": "Kaynak notu müzik eseri yazan, besteleyen veya icra eden kişiyi kapsar; icracının besteci olmasının gerekmediği ipucu bu kapsama dayanır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=m%C3%BCzisyen",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/m%C3%BCzisyen",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "fbca06b8892c08cf1f9b001b0eceb79f4c2e060851bc8609745fd6f3e0bb001c",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "fbca06b8892c08cf1f9b001b0eceb79f4c2e060851bc8609745fd6f3e0bb001c",
+      "rationale": "Hedef anlam: Müzik eseri yazan, besteleyen veya icra eden kişi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Müzik eseri yazan, besteleyen veya icra eden kişi.\nKaynak notu müzik eseri yazan, besteleyen veya icra eden kişiyi kapsar; icracının besteci olmasının gerekmediği ipucu bu kapsama dayanır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "BESTECİ",
+          "reason": "Harf/kelime düzeni [7]; bu sorunun düzeni [8]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q11",
+    "answer": "ÇAY KAZANI",
+    "answerId": "tr1_1509d9616b2e5cbdb96d0cc86aed34618bde397afddaa0c56953f66f8c2195a9",
+    "letterCount": 9,
+    "wordLengths": [
+      3,
+      6
+    ],
+    "answerType": "phrase",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q11_sense",
+    "meaning": "Alt bölümü suyu kaynatan, üst kısmında demlikler bulunan çay hazırlama düzeneği.",
+    "clue": "Kahvehane tezgâhında, alt haznesi suyu kaynatırken üstünde birkaç demlik birden taşıyan servis düzeneği.",
+    "hint": "Ev tipi bir demlikten farklı olarak toplu servis hazırlığına yarar.",
+    "topic": "işletme yaşamı",
+    "difficulty": 2,
+    "rootText": "ÇAY KAZANI",
+    "rootId": "tr1_1509d9616b2e5cbdb96d0cc86aed34618bde397afddaa0c56953f66f8c2195a9",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=%C3%A7ay%20kazan%C4%B1",
+      "meaningEvidence": "Alt bölümü suyu kaynatan, üst kısmında demlikler bulunan çay hazırlama düzeneği.",
+      "hintEvidence": "Kaynak notu alt haznede su kaynatıp üstte demlik taşıyan çay düzeneğini anlatır; ipucu toplu servis işlevini belirtir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=%C3%A7ay%20kazan%C4%B1",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/%C3%A7ay%20kazan%C4%B1",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "618466e104eb9782a7cd6601f46d34ee5ec61170a133cccfa4e9e372b0644a8a",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "618466e104eb9782a7cd6601f46d34ee5ec61170a133cccfa4e9e372b0644a8a",
+      "rationale": "Hedef anlam: Alt bölümü suyu kaynatan, üst kısmında demlikler bulunan çay hazırlama düzeneği. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Alt bölümü suyu kaynatan, üst kısmında demlikler bulunan çay hazırlama düzeneği.\nKaynak notu alt haznede su kaynatıp üstte demlik taşıyan çay düzeneğini anlatır; ipucu toplu servis işlevini belirtir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "ÇAYDANLIK",
+          "reason": "Harf/kelime düzeni [9]; bu sorunun düzeni [3,6]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q12",
+    "answer": "KONUŞMACI",
+    "answerId": "tr1_761c706b1ba3529a7d127ef15e47357ab818defaf5155451066337e93c460072",
+    "letterCount": 9,
+    "wordLengths": [
+      9
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q12_sense",
+    "meaning": "Topluluk önünde açık ve düzgün konuşarak düşünce ya da duygu aktarabilen kişi.",
+    "clue": "Bir topluluk önünde söz alıp düşüncesini açık ve etkili biçimde aktaran kişi.",
+    "hint": "Panel ve söyleşilerde bu görev, etkinlikteki sıfatından çok topluluk önünde söz almasına dayanır.",
+    "topic": "iletişim",
+    "difficulty": 2,
+    "rootText": "KONUŞ",
+    "rootId": "tr1_d68a6ed447519c983f86c94ecd2a5a71530fc5886ef0f7320fdf0ac723d32784",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=konu%C5%9Fmac%C4%B1",
+      "meaningEvidence": "Topluluk önünde açık ve düzgün konuşarak düşünce ya da duygu aktarabilen kişi.",
+      "hintEvidence": "Kaynak notu topluluk önünde düşünce veya duygu aktaran kişiyi kapsar; panel bağlamı bu tur yeniden doğrulanmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=konu%C5%9Fmac%C4%B1",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/konu%C5%9Fmac%C4%B1",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "a1a89a36e6666eddae0e9fbea49122753278c4a9a6849586a23cebead01be443",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "a1a89a36e6666eddae0e9fbea49122753278c4a9a6849586a23cebead01be443",
+      "rationale": "Hedef anlam: Topluluk önünde açık ve düzgün konuşarak düşünce ya da duygu aktarabilen kişi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Topluluk önünde açık ve düzgün konuşarak düşünce ya da duygu aktarabilen kişi.\nKaynak notu topluluk önünde düşünce veya duygu aktaran kişiyi kapsar; panel bağlamı bu tur yeniden doğrulanmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "DİNLEYİCİ",
+          "reason": "Dokuz harfli karşı seçenektir; anlatımı yapan değil, anlatımı alan kişiyi belirtir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q13",
+    "answer": "TUTARLILIK",
+    "answerId": "tr1_753f3a178eb75f95e997282dc0127f549d576fc8b3340411eb3974a30eec00f4",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q13_sense",
+    "meaning": "Tutarlı olma durumu; edebiyatta anlatımın konuyla bağdaşması.",
+    "clue": "Bir düşünce dizisinde parçalar birbirini boşa çıkarmıyorsa o dizinin taşıdığı nitelik.",
+    "hint": "Edebî anlatımda konu ile anlatımın uyuşması da bu sözcüğün özel kullanımıdır.",
+    "topic": "düşünme",
+    "difficulty": 3,
+    "rootText": "TUTARLI",
+    "rootId": "tr1_8cc3c7a35df3d466c59d7bf0dca578ec5fcbc7bd8c1e24d1155236c3283d240a",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=tutarl%C4%B1l%C4%B1k",
+      "meaningEvidence": "Tutarlı olma durumu; edebiyatta anlatımın konuyla bağdaşması.",
+      "hintEvidence": "TDK anlam notunda tutarlı olma ve edebî anlatımın konuyla bağdaşması yer alır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=tutarl%C4%B1l%C4%B1k",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/tutarl%C4%B1l%C4%B1k",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "f54c34f7b9079dd613ed3f621fdfcbc804252977b51ce9999492cbbdf0d01ae7",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "f54c34f7b9079dd613ed3f621fdfcbc804252977b51ce9999492cbbdf0d01ae7",
+      "rationale": "Hedef anlam: Tutarlı olma durumu; edebiyatta anlatımın konuyla bağdaşması. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Tutarlı olma durumu; edebiyatta anlatımın konuyla bağdaşması.\nTDK anlam notunda tutarlı olma ve edebî anlatımın konuyla bağdaşması yer alır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "UYUM",
+          "reason": "Harf/kelime düzeni [4]; bu sorunun düzeni [10]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_002_q14",
+    "answer": "KARARLILIK",
+    "answerId": "tr1_291f79c1bcd6c07e344d920aa1c53f1c206e5ce1715d95eead4ee3f64bd8fe29",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_002_q14_sense",
+    "meaning": "Kararlı olma durumu; kimyada boyanın özelliklerini zamanla koruması.",
+    "clue": "Hedefe yürürken engel çıktığında kolay vazgeçmeyen kişinin tutumu.",
+    "hint": "Kimyada boya, zamanla özelliklerini koruduğunda bu nitelikle tanımlanır.",
+    "topic": "kişilik",
+    "difficulty": 2,
+    "rootText": "KARARLI",
+    "rootId": "tr1_e35708e80b4c4bd6ef993b2d41b3a91a148a3f6ed094e9a97aa9fb4923e81bfb",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kararl%C4%B1l%C4%B1k",
+      "meaningEvidence": "Kararlı olma durumu; kimyada boyanın özelliklerini zamanla koruması.",
+      "hintEvidence": "Kaynak notunda hedefe bağlı kalma anlamı yanında boyanın zamanla özelliğini koruması kullanımı bulunur.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kararl%C4%B1l%C4%B1k",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kararl%C4%B1l%C4%B1k",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_002"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "1d1b0f087c390b066717ef36f1671ebe90dc8677cfa71ec02beb9a8616bc2296",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "1d1b0f087c390b066717ef36f1671ebe90dc8677cfa71ec02beb9a8616bc2296",
+      "rationale": "Hedef anlam: Kararlı olma durumu; kimyada boyanın özelliklerini zamanla koruması. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Kararlı olma durumu; kimyada boyanın özelliklerini zamanla koruması.\nKaynak notunda hedefe bağlı kalma anlamı yanında boyanın zamanla özelliğini koruması kullanımı bulunur.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "İSTİKRAR",
+          "reason": "Harf/kelime düzeni [8]; bu sorunun düzeni [10]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q01",
+    "answer": "KÖŞK",
+    "answerId": "tr1_ba4b5f52bcd9e4031dc37a78521a0677d1899dd62fcdfa98e80a80ce094bb35e",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q01_sense",
+    "meaning": "Bahçe içinde yapılmış süslü ev.",
+    "clue": "Bahçe içindeki gösterişli, müstakil ev; eski park ve korularda rastlanan yapı.",
+    "hint": "“Camlı” sözüyle kurulan birleşimde, kapalı bir salon anlamı da taşır.",
+    "topic": "mimari",
+    "difficulty": 2,
+    "rootText": "KÖŞK",
+    "rootId": "tr1_ba4b5f52bcd9e4031dc37a78521a0677d1899dd62fcdfa98e80a80ce094bb35e",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=k%C3%B6%C5%9Fk",
+      "meaningEvidence": "Bahçe içinde yapılmış süslü ev.",
+      "hintEvidence": "TDK anlam notunda bahçe içindeki süslü ev; birleşik kullanımda kapalı salon anlamı yer alır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=k%C3%B6%C5%9Fk",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/k%C3%B6%C5%9Fk",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "71989f806b19b80675b47e70c13b9873a3a023459ce136a0f2d310d79cd2577a",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "71989f806b19b80675b47e70c13b9873a3a023459ce136a0f2d310d79cd2577a",
+      "rationale": "Hedef anlam: Bahçe içinde yapılmış süslü ev. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Bahçe içinde yapılmış süslü ev.\nTDK anlam notunda bahçe içindeki süslü ev; birleşik kullanımda kapalı salon anlamı yer alır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "KONAK",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [4]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q02",
+    "answer": "OYUK",
+    "answerId": "tr1_21dd603659c176238fe14644746f932b7ae68212d315416bf532a7c4cb4e9f4f",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q02_sense",
+    "meaning": "Oyulmuş, içi boş ve çukur yer.",
+    "clue": "Bir yüzeyin içine doğru inen, parmağın girebildiği çukur boşluk.",
+    "hint": "Kıyıda dalgaların kayayı aşındırmasıyla oluşan girintiye de bu ad verilir.",
+    "topic": "doğa",
+    "difficulty": 1,
+    "rootText": "OYUK",
+    "rootId": "tr1_21dd603659c176238fe14644746f932b7ae68212d315416bf532a7c4cb4e9f4f",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=oyuk",
+      "meaningEvidence": "Oyulmuş, içi boş ve çukur yer.",
+      "hintEvidence": "TDK anlam notu içi boş ve çukur yeri tanımlar; yeni ana metin aynı anlamı kök sözcüğü kullanmadan anlatır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=oyuk",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/oyuk",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "2d898429d60f482865d21023021ca7976943ff5c0542dbd0c7f6fbcce4f6b4ca",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "2d898429d60f482865d21023021ca7976943ff5c0542dbd0c7f6fbcce4f6b4ca",
+      "rationale": "Hedef anlam: Oyulmuş, içi boş ve çukur yer. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Oyulmuş, içi boş ve çukur yer.\nTDK anlam notu içi boş ve çukur yeri tanımlar; yeni ana metin aynı anlamı kök sözcüğü kullanmadan anlatır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "DELİK",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [4]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q03",
+    "answer": "YANKI",
+    "answerId": "tr1_7eb3c545ae33d4167df2b9abc480ee6d197903cdb642bd89a8a07792465ee625",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q03_sense",
+    "meaning": "Sesin yansıtıcı yüzeyden dönmesiyle yeniden duyulması; mecazen bir olayın etkisi.",
+    "clue": "Duvara çarpıp geri dönen sesin ve bir olayın toplumda bıraktığı etkinin ortak adı.",
+    "hint": "Ses olayı, sert bir duvar ya da dağ yamacı gibi yüzeylerden geri dönüşle de duyulur.",
+    "topic": "ses",
+    "difficulty": 1,
+    "rootText": "YANKI",
+    "rootId": "tr1_7eb3c545ae33d4167df2b9abc480ee6d197903cdb642bd89a8a07792465ee625",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=yank%C4%B1",
+      "meaningEvidence": "Sesin yansıtıcı yüzeyden dönmesiyle yeniden duyulması; mecazen bir olayın etkisi.",
+      "hintEvidence": "Kaynak notu yansıyan sesin yeniden duyulması ile olayın bıraktığı etki anlamlarını ilişkilendirir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=yank%C4%B1",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/yank%C4%B1",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "418762700d5dd416485836642145039221f1ec4749ab0eaeea471973d557bca9",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "418762700d5dd416485836642145039221f1ec4749ab0eaeea471973d557bca9",
+      "rationale": "Hedef anlam: Sesin yansıtıcı yüzeyden dönmesiyle yeniden duyulması; mecazen bir olayın etkisi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Sesin yansıtıcı yüzeyden dönmesiyle yeniden duyulması; mecazen bir olayın etkisi.\nKaynak notu yansıyan sesin yeniden duyulması ile olayın bıraktığı etki anlamlarını ilişkilendirir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "SES YANSIMASI",
+          "reason": "Harf/kelime düzeni [3,9]; bu sorunun düzeni [5]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q04",
+    "answer": "DİKEN",
+    "answerId": "tr1_f604d1eb4ba205c568e8de87c9d1493021b4e71e86f3c001899ddbc3253bad6e",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q04_sense",
+    "meaning": "Sivri, batıcı ve sert çıkıntı.",
+    "clue": "Gül sapında eldivensiz tutmayı güçleştiren sivri ve batıcı çıkıntı.",
+    "hint": "Bu sivri çıkıntılar, bitkiyi otlayan hayvanlara karşı da koruyabilir.",
+    "topic": "doğa",
+    "difficulty": 1,
+    "rootText": "DİKEN",
+    "rootId": "tr1_f604d1eb4ba205c568e8de87c9d1493021b4e71e86f3c001899ddbc3253bad6e",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=diken",
+      "meaningEvidence": "Sivri, batıcı ve sert çıkıntı.",
+      "hintEvidence": "TDK anlam notu bitkideki sivri ve batıcı çıkıntıyı destekler; hayvanlara karşı korunma ayrıntısı bu tur yeniden doğrulanmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=diken",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/diken",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "bd02cf54abb5959bd09f62575a3d7cc4f988641171fed855e1c0065da1b85e67",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "bd02cf54abb5959bd09f62575a3d7cc4f988641171fed855e1c0065da1b85e67",
+      "rationale": "Hedef anlam: Sivri, batıcı ve sert çıkıntı. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Sivri, batıcı ve sert çıkıntı.\nTDK anlam notu bitkideki sivri ve batıcı çıkıntıyı destekler; hayvanlara karşı korunma ayrıntısı bu tur yeniden doğrulanmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "KIYMIK",
+          "reason": "Harf/kelime düzeni [6]; bu sorunun düzeni [5]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q05",
+    "answer": "MERMER",
+    "answerId": "tr1_fa7909b89bfee51d564f39c6c83082e79d52ce60a01f6868f7dc9c5cefd1eab7",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q05_sense",
+    "meaning": "Isı ve basınç etkisiyle yeniden kristalleşmiş, cilalanabilen kireç taşı.",
+    "clue": "Derinlerdeki ısı ve basınçla yeniden kristalleşmiş kireç taşından oluşan, cilalanabilen yapı taşı.",
+    "hint": "İşlenmiş yüzeyi parlatılabildiği için iç mekân kaplamasında ve heykelde kullanılabilir.",
+    "topic": "malzeme",
+    "difficulty": 3,
+    "rootText": "MERMER",
+    "rootId": "tr1_fa7909b89bfee51d564f39c6c83082e79d52ce60a01f6868f7dc9c5cefd1eab7",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://earthwise.bgs.ac.uk/index.php/Building_stones_of_Edinburgh:_geological_characteristics_of_building_stones",
+      "meaningEvidence": "BGS, gerçek mermeri yüksek sıcaklık etkisiyle yeniden kristalleşmiş kireç taşı olarak tanımlar; taşın kesilip parlatılabildiğini belirtir.",
+      "hintEvidence": "BGS, mermerin kesilip parlatılabildiğini ve dekoratif yüzeylerde kullanıldığını açıklar.",
+      "hintReference": "https://earthwise.bgs.ac.uk/index.php/Building_stones_of_Edinburgh:_geological_characteristics_of_building_stones",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "3227cac3a96bfec3f790045cb08713705ef0fc387ccdb526869d768816f511c6",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "3227cac3a96bfec3f790045cb08713705ef0fc387ccdb526869d768816f511c6",
+      "rationale": "Hedef anlam: Isı ve basınç etkisiyle yeniden kristalleşmiş, cilalanabilen kireç taşı. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "BGS, gerçek mermeri yüksek sıcaklık etkisiyle yeniden kristalleşmiş kireç taşı olarak tanımlar; taşın kesilip parlatılabildiğini belirtir.\nBGS, mermerin kesilip parlatılabildiğini ve dekoratif yüzeylerde kullanıldığını açıklar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "KALKER",
+          "reason": "Altı harfli ve cilalanabilir bir kireç taşıdır; yeniden kristalleşmiş olma koşulu onu dışarıda bırakır."
+        },
+        {
+          "answer": "GRANİT",
+          "reason": "Cilalanabilen bir yapı taşıdır ancak kireç taşının başkalaşmasıyla oluşmaz."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q06",
+    "answer": "KIVRIM",
+    "answerId": "tr1_1f93a4e8807d1199bc6775910437eea973b84bf15f8d547085dd0cae9599315f",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [
+      "BÜKLÜM"
+    ],
+    "meaningId": "initial_003_q06_sense",
+    "meaning": "Bükülmüş veya katlanmış şeylerde oluşan çizgi ve kat.",
+    "clue": "Yolun keskin dönüşünü anlatan sözcük, kumaşta oluşan kat çizgisi için de kullanılır.",
+    "hint": "Bir kâğıt buruşturulup açıldığında üzerinde kalan çizgi de bu sözcükle anlatılır.",
+    "topic": "giyim",
+    "difficulty": 2,
+    "rootText": "KIVRIM",
+    "rootId": "tr1_1f93a4e8807d1199bc6775910437eea973b84bf15f8d547085dd0cae9599315f",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=k%C4%B1vr%C4%B1m",
+      "meaningEvidence": "Önceki TDK anlam notu bükülmüş veya katlanmış şeylerde oluşan çizgi ve katı bildirir; bu revizyonda kaynak yeniden açılmadı.",
+      "hintEvidence": "İpucu, kağıtta katlanma izi örneğini verir; önceki TDK anlam notu çizgi ve kat anlamını destekler, fakat bu tur yeniden açılmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=k%C4%B1vr%C4%B1m",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/k%C4%B1vr%C4%B1m",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "551bfb517fbd1ae0cc95b669f5c29a3572db1e3358d83b4a11d3bda7eda8f6ec",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "551bfb517fbd1ae0cc95b669f5c29a3572db1e3358d83b4a11d3bda7eda8f6ec",
+      "rationale": "Hedef anlam: Bükülmüş veya katlanmış şeylerde oluşan çizgi ve kat. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi. Doğru eşdeğerler: BÜKLÜM.",
+      "sourceSupport": "Önceki TDK anlam notu bükülmüş veya katlanmış şeylerde oluşan çizgi ve katı bildirir; bu revizyonda kaynak yeniden açılmadı.\nİpucu, kağıtta katlanma izi örneğini verir; önceki TDK anlam notu çizgi ve kat anlamını destekler, fakat bu tur yeniden açılmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q07",
+    "answer": "SERAMİK",
+    "answerId": "tr1_20868804f28937c1b9c3c3ffb0c71c356b7ab64d2fbff9f0b6f201e8bd581607",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q07_sense",
+    "meaning": "Yüksek ısıda pişirilmiş kilden yapılan eşya veya bu malzeme türü.",
+    "clue": "Yüksek ısıda pişirilmiş kil ürünlerinin ve bu ürünlerin malzemesinin ortak adı.",
+    "hint": "Çömlek, fayans ve porselen bu geniş ürün grubuna girer.",
+    "topic": "zanaat",
+    "difficulty": 2,
+    "rootText": "SERAMİK",
+    "rootId": "tr1_20868804f28937c1b9c3c3ffb0c71c356b7ab64d2fbff9f0b6f201e8bd581607",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=seramik",
+      "meaningEvidence": "Yüksek ısıda pişirilmiş kilden yapılan eşya veya bu malzeme türü.",
+      "hintEvidence": "Kaynak notu yüksek ısıda pişmiş kil ürünlerini kapsar; çömlek, fayans ve porselen örnekleri önceki notta yer alır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=seramik",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/seramik",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "0819fd3aa1f55e3e72aeca2164962d9ffe16aa2c53844ef13a949e98510345e3",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "0819fd3aa1f55e3e72aeca2164962d9ffe16aa2c53844ef13a949e98510345e3",
+      "rationale": "Hedef anlam: Yüksek ısıda pişirilmiş kilden yapılan eşya veya bu malzeme türü. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Yüksek ısıda pişirilmiş kilden yapılan eşya veya bu malzeme türü.\nKaynak notu yüksek ısıda pişmiş kil ürünlerini kapsar; çömlek, fayans ve porselen örnekleri önceki notta yer alır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "PORSELEN",
+          "reason": "Harf/kelime düzeni [8]; bu sorunun düzeni [7]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q08",
+    "answer": "AĞIRLIK",
+    "answerId": "tr1_f427e0f8c8c0ffb84a8e394e920a9cf4a8254669b8c6ed211575cb5e58d02cba",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q08_sense",
+    "meaning": "Bir cismin ağırlık durumu veya tartıda ölçülen değeri; mecazen önem derecesi.",
+    "clue": "Bir cisme yer çekiminin uyguladığı kuvvetin ölçülen büyüklüğü.",
+    "hint": "Gündelik kullanımda bir konuya verilen önem payı için de aynı sözcük seçilir.",
+    "topic": "ölçüm",
+    "difficulty": 2,
+    "rootText": "AĞIRLIK",
+    "rootId": "tr1_f427e0f8c8c0ffb84a8e394e920a9cf4a8254669b8c6ed211575cb5e58d02cba",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=a%C4%9F%C4%B1rl%C4%B1k",
+      "meaningEvidence": "Bir cismin ağırlık durumu veya tartıda ölçülen değeri; mecazen önem derecesi.",
+      "hintEvidence": "Kaynak notu ağırlığı yer çekiminin cisme uyguladığı kuvvet olarak açıklar; önem anlamı ayrıca kayıtlıdır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=a%C4%9F%C4%B1rl%C4%B1k",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/a%C4%9F%C4%B1rl%C4%B1k",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "719d6d012b3f349e8dbf5aa76e8552225d019bfe546ddeeda322ece6ffb4e877",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "719d6d012b3f349e8dbf5aa76e8552225d019bfe546ddeeda322ece6ffb4e877",
+      "rationale": "Hedef anlam: Bir cismin ağırlık durumu veya tartıda ölçülen değeri; mecazen önem derecesi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Bir cismin ağırlık durumu veya tartıda ölçülen değeri; mecazen önem derecesi.\nKaynak notu ağırlığı yer çekiminin cisme uyguladığı kuvvet olarak açıklar; önem anlamı ayrıca kayıtlıdır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "KÜTLE",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [7]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q09",
+    "answer": "BAĞLANTI",
+    "answerId": "tr1_8fc8c1861ad25da07c3449ff58a7166f41e10aab592e94fd860e6462c2fffb60",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q09_sense",
+    "meaning": "İlişki ve bağ; ayrıca ulaşım, sözleşme ve bilişim alanlarında bağlantı.",
+    "clue": "İki kişi, yer ya da düşünce arasındaki ilişki; bazen ulaşım ağında bir hattan diğerine geçişi de anlatır.",
+    "hint": "Bilişimde iki cihaz arasındaki veri yoluna da bu ad verilir.",
+    "topic": "iletişim",
+    "difficulty": 2,
+    "rootText": "BAĞLANTI",
+    "rootId": "tr1_8fc8c1861ad25da07c3449ff58a7166f41e10aab592e94fd860e6462c2fffb60",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=ba%C4%9Flant%C4%B1",
+      "meaningEvidence": "İlişki ve bağ; ayrıca ulaşım, sözleşme ve bilişim alanlarında bağlantı.",
+      "hintEvidence": "Kaynak notunda ilişki ve ulaşım kullanımlarına ek olarak bilişim ağı kullanımı yer alır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=ba%C4%9Flant%C4%B1",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/ba%C4%9Flant%C4%B1",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "6a2ad5e3a856c1af88841922695edc8de480a7f1118c40d36fa603348d19739d",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "6a2ad5e3a856c1af88841922695edc8de480a7f1118c40d36fa603348d19739d",
+      "rationale": "Hedef anlam: İlişki ve bağ; ayrıca ulaşım, sözleşme ve bilişim alanlarında bağlantı. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "İlişki ve bağ; ayrıca ulaşım, sözleşme ve bilişim alanlarında bağlantı.\nKaynak notunda ilişki ve ulaşım kullanımlarına ek olarak bilişim ağı kullanımı yer alır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "İLİŞKİ",
+          "reason": "Harf/kelime düzeni [6]; bu sorunun düzeni [8]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q10",
+    "answer": "KALDIRIM",
+    "answerId": "tr1_6289146cd8fbb75c0689865082d6575a304a7b0cfd0a5f4a6e568c0e2e44a905",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q10_sense",
+    "meaning": "Yaya yolu; eski kullanımda taş döşeli yol.",
+    "clue": "Kentte yayaların taşıt yolundan ayrı yürüdüğü, kenarı çoğu kez taş döşeli bölüm.",
+    "hint": "Eski kullanımda taşla kaplanmış yolun bütünü için de söylenirdi.",
+    "topic": "kent yaşamı",
+    "difficulty": 1,
+    "rootText": "KALDIR",
+    "rootId": "tr1_60965c1d3c73de0cea4a0d69184e6f2cc57c81036242b6c7d95205759c34c870",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kald%C4%B1r%C4%B1m",
+      "meaningEvidence": "Yaya yolu; eski kullanımda taş döşeli yol.",
+      "hintEvidence": "TDK anlam notunda yaya yolu ve eski kullanımda taş döşeli yol açıklaması bulunur.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kald%C4%B1r%C4%B1m",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kald%C4%B1r%C4%B1m",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "2d91e9589a580ac19c124e2b43ed376875baf02ed1f057cf7e2dc6cec06799b1",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "2d91e9589a580ac19c124e2b43ed376875baf02ed1f057cf7e2dc6cec06799b1",
+      "rationale": "Hedef anlam: Yaya yolu; eski kullanımda taş döşeli yol. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Yaya yolu; eski kullanımda taş döşeli yol.\nTDK anlam notunda yaya yolu ve eski kullanımda taş döşeli yol açıklaması bulunur.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "YOL",
+          "reason": "Harf/kelime düzeni [3]; bu sorunun düzeni [8]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q11",
+    "answer": "KARŞILAMA",
+    "answerId": "tr1_cd895584460ef40ae4721c0dc784311cbd7a03a57785a3ef1cb9a06da38ac0cc",
+    "letterCount": 9,
+    "wordLengths": [
+      9
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q11_sense",
+    "meaning": "Birini kabul etme işi; ayrıca Trakya ve Marmara yörelerinde halk oyunu/müziği.",
+    "clue": "Trakya ve Marmara yörelerinde oynanan halk oyununun adı; gündelik dilde gelen kişiyi kabul etme eylemiyle de aynı sözcük kullanılır.",
+    "hint": "Trakya ve Marmara düğünlerinde oyun eşliğindeki ezgi için de aynı ad kullanılır.",
+    "topic": "toplum",
+    "difficulty": 1,
+    "rootText": "KARŞILA",
+    "rootId": "tr1_0139e4cff7ff3b7c411be204778b450a0b1f239b177de7faf9b297de2d7cefc2",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kar%C5%9F%C4%B1lama",
+      "meaningEvidence": "Birini kabul etme işi; ayrıca Trakya ve Marmara yörelerinde halk oyunu/müziği.",
+      "hintEvidence": "Kaynak notu Trakya ve Marmara yörelerindeki halk oyunu/müziği ile gelen kişiyi kabul etme eylemini aynı ad altında verir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kar%C5%9F%C4%B1lama",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kar%C5%9F%C4%B1lama",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "1bdf688fbb8828600bb49a659a781e27609f11f08407f7134d0e3ceb73d4e1a0",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "1bdf688fbb8828600bb49a659a781e27609f11f08407f7134d0e3ceb73d4e1a0",
+      "rationale": "Hedef anlam: Birini kabul etme işi; ayrıca Trakya ve Marmara yörelerinde halk oyunu/müziği. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Birini kabul etme işi; ayrıca Trakya ve Marmara yörelerinde halk oyunu/müziği.\nKaynak notu Trakya ve Marmara yörelerindeki halk oyunu/müziği ile gelen kişiyi kabul etme eylemini aynı ad altında verir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "SELAMLAMA",
+          "reason": "Dokuz harfli yakın eylemdir; yöresel halk oyununun adı olarak kullanılmaz."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q12",
+    "answer": "DÜZENLEME",
+    "answerId": "tr1_fec0c559be051cde12338382d976e18a86fa49f56cd6a30ee58ce336def9c37c",
+    "letterCount": 9,
+    "wordLengths": [
+      9
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q12_sense",
+    "meaning": "Bir şeyi belirli sıraya koyma eylemi veya ortaya çıkan tertip; müzikte uyarlama.",
+    "clue": "Bir metni yayıma hazırlarken parçalarını uygun sıraya koyma işi; etkinlik programı da bu yolla hazırlanır.",
+    "hint": "Müzikte bir eser farklı çalgılara göre yeniden yazıldığında da aynı işlem adı kullanılır.",
+    "topic": "iş",
+    "difficulty": 2,
+    "rootText": "DÜZEN",
+    "rootId": "tr1_7fe0fcf5954c98e784275f054c23874f2de564247c5e9b6cab591c07c8d288f1",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=d%C3%BCzenleme",
+      "meaningEvidence": "Bir şeyi belirli sıraya koyma eylemi veya ortaya çıkan tertip; müzikte uyarlama.",
+      "hintEvidence": "Kaynak notu metin veya programı sıraya koyma ile müzik eserini farklı çalgılara uyarlama anlamlarını kapsar.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=d%C3%BCzenleme",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/d%C3%BCzenleme",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "4ec309f66b4d500e537cd11264cecad98c86d3f47f889c6a1f136213a9667a50",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "4ec309f66b4d500e537cd11264cecad98c86d3f47f889c6a1f136213a9667a50",
+      "rationale": "Hedef anlam: Bir şeyi belirli sıraya koyma eylemi veya ortaya çıkan tertip; müzikte uyarlama. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Bir şeyi belirli sıraya koyma eylemi veya ortaya çıkan tertip; müzikte uyarlama.\nKaynak notu metin veya programı sıraya koyma ile müzik eserini farklı çalgılara uyarlama anlamlarını kapsar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "PLANLAMA",
+          "reason": "Harf/kelime düzeni [8]; bu sorunun düzeni [9]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q13",
+    "answer": "BAŞKALDIRI",
+    "answerId": "tr1_bdc1fd69fcb2f5a2f8977ef5c356765d65c1740a1bfcb2768494af2907717d27",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q13_sense",
+    "meaning": "Mevcut düzene veya devlet gücüne karşı gelme; emre uymayı reddetme.",
+    "clue": "Yerleşik siyasal düzene veya yönetime karşı açıkça karşı koyma eylemi.",
+    "hint": "Bir buyruğa itaat etmeyi reddetmek de sözcüğün kapsamındaki kullanımlardandır.",
+    "topic": "toplum",
+    "difficulty": 3,
+    "rootText": "BAŞKALDIR",
+    "rootId": "tr1_988f6068f2ebb40db47f75c71dbcb504816ac314fa716d1bfbe8966ad2895c5c",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=ba%C5%9Fkald%C4%B1r%C4%B1",
+      "meaningEvidence": "Mevcut düzene veya devlet gücüne karşı gelme; emre uymayı reddetme.",
+      "hintEvidence": "Kaynak notu siyasal düzene karşı gelme ve buyruğa uymayı reddetme anlamlarını içerir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=ba%C5%9Fkald%C4%B1r%C4%B1",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/ba%C5%9Fkald%C4%B1r%C4%B1",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "945eed55eedab8bfd6a6df14254db38f3e1f4e28a237d2278a7f92b04eff38c0",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "945eed55eedab8bfd6a6df14254db38f3e1f4e28a237d2278a7f92b04eff38c0",
+      "rationale": "Hedef anlam: Mevcut düzene veya devlet gücüne karşı gelme; emre uymayı reddetme. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Mevcut düzene veya devlet gücüne karşı gelme; emre uymayı reddetme.\nKaynak notu siyasal düzene karşı gelme ve buyruğa uymayı reddetme anlamlarını içerir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "İSYAN",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [10]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_003_q14",
+    "answer": "GELİŞTİRME",
+    "answerId": "tr1_6a0003304c379f34b09a42de49dc711b47a705b3e3c382f5f8d7760d2dc88264",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_003_q14_sense",
+    "meaning": "Bir şeyi daha ileri hâle getirme eylemi; araştırmayla ürün ya da işin iyileştirilmesi.",
+    "clue": "Bir taslağın işe yarar, olgun bir ürüne dönüşmesi için yapılan çalışma.",
+    "hint": "Ar-Ge sırasında mevcut ürünün niteliğini artırma işi de aynı kapsamda anılır.",
+    "topic": "üretim",
+    "difficulty": 2,
+    "rootText": "GELİŞTİR",
+    "rootId": "tr1_1e230a5660963ec9320fc3585fede812b1a7f5045656d38669fd6cb66b97555e",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=geli%C5%9Ftirme",
+      "meaningEvidence": "Bir şeyi daha ileri hâle getirme eylemi; araştırmayla ürün ya da işin iyileştirilmesi.",
+      "hintEvidence": "Kaynak notu bir şeyi daha ileri hâle getirme ve araştırmayla ürün niteliğini artırma anlamlarını destekler.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=geli%C5%9Ftirme",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/geli%C5%9Ftirme",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_003"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "9a6453c9a7477693f894b343620e465505e867e7969d635b123ee6785b4d1530",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "9a6453c9a7477693f894b343620e465505e867e7969d635b123ee6785b4d1530",
+      "rationale": "Hedef anlam: Bir şeyi daha ileri hâle getirme eylemi; araştırmayla ürün ya da işin iyileştirilmesi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Bir şeyi daha ileri hâle getirme eylemi; araştırmayla ürün ya da işin iyileştirilmesi.\nKaynak notu bir şeyi daha ileri hâle getirme ve araştırmayla ürün niteliğini artırma anlamlarını destekler.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "İYİLEŞTİRME",
+          "reason": "Harf/kelime düzeni [11]; bu sorunun düzeni [10]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q01",
+    "answer": "YAKA",
+    "answerId": "tr1_c49fbdf0ea1460be52948a8cbf511a007aa190d64de44ad6f3f499c23c44dc3d",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q01_sense",
+    "meaning": "Giysinin boyun çevresindeki parçası; ayrıca bir taraf veya kıyı bölümü.",
+    "clue": "Gömleğin boynu çevreleyen, kıvrılıp kaldırılabilen parçası.",
+    "hint": "Boğazın iki yanında kalan bölgeler için de bu sözcük kullanılır.",
+    "topic": "giyim",
+    "difficulty": 1,
+    "rootText": "YAKA",
+    "rootId": "tr1_c49fbdf0ea1460be52948a8cbf511a007aa190d64de44ad6f3f499c23c44dc3d",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=yaka",
+      "meaningEvidence": "Giysinin boyun çevresindeki parçası; ayrıca bir taraf veya kıyı bölümü.",
+      "hintEvidence": "TDK anlam notunda giysinin boyun parçası yanında taraf veya kıyı bölümü kullanımı da bulunur.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=yaka",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/yaka",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "3615cca6f82fc26bde2e8db3b92d952a3c539df51e009fd62eae6a97381893f0",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "3615cca6f82fc26bde2e8db3b92d952a3c539df51e009fd62eae6a97381893f0",
+      "rationale": "Hedef anlam: Giysinin boyun çevresindeki parçası; ayrıca bir taraf veya kıyı bölümü. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Giysinin boyun çevresindeki parçası; ayrıca bir taraf veya kıyı bölümü.\nTDK anlam notunda giysinin boyun parçası yanında taraf veya kıyı bölümü kullanımı da bulunur.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "MANŞET",
+          "reason": "Harf/kelime düzeni [6]; bu sorunun düzeni [4]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q02",
+    "answer": "ÇAPA",
+    "answerId": "tr1_d395846292a8db543e3033c869f9e4f39e1c5739139edf876e17e4da4bbc0c5c",
+    "letterCount": 4,
+    "wordLengths": [
+      4
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q02_sense",
+    "meaning": "Toprağı işlemek için kullanılan alet; ayrıca bu aletle yapılan iş.",
+    "clue": "Bahçe toprağının üst katmanını gevşetip aradaki yabani otları ayıklamaya yarayan el aleti.",
+    "hint": "Aletin adı, onunla yapılan yüzeysel toprak işleme işi için de kullanılır.",
+    "topic": "bahçe",
+    "difficulty": 1,
+    "rootText": "ÇAPA",
+    "rootId": "tr1_d395846292a8db543e3033c869f9e4f39e1c5739139edf876e17e4da4bbc0c5c",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=%C3%A7apa",
+      "meaningEvidence": "Toprağı işlemek için kullanılan alet; ayrıca bu aletle yapılan iş.",
+      "hintEvidence": "Kaynak notu toprağı işleyen alet ile bu aletle yapılan işi aynı adla açıklar.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=%C3%A7apa",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/%C3%A7apa",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "9edeec12d2154d7efec260e800660ca0c16534c744d9e4fd815561688a696937",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "9edeec12d2154d7efec260e800660ca0c16534c744d9e4fd815561688a696937",
+      "rationale": "Hedef anlam: Toprağı işlemek için kullanılan alet; ayrıca bu aletle yapılan iş. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Toprağı işlemek için kullanılan alet; ayrıca bu aletle yapılan iş.\nKaynak notu toprağı işleyen alet ile bu aletle yapılan işi aynı adla açıklar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "KÜREK",
+          "reason": "Harf/kelime düzeni [5]; bu sorunun düzeni [4]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q03",
+    "answer": "KİLİM",
+    "answerId": "tr1_1f841fc5593224b6f8267c24a91b88c82d42fc6a75eba89a8ffded643aa7a882",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q03_sense",
+    "meaning": "Yün veya kıldan düz dokunan yer örtüsü.",
+    "clue": "Yere serilen, havsız ve düz dokunan geleneksel yün ya da kıl örtüsü.",
+    "hint": "Göçebe topluluklarda kız çeyizi için daha süslü türleri dokunmuştur.",
+    "topic": "dokuma",
+    "difficulty": 2,
+    "rootText": "KİLİM",
+    "rootId": "tr1_1f841fc5593224b6f8267c24a91b88c82d42fc6a75eba89a8ffded643aa7a882",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kilim",
+      "meaningEvidence": "Yün veya kıldan düz dokunan yer örtüsü.",
+      "hintEvidence": "TDK anlam notunda yün veya kıldan düz dokunan yer örtüsü açıklaması bulunur; çeyiz ayrıntısı bu tur yeniden doğrulanmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kilim",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kilim",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "9299b4ec6ec2193513aeb1e2dae9ec0522ea7f29b5a637021786a28fd43c9593",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "9299b4ec6ec2193513aeb1e2dae9ec0522ea7f29b5a637021786a28fd43c9593",
+      "rationale": "Hedef anlam: Yün veya kıldan düz dokunan yer örtüsü. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Yün veya kıldan düz dokunan yer örtüsü.\nTDK anlam notunda yün veya kıldan düz dokunan yer örtüsü açıklaması bulunur; çeyiz ayrıntısı bu tur yeniden doğrulanmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "HALI",
+          "reason": "Harf/kelime düzeni [4]; bu sorunun düzeni [5]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q04",
+    "answer": "LİMAN",
+    "answerId": "tr1_5cf548ddbfed9524da4a4278761ed69214b9a9a2fbf3cb5741c4f474aae7edd6",
+    "letterCount": 5,
+    "wordLengths": [
+      5
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q04_sense",
+    "meaning": "Gemilerin konakladığı, yük ve yolcu işlemleri yaptığı deniz tesisi.",
+    "clue": "Geminin fırtınada barınabildiği, yolcu ve yük işlemlerinin yapıldığı kıyı tesisi.",
+    "hint": "Deniz haritalarında bu tür tesisler, gemiler için güvenli yanaşma alanı olarak gösterilir.",
+    "topic": "denizcilik",
+    "difficulty": 1,
+    "rootText": "LİMAN",
+    "rootId": "tr1_5cf548ddbfed9524da4a4278761ed69214b9a9a2fbf3cb5741c4f474aae7edd6",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=liman",
+      "meaningEvidence": "Gemilerin konakladığı, yük ve yolcu işlemleri yaptığı deniz tesisi.",
+      "hintEvidence": "Kaynak notu gemilerin konaklama, yük ve yolcu işlemlerini kapsayan deniz tesisini açıklar.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=liman",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/liman",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "0fd34d6dd2beac64976cb3deee37812e4858b2224fca50dc6601fe42f073a448",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "0fd34d6dd2beac64976cb3deee37812e4858b2224fca50dc6601fe42f073a448",
+      "rationale": "Hedef anlam: Gemilerin konakladığı, yük ve yolcu işlemleri yaptığı deniz tesisi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Gemilerin konakladığı, yük ve yolcu işlemleri yaptığı deniz tesisi.\nKaynak notu gemilerin konaklama, yük ve yolcu işlemlerini kapsayan deniz tesisini açıklar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "İSKELE",
+          "reason": "Harf/kelime düzeni [6]; bu sorunun düzeni [5]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q05",
+    "answer": "GÖZLÜK",
+    "answerId": "tr1_9771f42f4c5d68816783624cb442968faf51ece428cc09352bfe100d4c44d165",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q05_sense",
+    "meaning": "Görme ya da koruma amacı taşıyan çerçeveli optik araç.",
+    "clue": "Yüzde taşınan, iki ayrı camı aynı çerçevede birleştirip görmeyi düzelten araç.",
+    "hint": "Atlarda yan görüşü sınırlayan ve dalışta su altına yardımcı olan özel türleri vardır.",
+    "topic": "sağlık",
+    "difficulty": 1,
+    "rootText": "GÖZ",
+    "rootId": "tr1_2f44066212086a338e748f2e57d6312164f34adc51ec3d873e04489e17f54868",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=g%C3%B6zl%C3%BCk",
+      "meaningEvidence": "Görme ya da koruma amacı taşıyan çerçeveli optik araç.",
+      "hintEvidence": "TDK anlam notu iki camlı optik araç yanında atlarda yan görüşü sınırlayan ve dalışta kullanılan türleri sayar.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=g%C3%B6zl%C3%BCk",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/g%C3%B6zl%C3%BCk",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "b5040682946df6c3e1a0f01a6ed59f8220d68a846ae32808e5d586796331abcc",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "b5040682946df6c3e1a0f01a6ed59f8220d68a846ae32808e5d586796331abcc",
+      "rationale": "Hedef anlam: Görme ya da koruma amacı taşıyan çerçeveli optik araç. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Görme ya da koruma amacı taşıyan çerçeveli optik araç.\nTDK anlam notu iki camlı optik araç yanında atlarda yan görüşü sınırlayan ve dalışta kullanılan türleri sayar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "MONOKL",
+          "reason": "Altı harfli rakiptir fakat tek göz için kullanılır; soru iki camlı aracı tarif ediyor."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q06",
+    "answer": "MANTIK",
+    "answerId": "tr1_1e25623978933c06628a1b5012166c4e21a9d8ea7763e253bf081b26714f9534",
+    "letterCount": 6,
+    "wordLengths": [
+      6
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q06_sense",
+    "meaning": "Doğru düşünmenin bilim ve sanatı; doğru düşünme yöntemi.",
+    "clue": "Doğru akıl yürütmenin kurallarını inceleyen felsefe alanı.",
+    "hint": "Çıkarımda bir sonucun öncüllerden zorunlu çıkıp çıkmadığını da bu alan inceler.",
+    "topic": "felsefe",
+    "difficulty": 2,
+    "rootText": "MANTIK",
+    "rootId": "tr1_1e25623978933c06628a1b5012166c4e21a9d8ea7763e253bf081b26714f9534",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=mant%C4%B1k",
+      "meaningEvidence": "Doğru düşünmenin bilim ve sanatı; doğru düşünme yöntemi.",
+      "hintEvidence": "Kaynak notunda doğru düşünmenin bilim ve sanatı ile doğru düşünme yöntemi anlamları bulunur.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=mant%C4%B1k",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/mant%C4%B1k",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "aa3afadca8ab6bcf5dd4f5d18fa1e06755b6fc89032734c0d8d33262487474c1",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "aa3afadca8ab6bcf5dd4f5d18fa1e06755b6fc89032734c0d8d33262487474c1",
+      "rationale": "Hedef anlam: Doğru düşünmenin bilim ve sanatı; doğru düşünme yöntemi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Doğru düşünmenin bilim ve sanatı; doğru düşünme yöntemi.\nKaynak notunda doğru düşünmenin bilim ve sanatı ile doğru düşünme yöntemi anlamları bulunur.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "AKIL",
+          "reason": "Harf/kelime düzeni [4]; bu sorunun düzeni [6]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q07",
+    "answer": "KARINCA",
+    "answerId": "tr1_033bc470cda6d8e5484e4d6a25e7ec3a0e8022506156eee1ab4f9b228aab6903",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q07_sense",
+    "meaning": "Toprak altında yaşayan toplumsal böcek; ayrıca dökümde küçük boşluk.",
+    "clue": "Toprak altındaki yuvasında koloni hâlinde yaşayan küçük işçi böcek.",
+    "hint": "Döküm sırasında metal yüzeyde oluşan küçük boşluklar için de aynı sözcük kullanılır.",
+    "topic": "doğa",
+    "difficulty": 1,
+    "rootText": "KARINCA",
+    "rootId": "tr1_033bc470cda6d8e5484e4d6a25e7ec3a0e8022506156eee1ab4f9b228aab6903",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kar%C4%B1nca",
+      "meaningEvidence": "Toprak altında yaşayan toplumsal böcek; ayrıca dökümde küçük boşluk.",
+      "hintEvidence": "TDK anlam notu toplumsal böceğin yanında döküm yüzeyindeki küçük boşluk için de bu adı kullanır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kar%C4%B1nca",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kar%C4%B1nca",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "3bc1d59f18b0262827b01569754f23a546a0a710d167312af644b1bc50420ee7",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "3bc1d59f18b0262827b01569754f23a546a0a710d167312af644b1bc50420ee7",
+      "rationale": "Hedef anlam: Toprak altında yaşayan toplumsal böcek; ayrıca dökümde küçük boşluk. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Toprak altında yaşayan toplumsal böcek; ayrıca dökümde küçük boşluk.\nTDK anlam notu toplumsal böceğin yanında döküm yüzeyindeki küçük boşluk için de bu adı kullanır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "TERMİT",
+          "reason": "Harf/kelime düzeni [6]; bu sorunun düzeni [7]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q08",
+    "answer": "GELENEK",
+    "answerId": "tr1_4f48cee9915beca76f6a3ad4a70bee09a9de41561068478e11f4ff03067e01f8",
+    "letterCount": 7,
+    "wordLengths": [
+      7
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [
+      "GÖRENEK"
+    ],
+    "meaningId": "initial_004_q08_sense",
+    "meaning": "Kuşaklar arasında aktarılan uygulama ve alışkanlık; topluluğun kültür mirası.",
+    "clue": "Atalardan devralındığı için toplumda saygın tutulan, ortak yaşamı düzenleyip kuşaklara aktarılan kültürel uygulama.",
+    "hint": "Bayramda her yıl yinelenen ortak uygulamalar buna örnek olabilir.",
+    "topic": "kültür",
+    "difficulty": 2,
+    "rootText": "GELENE",
+    "rootId": "tr1_fa1bcb5374d3afafd0b4bda83835b62d0a301bf77b32731350ebd99e14033284",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=gelenek",
+      "meaningEvidence": "Kuşaklar arasında aktarılan uygulama ve alışkanlık; topluluğun kültür mirası.",
+      "hintEvidence": "Kaynak notu kuşaklar arasında aktarılan uygulama ve alışkanlığı kültür mirası bağlamında açıklar.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=gelenek",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/gelenek",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "119200732fb5152a6160cbf333b8b647e40b510c97046e8ae812fce80932217b",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "119200732fb5152a6160cbf333b8b647e40b510c97046e8ae812fce80932217b",
+      "rationale": "Hedef anlam: Kuşaklar arasında aktarılan uygulama ve alışkanlık; topluluğun kültür mirası. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi. Doğru eşdeğerler: GÖRENEK.",
+      "sourceSupport": "Kuşaklar arasında aktarılan uygulama ve alışkanlık; topluluğun kültür mirası.\nKaynak notu kuşaklar arasında aktarılan uygulama ve alışkanlığı kültür mirası bağlamında açıklar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q09",
+    "answer": "YALINLIK",
+    "answerId": "tr1_af92e337329759ad2bc624786406489d7c720be8304392268af539b2d68f5407",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q09_sense",
+    "meaning": "Basit ve bileşik olmayan durum; edebiyatta açık, kolay anlaşılır anlatım niteliği.",
+    "clue": "Bir öykünün süs ve gösterişten kaçınıp açık, kolay anlaşılır cümlelerle kurulma niteliği.",
+    "hint": "Edebiyat dışındaki kullanımında, bir yapının bileşik ya da karmaşık olmama niteliğini anlatır.",
+    "topic": "edebiyat",
+    "difficulty": 2,
+    "rootText": "YALIN",
+    "rootId": "tr1_e588715c82a822ec0924c9b88e0f7fb22d29a1083d8aebe9f0d747db07af6351",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=yal%C4%B1nl%C4%B1k",
+      "meaningEvidence": "Basit ve bileşik olmayan durum; edebiyatta açık, kolay anlaşılır anlatım niteliği.",
+      "hintEvidence": "Kaynak notunda edebî açık anlatım ile bileşik veya karmaşık olmama anlamları yer alır.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=yal%C4%B1nl%C4%B1k",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/yal%C4%B1nl%C4%B1k",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "24120e28776f2f0fbaf67565796e9746cf06bdef45017c7994c3bd5148ef5f5e",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "24120e28776f2f0fbaf67565796e9746cf06bdef45017c7994c3bd5148ef5f5e",
+      "rationale": "Hedef anlam: Basit ve bileşik olmayan durum; edebiyatta açık, kolay anlaşılır anlatım niteliği. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Basit ve bileşik olmayan durum; edebiyatta açık, kolay anlaşılır anlatım niteliği.\nKaynak notunda edebî açık anlatım ile bileşik veya karmaşık olmama anlamları yer alır.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "SADELİK",
+          "reason": "Harf/kelime düzeni [7]; bu sorunun düzeni [8]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q10",
+    "answer": "KÜLTÜREL",
+    "answerId": "tr1_8a0c5d7248ced568be2176df2838765c7c355967386a0cacb6d39f55d3ada67d",
+    "letterCount": 8,
+    "wordLengths": [
+      8
+    ],
+    "answerType": "word",
+    "grammaticalType": "adjective",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q10_sense",
+    "meaning": "Kültürle ilgili, kültüre ilişkin.",
+    "clue": "Bir toplumun ortak sanat, dil ve düşünce yaşamıyla ilgili sıfat.",
+    "hint": "Bir müze koleksiyonunun ortak geçmişi yansıtan özellikleri bu sıfatla nitelenebilir.",
+    "topic": "kültür",
+    "difficulty": 1,
+    "rootText": "KÜLTÜR",
+    "rootId": "tr1_83ce268767a989304938e343752dc8a0ae65566c5caa3ff6f6c735d7bd56fcae",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=k%C3%BClt%C3%BCrel",
+      "meaningEvidence": "Kültürle ilgili, kültüre ilişkin.",
+      "hintEvidence": "TDK anlam notu kültürle ilgili olmayı belirtir; müze koleksiyonu örneği bu anlamın özgün bir bağlamıdır, kaynak bu tur yeniden açılmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=k%C3%BClt%C3%BCrel",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/k%C3%BClt%C3%BCrel",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "629931468123db2362e15f18254655f08aa7072604ef1c2ba34e1f91c1e3d91a",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "629931468123db2362e15f18254655f08aa7072604ef1c2ba34e1f91c1e3d91a",
+      "rationale": "Hedef anlam: Kültürle ilgili, kültüre ilişkin. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Kültürle ilgili, kültüre ilişkin.\nTDK anlam notu kültürle ilgili olmayı belirtir; müze koleksiyonu örneği bu anlamın özgün bir bağlamıdır, kaynak bu tur yeniden açılmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "TOPLUMSAL",
+          "reason": "Harf/kelime düzeni [9]; bu sorunun düzeni [8]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q11",
+    "answer": "SERAMİKÇİ",
+    "answerId": "tr1_1fbde09b0cf7c804e11660fc3b3c4e6ab740f763b4e251ee94687c1dfbda1b46",
+    "letterCount": 9,
+    "wordLengths": [
+      9
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q11_sense",
+    "meaning": "Seramik işiyle uğraşan kişi.",
+    "clue": "Pişmiş topraktan eşya veya sanat ürünü yapan zanaat insanı.",
+    "hint": "Bu zanaat dalında kap-kacak dışında karo ve dekoratif parçalar da üretilir.",
+    "topic": "zanaat",
+    "difficulty": 2,
+    "rootText": "SERAMİK",
+    "rootId": "tr1_20868804f28937c1b9c3c3ffb0c71c356b7ab64d2fbff9f0b6f201e8bd581607",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=seramik%C3%A7i",
+      "meaningEvidence": "Seramik işiyle uğraşan kişi.",
+      "hintEvidence": "Kaynak notu seramik işiyle uğraşan kişiyi tanımlar; karo ve dekoratif parça örnekleri bu tur yeniden doğrulanmadı.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=seramik%C3%A7i",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/seramik%C3%A7i",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "45e5524e7b2b727e5c99dfd51ca3fef6f981ba2f0985870c2e6a81789e55b364",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "45e5524e7b2b727e5c99dfd51ca3fef6f981ba2f0985870c2e6a81789e55b364",
+      "rationale": "Hedef anlam: Seramik işiyle uğraşan kişi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Seramik işiyle uğraşan kişi.\nKaynak notu seramik işiyle uğraşan kişiyi tanımlar; karo ve dekoratif parça örnekleri bu tur yeniden doğrulanmadı.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "ÇÖMLEKÇİ",
+          "reason": "Harf/kelime düzeni [8]; bu sorunun düzeni [9]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q12",
+    "answer": "KATILIMCI",
+    "answerId": "tr1_9712adaee3015f08febfa9edc0d285ae57ddb40936c37281681dcbd33c3184a0",
+    "letterCount": 9,
+    "wordLengths": [
+      9
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q12_sense",
+    "meaning": "Bir etkinlikte hazır bulunan; konuşmacı, dinleyici ve diğer rolleri kapsayabilen kişi.",
+    "clue": "Bir konferans ya da atölye programında yeri bulunan kişi; konuşmacı, dinleyici ve uygulama yapanları kapsayan genel ad.",
+    "hint": "Programda bu rolde bulunan kişi, etkinliğin türüne göre konuşabilir, dinleyebilir ya da uygulama yapabilir.",
+    "topic": "toplum",
+    "difficulty": 2,
+    "rootText": "KATIL",
+    "rootId": "tr1_d77adf9969b94590d9abb571ca2d4e06160219d1a04fa3e0771799842d56c2b2",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=kat%C4%B1l%C4%B1mc%C4%B1",
+      "meaningEvidence": "Önceki TDK anlam notu bir etkinlikte bulunan kişi veya kuruluşu ve konferansta konuşabilen kişiyi kapsar; yeni metin genel rolü anlatır, bu tur yeniden okunmadı.",
+      "hintEvidence": "Kaynak notu etkinlikte bulunan kişi veya kuruluşu ve konferansta konuşabilen kişiyi kapsar; yeni metin genel etkinlik rolünü açıklar.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=kat%C4%B1l%C4%B1mc%C4%B1",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/kat%C4%B1l%C4%B1mc%C4%B1",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "0613f561c07b159ba6ff1fb653227848d172314aa1592dc6e3b4bda53f7a83c6",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "0613f561c07b159ba6ff1fb653227848d172314aa1592dc6e3b4bda53f7a83c6",
+      "rationale": "Hedef anlam: Bir etkinlikte hazır bulunan; konuşmacı, dinleyici ve diğer rolleri kapsayabilen kişi. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Önceki TDK anlam notu bir etkinlikte bulunan kişi veya kuruluşu ve konferansta konuşabilen kişiyi kapsar; yeni metin genel rolü anlatır, bu tur yeniden okunmadı.\nKaynak notu etkinlikte bulunan kişi veya kuruluşu ve konferansta konuşabilen kişiyi kapsar; yeni metin genel etkinlik rolünü açıklar.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "KONUŞMACI",
+          "reason": "Dokuz harfli ve konferans rolüdür; yeni metin bu rolün yanında dinleyici ve atölye rollerini de kapsayan genel adı soruyor."
+        },
+        {
+          "answer": "DİNLEYİCİ",
+          "reason": "Dokuz harfli ama etkinlikteki rollerden yalnız birini anlatır; konuşmacı ve uygulama yapanları kapsamaz."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q13",
+    "answer": "KONUKSEVER",
+    "answerId": "tr1_a8be64df781005798cab3a04c9102b3062617f7fd7b1167e2a8b156f4fe7afe5",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "adjective",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q13_sense",
+    "meaning": "Konuk ağırlamayı seven, konuğa iyi davranan.",
+    "clue": "Misafir ağırlamayı seven, eve gelen kişiye iyi davranan ev sahibinin niteliği.",
+    "hint": "Bir topluluğun ziyaretçilere sıcak yaklaşımı için de aynı nitelik söylenebilir.",
+    "topic": "toplum",
+    "difficulty": 3,
+    "rootText": "KONUK",
+    "rootId": "tr1_2d7b3ed8b83840ee4e192c5d908d7803021bb4921b0d7fecd2ba7b62c19d7dd3",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=konuksever",
+      "meaningEvidence": "Önceki TDK anlam notu konuğu ağırlamayı seven ve konuğuna iyi davranan kimseyi niteler; bu tur yeniden okunmadı.",
+      "hintEvidence": "TDK anlam notu konuğu ağırlamayı seven ve konuğa iyi davranan kişiyi niteler.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=konuksever",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/konuksever",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "22d70221bcc9c14c66f208a30b81156f80d69cb7cd467252961c24d4bfb7ef87",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "22d70221bcc9c14c66f208a30b81156f80d69cb7cd467252961c24d4bfb7ef87",
+      "rationale": "Hedef anlam: Konuk ağırlamayı seven, konuğa iyi davranan. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "Önceki TDK anlam notu konuğu ağırlamayı seven ve konuğuna iyi davranan kimseyi niteler; bu tur yeniden okunmadı.\nTDK anlam notu konuğu ağırlamayı seven ve konuğa iyi davranan kişiyi niteler.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "MİSAFİRPERVER",
+          "reason": "Harf/kelime düzeni [13]; bu sorunun düzeni [10]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  },
+  {
+    "id": "initial_004_q14",
+    "answer": "YÜREKLİLİK",
+    "answerId": "tr1_f2a3b22bd39af0bdbab7c39c939eb27f20fca33461374d341b8a1ba5c3143258",
+    "letterCount": 10,
+    "wordLengths": [
+      10
+    ],
+    "answerType": "word",
+    "grammaticalType": "noun",
+    "acceptedAnswers": [],
+    "meaningId": "initial_004_q14_sense",
+    "meaning": "Cesur ve yiğit olma durumu.",
+    "clue": "Güçlük veya tehlike karşısında geri çekilmeden davranabilme niteliği.",
+    "hint": "Korku hissetmemek şart değildir; zor durumda adım atabilmek bu niteliği gösterebilir.",
+    "topic": "kişilik",
+    "difficulty": 3,
+    "rootText": "YÜREKLİ",
+    "rootId": "tr1_a7cab6dcda2d5ed71b123377214ba43dd08bc3384582d060295887a0824f4d8c",
+    "relatedAnswerIds": [],
+    "origin": "production",
+    "source": {
+      "reference": "https://sozluk.gov.tr/gts?ara=y%C3%BCreklilik",
+      "meaningEvidence": "TDK maddesi yürekliliği yürekli olma durumu olarak tanımlar; burada yalnız cesur ve yiğit olma anlamı kullanılmıştır.",
+      "hintEvidence": "İpucu, korkunun bulunabileceğini kabul edip zor durumda harekete geçme örneği verir; bu, cesur olma anlamının editoryal örneğidir.",
+      "hintReference": "https://sozluk.gov.tr/gts?ara=y%C3%BCreklilik",
+      "retrievedAt": "2026-10-15",
+      "verificationStatus": "verified",
+      "rights": "original",
+      "inheritedVerification": {
+        "from": "luna_pilot_001.exchange.json",
+        "reportedStatus": "verified",
+        "retrievedAt": "2026-10-15",
+        "reference": "https://sozluk.gov.tr/kelime/y%C3%BCreklilik",
+        "scope": "Original headword/source verification retained. Current meanings and hints received editorial semantic review; no fresh lookup of all entries claimed."
+      },
+      "verificationOrigin": "original-pilot-inherited",
+      "termsReference": "Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used."
+    },
+    "generation": {
+      "method": "chat-authored-exchange",
+      "batchId": "initial_002_004_approved_20261015",
+      "setId": "initial_004"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "Codex — Türkçe editör öz incelemesi",
+      "reviewedAtMs": 1792091485219,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true,
+        "hintConsistency": true,
+        "hintNoLeak": true
+      },
+      "digest": "a85734c16626205045c885a8207f0643eb6d580f68ccbdd5ab21396c047d55c8",
+      "kind": "ai-self-review",
+      "model": "Codex current session (no separate model API request)",
+      "contentDigest": "a85734c16626205045c885a8207f0643eb6d580f68ccbdd5ab21396c047d55c8",
+      "rationale": "Hedef anlam: Cesur ve yiğit olma durumu. Son soru ve ipucu dil bilgisi, anlam ve kök sızıntısı bakımından incelendi.",
+      "sourceSupport": "TDK maddesi yürekliliği yürekli olma durumu olarak tanımlar; burada yalnız cesur ve yiğit olma anlamı kullanılmıştır.\nİpucu, korkunun bulunabileceğini kabul edip zor durumda harekete geçme örneği verir; bu, cesur olma anlamının editoryal örneğidir.",
+      "alternativePolicy": "allow-synonyms",
+      "alternativesRejected": [
+        {
+          "answer": "CESARET",
+          "reason": "Harf/kelime düzeni [7]; bu sorunun düzeni [10]. Eş anlamlı olmak tek başına ret sebebi değildir."
+        }
+      ],
+      "sourceVerificationScope": "Original pilot source evidence retained; no claim of re-fetching every TDK entry."
+    },
+    "publication": "unpublished"
+  }
+]

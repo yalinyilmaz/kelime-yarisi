@@ -14,6 +14,7 @@ import '../widgets/room_code_card.dart';
 import '../widgets/room_countdown_card.dart';
 import '../widgets/room_empty_player_tile.dart';
 import '../widgets/room_player_tile.dart';
+import 'question_capacity_card.dart';
 
 class RoomLobbyView extends StatelessWidget {
   const RoomLobbyView({super.key});
@@ -78,6 +79,13 @@ class RoomLobbyView extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(gutter, 8, gutter, 32),
                         children: [
                           RoomCodeCard(room: room),
+                          if (state.questionCapacity != null) ...[
+                            const SizedBox(height: 16),
+                            QuestionCapacityCard(
+                              capacity: state.questionCapacity!,
+                              collective: state.collectiveCapacity,
+                            ),
+                          ],
                           if (room.status == RoomStatus.countdown) ...[
                             const SizedBox(height: 16),
                             RoomCountdownCard(

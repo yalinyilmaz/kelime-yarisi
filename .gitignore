@@ -56,3 +56,12 @@ app.*.map.json
 /ios/config/dev/GoogleService-Info.plist
 /ios/config/prod/GoogleService-Info.plist
 /firebase-debug.log
+/functions/node_modules/
+/.firebase/
+/functions/.env
+/functions/.env.*
+/.local/
+/.env
+/.env.*
+/content/*.lock
+/content/*.tmp

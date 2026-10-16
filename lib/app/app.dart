@@ -7,7 +7,9 @@ import '../features/room/data/firebase_room_service.dart';
 import 'app_router.dart';
 
 class KelimeYarisiApp extends StatefulWidget {
-  const KelimeYarisiApp({super.key});
+  const KelimeYarisiApp({super.key, this.roomService});
+
+  final FirebaseRoomService? roomService;
 
   @override
   State<KelimeYarisiApp> createState() => _KelimeYarisiAppState();
@@ -25,7 +27,7 @@ class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (_) => FirebaseRoomService(),
+      create: (_) => widget.roomService ?? FirebaseRoomService(),
       child: MaterialApp.router(
         title: 'Kelime Yarışı',
         debugShowCheckedModeBanner: false,

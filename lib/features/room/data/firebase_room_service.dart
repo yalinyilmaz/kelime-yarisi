@@ -1,9 +1,14 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import '../../../core/config/question_environment.dart';
 import '../../game/data/question_bank.dart';
+import '../../game/data/question_history_store.dart';
+import '../../game/domain/game_question.dart';
+import '../../game/domain/question_capacity.dart';
 import '../../game/domain/game_progress.dart';
 import '../../game/domain/shared_hints.dart';
 import '../domain/entities/game_room.dart';
@@ -17,13 +22,21 @@ class FirebaseRoomService {
     FirebaseAuth? auth,
     FirebaseDatabase? database,
     RoomCodeGenerator? codeGenerator,
+    this.functions,
+    QuestionHistoryStore? questionHistory,
   }) : _auth = auth ?? FirebaseAuth.instance,
        _database = database ?? FirebaseDatabase.instance,
-       _codeGenerator = codeGenerator ?? RoomCodeGenerator();
+       _codeGenerator = codeGenerator ?? RoomCodeGenerator(),
+       _questionHistory = questionHistory ?? QuestionHistoryStore();
 
   final FirebaseAuth _auth;
   final FirebaseDatabase _database;
   final RoomCodeGenerator _codeGenerator;
+  final FirebaseFunctions? functions;
+  final QuestionHistoryStore _questionHistory;
+
+  FirebaseFunctions get _questionFunctions =>
+      functions ?? FirebaseFunctions.instanceFor(region: 'europe-west1');
 
   StreamSubscription<DatabaseEvent>? _presenceSubscription;
   String? _presenceRoomId;
@@ -60,6 +73,7 @@ class FirebaseRoomService {
         targetPlayerCount: targetPlayerCount,
         gameMode: gameMode,
         players: [player],
+        questionEngine: QuestionEnvironment.enabled ? 'pool-v1' : 'demo-v1',
       );
       try {
         await _roomRef(roomId).set(FirebaseRoomMapper.toMap(room));
@@ -175,6 +189,9 @@ class FirebaseRoomService {
 
   Future<void> setReady(String roomId, {required bool isReady}) async {
     final uid = _requireUserId();
+    if (isReady && await _usesQuestionPool(roomId)) {
+      await prepareQuestionHistory(roomId);
+    }
     await _roomRef(roomId).child('players/$uid').update({
       'isReady': isReady,
       'isOnline': true,
@@ -187,6 +204,11 @@ class FirebaseRoomService {
     required int serverTimeOffsetMs,
     required RoomGameMode gameMode,
   }) async {
+    if (await _usesQuestionPool(roomId)) {
+      await prepareQuestionHistory(roomId);
+      await _callQuestionFunction('startQuestionGame', {'roomId': roomId});
+      return;
+    }
     final startsAtMs =
         DateTime.now().millisecondsSinceEpoch + serverTimeOffsetMs + 4000;
     await _roomRef(roomId).update({
@@ -249,6 +271,46 @@ class FirebaseRoomService {
           .child('players/$currentUserId')
           .update({'isOnline': false, 'lastSeenAt': ServerValue.timestamp});
     }
+    await _questionHistory.close();
+  }
+
+  Future<void> recordQuestionShown(GameQuestion question) =>
+      _questionHistory.recordShown(question);
+
+  Future<bool> _usesQuestionPool(String roomId) async =>
+      (await _roomRef(roomId).child('questionEngine').get()).value == 'pool-v1';
+
+  Future<Map<String, dynamic>> prepareQuestionHistory(String roomId) async {
+    final data = await _callQuestionFunction('prepareQuestionHistory', {
+      'roomId': roomId,
+      'history': await _questionHistory.snapshot(),
+    });
+    return Map<String, dynamic>.from(data as Map);
+  }
+
+  Future<Object?> _callQuestionFunction(
+    String name,
+    Map<String, Object?> data,
+  ) async {
+    try {
+      return (await _questionFunctions.httpsCallable(name).call(data)).data;
+    } on FirebaseFunctionsException catch (error) {
+      final details = error.details;
+      String message = error.message ?? 'Soru servisine bağlanılamadı.';
+      if (error.code == 'resource-exhausted' && details is Map) {
+        final capacity = details['capacity'];
+        final lengths = capacity is Map ? capacity['blockedLengths'] : null;
+        message = lengths is List && lengths.isNotEmpty
+            ? '${lengths.join(', ')} harfli görülmemiş cevaplar yetersiz. Yeni içerik gerekli.'
+            : 'Konu, zorluk veya benzer kelime sınırlarına uygun yeni set bulunamadı.';
+      }
+      final capacity = details is Map ? details['capacity'] : null;
+      throw RoomServiceException(
+        error.code,
+        message,
+        capacity: capacity is Map ? QuestionCapacity.fromMap(capacity) : null,
+      );
+    }
   }
 
   Future<void> _registerConnectedPresence(String roomId) async {
@@ -282,10 +344,11 @@ class FirebaseRoomService {
 }
 
 class RoomServiceException implements Exception {
-  const RoomServiceException(this.code, this.message);
+  const RoomServiceException(this.code, this.message, {this.capacity});
 
   final String code;
   final String message;
+  final QuestionCapacity? capacity;
 
   @override
   String toString() => message;

@@ -2,6 +2,8 @@
     <application
         android:label="@string/app_name"
         android:name="${applicationName}"
+        android:fullBackupContent="@xml/question_history_backup_rules"
+        android:dataExtractionRules="@xml/question_history_data_extraction_rules"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher">
         <activity

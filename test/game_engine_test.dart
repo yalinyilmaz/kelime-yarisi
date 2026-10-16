@@ -6,6 +6,24 @@ import 'package:kelime_yarisi/features/game/domain/shared_hints.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/room_game_mode.dart';
 
 void main() {
+  test(
+    'Two-word answers count letters only and accept reviewed equivalents',
+    () {
+      const question = GameQuestion(
+        clue: '',
+        answer: 'NEFES ALMAK',
+        acceptedAnswers: ['SOLUK ALMAK'],
+      );
+      expect(question.letterCount, 10);
+      expect(question.wordLengths, [5, 5]);
+      expect(question.accepts('soluk almak'), isTrue);
+      expect(question.accepts('nefesalmak'), isTrue);
+      expect(question.accepts('soluk vermek'), isFalse);
+      expect(question.normalizeLetter('a', 5), 'A');
+      expect(question.answer, 'NEFES ALMAK');
+    },
+  );
+
   test('Stable question sets and 25-second rounds in both modes', () {
     for (final mode in RoomGameMode.values) {
       final questions = QuestionBank.forSet(QuestionBank.setIdFor(mode));

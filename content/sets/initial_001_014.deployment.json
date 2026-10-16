@@ -1,0 +1,71 @@
+{
+  "projectId": "kelime-yarisi-yalin",
+  "verifiedAtUtc": "2026-10-15T19:21:20.878Z",
+  "sets": [
+    "initial_001",
+    "initial_002",
+    "initial_003",
+    "initial_004",
+    "initial_005",
+    "initial_006",
+    "initial_007",
+    "initial_008",
+    "initial_009",
+    "initial_010",
+    "initial_011",
+    "initial_012",
+    "initial_013",
+    "initial_014"
+  ],
+  "uploadedQuestions": 196,
+  "totalDistinctAnswers": 336,
+  "perLength": {
+    "4": 48,
+    "5": 48,
+    "6": 48,
+    "7": 48,
+    "8": 48,
+    "9": 48,
+    "10": 48
+  },
+  "remoteReadbackVerified": true,
+  "allContentDigestsValid": true,
+  "backendTestsPassed": 63,
+  "functions": [
+    {
+      "id": "cleanupQuestionReservations",
+      "region": "europe-west1",
+      "state": "ACTIVE",
+      "hash": "ec62f4e897451ca99b08912f17400183c8db26ac"
+    },
+    {
+      "id": "generateDailyQuestions",
+      "region": "europe-west1",
+      "state": "ACTIVE",
+      "hash": "d51c5abe9c56cca930942145067a15570954fc5a"
+    },
+    {
+      "id": "prepareQuestionHistory",
+      "region": "europe-west1",
+      "state": "ACTIVE",
+      "hash": "ec62f4e897451ca99b08912f17400183c8db26ac"
+    },
+    {
+      "id": "startQuestionGame",
+      "region": "europe-west1",
+      "state": "ACTIVE",
+      "hash": "ec62f4e897451ca99b08912f17400183c8db26ac"
+    }
+  ],
+  "generator": {
+    "schedule": "0 4 * * *",
+    "timeZone": "Europe/Istanbul",
+    "state": "ENABLED",
+    "promptVersion": "tr-clue-v4-mixed-answers",
+    "newDraftSources": 16,
+    "totalDraftSources": 106,
+    "manualPaidInvocation": false
+  },
+  "updatedFlutterClientRequired": true,
+  "productionChanged": false
+}

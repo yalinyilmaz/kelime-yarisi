@@ -1,0 +1,218 @@
+{
+  "batchId": "luna_sets_005_014_20261015",
+  "sets": [
+    {
+      "id": "initial_005",
+      "questionIds": [
+        "initial_005_q01",
+        "initial_005_q02",
+        "initial_005_q03",
+        "initial_005_q04",
+        "initial_005_q05",
+        "initial_005_q06",
+        "initial_005_q07",
+        "initial_005_q08",
+        "initial_005_q09",
+        "initial_005_q10",
+        "initial_005_q11",
+        "initial_005_q12",
+        "initial_005_q13",
+        "initial_005_q14"
+      ]
+    },
+    {
+      "id": "initial_006",
+      "questionIds": [
+        "initial_006_q01",
+        "initial_006_q02",
+        "initial_006_q03",
+        "initial_006_q04",
+        "initial_006_q05",
+        "initial_006_q06",
+        "initial_006_q07",
+        "initial_006_q08",
+        "initial_006_q09",
+        "initial_006_q10",
+        "initial_006_q11",
+        "initial_006_q12",
+        "initial_006_q13",
+        "initial_006_q14"
+      ]
+    },
+    {
+      "id": "initial_007",
+      "questionIds": [
+        "initial_007_q01",
+        "initial_007_q02",
+        "initial_007_q03",
+        "initial_007_q04",
+        "initial_007_q05",
+        "initial_007_q06",
+        "initial_007_q07",
+        "initial_007_q08",
+        "initial_007_q09",
+        "initial_007_q10",
+        "initial_007_q11",
+        "initial_007_q12",
+        "initial_007_q13",
+        "initial_007_q14"
+      ]
+    },
+    {
+      "id": "initial_008",
+      "questionIds": [
+        "initial_008_q01",
+        "initial_008_q02",
+        "initial_008_q03",
+        "initial_008_q04",
+        "initial_008_q05",
+        "initial_008_q06",
+        "initial_008_q07",
+        "initial_008_q08",
+        "initial_008_q09",
+        "initial_008_q10",
+        "initial_008_q11",
+        "initial_008_q12",
+        "initial_008_q13",
+        "initial_008_q14"
+      ]
+    },
+    {
+      "id": "initial_009",
+      "questionIds": [
+        "initial_009_q01",
+        "initial_009_q02",
+        "initial_009_q03",
+        "initial_009_q04",
+        "initial_009_q05",
+        "initial_009_q06",
+        "initial_009_q07",
+        "initial_009_q08",
+        "initial_009_q09",
+        "initial_009_q10",
+        "initial_009_q11",
+        "initial_009_q12",
+        "initial_009_q13",
+        "initial_009_q14"
+      ]
+    },
+    {
+      "id": "initial_010",
+      "questionIds": [
+        "initial_010_q01",
+        "initial_010_q02",
+        "initial_010_q03",
+        "initial_010_q04",
+        "initial_010_q05",
+        "initial_010_q06",
+        "initial_010_q07",
+        "initial_010_q08",
+        "initial_010_q09",
+        "initial_010_q10",
+        "initial_010_q11",
+        "initial_010_q12",
+        "initial_010_q13",
+        "initial_010_q14"
+      ]
+    },
+    {
+      "id": "initial_011",
+      "questionIds": [
+        "initial_011_q01",
+        "initial_011_q02",
+        "initial_011_q03",
+        "initial_011_q04",
+        "initial_011_q05",
+        "initial_011_q06",
+        "initial_011_q07",
+        "initial_011_q08",
+        "initial_011_q09",
+        "initial_011_q10",
+        "initial_011_q11",
+        "initial_011_q12",
+        "initial_011_q13",
+        "initial_011_q14"
+      ]
+    },
+    {
+      "id": "initial_012",
+      "questionIds": [
+        "initial_012_q01",
+        "initial_012_q02",
+        "initial_012_q03",
+        "initial_012_q04",
+        "initial_012_q05",
+        "initial_012_q06",
+        "initial_012_q07",
+        "initial_012_q08",
+        "initial_012_q09",
+        "initial_012_q10",
+        "initial_012_q11",
+        "initial_012_q12",
+        "initial_012_q13",
+        "initial_012_q14"
+      ]
+    },
+    {
+      "id": "initial_013",
+      "questionIds": [
+        "initial_013_q01",
+        "initial_013_q02",
+        "initial_013_q03",
+        "initial_013_q04",
+        "initial_013_q05",
+        "initial_013_q06",
+        "initial_013_q07",
+        "initial_013_q08",
+        "initial_013_q09",
+        "initial_013_q10",
+        "initial_013_q11",
+        "initial_013_q12",
+        "initial_013_q13",
+        "initial_013_q14"
+      ]
+    },
+    {
+      "id": "initial_014",
+      "questionIds": [
+        "initial_014_q01",
+        "initial_014_q02",
+        "initial_014_q03",
+        "initial_014_q04",
+        "initial_014_q05",
+        "initial_014_q06",
+        "initial_014_q07",
+        "initial_014_q08",
+        "initial_014_q09",
+        "initial_014_q10",
+        "initial_014_q11",
+        "initial_014_q12",
+        "initial_014_q13",
+        "initial_014_q14"
+      ]
+    }
+  ],
+  "questionCount": 140,
+  "acceptedAlternatives": 17,
+  "combinedPoolQuestions": 336,
+  "localChecksPassed": true,
+  "deployed": true,
+  "requiresRuntimeUpdate": false,
+  "hintUiImplemented": false,
+  "sourceVerificationNote": "Original batch verification metadata retained. This pass did not re-fetch all 140 TDK entries; current primary-source checks are marked individually.",
+  "validationEvidence": {
+    "backendTestsPassed": 63,
+    "flutterTestsPassed": 29,
+    "combinedPoolAutomaticErrors": 0,
+    "note": "Measured locally. Seeded simulations do not guarantee every player history.",
+    "previous280QuestionSimulation": {
+      "trials": 5,
+      "minimumClassicGames": 19,
+      "maximumClassicGames": 20,
+      "theoreticalUpperBound": 20
+    }
+  },
+  "deployedProjectId": "kelime-yarisi-yalin",
+  "verifiedAtUtc": "2026-10-15T19:21:20.878Z",
+  "updatedFlutterClientRequired": true
+}

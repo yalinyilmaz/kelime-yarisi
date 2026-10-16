@@ -7,6 +7,41 @@ import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.
 
 void main() {
   testWidgets(
+    'Two-word input preserves shared-letter positions and accepts a synonym',
+    (tester) async {
+      const question = GameQuestion(
+        clue: '',
+        answer: 'NEFES ALMAK',
+        acceptedAnswers: ['SOLUK ALMAK'],
+      );
+      final answer = TextEditingController();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: WordPinInput(
+              question: question,
+              questionIndex: 0,
+              revealedMask: 1 << 5,
+              enabled: true,
+              answerController: answer,
+              onSubmitted: () {},
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.enterText(find.byType(TextField), 'soluklmak');
+      await tester.pump();
+      expect(answer.text, 'SOLUKALMAK');
+      expect(question.accepts(answer.text), isTrue);
+      expect(find.byKey(const ValueKey('0-9')), findsOneWidget);
+      expect(find.byKey(const ValueKey('0-10')), findsNothing);
+      await tester.pumpWidget(const SizedBox());
+      answer.dispose();
+    },
+  );
+
+  testWidgets(
     'iOS autofocus waits for the route transition and does not reopen a dismissed keyboard on hints',
     (tester) async {
       final answer = TextEditingController();

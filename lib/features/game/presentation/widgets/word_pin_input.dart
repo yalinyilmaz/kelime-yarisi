@@ -135,7 +135,7 @@ class _WordPinInputState extends State<WordPinInput>
     final answer = StringBuffer();
     for (var i = 0; i < widget.question.letterCount; i++) {
       if ((widget.revealedMask & (1 << i)) != 0) {
-        answer.write(widget.question.answer[i]);
+        answer.write(widget.question.letters[i]);
       } else {
         if (inputIndex < _text.text.length) {
           answer.write(_text.text[inputIndex]);
@@ -170,7 +170,10 @@ class _WordPinInputState extends State<WordPinInput>
             spacing: 6,
             runSpacing: 8,
             children: [
-              for (var i = 0; i < widget.question.letterCount; i++)
+              for (var i = 0; i < widget.question.letterCount; i++) ...[
+                if (widget.question.wordLengths.length == 2 &&
+                    i == widget.question.wordLengths.first)
+                  const SizedBox(width: 10, height: 1),
                 WordLetterCell(
                   key: ValueKey('${widget.questionIndex}-$i'),
                   index: i,
@@ -178,7 +181,7 @@ class _WordPinInputState extends State<WordPinInput>
                   character:
                       widget.outcome != null ||
                           (widget.revealedMask & (1 << i)) != 0
-                      ? widget.question.answer[i]
+                      ? widget.question.letters[i]
                       : hiddenPositions.indexOf(i) < _text.text.length
                       ? _text.text[hiddenPositions.indexOf(i)]
                       : null,
@@ -188,6 +191,7 @@ class _WordPinInputState extends State<WordPinInput>
                       _focus.hasFocus &&
                       hiddenPositions.indexOf(i) == focusedIndex,
                 ),
+              ],
             ],
           ),
         ),

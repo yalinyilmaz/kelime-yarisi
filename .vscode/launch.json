@@ -2,12 +2,23 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Dev — Cloud Question Pool",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "toolArgs": ["--flavor", "dev", "--dart-define=QUESTION_POOL_ENABLED=true"]
+    },
+    {
       "name": "Dev — Run",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
       "flutterMode": "debug",
-      "toolArgs": ["--flavor", "dev"]
+      "toolArgs": [
+        "--flavor",
+        "dev"
+      ]
     },
     {
       "name": "Prod — Run",
@@ -15,7 +26,10 @@
       "type": "dart",
       "program": "lib/main.dart",
       "flutterMode": "debug",
-      "toolArgs": ["--flavor", "prod"]
+      "toolArgs": [
+        "--flavor",
+        "prod"
+      ]
     },
     {
       "name": "Prod — Release",
@@ -23,7 +37,37 @@
       "type": "dart",
       "program": "lib/main.dart",
       "flutterMode": "release",
-      "toolArgs": ["--flavor", "prod"]
+      "toolArgs": [
+        "--flavor",
+        "prod"
+      ]
+    },
+    {
+      "name": "Dev — Question Pool (iOS Simulator)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "toolArgs": [
+        "--flavor",
+        "dev",
+        "--dart-define=QUESTION_POOL_ENABLED=true",
+        "--dart-define=USE_FIREBASE_EMULATORS=true"
+      ]
+    },
+    {
+      "name": "Dev — Question Pool (Android Emulator)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "toolArgs": [
+        "--flavor",
+        "dev",
+        "--dart-define=QUESTION_POOL_ENABLED=true",
+        "--dart-define=USE_FIREBASE_EMULATORS=true",
+        "--dart-define=FIREBASE_EMULATOR_HOST=10.0.2.2"
+      ]
     }
   ]
 }

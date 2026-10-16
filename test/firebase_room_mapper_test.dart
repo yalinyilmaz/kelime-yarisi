@@ -3,6 +3,17 @@ import 'package:kelime_yarisi/features/room/data/firebase_room_mapper.dart';
 import 'package:kelime_yarisi/features/game/domain/shared_hints.dart';
 
 void main() {
+  test('legacy room payloads remain compatible with live rules before pool deployment', () {
+    final legacy = FirebaseRoomMapper.fromMap('abc234', {});
+    expect(
+      FirebaseRoomMapper.toMap(legacy).containsKey('questionEngine'),
+      isFalse,
+    );
+    final pooled = FirebaseRoomMapper.fromMap('abc234', {
+      'questionEngine': 'pool-v1',
+    });
+    expect(FirebaseRoomMapper.toMap(pooled)['questionEngine'], 'pool-v1');
+  });
   test(
     'Dense Firebase lists and sparse maps preserve the same shared hints',
     () {

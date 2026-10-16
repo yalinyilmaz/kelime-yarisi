@@ -2,6 +2,19 @@
   "database": {
     "rules": "database.rules.json"
   },
+  "functions": [{
+    "source": "functions",
+    "codebase": "question-pool",
+    "ignore": ["node_modules", "test", "tools", "content/examples.json", ".env", ".env.*", "**/.env", "**/.env.*", ".local", "**/.local/**", ".secret.local", "**/.secret.local", "src/content_quality.js", "*.log"],
+    "predeploy": ["node \"$RESOURCE_DIR/tools/check_deploy.js\""]
+  }],
+  "emulators": {
+    "auth": {"port": 9099},
+    "database": {"port": 9000},
+    "functions": {"port": 5001},
+    "ui": {"enabled": false},
+    "singleProjectMode": true
+  },
   "auth": {
     "providers": {
       "anonymous": true

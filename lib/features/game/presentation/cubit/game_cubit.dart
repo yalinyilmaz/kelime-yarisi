@@ -40,16 +40,38 @@ class GameCubit extends Cubit<GameState> {
   int _offsetMs = 0;
   int _retryAtMs = 0;
   bool _isCompleting = false;
+  bool _isForeground = false;
+  bool _isRecordingQuestion = false;
+  int _historyRetryAtMs = 0;
 
   static GameState _initialState(FirebaseRoomService service, GameRoom room) {
     List<GameQuestion> questions = const [];
     String? error;
     try {
-      questions = QuestionBank.forSet(room.questionSetId);
+      questions = room.usesQuestionPool
+          ? room.questions
+          : QuestionBank.forSet(room.questionSetId);
       if (questions.length != room.gameMode.questionCount ||
           room.startsAtMs == null ||
           room.gameplayVersion != 'sync-v1') {
         throw StateError('Oyun verisi eksik. Yeni bir oda oluşturun.');
+      }
+      if (room.usesQuestionPool) {
+        for (var i = 0; i < questions.length; i++) {
+          final expected = 4 + (room.gameMode.name == 'classic' ? i ~/ 2 : i);
+          if (questions[i].letterCount != expected ||
+              questions[i].id == null ||
+              questions[i].answerId == null ||
+              questions[i].clue.trim().isEmpty) {
+            throw StateError(
+              'Soru havuzu verisi geçersiz. Yeni bir oda oluşturun.',
+            );
+          }
+        }
+        if (questions.map((q) => q.answerId).toSet().length !=
+            questions.length) {
+          throw StateError('Soru setinde yinelenen cevap var.');
+        }
       }
     } on StateError catch (e) {
       questions = const [];
@@ -212,6 +234,7 @@ class GameCubit extends Cubit<GameState> {
     final previousIndex = state.questionIndex;
     final next = state.copyWith(serverNowMs: _nowMs() + _offsetMs);
     emit(next.copyWith(clearFeedback: next.questionIndex != previousIndex));
+    _recordVisibleQuestion();
     if (state.clockReady &&
         state.isConnected &&
         !state.isSaving &&
@@ -222,6 +245,57 @@ class GameCubit extends Cubit<GameState> {
         ((state.progress.questionIndex < state.questionIndex) ||
             (state.hasExpired && state.room.status != RoomStatus.results))) {
       unawaited(_completeRound());
+    }
+  }
+
+  void setForeground(bool foreground) {
+    _isForeground = foreground;
+    if (foreground) _tick();
+  }
+
+  void _recordVisibleQuestion() {
+    if (!_isForeground ||
+        !state.room.usesQuestionPool ||
+        !state.clockReady ||
+        state.isHistoryReady ||
+        state.hasExpired ||
+        state.isLeaving ||
+        state.room.status != RoomStatus.playing ||
+        _isRecordingQuestion ||
+        _nowMs() < _historyRetryAtMs ||
+        state.questionIndex >= state.questions.length) {
+      return;
+    }
+    _isRecordingQuestion = true;
+    final index = state.questionIndex;
+    unawaited(_saveShownQuestion(index));
+  }
+
+  Future<void> _saveShownQuestion(int index) async {
+    try {
+      await _service.recordQuestionShown(state.questions[index]);
+      if (isClosed) return;
+      emit(
+        state.copyWith(
+          recordedQuestionIndices: Set.unmodifiable({
+            ...state.recordedQuestionIndices,
+            index,
+          }),
+          clearError: true,
+        ),
+      );
+    } catch (_) {
+      _historyRetryAtMs = _nowMs() + 3000;
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            errorMessage:
+                'Soru geçmişi cihazda kaydedilemedi. Tekrar deneniyor.',
+          ),
+        );
+      }
+    } finally {
+      _isRecordingQuestion = false;
     }
   }
 

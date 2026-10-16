@@ -52,6 +52,10 @@ class GameBoard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
+                    if (state.room.questionOrigin == 'example')
+                      const GameNotice(
+                        'Örnek soru havuzu · Gerçek yayın içeriği değildir.',
+                      ),
                     if (!state.isConnected)
                       const GameNotice(
                         'Bağlantı bekleniyor. Ortak süre devam ediyor.',
@@ -100,6 +104,11 @@ class GameBoard extends StatelessWidget {
                           fontSize: 12,
                         ),
                       ),
+                    ] else if (state.questions.isNotEmpty &&
+                        !state.isHistoryReady &&
+                        !state.hasExpired &&
+                        !isResults) ...[
+                      const GameNotice('Soru hazırlanıyor…'),
                     ] else if (state.questions.isNotEmpty) ...[
                       Card(
                         child: Padding(

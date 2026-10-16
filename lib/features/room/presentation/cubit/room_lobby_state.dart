@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/game_room.dart';
+import '../../../game/domain/question_capacity.dart';
 
 class RoomLobbyState extends Equatable {
   const RoomLobbyState({
@@ -9,6 +10,8 @@ class RoomLobbyState extends Equatable {
     this.nowMs = 0,
     this.isLeaving = false,
     this.errorMessage,
+    this.questionCapacity,
+    this.collectiveCapacity = false,
   });
 
   final GameRoom room;
@@ -16,6 +19,8 @@ class RoomLobbyState extends Equatable {
   final int nowMs;
   final bool isLeaving;
   final String? errorMessage;
+  final QuestionCapacity? questionCapacity;
+  final bool collectiveCapacity;
 
   int get serverNowMs =>
       (nowMs == 0 ? DateTime.now().millisecondsSinceEpoch : nowMs) +
@@ -36,6 +41,8 @@ class RoomLobbyState extends Equatable {
     bool? isLeaving,
     String? errorMessage,
     bool clearError = false,
+    QuestionCapacity? questionCapacity,
+    bool? collectiveCapacity,
   }) {
     return RoomLobbyState(
       room: room ?? this.room,
@@ -43,6 +50,8 @@ class RoomLobbyState extends Equatable {
       nowMs: nowMs ?? this.nowMs,
       isLeaving: isLeaving ?? this.isLeaving,
       errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
+      questionCapacity: questionCapacity ?? this.questionCapacity,
+      collectiveCapacity: collectiveCapacity ?? this.collectiveCapacity,
     );
   }
 
@@ -53,5 +62,7 @@ class RoomLobbyState extends Equatable {
     nowMs,
     isLeaving,
     errorMessage,
+    questionCapacity,
+    collectiveCapacity,
   ];
 }

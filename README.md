@@ -104,6 +104,88 @@ NODE_PATH=/tmp/kelime-yarisi-rules-test/node_modules node test/firebase/database
 
 Strateji değişikliği 1. adımı (ortak soru süresi ve harf oylaması), 2. adımı (autofocus ile PIN tarzı kelime girişi), 3. adımı (İngilizce/Türkçe karakter toleransı) ve 4. adımı (ses efektleri) tamamlandı. PIN görünümü, tek ve sabit bir standart Flutter TextField/FocusNode ile oluşturulur. iOS odak isteği sayfa geçişi tamamlandıktan sonra ve soru başına bir kez yapılır; harf oylaması giriş bağlantısını kilitlemez. Sayaç ayrı BlocSelector ile güncellenir; sesler GameAudioCubit üzerinden yönetilir. Oyuncu doğrudan kelime kutularında yalnızca boş harfleri yazar; ortak açılan harfler sabittir. Yeni harf açılırken diğer kutulara yazılanlar korunur. Firebase mapper, sayısal soru anahtarlarının hem map hem liste biçimini destekler; ortak harfler bütün cihazlara taşınır. Yeni soruda giriş temizlenip odaklanır. Cevap, “Cevapla” veya klavyedeki tamam tuşuyla gönderilir; eksik giriş puan kaybettirmez. Cevap doğrulaması büyük/küçük harf ile c/ç, g/ğ, i/ı/İ/I, o/ö, s/ş, u/ü ayrımı yapmaz. Örneğin kapi → KAPI, gokkusagi → GÖKKUŞAĞI doğru kabul edilir. PIN girişinde eşdeğer harfler kelimedeki konumuna göre gerçek Türkçe yazıma çevrilir; yanlış harfler otomatik düzeltilmez. Harf Al’a basınca hafif titreşim, harf gerçekten açıldığında kısa bir mekanik kasa açılışı ve zil efekti çalar; soru süresinin son 5 saniyesinde saniyede bir tik-tak çalar. Bekleyen oylar ve eski Firebase kayıtları ses çaldırmaz. Oyun ekranındaki hoparlör düğmesi oyuncunun sesini açar/kapatır; tercih o ekran oturumu boyunca geçerlidir. Arka plana geçişte ve odadan çıkışta sesler durur. Efektler `assets/audio/` altında projeye özel üretilmiş WAV dosyalarıdır ve `audioplayers` ile yerel olarak çalınır. Doğru cevap kabul edilince kısa bir çift zil sesi, yanlış cevap kabul edilince alçalan bir uyarı sesi ve sistem titreşimi tetiklenir. Doğru cevap titreşim yapmaz. Eksik giriş, başarısız kayıt ve süre dolması cevap efekti üretmez. Ses kapatma titreşimi kapatmaz; arka planda ikisi de çalışmaz. Eski cevaplar ve yinelenen snapshot’lar efektleri tekrar çaldırmaz. Ses veya titreşim hatası oyun akışını kesmez. Ardından Step 4: rövanş, yeniden oynama ve tam oda geri yükleme. Birden fazla fiziksel cihazla yeni strateji henüz doğrulanmadı.
 
+## Soru havuzu — yerel/emulator aşaması
+
+Çekirdek uygulandı: bağımsız soru kayıtları, kaynak/izin bilgisi, editör onayı, yayın artefaktı, cihaz geçmişi, kurallı ortak set seçimi, geçici rezervasyon ve kapasite raporu. Canlı Firebase projelerine bu çalışma için deploy yapılmadı. Mevcut `Dev — Run` ve `Prod — Run` sabit örnek soruları kullanır; havuz modu ayrı çalıştırılır.
+
+Klasik mod 14 soru ve 4–10 harften ikişer cevap kullanır. Mevcut hızlı mod 7 soru ve her uzunluktan bir cevap olarak korundu. Her modda en az 3 konu ve 3 zorluk seviyesi bulunur; bir konu toplamın en fazla üçte birini yukarı yuvarlanmış olarak, bir zorluk seviyesi toplamın en fazla yarısını yukarı yuvarlanmış olarak kaplar. Harf uzunluğu zorluk yerine geçmez. Aynı cevap, aynı kök ailesi veya editörün ilişkili işaretlediği cevaplar aynı sete alınmaz. Seçim başarısız olduğunda bu sınırlar ve tekrar kuralı gevşetilmez.
+
+**Yerel yayın kapasitesi: 336 kaynaklı, AI editör kontrolünden geçirilmiş farklı ana cevap; her uzunlukta 48.** İlk 140 soruya kullanıcının onayladığı 14 set / 196 soru eklendi. `content/questions.json` çalışma havuzu; `functions/content/published.json` backend yayın artefaktıdır. Kontrol türü `ai-self-review` olarak kaydedilir; insan editör onayı değildir. Teorik üst sınır 24 klasik oyundur; konu/zorluk/kök dengesi gerçek kapasiteyi azaltabilir. 90 gün × 3 oyun senaryosu için her uzunlukta en az 492 yeni cevap daha gerekir. Kaynaklar, atıflar, editör kararları ve yeni parti akışı [content/README.md](content/README.md) içinde açıklanır.
+
+`functions/content/examples.json` içindeki 42 eski fixture ayrı kalır; 336 gerçek kayda eklenmez. Örnekler sadece demo emulator ortamında `QUESTION_POOL_EXAMPLES=true` ile seçilebilir ve deploy paketinden çıkarılır. Normal emulator profili artık gerçek yayın havuzunu kullanır. Prod ayrı kalır; dev havuzu yalnız açık proje hedefiyle dağıtılır.
+
+### Cihaz geçmişi ve boyut
+
+SQLite sadece cevap kimliği, soru kimliği ve ilk görülme zamanını saklar. Soru metni ve cevap metni bu geçmiş veritabanına yazılmaz; büyük soru havuzu mobil uygulamaya gömülmez. Aktif oyunun 14/7 sorusu oda verisinden alınır; Firebase SDK'sının mevcut sınırlı oda cache'i ayrı bir mekanizmadır.
+
+Cevap kimliği Türkçe NFC yazımı ve I/ı–İ/i dönüşümü üzerinden üretilir. Soru metni/anlam varyantı değişince cevap kimliği değişmez. Oyuncunun ASCII karakterle cevap yazabilmesi ile kalıcı kelime kimliği birbirinden ayrıdır.
+
+Geçmiş hesap bazında değildir; o telefonda/app kurulumunda kalır. Uygulama verisi silinirse sıfırlanır. Geçmiş dizini Android cloud backup/device transfer ve iOS yedeklerinden çıkarılır; OS cache temizliğinde kaybolmaması için kalıcı uygulama alanında tutulur. Kaydın cihazda commit edilmesi beklenmeden soru gösterilmez. Arka planda geçen ve sadece timeout ile atlanan sorular görülmüş sayılmaz. Bir çökme tam commit ile ekranın çizilmesi arasına denk gelirse tek bir gösterim niyeti konservatif biçimde görülmüş kalabilir; ayrılan setin tamamı geçmişe yazılmaz.
+
+64 karakterli hash kimlikleriyle iki `WITHOUT ROWID` tablo ölçümü: 3.780 cevap + 3.780 soru yaklaşık 0,68 MiB; 10.000 + 10.000 yaklaşık 1,75 MiB; 50.000 + 50.000 yaklaşık 8,71 MiB. Bunlar çalışma sırasında oluşan veri boyutlarıdır, indirme/bundle boyutu değildir. Soru havuzunu genişletmek uygulamanın içine ek metin eklemez.
+
+### Emulator ile çalıştırma
+
+Functions Node 22 kullanır; en güncel JavaScript test SDK'sı Node 24 gerektirir. Aşağıdaki `npx` komutları sistemdeki Node sürümünü değiştirmeden gerekli çalışma zamanlarını kullanır. Java 21+ gerekir.
+
+```sh
+npm ci --prefix functions
+npx -y -p node@22 -p firebase-tools@latest firebase emulators:start --only auth,database,functions --project demo-kelime-yarisi
+```
+
+Emulator açıkken VS Code'da `Dev — Question Pool (iOS Simulator)` veya `Dev — Question Pool (Android Emulator)` seç. iOS simulator localhost'u; Android emulator `10.0.2.2` adresini kullanır. Bunlar simulator/emulator profilleridir; fiziksel telefonda localhost bilgisayarı göstermez. `functions/.env.local` içinde `QUESTION_POOL_EXAMPLES=false` ile 336 soruluk gerçek havuz açılır. Eski 42 fixture için açıkça `true` seçilebilir. Havuz değişince Functions emulator'ını yeniden başlat. Boş havuzun tükenme davranışı ayrı entegrasyon testinde kontrol edilir. Backend emulator, `demo-kelime-yarisi` dışındaki proje adlarını reddeder. Mobil emulator bağlantısı da yalnızca dev debug için kabul edilir; dev/prod native Firebase cache'inden ayrı bir named app kullanılır.
+
+```sh
+flutter run --flavor dev --dart-define=QUESTION_POOL_ENABLED=true --dart-define=USE_FIREBASE_EMULATORS=true
+```
+
+Backend sadece oda sahibinin başlatmasına ve oda üyelerinin geçmiş hazırlığına izin verir. Her cihaz kendi yerel kimlik listesini geçici olarak iletir; tüm oyuncuların görülmüş/ayrılmış cevapları ortak seçimden çıkarılır. Hazırlık 25 saniye geçerlidir; başlamazsa hazır durumu yenilenir. Kalıcı sunucu geçmişi tutulmaz. Aktif set rezervasyonu oyunun süresi + 30 saniye için geçerlidir; süresi dolan kayıtlar seçimden hemen çıkarılır ve periyodik temizlenir. Aynı oda/kurulum kimliği ile yinelenen başlatma istekleri aynı kaydedilmiş seti kullanır. Oda silinirse tamamlanmamış seçim odayı yeniden yaratmaz.
+
+Başlangıç sürümünde aktif rezervasyonlar tek atomik RTDB transaction ile seçilir ve 300 eşzamanlı rezervasyonla sınırlandırılır; yoğunlukta açık hata döner. Bu seçim katmanı yük altında ölçülmeden büyük trafik garantisi verilmez. Set parmak izi sıralanmış cevap kimliklerinden üretilir; farklı kullanıcı gruplarında global set benzersizliği zorlanmaz. Aynı soru farklı kullanıcılarda kullanılabilir. Yerel geçmiş kullanıcı cihazından geldiği için hesabın tüm cihazlarında tekrar engeli veya hileye karşı sunucu geçmişi garantisi verilmez.
+
+Lobide toplam/onaylı/yayındaki/kalan cevap sayıları, engelleyen uzunluklar ve günde 3 oyun için teorik süre görünür. Ortak set oluşturma hatasında bütün oyuncuların birleşik raporu gösterilir. Konu, zorluk ve kök sınırları kapasite üst sınırını düşürebilir; kombinasyon sayısı tekrarsız oyun sayısı olarak sunulmaz.
+
+### İçerik hazırlama ve editörlük
+
+```sh
+npm run content --prefix functions -- draft --answer kapı --id kapi-giris-01
+```
+
+Taslakta hedef anlam, soru, konu, gerçek zorluk, kök ailesi/ilişkili cevaplar ve `source` alanlarını doldur. `source.reference` doğrulama kaynağını, `meaningEvidence` seçilen anlamın kanıtını, `termsReference` kullanım koşullarını gösterir. İzin durumu `original`, `licensed` veya `public-domain` olarak doğrulanmadan yayın onayı verilemez. İzin gerektiğinde `permission-required`, bilinmiyorsa `unknown` kullan. Yarışma arşivleri izin varmış gibi kopyalanmaz.
+
+```sh
+npm run content --prefix functions -- validate
+npm run content --prefix functions -- prompt --id kapi-giris-01
+npm run content --prefix functions -- review --id kapi-giris-01 --editor EDITOR_ADI --checks spelling,meaning,uniqueAnswer,noLeak,originality,sourceRights
+npm run content --prefix functions -- publish
+npm run content --prefix functions -- report --file functions/content/published.json
+```
+
+`prompt` sadece istem yazar. Gerçek toplu API adaptörü `content:replenish` komutudur: kaynaklı kelimelerden üç soru adayı üretir; `--ai-review` ile ayrı bir Türkçe editör çağrısı yapar. Anahtar sadece yerel `OPENAI_API_KEY`, model açık `--model`/`OPENAI_MODEL` üzerinden verilir. API adaptörü kontrollü HTTP yanıtlarının yanında gerçek `gpt-6-luna` üretim/editör denemesiyle de test edildi: iki çağrıda 1.306 giriş ve 1.875 çıktı token’ı. FLÜT adayı editörce kaynak metne yakın olduğu için reddedildi; 140 soruluk yayın havuzu değiştirilmedi. API’ye mevcut havuz gönderilmez; yalnızca seçili kelime ve açık kaynak kanıtı gönderilir, benzerlik kontrolü yerelde kalır. İlk 140 soru Codex oturumunda kaynaklar okunup ayrı editör turundan geçirilerek hazırlandı. İnsan onayı varmış gibi işaretlenmez.
+
+Otomatik kontroller Türkçe normalizasyonu/uzunluğu, kimliği, açık cevap/kök sızıntısını ve çok benzer soru metinlerini yakalar. Anlam, doğal Türkçe ve aynı uzunluktaki alternatif cevaplar editör turunda incelenir. Kullanıcının tercihiyle AI kendi ürettiği metni ayrı bir turda inceleyebilir; gerekçe, kaynak desteği ve alternatif cevap kaydı şarttır. Bu yöntem hatasızlık garantisi değildir. Yeni kaynak toplama, eksik grupları besleme, API üretimi, inceleme ve kalite ölçüm komutları [content/README.md](content/README.md) içindedir.
+
+`review` altı kontrolün hepsini ve editör adını ister; onay içeriğin hash'ine bağlıdır. Onaydan sonra metin/kaynak/kök değişirse yeniden inceleme gerekir. `publish` yalnızca onaylı üretim kayıtlarından yerel backend artefaktını oluşturur; Firebase'e deploy etmez. Yeni partilerde kelime/kaynak tedariki devam eder. API üretimini çalıştırmak için yerel API anahtarı ve açık model seçimi gerekir. Yerel araç kontrollü parti komutuyla çalışır. Dev bulut üreticisi her gün İstanbul saatiyle 04.00’te yeni sorular hedefler; editörden geçenler özel RTDB havuzuna eklenir ve yeni oyunlarda yeniden deploy olmadan kullanılır. Prod bu aşamada değiştirilmez.
+
+### Kontroller
+
+Dev bulut üreticisi günde 42 onaylı soru, her uzunluktan altı adet hedefler. Kalıcı RTDB sayacı günde 60 deneme / 120 istek, beş art arda başarısız sonuç ve model maliyetinde 0,50 USD/gün, 10 USD/ay sınırları uygular. API anahtarı yalnızca üreticiye bağlı dev Secret Manager kaydındadır. Kaynak kuyruğu 90 önceki taslağa eklenen 16 karma cevap adayıyla 106 kayıttır; bunlar onaysızdır ve yayın sayısına dahil değildir. Güncel yayın havuzu 336 ana cevaptır. Üretici ve editör isimlerin yanında edat, bağlaç, mastar ve en fazla iki kelimeli ad/edat/fiil öbeklerini kabul eder. Boşluklar korunur; yalnız harfler 4–10 sınırına sayılır. Aynı harf/kelime düzenindeki doğru eşdeğerler `acceptedAnswers` içine alınır; eş anlamlı olması tek başına ret sebebi değildir. Stok tükenmesi/retler eksik hedef olarak raporlanır. Ayrıntılar [dev zamanlaması ve prod'a taşıma](content/README.md#dev-bulut-zamanlaması) bölümündedir. Yerel CLI ve bulut sayaçları ayrıdır.
+
+```sh
+flutter analyze
+flutter test
+npm test --prefix functions
+npx -y -p node@22 -p firebase-tools@latest firebase emulators:exec --only auth,database,functions --project demo-kelime-yarisi 'npx -y -p node@24 node --test --test-force-exit functions/test/emulator.integration.js && NODE_PATH=functions/node_modules npx -y -p node@24 node test/firebase/database_rules_test.cjs'
+```
+
+Mobil entegrasyon testi de aynı emulator oturumunda çalıştırılabilir:
+
+```sh
+flutter test integration_test/question_pool_emulator_test.dart --flavor dev -d IOS_SIMULATOR_ID --dart-define=QUESTION_POOL_ENABLED=true --dart-define=USE_FIREBASE_EMULATORS=true
+```
+
+Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Dev App Check debug token’ları Firebase Console’da kayıtlı olmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Normal Dev/Prod profillerinin havuz bayrağı korunur. Mevcut puan/cevap doğrulamasının istemciye güvenme sınırı devam eder.
+
 ## Güvenlik ve canlıya çıkış
 
 - Firebase istemci yapılandırmaları yalnızca yerelde tutulur ve Git tarafından izlenmez.

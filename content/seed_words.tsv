@@ -1,0 +1,141 @@
+answer	wikiTitle	topic	difficulty
+KAPI	Door	eşya	1
+SAAT	Clock	eşya	1
+MASA	Table (furniture)	eşya	1
+KALE	Castle	tarih	2
+KEDİ	Cat	doğa	1
+ELMA	Apple	gıda	1
+AYNA	Mirror	eşya	1
+GEMİ	Ship	ulaşım	1
+KURT	Wolf	doğa	1
+AYVA	Quince	gıda	2
+ÖYKÜ	Short story	kültür	2
+ŞİİR	Poetry	kültür	2
+KANO	Canoe	spor	2
+NOTA	Musical note	kültür	2
+KORO	Choir	kültür	2
+OBUA	Oboe	kültür	3
+FÜZE	Missile	teknoloji	2
+ATOM	Atom	bilim	2
+İĞNE	Sewing needle	eşya	1
+PİDE	İçli pide	gıda	2
+KİTAP	Book	kültür	1
+DENİZ	Sea	doğa	1
+BULUT	Cloud	doğa	1
+ÇİÇEK	Flower	doğa	1
+KALEM	Pencil	eşya	1
+GÜNEŞ	Sun	bilim	1
+ARMUT	Pear	gıda	1
+KİRAZ	Cherry	gıda	1
+ÖRDEK	Duck	doğa	1
+KİLİT	Lock and key	eşya	1
+SEPET	Basket	eşya	1
+MAKAS	Scissors	eşya	1
+DAVUL	Drum	kültür	1
+KEMAN	Violin	kültür	2
+ROMAN	Novel	kültür	2
+MASAL	Fairy tale	kültür	2
+ROBOT	Robot	teknoloji	2
+LAZER	Laser	bilim	3
+PLAKA	Vehicle registration plate	ulaşım	2
+ÖLÇEK	Scale (map)	coğrafya	3
+BARDAK	Drinking glass	eşya	1
+TOPRAK	Soil	doğa	1
+DEFTER	Notebook	eşya	1
+YASTIK	Pillow	eşya	1
+YAPRAK	Leaf	doğa	1
+PEYNİR	Cheese	gıda	1
+PUSULA	Compass	coğrafya	2
+KAMERA	Camera	teknoloji	1
+KAPTAN	Sea captain	ulaşım	2
+TERAZİ	Weighing scale	eşya	2
+HEYKEL	Statue	kültür	2
+ŞİMŞEK	Lightning	doğa	2
+TAVŞAN	Rabbit	doğa	1
+KARTAL	Eagle	doğa	2
+BALİNA	Whale	doğa	2
+KARBON	Carbon	bilim	3
+MERCEK	Lens	bilim	3
+DÜRBÜN	Binoculars	eşya	2
+ORKİDE	Orchid	doğa	3
+MOZAİK	Mosaic	kültür	3
+ANAHTAR	Key (lock)	eşya	1
+PATATES	Potato	gıda	1
+PENCERE	Window	eşya	1
+KİREMİT	Roof tiles	eşya	2
+DOMATES	Tomato	gıda	1
+TENCERE	Stock pot	eşya	1
+TELEFON	Telephone	teknoloji	1
+ŞEMSİYE	Umbrella	eşya	1
+TİYATRO	Theatre	kültür	2
+TRAMPET	Snare drum	kültür	3
+TROMPET	Trumpet	kültür	3
+PENGUEN	Penguin	doğa	2
+KANGURU	Kangaroo	doğa	2
+AHTAPOT	Octopus	doğa	2
+KELEBEK	Butterfly	doğa	1
+MENEKŞE	Viola (plant)	doğa	2
+OKSİJEN	Oxygen	bilim	2
+VİTAMİN	Vitamin	bilim	2
+SATRANÇ	Chess	spor	2
+KİMYACI	Chemist	bilim	3
+MERDİVEN	Stairs	eşya	1
+ÇEKİRDEK	Atomic nucleus	bilim	3
+SANDALYE	Chair	eşya	1
+AYAKKABI	Shoe	eşya	1
+ÇİKOLATA	Chocolate	gıda	1
+KARANLIK	Darkness	doğa	2
+BİSİKLET	Bicycle	ulaşım	1
+ORKESTRA	Orchestra	kültür	2
+HOPARLÖR	Loudspeaker	teknoloji	2
+KULAKLIK	Headphones	teknoloji	1
+TELESKOP	Telescope	bilim	2
+AKVARYUM	Aquarium	eşya	2
+ASTEROİT	Asteroid	bilim	3
+METEORİT	Meteorite	bilim	3
+YANARDAĞ	Volcano	coğrafya	2
+PORTAKAL	Orange (fruit)	gıda	1
+FOTOĞRAF	Photograph	kültür	2
+MANDOLİN	Mandolin	kültür	3
+ARMONİKA	Harmonica	kültür	3
+AKORDEON	Accordion	kültür	3
+DİPLOMASİ	Diplomacy	toplum	3
+KALABALIK	Crowd	toplum	2
+PAZARTESİ	Monday	gündelik	1
+KÜTÜPHANE	Library	kültür	1
+MİKROSKOP	Microscope	bilim	2
+KARİKATÜR	Caricature	kültür	2
+KALİGRAFİ	Calligraphy	kültür	3
+SALYANGOZ	Snail	doğa	2
+BÖĞÜRTLEN	Blackberry	gıda	2
+MANDALİNA	Mandarin orange	gıda	1
+DENİZALTI	Submarine	ulaşım	2
+BAROMETRE	Barometer	bilim	3
+TERMOSTAT	Thermostat	teknoloji	3
+JENERATÖR	Electric generator	teknoloji	2
+ALÜMİNYUM	Aluminium	bilim	3
+MAGNEZYUM	Magnesium	bilim	3
+EKOSİSTEM	Ecosystem	doğa	3
+NOKTALAMA	Punctuation	kültür	2
+BİYOGRAFİ	Biography	kültür	2
+YAĞMURLUK	Raincoat	eşya	1
+BİLGİSAYAR	Computer	teknoloji	1
+TELEVİZYON	Television	teknoloji	1
+FOTOĞRAFÇI	Photographer	meslek	2
+VOLEYBOLCU	Volleyball player	spor	2
+DENİZANASI	Jellyfish	doğa	2
+KAHVERENGİ	Brown	gündelik	1
+HELİKOPTER	Helicopter	ulaşım	2
+TERMOMETRE	Thermometer	bilim	2
+HİGROMETRE	Hygrometer	bilim	3
+ELEKTRİKÇİ	Electrician	meslek	2
+TRANSİSTÖR	Transistor	teknoloji	3
+FOTOSENTEZ	Photosynthesis	bilim	3
+KAPLUMBAĞA	Turtle	doğa	1
+KERTENKELE	Lizard	doğa	2
+ANTİSEPTİK	Antiseptic	bilim	3
+MİNERALOJİ	Mineralogy	bilim	3
+KARBÜRATÖR	Carburetor	teknoloji	3
+VİYOLONSEL	Cello	kültür	3
+KARNABAHAR	Cauliflower	gıda	2
+KRONOMETRE	Stopwatch	spor	2

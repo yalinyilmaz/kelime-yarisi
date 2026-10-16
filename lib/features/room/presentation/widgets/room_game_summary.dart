@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/config/question_environment.dart';
 import '../../domain/entities/room_game_mode.dart';
 
 class RoomGameSummary extends StatelessWidget {
@@ -22,7 +23,8 @@ class RoomGameSummary extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              '${mode.duration.inMinutes} dakika · Aynı soru seti · Canlı skor',
+              '${mode.duration.inMinutes} dakika · '
+              '${QuestionEnvironment.enabled ? 'Ortak yeni soru seti' : 'Sabit örnek sorular'} · Canlı skor',
               style: const TextStyle(
                 color: AppColors.onPaper,
                 fontWeight: FontWeight.w700,

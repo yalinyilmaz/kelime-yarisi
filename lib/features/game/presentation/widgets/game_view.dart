@@ -26,6 +26,10 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    context.read<GameCubit>().setForeground(
+      WidgetsBinding.instance.lifecycleState == null ||
+          WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed,
+    );
     context.read<GameAudioCubit>().setForeground(
       WidgetsBinding.instance.lifecycleState == null ||
           WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed,
@@ -34,6 +38,7 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    context.read<GameCubit>().setForeground(state == AppLifecycleState.resumed);
     context.read<GameAudioCubit>().setForeground(
       state == AppLifecycleState.resumed,
     );
@@ -88,6 +93,7 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
           isVoting: state.isVoting,
           feedback: state.feedback,
           errorMessage: state.errorMessage,
+          isHistoryReady: state.isHistoryReady,
         ),
         builder: (context, _) {
           final state = context.read<GameCubit>().state;
@@ -133,4 +139,5 @@ typedef _ViewSelection = ({
   bool isVoting,
   String? feedback,
   String? errorMessage,
+  bool isHistoryReady,
 });

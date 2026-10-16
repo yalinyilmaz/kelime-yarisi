@@ -1,0 +1,1472 @@
+[
+  {
+    "id": "example_1",
+    "answer": "KAPI",
+    "answerId": "tr1_4d0d323ee2211fbb978f52b102861ca83a425fb61b7386ddbedd70c71c223e1a",
+    "letterCount": 4,
+    "meaningId": "example_sense_1",
+    "meaning": "Bir odaya girerken açıp çıkarken kapattığımız geçit.",
+    "clue": "Bir odaya girerken açıp çıkarken kapattığımız geçit.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_4d0d323ee2211fbb978f52b102861ca83a425fb61b7386ddbedd70c71c223e1a",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Bir odaya girerken açıp çıkarken kapattığımız geçit.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "e4d4780c0658613a8b55b223616513b5b9c0f323667f69b955b9d382fbbede58"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_2",
+    "answer": "SAAT",
+    "answerId": "tr1_26cc0dca12c46f95cf1ad280d4195cdd17139f20a576cc4039dbe15633d6d9d0",
+    "letterCount": 4,
+    "meaningId": "example_sense_2",
+    "meaning": "Zamanı akrep ve yelkovanla gösteren araç.",
+    "clue": "Zamanı akrep ve yelkovanla gösteren araç.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_26cc0dca12c46f95cf1ad280d4195cdd17139f20a576cc4039dbe15633d6d9d0",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Zamanı akrep ve yelkovanla gösteren araç.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "985284b49d7b3178ea33167b5fa2d0cd265ad021244f6ec72e98a203498a971e"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_3",
+    "answer": "MASA",
+    "answerId": "tr1_87927ae0a5b2b5d2d0d3b838c0ad6dd25aec7a9d5a21ced7dd688e0cfa8e7085",
+    "letterCount": 4,
+    "meaningId": "example_sense_3",
+    "meaning": "Üzerinde yemek yenen veya yazı yazılan ayaklı mobilya.",
+    "clue": "Üzerinde yemek yenen veya yazı yazılan ayaklı mobilya.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_87927ae0a5b2b5d2d0d3b838c0ad6dd25aec7a9d5a21ced7dd688e0cfa8e7085",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Üzerinde yemek yenen veya yazı yazılan ayaklı mobilya.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "95c1f51adc38ce8776fa6d64fc6dad38af6982f38822edad8ce711baca0a7680"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_4",
+    "answer": "KALE",
+    "answerId": "tr1_234cffbabbf54748296ff53486de2e2a5d1da548c39856ca53f491f57dbf89f7",
+    "letterCount": 4,
+    "meaningId": "example_sense_4",
+    "meaning": "Satrançta düz hatlar boyunca hareket eden taş.",
+    "clue": "Satrançta düz hatlar boyunca hareket eden taş.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_234cffbabbf54748296ff53486de2e2a5d1da548c39856ca53f491f57dbf89f7",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Satrançta düz hatlar boyunca hareket eden taş.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "dd313e15e681a41e8f4657284c0ae6b9c4cae85756b378fd2d5618529abb678b"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_5",
+    "answer": "KEDİ",
+    "answerId": "tr1_fd21a2250134e61c137b1e44a9a97a9e106569ae8b6a6f7b0e057518f829ffbd",
+    "letterCount": 4,
+    "meaningId": "example_sense_5",
+    "meaning": "Miyavlayarak ses çıkaran evcil memeli.",
+    "clue": "Miyavlayarak ses çıkaran evcil memeli.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_fd21a2250134e61c137b1e44a9a97a9e106569ae8b6a6f7b0e057518f829ffbd",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Miyavlayarak ses çıkaran evcil memeli.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "950e4a7c1ac40dc21430949a88512ee00a90b4d388201c738cbe21f56cf7c0e6"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_6",
+    "answer": "ELMA",
+    "answerId": "tr1_c148ff7f0676fdf20f20d8b5bea8627d2dfcc5fc2c76ac1264aa767b85add7ec",
+    "letterCount": 4,
+    "meaningId": "example_sense_6",
+    "meaning": "Ağaçta yetişen kırmızı veya yeşil kabuklu meyve.",
+    "clue": "Ağaçta yetişen kırmızı veya yeşil kabuklu meyve.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_c148ff7f0676fdf20f20d8b5bea8627d2dfcc5fc2c76ac1264aa767b85add7ec",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Ağaçta yetişen kırmızı veya yeşil kabuklu meyve.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "ce2c58e126df4a94d5ce836582fe96973bfc6f5e8f31d98c57092f085c1e43cd"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_7",
+    "answer": "KİTAP",
+    "answerId": "tr1_eb08a20847fc2126a081e19d0907e9c91626c5e814393fb19ebdf4e3940d5f77",
+    "letterCount": 5,
+    "meaningId": "example_sense_7",
+    "meaning": "Sayfaları bir araya getirilmiş basılı eser.",
+    "clue": "Sayfaları bir araya getirilmiş basılı eser.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_eb08a20847fc2126a081e19d0907e9c91626c5e814393fb19ebdf4e3940d5f77",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Sayfaları bir araya getirilmiş basılı eser.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "35827e723e6c8a889fd9bd03de47b97ecaf7ce2e49eeeca8ae6166f1bee09c65"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_8",
+    "answer": "DENİZ",
+    "answerId": "tr1_552b1e9e763d243ba39cbf1db29ab36f44d01d162206382e47ab1e2b7c190e19",
+    "letterCount": 5,
+    "meaningId": "example_sense_8",
+    "meaning": "Okyanustan küçük tuzlu ve geniş su kütlesi.",
+    "clue": "Okyanustan küçük tuzlu ve geniş su kütlesi.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_552b1e9e763d243ba39cbf1db29ab36f44d01d162206382e47ab1e2b7c190e19",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Okyanustan küçük tuzlu ve geniş su kütlesi.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "6f348555d504cc1de3f8b1843b9a8e53d0c1d6f0242fee100a9730e7beef040f"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_9",
+    "answer": "BULUT",
+    "answerId": "tr1_2e96ab297381d588d069fd670f9369e3e411a1877b4e748a9769f8b9fb8f3dd7",
+    "letterCount": 5,
+    "meaningId": "example_sense_9",
+    "meaning": "Gökyüzünde biriken su damlacıkları kümesi.",
+    "clue": "Gökyüzünde biriken su damlacıkları kümesi.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_2e96ab297381d588d069fd670f9369e3e411a1877b4e748a9769f8b9fb8f3dd7",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Gökyüzünde biriken su damlacıkları kümesi.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "19c2ca70a754dfc5d062fdc47ba822dd739f3225da1534178a01ba4f43c6ff1c"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_10",
+    "answer": "ÇİÇEK",
+    "answerId": "tr1_fa97ab10a12094626aefcb74788aaeb28a0b3ada73d2c9bef1dabae427813dad",
+    "letterCount": 5,
+    "meaningId": "example_sense_10",
+    "meaning": "Bir bitkinin renkli taç yaprakları olan üreme organı.",
+    "clue": "Bir bitkinin renkli taç yaprakları olan üreme organı.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_fa97ab10a12094626aefcb74788aaeb28a0b3ada73d2c9bef1dabae427813dad",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Bir bitkinin renkli taç yaprakları olan üreme organı.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "90823cfa7787e471af2186ebe5030e94f4530da82ecb71e943e5c1c18ab30286"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_11",
+    "answer": "KALEM",
+    "answerId": "tr1_57a6f49f2cfd3d539b203b1262414771e68a1e2284790b4e90741b840a6fed93",
+    "letterCount": 5,
+    "meaningId": "example_sense_11",
+    "meaning": "Yazmak veya çizmek için elde tutulan araç.",
+    "clue": "Yazmak veya çizmek için elde tutulan araç.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_57a6f49f2cfd3d539b203b1262414771e68a1e2284790b4e90741b840a6fed93",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Yazmak veya çizmek için elde tutulan araç.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "cf2626a8ed4263709e8b9d20ac0f9d6c48d3a0ddac10e46c61107054aaaeb4af"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_12",
+    "answer": "GÜNEŞ",
+    "answerId": "tr1_98ceceb21f7d4ebd901c0110b8de0f907245fa6fe415243a7711eec732fdfa88",
+    "letterCount": 5,
+    "meaningId": "example_sense_12",
+    "meaning": "Dünya gündüzünü aydınlatan en yakın yıldız.",
+    "clue": "Dünya gündüzünü aydınlatan en yakın yıldız.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_98ceceb21f7d4ebd901c0110b8de0f907245fa6fe415243a7711eec732fdfa88",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Dünya gündüzünü aydınlatan en yakın yıldız.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "268abca9c9a605e5ca1b4d7f7d27014d95c16e2c766c82f09a4abdb372232bb3"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_13",
+    "answer": "BARDAK",
+    "answerId": "tr1_7938700d29cb79290c95674d93b367e9f1fc38ef921995725e1a33c939db6219",
+    "letterCount": 6,
+    "meaningId": "example_sense_13",
+    "meaning": "Su veya çay içmek için kullanılan kap.",
+    "clue": "Su veya çay içmek için kullanılan kap.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_7938700d29cb79290c95674d93b367e9f1fc38ef921995725e1a33c939db6219",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Su veya çay içmek için kullanılan kap.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "05542e7867df23aab19ceb89887f70f7e9016f3dee515c54aecce0ab406f9eab"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_14",
+    "answer": "TOPRAK",
+    "answerId": "tr1_e7411dc9e59a56c85e8201017d7fae9e015783d75fe78b8bc98b87df5a79ec11",
+    "letterCount": 6,
+    "meaningId": "example_sense_14",
+    "meaning": "Bitkilerin kök saldığı yeryüzünün üst tabakası.",
+    "clue": "Bitkilerin kök saldığı yeryüzünün üst tabakası.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_e7411dc9e59a56c85e8201017d7fae9e015783d75fe78b8bc98b87df5a79ec11",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Bitkilerin kök saldığı yeryüzünün üst tabakası.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "9e667c48b2efceeff12d182f9c324f60fe3ccdf5581bd54667ee5b57c10f2bc7"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_15",
+    "answer": "DEFTER",
+    "answerId": "tr1_78c1cef5f787a31da05153dded4c47e0612499a358943a011d5ee2b42445c3c5",
+    "letterCount": 6,
+    "meaningId": "example_sense_15",
+    "meaning": "Not yazmak için birleştirilmiş boş sayfalar bütünü.",
+    "clue": "Not yazmak için birleştirilmiş boş sayfalar bütünü.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_78c1cef5f787a31da05153dded4c47e0612499a358943a011d5ee2b42445c3c5",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Not yazmak için birleştirilmiş boş sayfalar bütünü.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "fd65a9c7e3cac810c3432f10d072f98afea5c178f4f2209999a797e5c41fe14f"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_16",
+    "answer": "YASTIK",
+    "answerId": "tr1_edd7236d7a2239b50121058c9c09b4094ec686682a0c213a974028003ce2ec9e",
+    "letterCount": 6,
+    "meaningId": "example_sense_16",
+    "meaning": "Uyurken başımızın altına koyduğumuz yumuşak eşya.",
+    "clue": "Uyurken başımızın altına koyduğumuz yumuşak eşya.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_edd7236d7a2239b50121058c9c09b4094ec686682a0c213a974028003ce2ec9e",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Uyurken başımızın altına koyduğumuz yumuşak eşya.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "2802c9c117af1dab37bca2c18f89ef9a07b1dcc4c2929e7b2277d4c45c9c6894"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_17",
+    "answer": "YAPRAK",
+    "answerId": "tr1_06ad8007ce53b157058f7f3615f8146cf024969d2e84d516a34f79e4ccef54ca",
+    "letterCount": 6,
+    "meaningId": "example_sense_17",
+    "meaning": "Bitkinin genellikle yeşil olan yassı organı.",
+    "clue": "Bitkinin genellikle yeşil olan yassı organı.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_06ad8007ce53b157058f7f3615f8146cf024969d2e84d516a34f79e4ccef54ca",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Bitkinin genellikle yeşil olan yassı organı.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "f707f14c047f632c2ed4a14739d967cfd8bb8d00d8a97e044583624a9d72ed28"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_18",
+    "answer": "PEYNİR",
+    "answerId": "tr1_f923d04af7763bd6548c59bd1bc78f95a27e828abd93600bdb809dbf18e2fad0",
+    "letterCount": 6,
+    "meaningId": "example_sense_18",
+    "meaning": "Sütün pıhtılaştırılmasıyla elde edilen kahvaltılık besin.",
+    "clue": "Sütün pıhtılaştırılmasıyla elde edilen kahvaltılık besin.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_f923d04af7763bd6548c59bd1bc78f95a27e828abd93600bdb809dbf18e2fad0",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Sütün pıhtılaştırılmasıyla elde edilen kahvaltılık besin.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "5b9006fef45c9f7ac3eafe19f04cdf8d0b1ffe06d42d460ab550ea646e9d0792"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_19",
+    "answer": "ANAHTAR",
+    "answerId": "tr1_c93a117f1b1ec9ab33d6ef6fe64b4ed75b38a9ef92947fb77f2e23aae31c3b4d",
+    "letterCount": 7,
+    "meaningId": "example_sense_19",
+    "meaning": "Kilidi açmak için kullanılan küçük metal araç.",
+    "clue": "Kilidi açmak için kullanılan küçük metal araç.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_c93a117f1b1ec9ab33d6ef6fe64b4ed75b38a9ef92947fb77f2e23aae31c3b4d",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Kilidi açmak için kullanılan küçük metal araç.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "42c9908e0c991de5f2312170623ec06a4e6b6b996fa415899057be0252ad2727"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_20",
+    "answer": "PATATES",
+    "answerId": "tr1_f55bcdb96e06d6ae5958c388477429036c5a4f52acc217879061b61a28719c6b",
+    "letterCount": 7,
+    "meaningId": "example_sense_20",
+    "meaning": "Toprak altında yetişen kızartması yapılan yumru sebze.",
+    "clue": "Toprak altında yetişen kızartması yapılan yumru sebze.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_f55bcdb96e06d6ae5958c388477429036c5a4f52acc217879061b61a28719c6b",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Toprak altında yetişen kızartması yapılan yumru sebze.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "66a97d6bff47908894004eb4c35368ac077aacc37544bc28ab42649af494f5b9"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_21",
+    "answer": "PENCERE",
+    "answerId": "tr1_0956c70474a9ca1e2540a57c22bf1e0fed74e383b483982325a7f2894df2f2ec",
+    "letterCount": 7,
+    "meaningId": "example_sense_21",
+    "meaning": "Duvarlarda ışık ve hava girmesini sağlayan açıklık.",
+    "clue": "Duvarlarda ışık ve hava girmesini sağlayan açıklık.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_0956c70474a9ca1e2540a57c22bf1e0fed74e383b483982325a7f2894df2f2ec",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Duvarlarda ışık ve hava girmesini sağlayan açıklık.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "3e4823628cb8a4cad89456e6839610c06910555987f92b74ef27a47e33de9756"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_22",
+    "answer": "KİREMİT",
+    "answerId": "tr1_3d346b40c45bf6e1cc089277fbe8cd6677ec52d603b1589be9a14a8fea1292af",
+    "letterCount": 7,
+    "meaningId": "example_sense_22",
+    "meaning": "Çatıyı örtmekte kullanılan pişmiş kil parçası.",
+    "clue": "Çatıyı örtmekte kullanılan pişmiş kil parçası.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_3d346b40c45bf6e1cc089277fbe8cd6677ec52d603b1589be9a14a8fea1292af",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Çatıyı örtmekte kullanılan pişmiş kil parçası.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "e239627d6f2af5561533a31c18579d5680ae29af7648b9994290bf96ed964307"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_23",
+    "answer": "DOMATES",
+    "answerId": "tr1_14cad32fe1bb7d5dbc3873930d28daf8e9afba985a29ed07ad56f58bf524fe0b",
+    "letterCount": 7,
+    "meaningId": "example_sense_23",
+    "meaning": "Salatada ve soslarda kullanılan kırmızı meyveli bitki.",
+    "clue": "Salatada ve soslarda kullanılan kırmızı meyveli bitki.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_14cad32fe1bb7d5dbc3873930d28daf8e9afba985a29ed07ad56f58bf524fe0b",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Salatada ve soslarda kullanılan kırmızı meyveli bitki.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "c235b50a51856eac3313879e791487fbba61d8271ec35b86c599061065165cdb"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_24",
+    "answer": "TENCERE",
+    "answerId": "tr1_b63c9c3b681efb8689ada20e2da1577c3cc359f2327bb0b0d3bca62e844c8b84",
+    "letterCount": 7,
+    "meaningId": "example_sense_24",
+    "meaning": "Yemek pişirmeye yarayan derin ve kapaklı mutfak kabı.",
+    "clue": "Yemek pişirmeye yarayan derin ve kapaklı mutfak kabı.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_b63c9c3b681efb8689ada20e2da1577c3cc359f2327bb0b0d3bca62e844c8b84",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Yemek pişirmeye yarayan derin ve kapaklı mutfak kabı.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "b6b3c65e2acb5a5eaf2ebbd3418b8126ab1f6ce5e0792b5c807f03a1530969c9"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_25",
+    "answer": "MERDİVEN",
+    "answerId": "tr1_0160df6cd3d74ff39ad1ab0d9eb5b583171daa719a8ad973ce8ac5e2f879d4e5",
+    "letterCount": 8,
+    "meaningId": "example_sense_25",
+    "meaning": "Basamakları kullanarak yukarı çıkmayı sağlayan yapı.",
+    "clue": "Basamakları kullanarak yukarı çıkmayı sağlayan yapı.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_0160df6cd3d74ff39ad1ab0d9eb5b583171daa719a8ad973ce8ac5e2f879d4e5",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Basamakları kullanarak yukarı çıkmayı sağlayan yapı.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "8ca17cce3b5bd04468a54c7005224fb9766576714eb5d6fff45fb6c9aeaca916"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_26",
+    "answer": "ÇEKİRDEK",
+    "answerId": "tr1_b50d8568597f41cc3b615ed69e3e2010fb75196993f0875a7bf6a70944a22b49",
+    "letterCount": 8,
+    "meaningId": "example_sense_26",
+    "meaning": "Ayçiçeğinden elde edilen kabuğu çıtlatılarak yenen atıştırmalık.",
+    "clue": "Ayçiçeğinden elde edilen kabuğu çıtlatılarak yenen atıştırmalık.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_b50d8568597f41cc3b615ed69e3e2010fb75196993f0875a7bf6a70944a22b49",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Ayçiçeğinden elde edilen kabuğu çıtlatılarak yenen atıştırmalık.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "cbb5c14c110411679b39619c5be751e1a0b1fe133a0f324340ea9c4a6618ce2a"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_27",
+    "answer": "SANDALYE",
+    "answerId": "tr1_9206f136ee564911368df4b515772b893e10f1de19f36ad0b95ec35570f4555f",
+    "letterCount": 8,
+    "meaningId": "example_sense_27",
+    "meaning": "Tek kişinin oturabildiği sırt dayanaklı mobilya.",
+    "clue": "Tek kişinin oturabildiği sırt dayanaklı mobilya.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_9206f136ee564911368df4b515772b893e10f1de19f36ad0b95ec35570f4555f",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Tek kişinin oturabildiği sırt dayanaklı mobilya.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "4c20b693ac43935e7f75686b34d531a21cf43a43dce099b60db2ea54ee00f5c5"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_28",
+    "answer": "AYAKKABI",
+    "answerId": "tr1_d744979506ec423e9a57a9f7115bb63561723389ba5bf27514513ffa525dd506",
+    "letterCount": 8,
+    "meaningId": "example_sense_28",
+    "meaning": "Dışarıda yürürken ayakları koruyan giyim eşyası.",
+    "clue": "Dışarıda yürürken ayakları koruyan giyim eşyası.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_d744979506ec423e9a57a9f7115bb63561723389ba5bf27514513ffa525dd506",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Dışarıda yürürken ayakları koruyan giyim eşyası.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "ca42be65c8548bcf8ba7a1fa88e267233e572f3b878d1124d02f898ba409ee47"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_29",
+    "answer": "ÇİKOLATA",
+    "answerId": "tr1_81ad45221057d446bfe2234776261756e4eb6f1c57802314ebc35f92519a7de3",
+    "letterCount": 8,
+    "meaningId": "example_sense_29",
+    "meaning": "Kakaodan yapılan çoğunlukla tatlı yiyecek.",
+    "clue": "Kakaodan yapılan çoğunlukla tatlı yiyecek.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_81ad45221057d446bfe2234776261756e4eb6f1c57802314ebc35f92519a7de3",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Kakaodan yapılan çoğunlukla tatlı yiyecek.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "a9b17726af4bb5a3a2b34078dd63b181b55c24144f4424f6231798abadc3d262"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_30",
+    "answer": "KARANLIK",
+    "answerId": "tr1_645fd874018f000e9778c57aac1cf83019fdc078a3f7d04b48f420bd2bfeb0e0",
+    "letterCount": 8,
+    "meaningId": "example_sense_30",
+    "meaning": "Bir yerde ışığın bulunmaması durumu.",
+    "clue": "Bir yerde ışığın bulunmaması durumu.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_645fd874018f000e9778c57aac1cf83019fdc078a3f7d04b48f420bd2bfeb0e0",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Bir yerde ışığın bulunmaması durumu.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "aaedfde1d71809125e79cc18214039aaca1d7844626413ff57a50f35bc2389db"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_31",
+    "answer": "GÖKKUŞAĞI",
+    "answerId": "tr1_145d4c9ad067e7066aed2320394701596f48a63ad169fd0df241b22174cb30bb",
+    "letterCount": 9,
+    "meaningId": "example_sense_31",
+    "meaning": "Yağmurdan sonra gökyüzünde oluşabilen renkli yay.",
+    "clue": "Yağmurdan sonra gökyüzünde oluşabilen renkli yay.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_145d4c9ad067e7066aed2320394701596f48a63ad169fd0df241b22174cb30bb",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Yağmurdan sonra gökyüzünde oluşabilen renkli yay.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "ce58986b2d74d99c9c51bf5bd9af871ddcf27149c0a92bb216ea8cd8553bd8f5"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_32",
+    "answer": "KALABALIK",
+    "answerId": "tr1_21d82e41b544c39f45f3421ee7ca7ed37713699cdbb153496a70289706c39cea",
+    "letterCount": 9,
+    "meaningId": "example_sense_32",
+    "meaning": "Bir yerde toplanmış çok sayıda insan.",
+    "clue": "Bir yerde toplanmış çok sayıda insan.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_21d82e41b544c39f45f3421ee7ca7ed37713699cdbb153496a70289706c39cea",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Bir yerde toplanmış çok sayıda insan.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "b524f7b214fff73c5949cb7d0b15f3c7224c875091d146b73ff0223d208dfaea"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_33",
+    "answer": "ÇAMAŞIRCI",
+    "answerId": "tr1_5bc66faee69f51fe308248f4057de3c31c1275bdac943e309488a81303864528",
+    "letterCount": 9,
+    "meaningId": "example_sense_33",
+    "meaning": "Giysi yıkama işini meslek olarak yapan kişi.",
+    "clue": "Giysi yıkama işini meslek olarak yapan kişi.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_5bc66faee69f51fe308248f4057de3c31c1275bdac943e309488a81303864528",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Giysi yıkama işini meslek olarak yapan kişi.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "c63976181e498385e208f76297373b0af7b1151985c2246daed7f82288e19985"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_34",
+    "answer": "PAZARTESİ",
+    "answerId": "tr1_066033749f1baaeb534c98e059702d3ea70a2b21c72403575a8522061ae3310d",
+    "letterCount": 9,
+    "meaningId": "example_sense_34",
+    "meaning": "Haftanın pazar gününü izleyen günü.",
+    "clue": "Haftanın pazar gününü izleyen günü.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_066033749f1baaeb534c98e059702d3ea70a2b21c72403575a8522061ae3310d",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Haftanın pazar gününü izleyen günü.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "fc59f3733e4becec27114ebc4f9e0bdbe626692be2ce5b4c26c5ad1637a7cb73"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_35",
+    "answer": "KÜTÜPHANE",
+    "answerId": "tr1_9f68e105a4526a448f3fb3acc38d941a7503a096748ac49d0c9a5d6b3e9fb8ca",
+    "letterCount": 9,
+    "meaningId": "example_sense_35",
+    "meaning": "Okunacak eserlerin korunduğu ve ödünç verildiği yer.",
+    "clue": "Okunacak eserlerin korunduğu ve ödünç verildiği yer.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_9f68e105a4526a448f3fb3acc38d941a7503a096748ac49d0c9a5d6b3e9fb8ca",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Okunacak eserlerin korunduğu ve ödünç verildiği yer.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "757ed84f6f964b6c4ce4438e59f2d52f76646f6c42c6f23cbb8f6f52f8bce0d7"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_36",
+    "answer": "OYUNCAKÇI",
+    "answerId": "tr1_4fe98cc266d4beea18ca1c145474add6650e26d6781dc0b5ecbbcae9b71160c4",
+    "letterCount": 9,
+    "meaningId": "example_sense_36",
+    "meaning": "Çocukların eğlenirken kullandığı eşyaları satan kişi.",
+    "clue": "Çocukların eğlenirken kullandığı eşyaları satan kişi.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_4fe98cc266d4beea18ca1c145474add6650e26d6781dc0b5ecbbcae9b71160c4",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Çocukların eğlenirken kullandığı eşyaları satan kişi.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "333593cfa839b1e0f7e9361579ca09588671085c101d6909d5710ce47a96e5a9"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_37",
+    "answer": "BİLGİSAYAR",
+    "answerId": "tr1_385c9b442c101af51d6373ce5c0e0dd913811d3dd03807a487d71c8755ba2c53",
+    "letterCount": 10,
+    "meaningId": "example_sense_37",
+    "meaning": "Verileri işleyen ekran ve klavyeyle kullanılan elektronik cihaz.",
+    "clue": "Verileri işleyen ekran ve klavyeyle kullanılan elektronik cihaz.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_385c9b442c101af51d6373ce5c0e0dd913811d3dd03807a487d71c8755ba2c53",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Verileri işleyen ekran ve klavyeyle kullanılan elektronik cihaz.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "176153954149ae19e6a7a00a27ba7bbaf53802a60a835cb08718f50e7dceca33"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_38",
+    "answer": "TELEVİZYON",
+    "answerId": "tr1_dc807ba8d8adbf30213c1905e483d78f111057608964529ad750bb2ebb25de6b",
+    "letterCount": 10,
+    "meaningId": "example_sense_38",
+    "meaning": "Görüntülü yayınları evde izlemeyi sağlayan cihaz.",
+    "clue": "Görüntülü yayınları evde izlemeyi sağlayan cihaz.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_dc807ba8d8adbf30213c1905e483d78f111057608964529ad750bb2ebb25de6b",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Görüntülü yayınları evde izlemeyi sağlayan cihaz.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "526293b27c1484518928e4d8259b72fb5671a224ee660fa6b12f49ee186d3de1"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_39",
+    "answer": "FOTOĞRAFÇI",
+    "answerId": "tr1_cd294569503dc04d5410b819cb27e95bd22af6542eb9d4d9207145e1480674b6",
+    "letterCount": 10,
+    "meaningId": "example_sense_39",
+    "meaning": "Kamera ile görüntü çekmeyi meslek edinmiş kişi.",
+    "clue": "Kamera ile görüntü çekmeyi meslek edinmiş kişi.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_cd294569503dc04d5410b819cb27e95bd22af6542eb9d4d9207145e1480674b6",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Kamera ile görüntü çekmeyi meslek edinmiş kişi.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "a86f59468c24fdf1e51479b80a3d9b3dd72a6ef78e2b961679c3a730f5044308"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_40",
+    "answer": "VOLEYBOLCU",
+    "answerId": "tr1_5ec5c800dd6ad35c36d4899a2a68c72a173b890e2204ec815bd58be7d479f8ac",
+    "letterCount": 10,
+    "meaningId": "example_sense_40",
+    "meaning": "File üzerinden elle top atılan takım sporunu oynayan kişi.",
+    "clue": "File üzerinden elle top atılan takım sporunu oynayan kişi.",
+    "topic": "gündelik",
+    "difficulty": 1,
+    "rootId": "tr1_5ec5c800dd6ad35c36d4899a2a68c72a173b890e2204ec815bd58be7d479f8ac",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "File üzerinden elle top atılan takım sporunu oynayan kişi.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "2812f2ee7593d7b62dc592ef3afb8a3a9a410047a6baf9aacd31a1527296d05e"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_41",
+    "answer": "ÇAMAŞIRLIK",
+    "answerId": "tr1_de002b6151ab53381ca35eaa396bdaea42fe1a24543de3b7f9a16364c6fbcf9a",
+    "letterCount": 10,
+    "meaningId": "example_sense_41",
+    "meaning": "Yıkanmış giysilerin kuruması için asıldığı eşya.",
+    "clue": "Yıkanmış giysilerin kuruması için asıldığı eşya.",
+    "topic": "doğa",
+    "difficulty": 2,
+    "rootId": "tr1_de002b6151ab53381ca35eaa396bdaea42fe1a24543de3b7f9a16364c6fbcf9a",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Yıkanmış giysilerin kuruması için asıldığı eşya.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "b93c01d5e1ee06f4772aaab640df8a82ccbc4d7d72ceec9c99e3adf84a28f3ef"
+    },
+    "publication": "published"
+  },
+  {
+    "id": "example_42",
+    "answer": "KAHVERENGİ",
+    "answerId": "tr1_4e34767d517a5839a0fa9e02a2ce68c308dfed4a6b63bb2a3bacf0d25c70de7d",
+    "letterCount": 10,
+    "meaningId": "example_sense_42",
+    "meaning": "Kavrulmuş kahve tanesinin rengine benzeyen renk.",
+    "clue": "Kavrulmuş kahve tanesinin rengine benzeyen renk.",
+    "topic": "kültür",
+    "difficulty": 3,
+    "rootId": "tr1_4e34767d517a5839a0fa9e02a2ce68c308dfed4a6b63bb2a3bacf0d25c70de7d",
+    "relatedAnswerIds": [],
+    "origin": "example",
+    "source": {
+      "reference": "Project-authored development fixture; no external archive copied",
+      "meaningEvidence": "Kavrulmuş kahve tanesinin rengine benzeyen renk.",
+      "termsReference": "Project-authored fixture; not dictionary-verified or editor-approved production content",
+      "rights": "original"
+    },
+    "review": {
+      "status": "approved",
+      "editor": "FIXTURE ONLY — not production editor approval",
+      "reviewedAtMs": 1,
+      "checks": {
+        "spelling": true,
+        "meaning": true,
+        "uniqueAnswer": true,
+        "noLeak": true,
+        "originality": true,
+        "sourceRights": true
+      },
+      "digest": "605ba528a1fb31c200f2966e24311ca428d21a1abe5c2ce6da1d2987b2c5bb73"
+    },
+    "publication": "published"
+  }
+]
