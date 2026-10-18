@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_yarisi/features/game/data/question_history_store.dart';
-import 'package:kelime_yarisi/features/game/domain/game_question.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class RetryDatabaseFactory extends Fake implements DatabaseFactory {
@@ -22,65 +21,82 @@ void main() {
       databasePath: inMemoryDatabasePath,
     );
     await expectLater(store.snapshot(), throwsStateError);
-    expect((await store.snapshot())['seenAnswerIds'], isEmpty);
+    expect((await store.snapshot())['completedSetIds'], isEmpty);
     await store.close();
-  });
-  test('SQLite persists only shown IDs across reopen; variants share answer history', () async {
-    final factory = databaseFactoryFfi;
-    final directory = await Directory.systemTemp.createTemp(
-      'question-history-test',
-    );
-    addTearDown(() => directory.delete(recursive: true));
-    final databasePath = '${directory.path}/history.sqlite';
-    await factory.deleteDatabase(databasePath);
-    var store = QuestionHistoryStore(
-      factory: factory,
-      databasePath: databasePath,
-    );
-    const first = GameQuestion(
-      id: 'q1',
-      answerId: 'w1',
-      clue: 'Bir geçit.',
-      answer: 'KAPI',
-    );
-    const variant = GameQuestion(
-      id: 'q2',
-      answerId: 'w1',
-      clue: 'Bir giriş bölümü.',
-      answer: 'KAPI',
-    );
-    expect((await store.snapshot())['seenAnswerIds'], isEmpty);
-    await Future.wait([
-      store.recordShown(first),
-      store.recordShown(first),
-      store.recordShown(variant),
-    ]);
-    await store.close();
-    store = QuestionHistoryStore(factory: factory, databasePath: databasePath);
-    expect((await store.snapshot())['seenAnswerIds'], ['w1']);
-    expect((await store.snapshot())['seenQuestionIds']!.toSet(), {'q1', 'q2'});
-    await store.close();
-    // Simulates removal of app data. No server/account history is restored.
-    await factory.deleteDatabase(databasePath);
-    store = QuestionHistoryStore(factory: factory, databasePath: databasePath);
-    expect((await store.snapshot())['seenAnswerIds'], isEmpty);
-    await store.close();
-    await factory.deleteDatabase(databasePath);
   });
 
-  test(
-    'an unallocated/legacy question cannot create an incomplete history row',
-    () async {
-      final store = QuestionHistoryStore(
-        factory: databaseFactoryFfi,
-        databasePath: inMemoryDatabasePath,
-      );
-      await expectLater(
-        store.recordShown(const GameQuestion(clue: 'Deneme', answer: 'KAPI')),
-        throwsStateError,
-      );
-      expect((await store.snapshot())['seenAnswerIds'], isEmpty);
-      await store.close();
-    },
-  );
+  test('only completed set IDs persist across reopen; clearing app data resets history', () async {
+    final directory = await Directory.systemTemp.createTemp('set-history-test');
+    addTearDown(() => directory.delete(recursive: true));
+    final file = '${directory.path}/history.sqlite';
+    var store = QuestionHistoryStore(
+      factory: databaseFactoryFfi,
+      databasePath: file,
+    );
+    expect((await store.snapshot())['completedSetIds'], isEmpty);
+    await Future.wait([
+      store.recordCompleted('initial_001'),
+      store.recordCompleted('initial_001'),
+    ]);
+    await store.close();
+    store = QuestionHistoryStore(
+      factory: databaseFactoryFfi,
+      databasePath: file,
+    );
+    expect(await store.snapshot(), {
+      'seenAnswerIds': [],
+      'seenQuestionIds': [],
+      'completedSetIds': ['initial_001'],
+    });
+    await expectLater(store.recordCompleted('../invalid'), throwsStateError);
+    await store.close();
+    await databaseFactoryFfi.deleteDatabase(file);
+    store = QuestionHistoryStore(
+      factory: databaseFactoryFfi,
+      databasePath: file,
+    );
+    expect((await store.snapshot())['completedSetIds'], isEmpty);
+    await store.close();
+  });
+
+  test('v1 shown-question rows are preserved but cannot count as completed sets', () async {
+    final directory = await Directory.systemTemp.createTemp(
+      'set-history-migration',
+    );
+    addTearDown(() => directory.delete(recursive: true));
+    final file = '${directory.path}/history.sqlite';
+    final old = await databaseFactoryFfi.openDatabase(
+      file,
+      options: OpenDatabaseOptions(
+        version: 1,
+        onCreate: (db, _) async {
+          for (final name in ['seen_answers', 'seen_questions']) {
+            await db.execute(
+              'CREATE TABLE $name (id TEXT PRIMARY KEY, seen_at_ms INTEGER NOT NULL) WITHOUT ROWID',
+            );
+            await db.insert(name, {
+              'id': 'partial_question',
+              'seen_at_ms': 1000,
+            });
+          }
+        },
+      ),
+    );
+    await old.close();
+    final store = QuestionHistoryStore(
+      factory: databaseFactoryFfi,
+      databasePath: file,
+    );
+    expect((await store.snapshot())['completedSetIds'], isEmpty);
+    expect((await store.snapshot())['seenQuestionIds'], isEmpty);
+    await store.recordCompleted('initial_002');
+    await store.close();
+    final check = await databaseFactoryFfi.openDatabase(file);
+    expect(
+      (await check.query('seen_questions')).single['id'],
+      'partial_question',
+    );
+    expect((await check.query('completed_sets')).single['id'], 'initial_002');
+    await check.close();
+  });
 }

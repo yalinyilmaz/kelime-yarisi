@@ -2,7 +2,7 @@ import {LENGTHS} from './content.js';
 
 // GPT-6 Luna standard short-context prices, USD / million tokens, 2026-10-15.
 export const GENERATION_LIMITS=Object.freeze({attempts:60,calls:120,consecutiveFailures:5,
-  dailyMicros:500000,monthlyMicros:10000000,runtimeMs:600000,approvedPerLength:6});
+  dailyMicros:500000,monthlyMicros:10000000,runtimeMs:1500000,approvedPerLength:6});
 export const generationDay=now=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now));
 export const blankGenerationDay=()=>({attempts:[],calls:0,chargedMicros:0,consecutiveFailures:0,pending:null});
 const integer=n=>Number.isSafeInteger(n)&&n>=0;

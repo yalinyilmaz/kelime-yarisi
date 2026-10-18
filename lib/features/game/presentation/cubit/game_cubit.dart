@@ -41,7 +41,8 @@ class GameCubit extends Cubit<GameState> {
   int _retryAtMs = 0;
   bool _isCompleting = false;
   bool _isForeground = false;
-  bool _isRecordingQuestion = false;
+  bool _completedSetRecorded = false;
+  Future<void>? _completionWrite;
   int _historyRetryAtMs = 0;
 
   static GameState _initialState(FirebaseRoomService service, GameRoom room) {
@@ -240,6 +241,7 @@ class GameCubit extends Cubit<GameState> {
           answerFeedback: answerFeedback,
         ),
       );
+      _recordCompletedSet();
       return true;
     } catch (_) {
       if (isClosed) return false;
@@ -321,6 +323,7 @@ class GameCubit extends Cubit<GameState> {
     final next = state.copyWith(serverNowMs: _nowMs() + _offsetMs);
     emit(next.copyWith(clearFeedback: next.questionIndex != previousIndex));
     _recordVisibleQuestion();
+    _recordCompletedSet();
     if (state.room.isRace) {
       final race = state.room.race;
       if (race != null &&
@@ -381,41 +384,52 @@ class GameCubit extends Cubit<GameState> {
         state.hasExpired ||
         state.isLeaving ||
         state.room.status != RoomStatus.playing ||
-        _isRecordingQuestion ||
-        _nowMs() < _historyRetryAtMs ||
         state.questionIndex >= state.questions.length) {
       return;
     }
-    _isRecordingQuestion = true;
-    final index = state.questionIndex;
-    unawaited(_saveShownQuestion(index));
+    // Visibility is session memory only; it must not consume a partially played set.
+    emit(
+      state.copyWith(
+        recordedQuestionIndices: Set.unmodifiable({
+          ...state.recordedQuestionIndices,
+          state.questionIndex,
+        }),
+      ),
+    );
   }
 
-  Future<void> _saveShownQuestion(int index) async {
+  void _recordCompletedSet() {
+    if (_completedSetRecorded ||
+        _completionWrite != null ||
+        state.isLeaving ||
+        !state.room.usesQuestionPool ||
+        state.room.contentSetId == null ||
+        state.questions.length != 14 ||
+        !state.progress.finished ||
+        state.recordedQuestionIndices.length != 14 ||
+        _nowMs() < _historyRetryAtMs) {
+      return;
+    }
+    _completionWrite = _saveCompletedSet();
+  }
+
+  Future<void> _saveCompletedSet() async {
     try {
-      await _service.recordQuestionShown(state.questions[index]);
-      if (isClosed) return;
-      emit(
-        state.copyWith(
-          recordedQuestionIndices: Set.unmodifiable({
-            ...state.recordedQuestionIndices,
-            index,
-          }),
-          clearError: true,
-        ),
-      );
+      await _service.recordCompletedSet(state.room.contentSetId!);
+      _completedSetRecorded = true;
+      if (!isClosed) emit(state.copyWith(clearError: true));
     } catch (_) {
       _historyRetryAtMs = _nowMs() + 3000;
       if (!isClosed) {
         emit(
           state.copyWith(
             errorMessage:
-                'Soru geçmişi cihazda kaydedilemedi. Tekrar deneniyor.',
+                'Tamamlanan set cihazda kaydedilemedi. Tekrar deneniyor.',
           ),
         );
       }
     } finally {
-      _isRecordingQuestion = false;
+      _completionWrite = null;
     }
   }
 
@@ -452,6 +466,22 @@ class GameCubit extends Cubit<GameState> {
 
   Future<void> leaveRoom() async {
     if (state.isLeaving) return;
+    _recordCompletedSet();
+    await _completionWrite;
+    if (isClosed) return;
+    if (state.room.usesQuestionPool &&
+        state.room.contentSetId != null &&
+        state.progress.finished &&
+        state.recordedQuestionIndices.length == 14 &&
+        !_completedSetRecorded) {
+      emit(
+        state.copyWith(
+          errorMessage:
+              'Tamamlanan set henüz kaydedilemedi. Lütfen tekrar dene.',
+        ),
+      );
+      return;
+    }
     emit(state.copyWith(isLeaving: true, clearError: true));
     try {
       await _service.leaveRoom(state.room.id);
@@ -482,6 +512,7 @@ class GameCubit extends Cubit<GameState> {
   @override
   Future<void> close() async {
     _timer?.cancel();
+    await _completionWrite;
     await _roomSubscription?.cancel();
     await _clockSubscription?.cancel();
     await _connectionSubscription?.cancel();

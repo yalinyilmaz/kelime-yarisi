@@ -38,9 +38,8 @@ class QuestionCapacityCard extends StatelessWidget {
             ),
           const SizedBox(height: 8),
           Text(
-            'Teorik üst sınır: ${capacity.upperBoundGames} oyun. '
-            'Günde 3 oyunla ${(capacity.upperBoundGames / 3).toStringAsFixed(1)} gün. '
-            'Konu, zorluk ve kök sınırları bu sayıyı azaltabilir.',
+            'Oynanabilir tamamlanmış set: ${capacity.upperBoundGames}. '
+            'Yarım bıraktığın oyunlar tamamlanmış sayılmaz.',
             style: const TextStyle(
               color: AppColors.textSecondary,
               fontSize: 12,

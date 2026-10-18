@@ -6,7 +6,7 @@ import {onSchedule} from 'firebase-functions/v2/scheduler';
 import {defineSecret} from 'firebase-functions/params';
 import {QuestionService, ServiceError} from './question_service.js';
 import {CloudQuestionGenerator} from './cloud_generation.js';
-import {loadPublishedPool} from './published_pool.js';
+import {loadPublishedPool,loadPublishedSets} from './published_pool.js';
 import {RaceService} from './race.js';
 
 const emulator = process.env.FUNCTIONS_EMULATOR === 'true';
@@ -17,6 +17,8 @@ initializeApp(emulator ? {projectId: 'demo-kelime-yarisi', databaseURL: 'https:/
 const useExamples = emulator && process.env.QUESTION_POOL_EXAMPLES === 'true';
 const pool = JSON.parse(readFileSync(new URL(useExamples ? '../content/examples.json' : '../content/published.json', import.meta.url)));
 const service = new QuestionService({database: getDatabase(), pool, includeExamples: useExamples, allowSolo: emulator,
+  allowDebugSolo:projectId==='kelime-yarisi-yalin',
+  loadSets:useExamples?undefined:()=>loadPublishedSets(getDatabase(),pool),
   loadPool:useExamples?undefined:()=>loadPublishedPool(getDatabase(),pool)});
 const options = {region: 'europe-west1', maxInstances: 3, enforceAppCheck: !emulator};
 const callable = action => onCall(options, async request => {
@@ -39,7 +41,7 @@ export const cleanupQuestionReservations = onSchedule({schedule: 'every 10 minut
 const generationKey=defineSecret('OPENAI_API_KEY');
 const generationSources=JSON.parse(readFileSync(new URL('../content/source_queue.json',import.meta.url)));
 export const generateDailyQuestions=onSchedule({schedule:'0 4 * * *',timeZone:'Europe/Istanbul',region:'europe-west1',
-  retryCount:0,maxInstances:1,concurrency:1,timeoutSeconds:900,memory:'512MiB',
+  retryCount:0,maxInstances:1,concurrency:1,timeoutSeconds:1800,memory:'512MiB',
   serviceAccount:`question-generator@${projectId}.iam.gserviceaccount.com`,secrets:[generationKey]},async event=>{
   // Emulator tests inject a mock provider into CloudQuestionGenerator directly.
   if(emulator)throw new Error('Scheduled paid generation is disabled in the emulator. Use injected mock-provider tests.');

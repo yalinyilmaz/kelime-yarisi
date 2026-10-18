@@ -21,6 +21,7 @@ class GameRoom extends Equatable {
     this.status = RoomStatus.lobby,
     this.startsAtMs,
     this.questionSetId,
+    this.contentSetId,
     this.progress = const {},
     this.gameplayVersion,
     this.hints = const {},
@@ -40,6 +41,7 @@ class GameRoom extends Equatable {
   final RoomStatus status;
   final int? startsAtMs;
   final String? questionSetId;
+  final String? contentSetId;
   final Map<String, GameProgress> progress;
   final String? gameplayVersion;
   final Map<int, SharedHints> hints;
@@ -81,6 +83,7 @@ class GameRoom extends Equatable {
       status: status ?? this.status,
       startsAtMs: startsAtMs ?? this.startsAtMs,
       questionSetId: questionSetId ?? this.questionSetId,
+      contentSetId: contentSetId,
       progress: progress ?? this.progress,
       hints: hints ?? this.hints,
       questions: questions,
@@ -103,6 +106,7 @@ class GameRoom extends Equatable {
     status,
     startsAtMs,
     questionSetId,
+    contentSetId,
     progress,
     gameplayVersion,
     hints,

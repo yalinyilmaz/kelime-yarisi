@@ -114,17 +114,13 @@ Klasik mod 14 soru ve 4–10 harften ikişer cevap kullanır. Mevcut hızlı mod
 
 ### Cihaz geçmişi ve boyut
 
-SQLite sadece cevap kimliği, soru kimliği ve ilk görülme zamanını saklar. Soru metni ve cevap metni bu geçmiş veritabanına yazılmaz; büyük soru havuzu mobil uygulamaya gömülmez. Aktif oyunun 14/7 sorusu oda verisinden alınır; Firebase SDK'sının mevcut sınırlı oda cache'i ayrı bir mekanizmadır.
+SQLite yalnız tamamlanan setin kalıcı kimliğini ve tamamlanma zamanını `completed_sets` tablosunda saklar. Soru/cevap metinleri telefona havuz olarak indirilmez; oda snapshot'ı 14 soruyu taşır. Set, oyuncu 14 soruyu gördükten ve son sorunun sunucu sonucu alındıktan sonra tek kez kaydedilir. Üçüncü/dördüncü soruda odadan çıkmak geçmişe kayıt oluşturmaz; yarım set yeniden oynanabilir.
 
-Cevap kimliği Türkçe NFC yazımı ve I/ı–İ/i dönüşümü üzerinden üretilir. Soru metni/anlam varyantı değişince cevap kimliği değişmez. Oyuncunun ASCII karakterle cevap yazabilmesi ile kalıcı kelime kimliği birbirinden ayrıdır.
-
-Geçmiş hesap bazında değildir; o telefonda/app kurulumunda kalır. Uygulama verisi silinirse sıfırlanır. Geçmiş dizini Android cloud backup/device transfer ve iOS yedeklerinden çıkarılır; OS cache temizliğinde kaybolmaması için kalıcı uygulama alanında tutulur. Kaydın cihazda commit edilmesi beklenmeden soru gösterilmez. Arka planda geçen ve sadece timeout ile atlanan sorular görülmüş sayılmaz. Bir çökme tam commit ile ekranın çizilmesi arasına denk gelirse tek bir gösterim niyeti konservatif biçimde görülmüş kalabilir; ayrılan setin tamamı geçmişe yazılmaz.
-
-64 karakterli hash kimlikleriyle iki `WITHOUT ROWID` tablo ölçümü: 3.780 cevap + 3.780 soru yaklaşık 0,68 MiB; 10.000 + 10.000 yaklaşık 1,75 MiB; 50.000 + 50.000 yaklaşık 8,71 MiB. Bunlar çalışma sırasında oluşan veri boyutlarıdır, indirme/bundle boyutu değildir. Soru havuzunu genişletmek uygulamanın içine ek metin eklemez.
+V2 geçmiş geçişi eski soru bazlı tabloları korur fakat bu satırlar tamamlanmış oyun kanıtı olmadığından yeni seçimde tüketilmiş set sayılmaz. Set kimlikleri uygulama güncellemesinde korunur. Uygulama verisi silinirse yerel geçmiş sıfırlanır; geçmiş dizini Android/iOS yedeklerinden çıkarılır. Soru gösterimi SQLite yazısına bağlı değildir. Tamamlanma yazısı başarısız olursa yeniden denenir ve sonuç ekranından normal çıkışta yazının tamamlanması beklenir.
 
 ### Gerçek cihaz ile çalıştırma
 
-Uygulama flavor’ın yerel Firebase yapılandırmasıyla açılır. `main.dart` içinde named demo app, sahte anahtar, emulator adresi veya `USE_FIREBASE_EMULATORS` seçeneği yoktur. Android/iOS cihazını bağlayıp VS Code’da **Dev — Cloud Question Pool** profilini seç veya cihaz kimliğini açıkça ver:
+Uygulama flavor’ın yerel Firebase yapılandırmasıyla açılır. `main.dart` içinde named demo app, sahte anahtar, emulator adresi veya `USE_FIREBASE_EMULATORS` seçeneği yoktur. Android/iOS cihazını bağlayıp VS Code’da **Dev — Run** profilini seç veya cihaz kimliğini açıkça ver. Dev flavor gerçek havuzu varsayılan kullanır; prod otomatik etkinleşmez:
 
 ```sh
 flutter run --flavor dev -d DEVICE_ID --dart-define=QUESTION_POOL_ENABLED=true
@@ -134,7 +130,7 @@ Android Play Integrity için dev imzasının SHA-256 parmak izi Firebase'de kay�
 
 iOS debug tokenı cihazdaki uygulama kurulumuna aittir. Uygulama silinirse veya verileri temizlenirse token değişebilir; yeni token aynı dev uygulamasında yeniden kaydedilmelidir. Normal `flutter run` için uygulama verilerini temizleme. App Check ayarları tamamlandıktan sonra `Too many attempts` sürerse uygulamayı kapatıp yeniden aç; sürekli token yenileme/istek döngüsü ekleme.
 
-Gerçek cihaz kabul testi, dev proje ve havuz bayrağı doğrulandıktan sonra App Check tokenını, oda oluşturmayı ve bulut soru havuzuna callable erişimini sınar. Test kendi odasını kapatır; görülen soru geçmişini silmez/değiştirmez. Testin oluşturduğu geçici `questionPreparations` kaydı da yalnız testteki kullanıcı/oda kimliği eşleşiyorsa iş sonunda yönetici erişimiyle temizlenmelidir:
+Gerçek cihaz kabul testi gerçek callable doğrulamasıyla 14 soruluk seti bitirir, SQLite kaydını ve sonraki oyunda farklı set seçildiğini doğrular; yarıda bırakılan oyunun tüketilmediğini kontrol eder. Test kendine ait geçici SQLite dosyası kullanır ve kullanıcının geçmişine dokunmaz; oluşturduğu odaları kapatır. Testin oluşturduğu geçici `questionPreparations` kaydı da yalnız testteki kullanıcı/oda kimliği eşleşiyorsa iş sonunda yönetici erişimiyle temizlenmelidir:
 
 ```sh
 flutter test integration_test/question_pool_device_test.dart --flavor dev -d DEVICE_ID --dart-define=QUESTION_POOL_ENABLED=true
@@ -142,11 +138,13 @@ flutter test integration_test/question_pool_device_test.dart --flavor dev -d DEV
 
 Test/build sonunda bu çalışma için üretilen gereksiz APK/IPA, build çıktıları ve geçici logları temizle. Proje özelindeki ayrıntılar `AGENTS.md` içindedir. Backend’in izole güvenlik testleri saklanır; emulator kullanımı günlük cihaz akışının parçası değildir ve yalnız teknik olarak gerekli özel bir doğrulama için geçici olarak çalıştırılır.
 
-Backend sadece oda sahibinin başlatmasına ve oda üyelerinin geçmiş hazırlığına izin verir. Her cihaz kendi yerel kimlik listesini geçici olarak iletir; tüm oyuncuların görülmüş/ayrılmış cevapları ortak seçimden çıkarılır. Hazırlık 25 saniye geçerlidir; başlamazsa hazır durumu yenilenir. Kalıcı sunucu geçmişi tutulmaz. Aktif set rezervasyonu soruların azami toplam süresi + 30 saniye için geçerlidir (14 × 2 saniyelik gösterim de bu payın içindedir); süresi dolan kayıtlar seçimden hemen çıkarılır ve periyodik temizlenir. Aynı oda/kurulum kimliği ile yinelenen başlatma istekleri aynı kaydedilmiş seti kullanır. Oda silinirse tamamlanmamış seçim odayı yeniden yaratmaz.
+Backend yalnız oda sahibinin başlatmasına ve oda üyelerinin geçmiş hazırlığına izin verir. Her cihaz tamamladığı set kimliklerini geçici hazırlık kaydına iletir. Tüm oyuncuların tamamladığı setler birleşik olarak elenir; kalan yayımlanmış setlerden biri, kendi 14 sorusu ve sırası korunarak seçilir. `contentSetId` kalıcı içerik kimliği, `questionSetId` ise oda oturum kimliğidir; içerik kimliğini istemci değiştiremez. Hiç uygun set kalmazsa örnek sete veya karma seçime dönülmez.
+
+Hazırlık 25 saniye geçerlidir; başlamazsa hazır durumu yenilenir. Sunucuda kalıcı kullanıcı geçmişi tutulmaz. Aynı oda için eşzamanlı/tekrarlanan başlatma aynı ayrılmış seti kullanır. Yarıda bırakılan başka bir oda, seti sonraki oyuna kalıcı olarak kapatmaz. Yeni oyunlar yalnız 14 soruluk klasik moddur; hızlı mod oluşturma ekranından ve yeni oyun servisinden kaldırılmıştır. Eski snapshot'ları okuyabilmek için legacy enum/veri desteği korunur.
 
 Başlangıç sürümünde aktif rezervasyonlar tek atomik RTDB transaction ile seçilir ve 300 eşzamanlı rezervasyonla sınırlandırılır; yoğunlukta açık hata döner. Bu seçim katmanı yük altında ölçülmeden büyük trafik garantisi verilmez. Set parmak izi sıralanmış cevap kimliklerinden üretilir; farklı kullanıcı gruplarında global set benzersizliği zorlanmaz. Aynı soru farklı kullanıcılarda kullanılabilir. Yerel geçmiş kullanıcı cihazından geldiği için hesabın tüm cihazlarında tekrar engeli veya hileye karşı sunucu geçmişi garantisi verilmez.
 
-Lobide toplam/onaylı/yayındaki/kalan cevap sayıları, engelleyen uzunluklar ve günde 3 oyun için teorik süre görünür. Ortak set oluşturma hatasında bütün oyuncuların birleşik raporu gösterilir. Konu, zorluk ve kök sınırları kapasite üst sınırını düşürebilir; kombinasyon sayısı tekrarsız oyun sayısı olarak sunulmaz.
+Lobide setlerdeki soru sayıları ve gerçekten oynanabilir tamamlanmış set sayısı görünür. Ortak set oluşturma hatasında bütün oyuncuların birleşik raporu gösterilir. Konu, zorluk ve kök sınırları kapasite üst sınırını düşürebilir; kombinasyon sayısı tekrarsız oyun sayısı olarak sunulmaz.
 
 ### İçerik hazırlama ve editörlük
 
@@ -168,11 +166,11 @@ npm run content --prefix functions -- report --file functions/content/published.
 
 Otomatik kontroller Türkçe normalizasyonu/uzunluğu, kimliği, açık cevap/kök sızıntısını ve çok benzer soru metinlerini yakalar. Anlam, doğal Türkçe ve aynı uzunluktaki alternatif cevaplar editör turunda incelenir. Kullanıcının tercihiyle AI kendi ürettiği metni ayrı bir turda inceleyebilir; gerekçe, kaynak desteği ve alternatif cevap kaydı şarttır. Bu yöntem hatasızlık garantisi değildir. Yeni kaynak toplama, eksik grupları besleme, API üretimi, inceleme ve kalite ölçüm komutları [content/README.md](content/README.md) içindedir.
 
-`review` altı kontrolün hepsini ve editör adını ister; onay içeriğin hash'ine bağlıdır. Onaydan sonra metin/kaynak/kök değişirse yeniden inceleme gerekir. `publish` yalnızca onaylı üretim kayıtlarından yerel backend artefaktını oluşturur; Firebase'e deploy etmez. Yeni partilerde kelime/kaynak tedariki devam eder. API üretimini çalıştırmak için yerel API anahtarı ve açık model seçimi gerekir. Yerel araç kontrollü parti komutuyla çalışır. Dev bulut üreticisi her gün İstanbul saatiyle 04.00’te yeni sorular hedefler; editörden geçenler özel RTDB havuzuna eklenir ve yeni oyunlarda yeniden deploy olmadan kullanılır. Prod bu aşamada değiştirilmez.
+`review` altı kontrolün hepsini ve editör adını ister; onay içeriğin hash'ine bağlıdır. Onaydan sonra metin/kaynak/kök değişirse yeniden inceleme gerekir. `publish` yalnızca onaylı üretim kayıtlarından yerel backend artefaktını oluşturur; Firebase'e deploy etmez. Yeni partilerde kelime/kaynak tedariki devam eder. API üretimini çalıştırmak için yerel API anahtarı ve açık model seçimi gerekir. Yerel araç kontrollü parti komutuyla çalışır. Dev bulut üreticisi her gün İstanbul saatiyle 04.00’te yeni sorular hedefler; editörden geçen sorular özel taslakta birikir. Her uzunluktan iki soru, konu/zorluk/kök kontrolleri ve 14 soru tamamlanınca set ile soruları atomik yayımlanır. Eksik set ertesi gün kaldığı yerden devam eder; tamamlanmadan oynanamaz. Prod bu aşamada değiştirilmez.
 
 ### Kontroller
 
-Dev bulut üreticisi günde 42 onaylı soru, her uzunluktan altı adet hedefler. Kalıcı RTDB sayacı günde 60 deneme / 120 istek, beş art arda başarısız sonuç ve model maliyetinde 0,50 USD/gün, 10 USD/ay sınırları uygular. API anahtarı yalnızca üreticiye bağlı dev Secret Manager kaydındadır. Kaynak kuyruğu 90 önceki taslağa eklenen 16 karma cevap adayıyla 106 kayıttır; bunlar onaysızdır ve yayın sayısına dahil değildir. Güncel yayın havuzu 336 ana cevaptır. Üretici ve editör isimlerin yanında edat, bağlaç, mastar ve en fazla iki kelimeli ad/edat/fiil öbeklerini kabul eder. Boşluklar korunur; yalnız harfler 4–10 sınırına sayılır. Aynı harf/kelime düzenindeki doğru eşdeğerler `acceptedAnswers` içine alınır; eş anlamlı olması tek başına ret sebebi değildir. Stok tükenmesi/retler eksik hedef olarak raporlanır. Ayrıntılar [dev zamanlaması ve prod'a taşıma](content/README.md#dev-bulut-zamanlaması) bölümündedir. Yerel CLI ve bulut sayaçları ayrıdır.
+Dev bulut üreticisi günde 3 tamamlanmış 14’lü set hedefler. Çalışma sınırı 25 dakika, fonksiyon timeout’u 30 dakikadır; kaynak/ret/harcama sınırında kalan taslak silinmez. Kalıcı RTDB sayacı günde 60 deneme / 120 istek, beş art arda başarısız sonuç ve model maliyetinde 0,50 USD/gün, 10 USD/ay sınırları uygular. API anahtarı yalnızca üreticiye bağlı dev Secret Manager kaydındadır. Kaynak kuyruğu 90 önceki taslağa eklenen 16 karma cevap adayıyla 106 kayıttır; bunlar onaysızdır ve yayın sayısına dahil değildir. 18 Ekim geçiş planında 28 tamamlanmış set / 392 oynanabilir soru ve 9 özel taslak sorusu vardır; güncel sayı dev veritabanından doğrulanır. Üretici ve editör isimlerin yanında edat, bağlaç, mastar ve en fazla iki kelimeli ad/edat/fiil öbeklerini kabul eder. Boşluklar korunur; yalnız harfler 4–10 sınırına sayılır. Aynı harf/kelime düzenindeki doğru eşdeğerler `acceptedAnswers` içine alınır; eş anlamlı olması tek başına ret sebebi değildir. Stok tükenmesi/retler eksik hedef olarak raporlanır. Ayrıntılar [dev zamanlaması ve prod'a taşıma](content/README.md#dev-bulut-zamanlaması) bölümündedir. Yerel CLI ve bulut sayaçları ayrıdır.
 
 ```sh
 flutter analyze
@@ -181,7 +179,7 @@ npm test --prefix functions
 ```
 
 
-Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Android dev Play Integrity ayarları ve iOS dev App Check debug token kayıtları tamamlanmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Normal Dev/Prod profillerinin havuz bayrağı korunur. Yarış puan/cevap doğrulaması sunucudadır; mevcut oda snapshot’ında cevaplar üyelere gönderilmeye devam eder.
+Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Android dev Play Integrity ayarları ve iOS dev App Check debug token kayıtları tamamlanmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Dev profilleri ve terminalde dev flavor gerçek havuzu kullanır; prod etkinleştirmesi bu değişikliğe dahil değildir. Yarış puan/cevap doğrulaması sunucudadır; mevcut oda snapshot’ında cevaplar üyelere gönderilmeye devam eder.
 
 ## Güvenlik ve canlıya çıkış
 

@@ -99,35 +99,7 @@ class RoomSetupView extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          const StudioSectionLabel('Oyun modu'),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            child: SegmentedButton<RoomGameMode>(
-                              segments: RoomGameMode.values
-                                  .map(
-                                    (mode) => ButtonSegment<RoomGameMode>(
-                                      value: mode,
-                                      icon: Icon(
-                                        mode == RoomGameMode.quick
-                                            ? Icons.bolt_rounded
-                                            : Icons.bar_chart_rounded,
-                                      ),
-                                      label: Text(mode.label),
-                                      tooltip: mode.description,
-                                    ),
-                                  )
-                                  .toList(growable: false),
-                              selected: {state.gameMode},
-                              showSelectedIcon: false,
-                              style: _segmentStyle(),
-                              onSelectionChanged: (selection) => context
-                                  .read<RoomSetupCubit>()
-                                  .gameModeChanged(selection.first),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          RoomGameSummary(mode: state.gameMode),
+                          const RoomGameSummary(mode: RoomGameMode.classic),
                         ] else ...[
                           TextField(
                             textCapitalization: TextCapitalization.characters,

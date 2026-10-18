@@ -139,6 +139,10 @@
           ".write": false,
           ".validate": false
         },
+        "contentSetId": {
+          ".write": false,
+          ".validate": false
+        },
         "race": {
           ".write": false,
           ".validate": false

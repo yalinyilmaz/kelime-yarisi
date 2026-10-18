@@ -1,3 +1,6 @@
 abstract final class QuestionEnvironment {
-  static const enabled = bool.fromEnvironment('QUESTION_POOL_ENABLED');
+  static const enabled = bool.fromEnvironment(
+    'QUESTION_POOL_ENABLED',
+    defaultValue: String.fromEnvironment('FLUTTER_APP_FLAVOR') == 'dev',
+  );
 }

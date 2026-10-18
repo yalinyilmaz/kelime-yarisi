@@ -109,7 +109,7 @@ export class RaceService {
     return this.commit(this.reference(uid, roomId), room => {
       if (!room || room.hostId !== uid) throw new ServiceError('permission-denied', 'Oyunu oda sahibi başlatır.');
       if (room.gameplayVersion === 'race-v1') return room;
-      if (room.questionEngine === 'pool-v1' || room.status !== 'lobby' || !['quick', 'classic'].includes(room.gameMode)) {
+      if (room.questionEngine === 'pool-v1' || room.status !== 'lobby' || room.gameMode !== 'classic') {
         throw new ServiceError('failed-precondition', 'Örnek oyun başlatılamaz.');
       }
       const players = Object.values(room.players ?? {});
@@ -120,7 +120,7 @@ export class RaceService {
       const startsAtMs = this.now() + 4000;
       return {...room, startsAtMs, gameplayVersion: 'race-v1', status: 'countdown',
         questionSetId: `${room.gameMode}-v1`,
-        questions: this.demoQuestions.filter((_, i) => room.gameMode === 'classic' || i % 2 === 0),
+        questions: this.demoQuestions,
         race: initialRace(startsAtMs)};
     });
   }

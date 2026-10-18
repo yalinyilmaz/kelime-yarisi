@@ -1,25 +1,29 @@
 import {randomUUID} from 'node:crypto';
 import {LENGTHS,candidatePrompt,isPublished,validateQuestion,validatePool} from './content.js';
 import {generateQuestion,replenishmentPlan} from './content_generation.js';
-import {selectSet,PoolError} from './set_selector.js';
+import {createQuestionSet,fitsDraft} from './question_sets.js';
 import {transaction} from './database_transaction.js';
 import {loadPublishedPool,decodeStoredQuestion} from './published_pool.js';
 import {GENERATION_LIMITS,generationDay,blankGenerationDay,validateGenerationLedger,approvedCounts,
   monthlyCharge,generationStopReason,reserveRequest,settleUsage} from './generation_policy.js';
 
-const leaseMs=20*60*1000;
+const leaseMs=35*60*1000;
 function normalize(raw) {
   const state=raw??{version:1};
   if(state.version===undefined&&!state.ledger)state.version=1; // A control-only bootstrap has no spending state yet.
   if(state.version!==1)throw new Error('Invalid cloud generation state.');
-  state.ledger??={version:1};state.ledger.days??={};state.outbox??={};
+  state.ledger??={version:1};state.ledger.days??={};state.outbox??={};state.backlog??={};
   for(const day of Object.values(state.ledger.days)){day.attempts??=[];day.pending??=null;}
   validateGenerationLedger(state.ledger);return state;
 }
 export function cloudGenerationReport(state,date,reason,limits=GENERATION_LIMITS) {
   const day=state.ledger.days[date]??blankGenerationDay(),approved=approvedCounts(day);
   return {date,reason,attempts:day.attempts.length,apiCalls:day.calls,approvedToday:approved,
-    missingToday:Object.fromEntries(LENGTHS.map(l=>[l,Math.max(0,limits.approvedPerLength-approved[l])])),
+    setsPublishedToday:Object.keys(day.publishedSetIds??{}).length,
+    missingSetsToday:Math.max(0,3-Object.keys(day.publishedSetIds??{}).length),
+    draftQuestions:Object.keys(state.draft?.questions??{}).length,
+    draftByLength:Object.fromEntries(LENGTHS.map(length=>[length,Object.values(state.draft?.questions??{}).map(decodeStoredQuestion).filter(q=>q.letterCount===length).length])),
+    backlogQuestions:Object.keys(state.backlog??{}).length,
     chargedOrReservedUsd:day.chargedMicros/1e6,monthlyChargedOrReservedUsd:monthlyCharge(state.ledger,date)/1e6};
 }
 
@@ -42,16 +46,42 @@ export class CloudQuestionGenerator {
     return normalize(result.snapshot.val());
   }
   async flushOutbox(state) {
-    const questions=Object.values(state.outbox).map(decodeStoredQuestion);
-    if(!questions.length)return;
+    const entries=Object.entries(state.outbox).map(([id,raw])=>[id,decodeStoredQuestion(raw)]);
+    if(!entries.length)return state;
+    // Old individual outbox entries must never bypass the complete-set gate.
+    if(entries.some(([,entry])=>!entry.manifest)) {
+      state=await this.change(s=>{
+        for(const [id,entry] of entries)if(!entry.manifest){s.backlog[id]=JSON.stringify({...entry,publication:'unpublished'});delete s.outbox[id];}
+      });
+      return this.flushOutbox(state);
+    }
     // Approved records and removal of their outbox entries commit atomically.
     const current=await loadPublishedPool(this.database,this.bundledPool);
     const combined=new Map(current.map(q=>[q.id,q]));
-    for(const q of questions){if(!isPublished(q))throw new Error('Invalid publication outbox.');combined.set(q.id,q);}
+    for(const [,entry] of entries)for(const q of entry.questions){if(!isPublished(q))throw new Error('Invalid publication outbox.');combined.set(q.id,q);}
     if(validatePool([...combined.values()]).length)throw new Error('Publication quality checks failed.');
     const updates={};
-    for(const q of questions){updates[`questionPool/published/${q.id}`]=JSON.stringify(q);updates[`questionGeneration/outbox/${q.id}`]=null;}
+    for(const [id,entry] of entries){
+      const manifest=createQuestionSet(id,entry.questions,entry.manifest.publishedAtMs);
+      if(manifest.fingerprint!==entry.manifest.fingerprint)throw new Error('Invalid publication set.');
+      for(const q of entry.questions)updates[`questionPool/published/${q.id}`]=JSON.stringify(q);
+      updates[`questionPool/sets/${id}`]=manifest;
+      updates[`questionGeneration/ledger/days/${entry.date}/publishedSetIds/${id}`]=true;
+      updates[`questionGeneration/outbox/${id}`]=null;
+    }
     await this.database.ref().update(updates);
+    return normalize((await this.database.ref('questionGeneration').get()).val());
+  }
+  async publishDraft(state) {
+    const questions=Object.values(state.draft?.questions??{}).map(decodeStoredQuestion);
+    if(questions.length!==14)return state;
+    const published=questions.map(q=>({...q,publication:'published'}));
+    const manifest=createQuestionSet(state.draft.id,published,this.now());
+    state=await this.change(s=>{
+      s.outbox[manifest.id]=JSON.stringify({date:this.date,manifest,questions:published});
+      s.draft=null;
+    });
+    return this.flushOutbox(state);
   }
   async run({scheduleTime=new Date(this.now()).toISOString()}={}) {
     if(generationDay(Date.parse(scheduleTime))!==this.date)return {reason:'stale-schedule'};
@@ -71,17 +101,27 @@ export class CloudQuestionGenerator {
         const day=s.ledger.days[this.date]??=blankGenerationDay();
         if(!day.runId){day.runId=this.owner;day.runStartedAtMs=this.startedAt;}
       },{acquire:true});acquired=true;
-      await this.flushOutbox(state);
+      state=await this.flushOutbox(state);
       if(state.ledger.days[this.date].runId!==this.owner){reason='already-ran-today';return cloudGenerationReport(state,this.date,reason,this.limits);}
       let pool=await loadPublishedPool(this.database,this.bundledPool);
       const queued=Object.values((await this.database.ref('questionSources').get()).val()??{}).map(decodeStoredQuestion);
       const sources=[...new Map([...this.sources,...queued].map(s=>[s.answerId,s])).values()];
       while(true) {
+        state=await this.publishDraft(state);
         reason=generationStopReason(state.ledger,this.date,{now:this.now(),startedAt:this.startedAt,limits:this.limits});if(reason)break;
-        const counts=approvedCounts(state.ledger.days[this.date]);
-        if(LENGTHS.every(l=>counts[l]>=this.limits.approvedPerLength)){reason='daily-target-reached';break;}
-        const known=new Set([...pool.map(q=>q.answerId),...Object.values(state.ledger.days).flatMap(d=>d.attempts.map(a=>a.answerId))]);
-        const eligible=sources.filter(q=>!known.has(q.answerId)&&counts[q.letterCount]<this.limits.approvedPerLength);
+        if(Object.keys(state.ledger.days[this.date].publishedSetIds??{}).length>=3){reason='daily-target-reached';break;}
+        const draft=Object.values(state.draft?.questions??{}).map(decodeStoredQuestion);
+        const backlog=Object.values(state.backlog).map(decodeStoredQuestion);
+        const reusable=backlog.find(q=>fitsDraft(q,draft));
+        if(reusable){
+          state=await this.change(s=>{
+            s.draft??={id:`daily_${randomUUID().replaceAll('-','')}`,questions:{},startedAtMs:this.now()};
+            s.draft.questions[reusable.id]=JSON.stringify({...reusable,publication:'unpublished'});delete s.backlog[reusable.id];
+          });
+          continue;
+        }
+        const known=new Set([...pool.map(q=>q.answerId),...draft.map(q=>q.answerId),...backlog.map(q=>q.answerId),...Object.values(state.ledger.days).flatMap(d=>d.attempts.map(a=>a.answerId))]);
+        const eligible=sources.filter(q=>!known.has(q.answerId)&&fitsDraft(q,draft));
         const target=Math.min(2000,Math.max(...LENGTHS.map(l=>pool.filter(q=>q.letterCount===l).length))+this.limits.approvedPerLength);
         const source=replenishmentPlan(eligible,pool,{targetPerLength:target,limit:1}).selected[0];
         if(!source){reason='source-stock-exhausted';break;}
@@ -94,7 +134,8 @@ export class CloudQuestionGenerator {
           s.ledger.days[this.date].attempts.push({answerId:source.answerId,length:source.letterCount,status:'started',dailyCredit:true});
         });
         try {
-          const q=await this.generate(source,pool,{model:this.model,apiKey:key,aiReview:true,now:this.now(),maxOutputTokens:6000,
+          const knownQuestions=[...new Map([...pool,...draft,...backlog].map(q=>[q.id,q])).values()];
+          const q=await this.generate(source,knownQuestions,{model:this.model,apiKey:key,aiReview:true,now:this.now(),maxOutputTokens:6000,
             fetchImpl:async(url,request)=>{
               state=await this.change(s=>{
                 if(s.control?.enabled!==true||s.control.projectId!==this.projectId)throw new Error('Generation disabled.');
@@ -113,12 +154,16 @@ export class CloudQuestionGenerator {
             if(attempt.answerId!==q.answerId||attempt.status!=='started')throw new Error('Attempt identity changed.');
             attempt.status=q.review.status;attempt.questionId=q.id;day.pending=null;
             day.consecutiveFailures=q.review.status==='approved'?0:day.consecutiveFailures+1;
-            if(q.review.status==='approved')s.outbox[q.id]=JSON.stringify({...q,publication:'published'});
+            if(q.review.status==='approved'){
+              s.draft??={id:`daily_${randomUUID().replaceAll('-','')}`,questions:{},startedAtMs:this.now()};
+              if(!fitsDraft(q,Object.values(s.draft.questions).map(decodeStoredQuestion)))throw new Error('Editorial result does not fit the pending set.');
+              s.draft.questions[q.id]=JSON.stringify({...q,publication:'unpublished'});
+            }
             // Rejections retain the editorial audit, never enter the published pool.
             else s.rejections={...(s.rejections??{}),[q.id]:JSON.stringify(q)};
           });
-          await this.flushOutbox(state);
-          if(q.review.status==='approved')pool.push({...q,publication:'published'});
+          state=await this.publishDraft(state);
+          if(q.review.status==='approved')pool.push(q);
         }catch(error) {
           this.failure=error; // In-memory diagnostics only; never persisted or logged.
           state=await this.change(s=>{
@@ -130,12 +175,7 @@ export class CloudQuestionGenerator {
           reason=['daily-budget','monthly-budget','api-call-limit','runtime-limit','day-changed'].find(code=>error.message?.includes(code))??'generation-error';break;
         }
       }
-      const report=cloudGenerationReport(state,this.date,reason,this.limits);
-      const ids=new Set(state.ledger.days[this.date].attempts.filter(a=>a.status==='approved').map(a=>a.questionId));
-      const today=pool.filter(q=>ids.has(q.id));let sets=0,history={seenAnswerIds:[],seenQuestionIds:[]};
-      try {while(sets<3){const {questions}=selectSet(today,[history],{random:()=>0.5});history.seenAnswerIds.push(...questions.map(q=>q.answerId));history.seenQuestionIds.push(...questions.map(q=>q.id));sets++;}}
-      catch(error){if(!(error instanceof PoolError))throw error;}
-      return {...report,classicSetsVerified:sets};
+      return cloudGenerationReport(state,this.date,reason,this.limits);
     }catch(error) {
       if(!acquired&&error.message==='Generation already running.')return {reason:'already-running'};
       reason='job-error';throw new Error('Daily question job failed; inspect private counters and source inventory.');

@@ -31,10 +31,6 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
     emit(state.copyWith(targetPlayerCount: value, clearError: true));
   }
 
-  void gameModeChanged(RoomGameMode value) {
-    emit(state.copyWith(gameMode: value, clearError: true));
-  }
-
   Future<void> submit() async {
     if (!state.canSubmit || state.isSubmitting) {
       emit(
@@ -50,7 +46,7 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
           displayName: state.displayName,
           roomName: state.roomName,
           targetPlayerCount: state.targetPlayerCount,
-          gameMode: state.gameMode,
+          gameMode: RoomGameMode.classic,
         ),
         RoomSetupFlow.join => await _roomService.joinRoom(
           displayName: state.displayName,

@@ -11,6 +11,7 @@ import {QuestionService} from '../src/question_service.js';
 import {roomKey} from '../src/allocation.js';
 import {CloudQuestionGenerator} from '../src/cloud_generation.js';
 import {loadPublishedPool} from '../src/published_pool.js';
+import {partitionExistingQuestions} from '../src/question_sets.js';
 import {callStructured} from '../src/content_generation.js';
 import {RaceService} from '../src/race.js';
 import {approveQuestion,reviewDigest,REVIEW_CHECKS} from '../src/content.js';
@@ -40,6 +41,7 @@ async function client(name) {
 }
 const player = (uid, isHost) => ({displayName: uid.slice(0, 12), isHost, isReady: true, isOnline: true, lastSeenAt: Date.now()});
 async function room(id, users, mode = 'classic') {
+  if(!(await db.ref('questionPool/sets').get()).exists())await db.ref('questionPool/sets').set(partitionExistingQuestions(pool).sets);
   const value = {name: 'Havuz testi', code: `${id.slice(0,3)}-${id.slice(3)}`.toUpperCase(), hostId: users[0].uid,
     targetPlayerCount: users.length, playerCount: users.length, gameMode: mode, status: 'lobby', createdAt: Date.now(),
     questionEngine: 'pool-v1', players: Object.fromEntries(users.map((u, i) => [u.uid, player(u.uid, i === 0)]))};
@@ -67,7 +69,8 @@ test('cloud generator uses real RTDB leases/counters, private publication and dy
   const results=await Promise.all(jobs.map(job=>job.run()));
   assert(results.some(r=>r.reason==='source-stock-exhausted'),JSON.stringify({results,errors:jobs.map(j=>j.failure?.message)}));assert(results.some(r=>['already-running','already-ran-today'].includes(r.reason)));
   assert.equal(calls,2);assert.equal((await new CloudQuestionGenerator(settings).run()).reason,'already-ran-today');assert.equal(calls,2);
-  assert.equal((await loadPublishedPool(db,pool)).length,pool.length+1);
+  assert.equal((await loadPublishedPool(db,pool)).length,pool.length);
+  assert.equal(Object.keys((await db.ref('questionGeneration/draft/questions').get()).val()).length,1);
   const host=await client('cloud-host'),guest=await client('cloud-guest');
   for(const path of ['questionGeneration','questionPool/published','questionSources']) {
     await assert.rejects(get(ref(host.database,path)));await assert.rejects(set(ref(host.database,path),{forged:true}));
@@ -75,7 +78,7 @@ test('cloud generator uses real RTDB leases/counters, private publication and dy
   await room('abc234',[host,guest]);
   const report=(await httpsCallable(host.functions,'prepareQuestionHistory')({roomId:'abc234',history:empty})).data;
   const bundledFive = new Set(pool.filter(q => q.letterCount === 5).map(q => q.answerId)).size;
-  assert.equal(report.groups.find(g=>g.length===5).publishedAnswers,bundledFive + 1);
+  assert.equal(report.groups.find(g=>g.length===5).publishedAnswers,bundledFive);
 });
 
 test('callable auth, shared 14-question snapshot, guest history exclusion, no metadata forgery', async () => {

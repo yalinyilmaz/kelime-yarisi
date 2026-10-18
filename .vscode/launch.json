@@ -21,7 +21,8 @@
       "flutterMode": "debug",
       "toolArgs": [
         "--flavor",
-        "dev"
+        "dev",
+        "--dart-define=QUESTION_POOL_ENABLED=true"
       ]
     },
     {

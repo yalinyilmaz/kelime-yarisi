@@ -4,9 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
-import '../domain/game_question.dart';
-
-/// Device-local IDs only. Clues and answer text are never written to this DB.
+/// Device-local completed set IDs only. Partial games never enter this history.
 class QuestionHistoryStore {
   QuestionHistoryStore({DatabaseFactory? factory, this.databasePath})
     : _factory = factory ?? databaseFactory;
@@ -40,58 +38,44 @@ class QuestionHistoryStore {
     return _factory.openDatabase(
       resolvedPath,
       options: OpenDatabaseOptions(
-        version: 1,
-        onCreate: (db, _) async {
-          for (final table in ['seen_answers', 'seen_questions']) {
-            await db.execute(
-              'CREATE TABLE $table '
-              '(id TEXT PRIMARY KEY, seen_at_ms INTEGER NOT NULL) WITHOUT ROWID',
-            );
-          }
+        version: 2,
+        onCreate: (db, _) => _createCompletedSets(db),
+        // Old per-question rows cannot prove that a game was completed.
+        // Keep them intact, but exclude only the new completion records.
+        onUpgrade: (db, oldVersion, _) async {
+          if (oldVersion < 2) await _createCompletedSets(db);
         },
       ),
     );
   }
 
+  static Future<void> _createCompletedSets(Database db) => db.execute(
+    'CREATE TABLE completed_sets '
+    '(id TEXT PRIMARY KEY, completed_at_ms INTEGER NOT NULL) WITHOUT ROWID',
+  );
+
   Future<Map<String, List<String>>> snapshot() async {
     final db = await _database;
-    return db.transaction(
-      (transaction) async => {
-        'seenAnswerIds': [
-          for (final row in await transaction.query(
-            'seen_answers',
-            columns: ['id'],
-          ))
-            row['id']! as String,
-        ],
-        'seenQuestionIds': [
-          for (final row in await transaction.query(
-            'seen_questions',
-            columns: ['id'],
-          ))
-            row['id']! as String,
-        ],
-      },
-    );
+    return {
+      'seenAnswerIds': const [],
+      'seenQuestionIds': const [],
+      'completedSetIds': [
+        for (final row in await db.query('completed_sets', columns: ['id']))
+          row['id']! as String,
+      ],
+    };
   }
 
-  Future<void> recordShown(GameQuestion question) async {
-    if (question.id == null || question.answerId == null) {
-      throw StateError('Soru kimliği eksik.');
+  Future<void> recordCompleted(String setId) async {
+    if (!RegExp(r'^[A-Za-z0-9_-]{1,100}$').hasMatch(setId)) {
+      throw StateError('Set kimliği geçersiz.');
     }
     final db = await _database;
     final now = DateTime.now().millisecondsSinceEpoch;
-    await db.transaction((transaction) async {
-      for (final item in [
-        (table: 'seen_answers', id: question.answerId!),
-        (table: 'seen_questions', id: question.id!),
-      ]) {
-        await transaction.insert(item.table, {
-          'id': item.id,
-          'seen_at_ms': now,
-        }, conflictAlgorithm: ConflictAlgorithm.ignore);
-      }
-    });
+    await db.insert('completed_sets', {
+      'id': setId,
+      'completed_at_ms': now,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   Future<void> close() async {

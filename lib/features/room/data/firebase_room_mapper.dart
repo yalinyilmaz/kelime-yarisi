@@ -67,6 +67,7 @@ abstract final class FirebaseRoomMapper {
       ),
       startsAtMs: (map['startsAtMs'] as num?)?.toInt(),
       questionSetId: map['questionSetId'] as String?,
+      contentSetId: map['contentSetId'] as String?,
       gameplayVersion: map['gameplayVersion'] as String?,
       race: map['race'] is Map
           ? QuestionRace.fromMap(map['race'] as Map)

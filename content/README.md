@@ -82,7 +82,7 @@ Tüm `daily`, `replenish` ve `trial` komutları aynı kalıcı yerel sayacı kul
 - İstanbul takvim gününde en fazla **60 kelime denemesi / 120 API isteği**.
 - **5 art arda ret, incelemesiz veya başarısız sonuç** sonrasında o gün durma. HTTP/ağ hatasında mevcut çalışma ilk hatada durur; otomatik HTTP retry yoktur.
 - Hesaplanan/rezerve edilen tutar için **0,50 USD/gün, 10 USD/takvim ayı** tavanı. Bunlar harcama hedefi değildir. Sayaç bu koruma üzerinden geçen yeni çağrıları kapsar; eski denemenin makbuzu ayrı kalır.
-- Başlangıçtan **10 dakika** sonra yeni API isteği başlatılmaz. Devam eden isteğin ayrıca 90 saniyelik timeout'u vardır.
+- Başlangıçtan **25 dakika** sonra yeni API isteği başlatılmaz. Devam eden isteğin ayrıca 90 saniyelik timeout'u vardır.
 - Denenmiş kelimeler sonraki komutlarda ve günlerde otomatik tekrar denenmez. Yeni kaynaklı kelimeler gerekir. Önceki FLÜT reddi de atlanır.
 
 Sayaç `.local/question-generation-ledger.json` içinde anahtarsız tutulur; Git/deploy dışındadır. Komutu yeniden çalıştırmak veya farklı çıktı dosyası seçmek sınırları sıfırlamaz. Eşzamanlı çalışmayı kilit engeller. Kesintiden kalan kilit otomatik silinmez; başka üretici çalışmadığını kontrol etmeden kilidi silme. Bozuk sayaçla üretim durur; harcama kaydını sıfırlamak için dosyayı silme. Gün değişince günlük limitler sıfırlanır; aynı ayın maliyeti ve denenmiş kelimeler korunur.
@@ -95,7 +95,7 @@ Günlük komut ana çalışma havuzuna kaydedilmiş yeni onayları sayar; `trial
 
 ## Dev bulut zamanlaması
 
-`generateDailyQuestions`, [Firebase onSchedule](https://firebase.google.com/docs/functions/schedule-functions) ile **her gün 04.00 Europe/Istanbul** saatinde çalışır. Hedef her uzunluktan altı onaylı soru; sonuçta yeni sorulardan kurulabilen en fazla üç dengeli klasik set de doğrulanır (`classicSetsVerified`). Eksik kalan hedef tamamlanmış gösterilmez. `retryCount: 0`, tek instance/concurrency ve 15 dakika fonksiyon timeout'u vardır. Paylaşılan politika 10 dakikadan sonra yeni API isteğini durdurur.
+`generateDailyQuestions`, [Firebase onSchedule](https://firebase.google.com/docs/functions/schedule-functions) ile **her gün 04.00 Europe/Istanbul** saatinde çalışır. Hedef üç tamamlanmış 14’lü settir (`setsPublishedToday`). Onaylanan sorular `questionGeneration/draft` altında gizli kalır; ret sonrası eksik uzunluk için yeni aday seçilir. Eksik set ertesi gün mevcut onaylarını koruyarak devam eder. Konu, zorluk, kök ve harf dağılımı kontrolü geçen 14 soru, `questionPool/sets` manifestiyle aynı atomik güncellemede yayımlanır. `retryCount: 0`, tek instance/concurrency, 30 dakika fonksiyon timeout’u ve 25 dakika yeni istek sınırı vardır. Harcama ve çağrı üst sınırları korunur.
 
 Dev projesi `kelime-yarisi-yalin`; prod `kelime-yarisi-prod` bu adımda değiştirilmez. Fiziksel cihazda dev bulut havuzu için **Dev — Cloud Question Pool** launch profilini kullan. Yeni bir oda aç; iki cihazdaki debug App Check token'ları dev Firebase Console'da kayıtlı olmalıdır. Backend callables App Check ve üyelik denetimini korur. Testler emulator'da mock sağlayıcıyla çalışır; zamanlanmış ücretli handler emulator'da devre dışıdır.
 
@@ -106,7 +106,8 @@ Kalıcı özel yollar:
 - `questionGeneration/control`: `{enabled: true, projectId: "kelime-yarisi-yalin"}`. Alanlardan biri uyuşmazsa iş API çağrısı yapmaz. `enabled: false` sonraki API isteği öncesinde üretimi durdurur.
 - `questionGeneration/ledger`: günlük/aylık sayaçlar ve daha önce denenmiş cevaplar. Yerel CLI sayacından ayrıdır; iki üreticiyi aynı anahtarla paralel çalıştırırsan hesap genelindeki harcama toplamını ayrıca takip et.
 - `questionGeneration/lease`: RTDB transaction ile alınan süreli kilit. Tekrar teslim edilen aynı günün işi ikinci bir üretim turu açmaz. Kesinti sonrası bilinmeyen ücret rezervasyonları korunur.
-- `questionGeneration/outbox`: editör onayından sonra kalıcı yayın kuyruğu. Yayın ve outbox silme atomiktir; kesinti sonrası tekrar tetikleme yeni ücret harcamadan yayını tamamlar.
+- `questionGeneration/draft` ve `backlog`: henüz tamamlanmış bir sete girmeyen onaylı sorular; oynanabilir değillerdir.
+- `questionGeneration/outbox`: yalnız bütün kontrolleri geçmiş tam setlerin kalıcı yayın kuyruğu. Yayın ve outbox silme atomiktir; kesinti sonrası tekrar tetikleme yeni ücret harcamadan yayını tamamlar.
 - `questionGeneration/rejections`: reddedilen metinler ve editör gerekçesi. Oyun havuzuna katılmaz.
 - `questionGeneration/lastRun`: durma nedeni, çağrı/maliyet ve eksik uzunluklar. Durum ayrıca Cloud Logging'e anahtarsız yazılır.
 - `questionPool/published`: yalnızca doğrulanmış onaylı ek sorular. `questionSources`: stok eklemek için opsiyonel özel kaynak kuyruğu. Bu üç kök mobil istemcilerin okuma/yazmasına kapalıdır.
@@ -117,7 +118,7 @@ Yeni kaynak stoku eklemek için seed listesi → `content:sources` → `content:
 
 ### Prod'a taşıma
 
-Dev'de kabul testinden geçen **yalnızca yayımlanmış soru içeriğini**, başlangıç artefaktı ve `questionPool/published` kayıtlarıyla birlikte dışarı al. Kimlikleri ve editör kayıtlarını değiştirmeden prod'a taşı; prod'daki oyuncu geçmişleri böylece aynı cevap kimliklerini kullanabilir. Dev oda/oyuncu geçmişleri, harcama sayacı, lease, kontrol bayrağı, red/outbox kayıtları ve secret kopyalanmaz. Prod için ayrı Secret Manager kaydı, üretici hesabı, Blaze/Scheduler kurulumu ve prod projectId'li kontrol gerekir. Aynı kod deploy edilebilir; prod kontrolü ayrıca açılana kadar ücretli üretim başlamaz. Dev ve prod üreticilerini bağımsız bırakmak iki ortamda ayrı API maliyeti doğurur; dev artık gerekmiyorsa kontrol bayrağını kapat.
+Dev'de kabul testinden geçen **yalnızca yayımlanmış soru içeriğini**, başlangıç artefaktı, `questionPool/published` soruları ve `questionPool/sets` manifestleriyle birlikte dışarı al. Kimlikleri ve editör kayıtlarını değiştirmeden prod'a taşı; prod'daki oyuncu geçmişleri böylece aynı cevap kimliklerini kullanabilir. Dev oda/oyuncu geçmişleri, harcama sayacı, lease, kontrol bayrağı, red/outbox kayıtları ve secret kopyalanmaz. Prod için ayrı Secret Manager kaydı, üretici hesabı, Blaze/Scheduler kurulumu ve prod projectId'li kontrol gerekir. Aynı kod deploy edilebilir; prod kontrolü ayrıca açılana kadar ücretli üretim başlamaz. Dev ve prod üreticilerini bağımsız bırakmak iki ortamda ayrı API maliyeti doğurur; dev artık gerekmiyorsa kontrol bayrağını kapat.
 
 ## Yerel API kurulumu ve tek soruluk deneme
 

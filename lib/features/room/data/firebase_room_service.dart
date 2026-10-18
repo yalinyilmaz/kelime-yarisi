@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/config/question_environment.dart';
 import '../../game/data/question_history_store.dart';
-import '../../game/domain/game_question.dart';
 import '../../game/domain/question_capacity.dart';
 import '../../game/domain/game_progress.dart';
 import '../../game/domain/shared_hints.dart';
@@ -54,6 +53,12 @@ class FirebaseRoomService {
     required int targetPlayerCount,
     required RoomGameMode gameMode,
   }) async {
+    if (gameMode != RoomGameMode.classic) {
+      throw const RoomServiceException(
+        'unsupported-mode',
+        'Yalnız klasik oyun destekleniyor.',
+      );
+    }
     await ensureSignedIn();
     final uid = _requireUserId();
 
@@ -222,7 +227,10 @@ class FirebaseRoomService {
   }) async {
     if (await _usesQuestionPool(roomId)) {
       await prepareQuestionHistory(roomId);
-      await _callQuestionFunction('startQuestionGame', {'roomId': roomId});
+      await _callQuestionFunction('startQuestionGame', {
+        'roomId': roomId,
+        'debugSolo': kDebugMode,
+      });
       return;
     }
     await _callQuestionFunction('startDemoRaceGame', {
@@ -291,8 +299,8 @@ class FirebaseRoomService {
     await _questionHistory.close();
   }
 
-  Future<void> recordQuestionShown(GameQuestion question) =>
-      _questionHistory.recordShown(question);
+  Future<void> recordCompletedSet(String setId) =>
+      _questionHistory.recordCompleted(setId);
 
   Future<bool> _usesQuestionPool(String roomId) async =>
       (await _roomRef(roomId).child('questionEngine').get()).value == 'pool-v1';
@@ -317,7 +325,9 @@ class FirebaseRoomService {
       if (error.code == 'resource-exhausted' && details is Map) {
         final capacity = details['capacity'];
         final lengths = capacity is Map ? capacity['blockedLengths'] : null;
-        message = lengths is List && lengths.isNotEmpty
+        message = details['reason'] == 'sets-exhausted'
+            ? 'Tüm oyuncular için yeni, tamamlanmış bir set kalmadı. Yeni setler yayımlandığında tekrar deneyin.'
+            : lengths is List && lengths.isNotEmpty
             ? '${lengths.join(', ')} harfli görülmemiş cevaplar yetersiz. Yeni içerik gerekli.'
             : 'Konu, zorluk veya benzer kelime sınırlarına uygun yeni set bulunamadı.';
       }

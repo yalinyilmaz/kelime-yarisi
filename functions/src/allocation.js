@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {capacityReport, PoolError, selectSet} from './set_selector.js';
+import {selectPublishedSet} from './question_sets.js';
 
 export const QUESTION_MS = 25000;
 // Shorter than the reservation grace period: stale snapshots cannot outlive a
@@ -14,7 +15,9 @@ export function validateHistory(history) {
       throw new Error('invalid-history');
     }
   }
-  return {seenAnswerIds: [...new Set(history.seenAnswerIds)], seenQuestionIds: [...new Set(history.seenQuestionIds)]};
+  const completed=history.completedSetIds??[];
+  if(!Array.isArray(completed)||completed.length>50000||completed.some(id=>typeof id!=='string'||!/^[A-Za-z0-9_-]{1,100}$/.test(id)))throw new Error('invalid-history');
+  return {seenAnswerIds: [...new Set(history.seenAnswerIds)], seenQuestionIds: [...new Set(history.seenQuestionIds)],completedSetIds:[...new Set(completed)]};
 }
 
 export function activeAllocations(state, now) {
@@ -22,7 +25,7 @@ export function activeAllocations(state, now) {
 }
 
 // One bounded RTDB transaction covers all players. No per-user permanent history is stored here.
-export function allocate(state, {sessionId, roomId, mode, participantIds, histories, pool, now, includeExamples = false}) {
+export function allocate(state, {sessionId, roomId, mode, participantIds, histories, pool, sets, now, includeExamples = false}) {
   const sessions = activeAllocations(state, now);
   if (sessions[sessionId]) {
     const session = {...sessions[sessionId]};
@@ -38,11 +41,12 @@ export function allocate(state, {sessionId, roomId, mode, participantIds, histor
   if (Object.keys(sessions).length >= 300) throw new PoolError('allocation-capacity', null);
   const reserved = Object.values(sessions).filter(s => s.participantIds.some(uid => participantIds.includes(uid)));
   const blocked = reserved.map(s => ({reservedAnswerIds: s.questions.map(q => q.answerId), reservedQuestionIds: s.questions.map(q => q.id)}));
-  const selected = selectSet(pool, [...histories, ...blocked], {mode, includeExamples});
+  // Only completed sets exclude future games. Leaving an unfinished room is replayable.
+  const selected = sets ? selectPublishedSet(sets,histories,{includeExamples}) : selectSet(pool, [...histories, ...blocked], {mode, includeExamples});
   const startsAtMs = now + 4000;
   const session = {sessionId, roomId, mode, participantIds, startsAtMs,
     expiresAtMs: startsAtMs + selected.questions.length * QUESTION_MS + 30000,
-    fingerprint: selected.fingerprint,
+    fingerprint: selected.fingerprint, ...(sets?{contentSetId:selected.id}:{}),
     questions: selected.questions.map(({id, answerId, answer, clue, letterCount, acceptedAnswers}) =>
       ({id, answerId, answer, clue, letterCount, ...(acceptedAnswers?.length ? {acceptedAnswers} : {})}))};
   sessions[sessionId] = session;

@@ -4,7 +4,8 @@ import {readFileSync} from 'node:fs';
 import {CloudQuestionGenerator} from '../src/cloud_generation.js';
 import {approveQuestion,reviewDigest,REVIEW_CHECKS,candidatePrompt,validateQuestion} from '../src/content.js';
 import {callStructured,generateQuestion} from '../src/content_generation.js';
-import {loadPublishedPool} from '../src/published_pool.js';
+import {loadPublishedPool,loadPublishedSets} from '../src/published_pool.js';
+import {selectSet} from '../src/set_selector.js';
 import {GENERATION_LIMITS} from '../src/generation_policy.js';
 
 // Unit adapter; real RTDB serialization/transactions are covered in emulator.integration.js.
@@ -20,7 +21,7 @@ class MemoryDatabase {
   }
 }
 const examples=JSON.parse(readFileSync(new URL('../content/examples.json',import.meta.url)));
-const sources=examples.map(q=>({...q,origin:'production',publication:'unpublished',review:{status:'draft'}}));
+const sources=JSON.parse(readFileSync(new URL('../content/published.json',import.meta.url))).map(q=>({...q,publication:'unpublished',review:{status:'draft'}}));
 const checks=Object.fromEntries(REVIEW_CHECKS.map(k=>[k,true]));
 const now=()=>Date.parse('2026-10-15T10:00:00Z');
 function approved(source) {
@@ -43,7 +44,8 @@ test('cloud daily target persists 42 approvals and 84 mock requests; duplicate d
   const {job,database,options,calls}=setup();const report=await job.run();
   assert.equal(report.reason,'daily-target-reached');assert.equal(report.apiCalls,84);assert.equal(calls(),84);
   assert.deepEqual(Object.values(report.approvedToday),Array(7).fill(6));
-  assert.equal((await loadPublishedPool(database,[])).length,42);assert.equal(report.classicSetsVerified,3);
+  assert.equal((await loadPublishedPool(database,[])).length,42);assert.equal(report.setsPublishedToday,3);
+  assert.equal((await loadPublishedSets(database,[])).length,3);
   assert.equal((await new CloudQuestionGenerator(options).run()).reason,'already-ran-today');assert.equal(calls(),84);
   assert(!JSON.stringify(database.data).includes('private-test-key'));
 });
@@ -76,20 +78,25 @@ test('cloud budget reservation and HTTP errors stop before retrying or leaking s
   assert.equal(day.calls,1);assert(day.chargedMicros>0);assert.equal(day.attempts[0].status,'failed');
   assert(!JSON.stringify(state).includes('private-test-key'));
 });
-test('empty stock reports shortage without fees; partial approved results remain usable',async()=>{
+test('empty stock reports shortage without fees; partial approvals stay private',async()=>{
   const empty=setup({sources:[]});assert.equal((await empty.job.run()).reason,'source-stock-exhausted');assert.equal(empty.calls(),0);
   const partial=setup({sources:sources.slice(0,1)});const report=await partial.job.run();
   assert.equal(report.reason,'source-stock-exhausted');assert.equal(report.apiCalls,2);
-  assert.equal((await loadPublishedPool(partial.database,[])).length,1);
+  assert.equal((await loadPublishedPool(partial.database,[])).length,0);
+  assert.equal((await loadPublishedSets(partial.database,[])).length,0);
+  assert.equal(Object.keys(partial.database.value('questionGeneration/draft/questions')).length,1);
 });
 test('publication crash leaves an outbox; duplicate invocation repairs publication without new API calls',async()=>{
-  const {job,options,database,calls}=setup({sources:sources.slice(0,1)});
+  const {questions}=selectSet(examples,[],{includeExamples:true,random:()=>0.5});
+  const {job,options,database,calls}=setup({sources:questions.map(q=>({...q,origin:'production',publication:'unpublished',review:{status:'draft'}}))});
   const ref=database.ref.bind(database);let fail=true;
   database.ref=(path='')=>{const r=ref(path);if(!path)r.update=async updates=>{if(fail){fail=false;throw new Error('publication interrupted');}return ref().update(updates);};return r;};
-  assert.equal((await job.run()).reason,'generation-error');assert.equal(calls(),2);
+  assert.equal((await job.run()).reason,'generation-error');assert.equal(calls(),28);
   assert.equal(Object.keys(database.value('questionGeneration/outbox')).length,1);
-  assert.equal((await new CloudQuestionGenerator(options).run()).reason,'already-ran-today');assert.equal(calls(),2);
-  assert.equal((await loadPublishedPool(database,[])).length,1);
+  assert.equal((await loadPublishedPool(database,[])).length,0);
+  assert.equal((await new CloudQuestionGenerator(options).run()).reason,'already-ran-today');assert.equal(calls(),28);
+  assert.equal((await loadPublishedPool(database,[])).length,14);
+  assert.equal((await loadPublishedSets(database,[])).length,1);
 });
 test('expired process lease retains unknown charges and never retries its attempted word',async()=>{
   const {job,database,options,calls}=setup({sources:sources.slice(0,1)});
@@ -137,7 +144,32 @@ test('real cloud generation path publishes a conjunction and two-word verb with 
     output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(value)}]}]})};
   }});
  const report=await job.run();assert.equal(report.reason,'source-stock-exhausted');assert.equal(calls,4);
- const published=await loadPublishedPool(database,[]);
- assert.equal(published.length,2);assert(published.some(q=>q.answer==='NOT TUTMAK'&&q.letterCount===9));
- assert(published.every(q=>q.review.alternativePolicy==='allow-synonyms'));
+ assert.equal((await loadPublishedPool(database,[])).length,0);
+ const drafts=Object.values(database.value('questionGeneration/draft/questions')).map(JSON.parse);
+ assert.equal(drafts.length,2);assert(drafts.some(q=>q.answer==='NOT TUTMAK'&&q.letterCount===9));
+ assert(drafts.every(q=>q.review.alternativePolicy==='allow-synonyms'));
+});
+
+test('an unfinished draft resumes on the next day without regenerating its accepted questions',async()=>{
+ const {questions}=selectSet(examples,[],{includeExamples:true,random:()=>0.5});
+ const candidates=questions.map(q=>({...q,origin:'production',publication:'unpublished',review:{status:'draft'}}));
+ const {job,options,database,calls}=setup({sources:candidates,limits:{...GENERATION_LIMITS,attempts:10}});
+ assert.equal((await job.run()).reason,'attempt-limit');assert.equal(calls(),20);
+ const id=database.value('questionGeneration/draft/id');
+ assert.equal(Object.keys(database.value('questionGeneration/draft/questions')).length,10);
+ assert.equal((await loadPublishedPool(database,[])).length,0);
+ const report=await new CloudQuestionGenerator({...options,now:()=>now()+86400000,limits:GENERATION_LIMITS}).run();
+ assert.equal(report.setsPublishedToday,1);assert.equal(calls(),28);
+ const [set]=await loadPublishedSets(database,[]);assert.equal(set.id,id);assert.equal(set.questions.length,14);
+ assert.equal(database.value('questionGeneration/draft'),null);
+});
+
+test('a rejected question is replaced while only complete sets reach publication',async()=>{
+ const {options,database}=setup();const generate=options.generate;let first=true;
+ options.generate=async(...args)=>{const q=await generate(...args);if(first){first=false;return {...q,review:{...q.review,status:'rejected'}};}return q;};
+ const report=await new CloudQuestionGenerator(options).run();
+ assert.equal(report.setsPublishedToday,3);assert.equal(report.apiCalls,86);
+ const published=await loadPublishedPool(database,[]);assert.equal(published.length,42);
+ const rejected=Object.values(database.value('questionGeneration/rejections')).map(JSON.parse);
+ assert.equal(rejected.length,1);assert(!published.some(q=>q.id===rejected[0].id));
 });
