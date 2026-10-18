@@ -36,6 +36,15 @@ void main() {
       expect(question.accepts(answer.text), isTrue);
       expect(find.byKey(const ValueKey('0-9')), findsOneWidget);
       expect(find.byKey(const ValueKey('0-10')), findsNothing);
+      final cells = List.generate(
+        10,
+        (index) => tester.getRect(find.byKey(ValueKey('0-$index'))),
+      );
+      final gap = cells[1].left - cells[0].right;
+      for (var i = 1; i < cells.length; i++) {
+        expect(cells[i].top, closeTo(cells.first.top, 0.01));
+        expect(cells[i].left - cells[i - 1].right, closeTo(gap, 0.01));
+      }
       await tester.pumpWidget(const SizedBox());
       answer.dispose();
     },
@@ -233,41 +242,68 @@ void main() {
     },
   );
 
-  testWidgets(
-    'Ten letter input fits narrow screens with keyboard and sanitizes paste',
-    (tester) async {
-      tester.view.physicalSize = const Size(320, 640);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      final answer = TextEditingController();
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: AppTheme.dark,
-          home: Scaffold(
-            body: Padding(
-              padding: const EdgeInsets.all(40),
-              child: WordPinInput(
-                question: const GameQuestion(clue: '', answer: 'BİLGİSAYAR'),
-                questionIndex: 6,
-                revealedMask: 0,
-                enabled: true,
-                answerController: answer,
-                onSubmitted: () {},
+  for (final (width, textScale) in [(320.0, 1.0), (320.0, 2.0), (360.0, 1.0)]) {
+    testWidgets(
+      'Ten letters stay on one row with keyboard: width=$width, textScale=$textScale',
+      (tester) async {
+        tester.view.physicalSize = Size(width, 640);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        addTearDown(tester.view.resetViewInsets);
+        final answer = TextEditingController();
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: AppTheme.dark,
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(textScale)),
+              child: child!,
+            ),
+            home: Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.all(40),
+                child: WordPinInput(
+                  question: const GameQuestion(clue: '', answer: 'BİLGİSAYAR'),
+                  questionIndex: 6,
+                  revealedMask: 0,
+                  enabled: true,
+                  answerController: answer,
+                  onSubmitted: () {},
+                ),
               ),
             ),
           ),
-        ),
-      );
-      await tester.pump();
-      await tester.enterText(find.byType(TextField), 'bilgi sayar!123');
-      expect(answer.text, 'BİLGİSAYAR');
-      tester.view.viewInsets = const FakeViewPadding(bottom: 260);
-      await tester.pump();
-      expect(tester.takeException(), isNull);
-      tester.view.resetViewInsets();
-      await tester.pumpWidget(const SizedBox());
-      answer.dispose();
-    },
-  );
+        );
+        await tester.pump();
+        expect(find.text('·'), findsNothing);
+        final bounds = tester.getRect(find.byType(WordPinInput));
+        final cells = List.generate(
+          10,
+          (index) => tester.getRect(find.byKey(ValueKey('6-$index'))),
+        );
+        for (final cell in cells) {
+          expect(cell.top, closeTo(cells.first.top, 0.01));
+          expect(cell.left, greaterThanOrEqualTo(bounds.left));
+          expect(cell.right, lessThanOrEqualTo(bounds.right + 0.01));
+        }
+        await tester.enterText(find.byType(TextField), 'bilgi sayar!123');
+        expect(answer.text, 'BİLGİSAYAR');
+        tester.view.viewInsets = const FakeViewPadding(bottom: 260);
+        await tester.pump();
+        expect(tester.testTextInput.isVisible, isTrue);
+        expect(
+          tester.getTopLeft(find.byKey(const ValueKey('6-9'))).dy,
+          closeTo(
+            tester.getTopLeft(find.byKey(const ValueKey('6-0'))).dy,
+            0.01,
+          ),
+        );
+        expect(tester.takeException(), isNull);
+        tester.view.resetViewInsets();
+        await tester.pumpWidget(const SizedBox());
+        answer.dispose();
+      },
+    );
+  }
 }

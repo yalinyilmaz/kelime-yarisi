@@ -32,17 +32,23 @@ class GameQuestionCard extends StatelessWidget {
       final question = state.question!;
       return Card(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StudioSectionLabel(
-                'SORU ${state.questionIndex + 1} / ${state.questions.length}',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: StudioSectionLabel(
+                  'SORU ${state.questionIndex + 1} / ${state.questions.length}',
+                ),
               ),
               const SizedBox(height: 12),
-              Text(
-                question.clue,
-                style: Theme.of(context).textTheme.titleLarge,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  question.clue,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
               const SizedBox(height: 24),
               WordPinInput(
@@ -59,16 +65,18 @@ class GameQuestionCard extends StatelessWidget {
                 outcome: currentResult?.outcome,
               ),
               const SizedBox(height: 16),
-              if (currentResult != null)
-                AnswerFeedbackBanner(result: currentResult)
-              else
-                Text(
-                  'Soru değeri: ${state.questionValue} puan',
-                  style: const TextStyle(
-                    color: AppColors.cyan,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: currentResult != null
+                    ? AnswerFeedbackBanner(result: currentResult)
+                    : Text(
+                        'Soru değeri: ${state.questionValue} puan',
+                        style: const TextStyle(
+                          color: AppColors.cyan,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+              ),
             ],
           ),
         ),

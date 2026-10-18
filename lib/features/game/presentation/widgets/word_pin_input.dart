@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -182,83 +184,92 @@ class _WordPinInputState extends State<WordPinInput>
     final focusedIndex = _text.text.length < hiddenPositions.length
         ? _text.text.length
         : hiddenPositions.length - 1;
-    return Stack(
-      children: [
-        IgnorePointer(
-          child: Wrap(
-            spacing: 6,
-            runSpacing: 8,
-            children: [
-              for (var i = 0; i < widget.question.letterCount; i++) ...[
-                if (widget.question.wordLengths.length == 2 &&
-                    i == widget.question.wordLengths.first)
-                  const SizedBox(width: 10, height: 1),
-                WordLetterCell(
-                  key: ValueKey('${widget.questionIndex}-$i'),
-                  index: i,
-                  outcome: widget.outcome,
-                  character:
-                      widget.outcome != null ||
-                          (widget.revealedMask & (1 << i)) != 0
-                      ? widget.question.letters[i]
-                      : hiddenPositions.indexOf(i) < _text.text.length
-                      ? _text.text[hiddenPositions.indexOf(i)]
-                      : null,
-                  revealed: (widget.revealedMask & (1 << i)) != 0,
-                  focused:
-                      widget.enabled &&
-                      _focus.hasFocus &&
-                      hiddenPositions.indexOf(i) == focusedIndex,
-                ),
-              ],
-            ],
-          ),
-        ),
-        // A normal-sized native field owns one stable keyboard connection.
-        // Transparent text preserves PIN visuals without a tiny/offstage editable.
-        Positioned.fill(
-          child: TextField(
-            controller: _text,
-            focusNode: _focus,
-            // Dismiss on release so keyboard resizing cannot move a button
-            // away from the finger before its tap completes.
-            onTapOutside: (_) {},
-            onTapUpOutside: (_) => _focus.unfocus(),
-            readOnly: !widget.enabled && !_focus.hasFocus,
-            showCursor: false,
-            enableInteractiveSelection: false,
-            autocorrect: false,
-            enableSuggestions: false,
-            smartDashesType: SmartDashesType.disabled,
-            smartQuotesType: SmartQuotesType.disabled,
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.done,
-            textCapitalization: TextCapitalization.characters,
-            scrollPadding: EdgeInsets.zero,
-            style: const TextStyle(color: Colors.transparent, fontSize: 20),
-            cursorColor: Colors.transparent,
-            decoration: const InputDecoration(
-              filled: false,
-              isDense: true,
-              contentPadding: EdgeInsets.zero,
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final count = widget.question.letterCount;
+        final spacing =
+            ((constraints.maxWidth - count * 32) / math.max(1, count - 1))
+                .clamp(3.0, 6.0)
+                .toDouble();
+        final cellWidth = math.min(
+          32.0,
+          (constraints.maxWidth - spacing * (count - 1)) / count,
+        );
+        return Stack(
+          children: [
+            IgnorePointer(
+              child: Row(
+                spacing: spacing,
+                children: [
+                  for (var i = 0; i < count; i++)
+                    WordLetterCell(
+                      key: ValueKey('${widget.questionIndex}-$i'),
+                      width: cellWidth,
+                      index: i,
+                      outcome: widget.outcome,
+                      character:
+                          widget.outcome != null ||
+                              (widget.revealedMask & (1 << i)) != 0
+                          ? widget.question.letters[i]
+                          : hiddenPositions.indexOf(i) < _text.text.length
+                          ? _text.text[hiddenPositions.indexOf(i)]
+                          : null,
+                      revealed: (widget.revealedMask & (1 << i)) != 0,
+                      focused:
+                          widget.enabled &&
+                          _focus.hasFocus &&
+                          hiddenPositions.indexOf(i) == focusedIndex,
+                    ),
+                ],
+              ),
             ),
-            inputFormatters: [
-              if (!widget.enabled)
-                TextInputFormatter.withFunction((oldValue, _) => oldValue),
-              WordLetterFormatter(widget.question, hiddenPositions),
-              LengthLimitingTextInputFormatter(hiddenPositions.length),
-            ],
-            onEditingComplete: () {},
-            onSubmitted: (_) {
-              if (widget.enabled) widget.onSubmitted();
-            },
-          ),
-        ),
-      ],
+            // A normal-sized native field owns one stable keyboard connection.
+            // Transparent text preserves PIN visuals without a tiny/offstage editable.
+            Positioned.fill(
+              child: TextField(
+                controller: _text,
+                focusNode: _focus,
+                // Dismiss on release so keyboard resizing cannot move a button
+                // away from the finger before its tap completes.
+                onTapOutside: (_) {},
+                onTapUpOutside: (_) => _focus.unfocus(),
+                readOnly: !widget.enabled && !_focus.hasFocus,
+                showCursor: false,
+                enableInteractiveSelection: false,
+                autocorrect: false,
+                enableSuggestions: false,
+                smartDashesType: SmartDashesType.disabled,
+                smartQuotesType: SmartQuotesType.disabled,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                textCapitalization: TextCapitalization.characters,
+                scrollPadding: EdgeInsets.zero,
+                style: const TextStyle(color: Colors.transparent, fontSize: 20),
+                cursorColor: Colors.transparent,
+                decoration: const InputDecoration(
+                  filled: false,
+                  isDense: true,
+                  contentPadding: EdgeInsets.zero,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
+                inputFormatters: [
+                  if (!widget.enabled)
+                    TextInputFormatter.withFunction((oldValue, _) => oldValue),
+                  WordLetterFormatter(widget.question, hiddenPositions),
+                  LengthLimitingTextInputFormatter(hiddenPositions.length),
+                ],
+                onEditingComplete: () {},
+                onSubmitted: (_) {
+                  if (widget.enabled) widget.onSubmitted();
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

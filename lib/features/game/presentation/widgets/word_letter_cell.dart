@@ -11,6 +11,7 @@ class WordLetterCell extends StatelessWidget {
     required this.revealed,
     required this.focused,
     required this.index,
+    required this.width,
     this.outcome,
     super.key,
   });
@@ -19,6 +20,7 @@ class WordLetterCell extends StatelessWidget {
   final bool revealed;
   final bool focused;
   final int index;
+  final double width;
   final AnswerOutcome? outcome;
 
   @override
@@ -51,7 +53,7 @@ class WordLetterCell extends StatelessWidget {
             correct || beaten ? -motion * 6 : 0,
           ),
           child: Container(
-            width: 32,
+            width: width,
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -80,17 +82,20 @@ class WordLetterCell extends StatelessWidget {
                 opacity: animation,
                 child: ScaleTransition(scale: animation, child: child),
               ),
-              child: Text(
-                character ?? (focused ? '│' : '·'),
+              child: FittedBox(
                 key: ValueKey(character),
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  color: outcome != null
-                      ? AppColors.textPrimary
-                      : revealed
-                      ? AppColors.onPaper
-                      : AppColors.textPrimary,
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  character ?? (focused ? '│' : ''),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: outcome != null
+                        ? AppColors.textPrimary
+                        : revealed
+                        ? AppColors.onPaper
+                        : AppColors.textPrimary,
+                  ),
                 ),
               ),
             ),
