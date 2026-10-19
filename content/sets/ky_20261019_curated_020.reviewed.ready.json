@@ -1,0 +1,405 @@
+{
+  "batchId": "ky_20261019_curated_020",
+  "sets": [
+    {
+      "id": "ky_20261019_curated_01",
+      "questionIds": [
+        "ky_20261019_curated_01_q01",
+        "ky_20261019_curated_01_q02",
+        "ky_20261019_curated_01_q03",
+        "ky_20261019_curated_01_q04",
+        "ky_20261019_curated_01_q05",
+        "ky_20261019_curated_01_q06",
+        "ky_20261019_curated_01_q07",
+        "ky_20261019_curated_01_q08",
+        "ky_20261019_curated_01_q09",
+        "ky_20261019_curated_01_q10",
+        "ky_20261019_curated_01_q11",
+        "ky_20261019_curated_01_q12",
+        "ky_20261019_curated_01_q13",
+        "ky_20261019_curated_01_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_02",
+      "questionIds": [
+        "ky_20261019_curated_02_q01",
+        "ky_20261019_curated_02_q02",
+        "ky_20261019_curated_02_q03",
+        "ky_20261019_curated_02_q04",
+        "ky_20261019_curated_02_q05",
+        "ky_20261019_curated_02_q06",
+        "ky_20261019_curated_02_q07",
+        "ky_20261019_curated_02_q08",
+        "ky_20261019_curated_02_q09",
+        "ky_20261019_curated_02_q10",
+        "ky_20261019_curated_02_q11",
+        "ky_20261019_curated_02_q12",
+        "ky_20261019_curated_02_q13",
+        "ky_20261019_curated_02_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_03",
+      "questionIds": [
+        "ky_20261019_curated_03_q01",
+        "ky_20261019_curated_03_q02",
+        "ky_20261019_curated_03_q03",
+        "ky_20261019_curated_03_q04",
+        "ky_20261019_curated_03_q05",
+        "ky_20261019_curated_03_q06",
+        "ky_20261019_curated_03_q07",
+        "ky_20261019_curated_03_q08",
+        "ky_20261019_curated_03_q09",
+        "ky_20261019_curated_03_q10",
+        "ky_20261019_curated_03_q11",
+        "ky_20261019_curated_03_q12",
+        "ky_20261019_curated_03_q13",
+        "ky_20261019_curated_03_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_04",
+      "questionIds": [
+        "ky_20261019_curated_04_q01",
+        "ky_20261019_curated_04_q02",
+        "ky_20261019_curated_04_q03",
+        "ky_20261019_curated_04_q04",
+        "ky_20261019_curated_04_q05",
+        "ky_20261019_curated_04_q06",
+        "ky_20261019_curated_04_q07",
+        "ky_20261019_curated_04_q08",
+        "ky_20261019_curated_04_q09",
+        "ky_20261019_curated_04_q10",
+        "ky_20261019_curated_04_q11",
+        "ky_20261019_curated_04_q12",
+        "ky_20261019_curated_04_q13",
+        "ky_20261019_curated_04_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_05",
+      "questionIds": [
+        "ky_20261019_curated_05_q01",
+        "ky_20261019_curated_05_q02",
+        "ky_20261019_curated_05_q03",
+        "ky_20261019_curated_05_q04",
+        "ky_20261019_curated_05_q05",
+        "ky_20261019_curated_05_q06",
+        "ky_20261019_curated_05_q07",
+        "ky_20261019_curated_05_q08",
+        "ky_20261019_curated_05_q09",
+        "ky_20261019_curated_05_q10",
+        "ky_20261019_curated_05_q11",
+        "ky_20261019_curated_05_q12",
+        "ky_20261019_curated_05_q13",
+        "ky_20261019_curated_05_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_06",
+      "questionIds": [
+        "ky_20261019_curated_06_q01",
+        "ky_20261019_curated_06_q02",
+        "ky_20261019_curated_06_q03",
+        "ky_20261019_curated_06_q04",
+        "ky_20261019_curated_06_q05",
+        "ky_20261019_curated_06_q06",
+        "ky_20261019_curated_06_q07",
+        "ky_20261019_curated_06_q08",
+        "ky_20261019_curated_06_q09",
+        "ky_20261019_curated_06_q10",
+        "ky_20261019_curated_06_q11",
+        "ky_20261019_curated_06_q12",
+        "ky_20261019_curated_06_q13",
+        "ky_20261019_curated_06_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_07",
+      "questionIds": [
+        "ky_20261019_curated_07_q01",
+        "ky_20261019_curated_07_q02",
+        "ky_20261019_curated_07_q03",
+        "ky_20261019_curated_07_q04",
+        "ky_20261019_curated_07_q05",
+        "ky_20261019_curated_07_q06",
+        "ky_20261019_curated_07_q07",
+        "ky_20261019_curated_07_q08",
+        "ky_20261019_curated_07_q09",
+        "ky_20261019_curated_07_q10",
+        "ky_20261019_curated_07_q11",
+        "ky_20261019_curated_07_q12",
+        "ky_20261019_curated_07_q13",
+        "ky_20261019_curated_07_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_08",
+      "questionIds": [
+        "ky_20261019_curated_08_q01",
+        "ky_20261019_curated_08_q02",
+        "ky_20261019_curated_08_q03",
+        "ky_20261019_curated_08_q04",
+        "ky_20261019_curated_08_q05",
+        "ky_20261019_curated_08_q06",
+        "ky_20261019_curated_08_q07",
+        "ky_20261019_curated_08_q08",
+        "ky_20261019_curated_08_q09",
+        "ky_20261019_curated_08_q10",
+        "ky_20261019_curated_08_q11",
+        "ky_20261019_curated_08_q12",
+        "ky_20261019_curated_08_q13",
+        "ky_20261019_curated_08_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_09",
+      "questionIds": [
+        "ky_20261019_curated_09_q01",
+        "ky_20261019_curated_09_q02",
+        "ky_20261019_curated_09_q03",
+        "ky_20261019_curated_09_q04",
+        "ky_20261019_curated_09_q05",
+        "ky_20261019_curated_09_q06",
+        "ky_20261019_curated_09_q07",
+        "ky_20261019_curated_09_q08",
+        "ky_20261019_curated_09_q09",
+        "ky_20261019_curated_09_q10",
+        "ky_20261019_curated_09_q11",
+        "ky_20261019_curated_09_q12",
+        "ky_20261019_curated_09_q13",
+        "ky_20261019_curated_09_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_10",
+      "questionIds": [
+        "ky_20261019_curated_10_q01",
+        "ky_20261019_curated_10_q02",
+        "ky_20261019_curated_10_q03",
+        "ky_20261019_curated_10_q04",
+        "ky_20261019_curated_10_q05",
+        "ky_20261019_curated_10_q06",
+        "ky_20261019_curated_10_q07",
+        "ky_20261019_curated_10_q08",
+        "ky_20261019_curated_10_q09",
+        "ky_20261019_curated_10_q10",
+        "ky_20261019_curated_10_q11",
+        "ky_20261019_curated_10_q12",
+        "ky_20261019_curated_10_q13",
+        "ky_20261019_curated_10_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_11",
+      "questionIds": [
+        "ky_20261019_curated_11_q01",
+        "ky_20261019_curated_11_q02",
+        "ky_20261019_curated_11_q03",
+        "ky_20261019_curated_11_q04",
+        "ky_20261019_curated_11_q05",
+        "ky_20261019_curated_11_q06",
+        "ky_20261019_curated_11_q07",
+        "ky_20261019_curated_11_q08",
+        "ky_20261019_curated_11_q09",
+        "ky_20261019_curated_11_q10",
+        "ky_20261019_curated_11_q11",
+        "ky_20261019_curated_11_q12",
+        "ky_20261019_curated_11_q13",
+        "ky_20261019_curated_11_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_12",
+      "questionIds": [
+        "ky_20261019_curated_12_q01",
+        "ky_20261019_curated_12_q02",
+        "ky_20261019_curated_12_q03",
+        "ky_20261019_curated_12_q04",
+        "ky_20261019_curated_12_q05",
+        "ky_20261019_curated_12_q06",
+        "ky_20261019_curated_12_q07",
+        "ky_20261019_curated_12_q08",
+        "ky_20261019_curated_12_q09",
+        "ky_20261019_curated_12_q10",
+        "ky_20261019_curated_12_q11",
+        "ky_20261019_curated_12_q12",
+        "ky_20261019_curated_12_q13",
+        "ky_20261019_curated_12_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_13",
+      "questionIds": [
+        "ky_20261019_curated_13_q01",
+        "ky_20261019_curated_13_q02",
+        "ky_20261019_curated_13_q03",
+        "ky_20261019_curated_13_q04",
+        "ky_20261019_curated_13_q05",
+        "ky_20261019_curated_13_q06",
+        "ky_20261019_curated_13_q07",
+        "ky_20261019_curated_13_q08",
+        "ky_20261019_curated_13_q09",
+        "ky_20261019_curated_13_q10",
+        "ky_20261019_curated_13_q11",
+        "ky_20261019_curated_13_q12",
+        "ky_20261019_curated_13_q13",
+        "ky_20261019_curated_13_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_14",
+      "questionIds": [
+        "ky_20261019_curated_14_q01",
+        "ky_20261019_curated_14_q02",
+        "ky_20261019_curated_14_q03",
+        "ky_20261019_curated_14_q04",
+        "ky_20261019_curated_14_q05",
+        "ky_20261019_curated_14_q06",
+        "ky_20261019_curated_14_q07",
+        "ky_20261019_curated_14_q08",
+        "ky_20261019_curated_14_q09",
+        "ky_20261019_curated_14_q10",
+        "ky_20261019_curated_14_q11",
+        "ky_20261019_curated_14_q12",
+        "ky_20261019_curated_14_q13",
+        "ky_20261019_curated_14_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_15",
+      "questionIds": [
+        "ky_20261019_curated_15_q01",
+        "ky_20261019_curated_15_q02",
+        "ky_20261019_curated_15_q03",
+        "ky_20261019_curated_15_q04",
+        "ky_20261019_curated_15_q05",
+        "ky_20261019_curated_15_q06",
+        "ky_20261019_curated_15_q07",
+        "ky_20261019_curated_15_q08",
+        "ky_20261019_curated_15_q09",
+        "ky_20261019_curated_15_q10",
+        "ky_20261019_curated_15_q11",
+        "ky_20261019_curated_15_q12",
+        "ky_20261019_curated_15_q13",
+        "ky_20261019_curated_15_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_16",
+      "questionIds": [
+        "ky_20261019_curated_16_q01",
+        "ky_20261019_curated_16_q02",
+        "ky_20261019_curated_16_q03",
+        "ky_20261019_curated_16_q04",
+        "ky_20261019_curated_16_q05",
+        "ky_20261019_curated_16_q06",
+        "ky_20261019_curated_16_q07",
+        "ky_20261019_curated_16_q08",
+        "ky_20261019_curated_16_q09",
+        "ky_20261019_curated_16_q10",
+        "ky_20261019_curated_16_q11",
+        "ky_20261019_curated_16_q12",
+        "ky_20261019_curated_16_q13",
+        "ky_20261019_curated_16_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_17",
+      "questionIds": [
+        "ky_20261019_curated_17_q01",
+        "ky_20261019_curated_17_q02",
+        "ky_20261019_curated_17_q03",
+        "ky_20261019_curated_17_q04",
+        "ky_20261019_curated_17_q05",
+        "ky_20261019_curated_17_q06",
+        "ky_20261019_curated_17_q07",
+        "ky_20261019_curated_17_q08",
+        "ky_20261019_curated_17_q09",
+        "ky_20261019_curated_17_q10",
+        "ky_20261019_curated_17_q11",
+        "ky_20261019_curated_17_q12",
+        "ky_20261019_curated_17_q13",
+        "ky_20261019_curated_17_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_18",
+      "questionIds": [
+        "ky_20261019_curated_18_q01",
+        "ky_20261019_curated_18_q02",
+        "ky_20261019_curated_18_q03",
+        "ky_20261019_curated_18_q04",
+        "ky_20261019_curated_18_q05",
+        "ky_20261019_curated_18_q06",
+        "ky_20261019_curated_18_q07",
+        "ky_20261019_curated_18_q08",
+        "ky_20261019_curated_18_q09",
+        "ky_20261019_curated_18_q10",
+        "ky_20261019_curated_18_q11",
+        "ky_20261019_curated_18_q12",
+        "ky_20261019_curated_18_q13",
+        "ky_20261019_curated_18_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_19",
+      "questionIds": [
+        "ky_20261019_curated_19_q01",
+        "ky_20261019_curated_19_q02",
+        "ky_20261019_curated_19_q03",
+        "ky_20261019_curated_19_q04",
+        "ky_20261019_curated_19_q05",
+        "ky_20261019_curated_19_q06",
+        "ky_20261019_curated_19_q07",
+        "ky_20261019_curated_19_q08",
+        "ky_20261019_curated_19_q09",
+        "ky_20261019_curated_19_q10",
+        "ky_20261019_curated_19_q11",
+        "ky_20261019_curated_19_q12",
+        "ky_20261019_curated_19_q13",
+        "ky_20261019_curated_19_q14"
+      ]
+    },
+    {
+      "id": "ky_20261019_curated_20",
+      "questionIds": [
+        "ky_20261019_curated_20_q01",
+        "ky_20261019_curated_20_q02",
+        "ky_20261019_curated_20_q03",
+        "ky_20261019_curated_20_q04",
+        "ky_20261019_curated_20_q05",
+        "ky_20261019_curated_20_q06",
+        "ky_20261019_curated_20_q07",
+        "ky_20261019_curated_20_q08",
+        "ky_20261019_curated_20_q09",
+        "ky_20261019_curated_20_q10",
+        "ky_20261019_curated_20_q11",
+        "ky_20261019_curated_20_q12",
+        "ky_20261019_curated_20_q13",
+        "ky_20261019_curated_20_q14"
+      ]
+    }
+  ],
+  "questionCount": 280,
+  "acceptedAlternatives": 18,
+  "combinedPoolQuestions": 952,
+  "localChecksPassed": true,
+  "deployed": true,
+  "requiresRuntimeUpdate": true,
+  "hintUiImplemented": true,
+  "sourceVerificationNote": "Her ana anlam ve iki ipucu gerçek kaynak erişimiyle kontrol edildi. Kubbealtı kaynak maddeleri, TDK yazım kuralı ve ilgili birincil teknik kaynaklar okundu. Bütün onaylar aynı sohbet modelinin ayrı Türkçe editör öz incelemesidir; insan veya bağımsız model onayı değildir.",
+  "targetProjectId": "kelime-yarisi-yalin",
+  "approvalStatus": "approved-and-deployed",
+  "sourceUrlCount": 323,
+  "sourceChecksCompleted": true,
+  "reviewKind": "ai-self-review",
+  "publicationUpdateCount": 320,
+  "paidModelApiCalls": 0,
+  "verified": true,
+  "deployedAtMs": 1792427783166,
+  "totalPlayableSets": 68,
+  "totalPlayableQuestions": 952,
+  "productionTouched": false
+}
