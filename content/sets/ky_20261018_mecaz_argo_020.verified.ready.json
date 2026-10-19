@@ -1,0 +1,68 @@
+{
+  "batchId": "ky_20261018_mecaz_argo_020",
+  "sets": [
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s01_q01",
+        "ky_20261018_mecaz_argo_020_s01_q02",
+        "ky_20261018_mecaz_argo_020_s01_q03",
+        "ky_20261018_mecaz_argo_020_s01_q04",
+        "ky_20261018_mecaz_argo_020_s01_q05",
+        "ky_20261018_mecaz_argo_020_s01_q06",
+        "ky_20261018_mecaz_argo_020_s01_q07",
+        "ky_20261018_mecaz_argo_020_s01_q08",
+        "ky_20261018_mecaz_argo_020_s01_q09",
+        "ky_20261018_mecaz_argo_020_s01_q10",
+        "ky_20261018_mecaz_argo_020_s01_q11",
+        "ky_20261018_mecaz_argo_020_s01_q12",
+        "ky_20261018_mecaz_argo_020_s01_q13",
+        "ky_20261018_mecaz_argo_020_s01_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s03_q01",
+        "ky_20261018_mecaz_argo_020_s03_q02",
+        "ky_20261018_mecaz_argo_020_s03_q03",
+        "ky_20261018_mecaz_argo_020_s03_q04",
+        "ky_20261018_mecaz_argo_020_s03_q05",
+        "ky_20261018_mecaz_argo_020_s03_q06",
+        "ky_20261018_mecaz_argo_020_s03_q07",
+        "ky_20261018_mecaz_argo_020_s03_q08",
+        "ky_20261018_mecaz_argo_020_s03_q09",
+        "ky_20261018_mecaz_argo_020_s03_q10",
+        "ky_20261018_mecaz_argo_020_s03_q11",
+        "ky_20261018_mecaz_argo_020_s03_q12",
+        "ky_20261018_mecaz_argo_020_s03_q13",
+        "ky_20261018_mecaz_argo_020_s03_q14"
+      ]
+    }
+  ],
+  "questionCount": 28,
+  "acceptedAlternatives": 3,
+  "combinedPoolQuestions": 429,
+  "localChecksPassed": true,
+  "deployed": true,
+  "requiresRuntimeUpdate": true,
+  "hintUiImplemented": false,
+  "sourceVerificationNote": "40 soru için anlam ve ayrı ipucu kaynakları okundu. Yalnız 2 setin 14 sorusu da tam doğrulandı; diğer 18 set yayıma kapalı taslak kalır. Toplu HTTP yanıtı alınması editör onayı sayılmadı.",
+  "deployment": {
+    "projectId": "kelime-yarisi-yalin",
+    "batchId": "ky_20261018_mecaz_argo_020",
+    "contentDigest": "83597449eea86bcb44f508368831a7f05081f6b01812331bc6cc051d04ca95fb",
+    "setIds": [
+      "ky_20261018_mecaz_argo_020_s01",
+      "ky_20261018_mecaz_argo_020_s03"
+    ],
+    "questionCount": 28,
+    "publishedAtMs": 1792347348922,
+    "draftSetsExcluded": 18,
+    "verified": true,
+    "totalPlayableSets": 30,
+    "totalPlayableQuestions": 420,
+    "allImportedHintsVerified": true,
+    "productionTouched": false
+  }
+}

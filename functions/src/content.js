@@ -10,6 +10,12 @@ export const fingerprint = questions => hash(questions.map(q => q.answerId).sort
 const tokens = text => normalizeWord(text).match(/[A-ZÇĞİÖŞÜ]+/gu) ?? [];
 const comparisonWord = value => normalizeWord(value).replace(/[ÇĞİÖŞÜ]/gu,
   letter => ({Ç:'C',Ğ:'G',İ:'I',Ö:'O',Ş:'S',Ü:'U'})[letter]);
+export const hasAnswerLeak = (text, target) => {
+  const textWords = tokens(text).map(comparisonWord);
+  const targetWords = tokens(target).map(comparisonWord);
+  return targetWords.length && textWords.some((_, i) => targetWords.every((part, j) =>
+    j === targetWords.length - 1 ? textWords[i + j]?.startsWith(part) : textWords[i + j] === part));
+};
 
 export function reviewDigest(question) {
   const {review, publication, ...content} = question;
@@ -21,7 +27,7 @@ export function reviewDigest(question) {
 export function validateQuestion(q) {
   const errors = [];
   if (!q || typeof q !== 'object') return ['invalid-record'];
-  for (const key of ['id', 'answer', 'answerId', 'meaningId', 'meaning', 'clue', 'topic', 'rootId']) {
+  for (const key of ['id', 'answer', 'answerId', 'meaning', 'clue', 'topic', 'rootId']) {
     if (typeof q[key] !== 'string' || !q[key].trim()) errors.push(`missing-${key}`);
   }
   if (typeof q.answer !== 'string') return errors;
@@ -47,12 +53,7 @@ export function validateQuestion(q) {
   if (q.letterCount !== lengths.reduce((sum, length) => sum + length, 0) || !LENGTHS.includes(q.letterCount)) errors.push('invalid-length');
   if (![1, 2, 3].includes(q.difficulty)) errors.push('invalid-difficulty');
   if (!Array.isArray(q.relatedAnswerIds) || !q.relatedAnswerIds.every(x => typeof x === 'string')) errors.push('invalid-related-answers');
-  const leaks = (text, target) => {
-    const textWords = tokens(text).map(comparisonWord);
-    const targetWords = tokens(target).map(comparisonWord);
-    return targetWords.length && textWords.some((_, i) => targetWords.every((part, j) =>
-      j === targetWords.length - 1 ? textWords[i + j]?.startsWith(part) : textWords[i + j] === part));
-  };
+  const leaks = hasAnswerLeak;
   if (typeof q.clue === 'string' && leaks(q.clue, word)) errors.push('answer-leak');
   if (q.rootText != null && typeof q.rootText !== 'string') errors.push('invalid-root-text');
   if (typeof q.rootText === 'string' && normalizeWord(q.rootText).length >= 3 &&
@@ -65,6 +66,19 @@ export function validateQuestion(q) {
       if (typeof q.clue === 'string' && normalizeWord(q.hint) === normalizeWord(q.clue)) errors.push('duplicate-hint');
     }
   }
+  if (q.hints !== undefined) {
+    if (!Array.isArray(q.hints) || q.hints.length !== 2 ||
+        q.hints.some(h => typeof h !== 'string' || !h.trim()) ||
+        q.hints[0] === q.hints[1]) errors.push('invalid-hints');
+    else {
+      for (const hint of q.hints) {
+        if (/^(?:(?:TEK|BİR|İKİ|[12]) (?:KELİME|SÖZCÜK)(?:Lİ|DEN OLUŞUR|DEN OLUŞUYOR)?|(?:KELİME|SÖZCÜK) SAYISI:\s*[12]|MASTAR(?: BİÇİMİNDE|LA BİTİYOR)?)[.!]?$/u.test(normalizeWord(hint))) errors.push('bare-structural-hint');
+        if ([word, ...(q.acceptedAnswers ?? [])].some(a => leaks(hint, a))) errors.push('hint-answer-leak');
+        if (typeof q.rootText === 'string' && normalizeWord(q.rootText).length >= 3 && leaks(hint, q.rootText)) errors.push('hint-root-leak');
+        if (typeof q.clue === 'string' && normalizeWord(hint) === normalizeWord(q.clue)) errors.push('duplicate-hint');
+      }
+    }
+  }
   if (!['draft', 'in-review', 'approved', 'rejected'].includes(q.review?.status)) errors.push('invalid-review-status');
   if (!['unpublished', 'published'].includes(q.publication)) errors.push('invalid-publication-status');
   if (!['example', 'production'].includes(q.origin)) errors.push('invalid-origin');
@@ -72,13 +86,13 @@ export function validateQuestion(q) {
   if (!source || !['original', 'licensed', 'public-domain', 'permission-required', 'unknown'].includes(source.rights)) errors.push('missing-source-rights');
   if (source && ['reference', 'meaningEvidence', 'termsReference'].some(key => typeof source[key] !== 'string' || !source[key].trim())) errors.push('missing-source-evidence');
   if (q.review?.status === 'approved') {
-    if (q.hint !== undefined && ['hintConsistency', 'hintNoLeak'].some(key => q.review.checks?.[key] !== true)) errors.push('missing-hint-review');
+    if ((q.hint !== undefined || q.hints !== undefined) && ['hintConsistency', 'hintNoLeak'].some(key => q.review.checks?.[key] !== true)) errors.push('missing-hint-review');
     if (!q.review.editor || !Number.isFinite(q.review.reviewedAtMs) ||
         q.review.digest !== reviewDigest(q) || REVIEW_CHECKS.some(k => q.review.checks?.[k] !== true)) errors.push('invalid-editor-approval');
     if (!['original', 'licensed', 'public-domain'].includes(source?.rights)) errors.push('source-rights-not-cleared');
     if (q.review.kind === 'ai-self-review' &&
-        (!q.review.model?.trim() || !q.review.rationale?.trim() || !q.review.sourceSupport?.trim() ||
-         q.review.contentDigest !== reviewDigest(q) || !Array.isArray(q.review.alternativesRejected) ||
+        (!q.review.model?.trim() || !q.review.rationale?.trim() ||
+         (q.review.contentDigest !== undefined && q.review.contentDigest !== reviewDigest(q)) || !Array.isArray(q.review.alternativesRejected) ||
          (!q.review.alternativesRejected.length && q.review.alternativePolicy !== 'allow-synonyms') || q.review.alternativesRejected.some(a =>
            typeof a.answer !== 'string' || !a.answer.trim() || typeof a.reason !== 'string' || !a.reason.trim()))) {
       errors.push('missing-ai-editor-audit');

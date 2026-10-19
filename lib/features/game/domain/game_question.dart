@@ -7,6 +7,7 @@ class GameQuestion extends Equatable {
     this.id,
     this.answerId,
     this.acceptedAnswers = const [],
+    this.hints = const [],
   });
 
   final String clue;
@@ -14,6 +15,7 @@ class GameQuestion extends Equatable {
   final String? id;
   final String? answerId;
   final List<String> acceptedAnswers;
+  final List<String> hints;
 
   String get letters => normalizeAnswer(answer);
 
@@ -57,5 +59,12 @@ class GameQuestion extends Equatable {
       .replaceAll(RegExp(r'\s+'), '');
 
   @override
-  List<Object?> get props => [clue, answer, id, answerId, acceptedAnswers];
+  List<Object?> get props => [
+    clue,
+    answer,
+    id,
+    answerId,
+    acceptedAnswers,
+    hints,
+  ];
 }

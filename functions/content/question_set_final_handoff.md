@@ -76,6 +76,15 @@ Kullanıcının beğendiği üslup örnekleri — **bu soruları/cevapları yeni
 - “Bir yöneticinin görev koltuğunu da Türk müziğinde bir ezginin ses düzenini de anlatan sözcük.” → **MAKAM**. İki gerçek anlam kısa ve akıcı birleşir.
 - “Bir yazı aracının boyunu kısaltırken ucunu kullanılır hâle getiren gereç.” → **KALEMTIRAŞ**. Gündelik nesne, işlev üzerinden küçük bir çıkarımla bulunur.
 
+## Mecaz anlam ve argo
+
+- Mecaz anlamlar ve yerleşik argo sözcük/ifadeler de cevap olabilir. Bunlar yeni bir dil bilgisi türü değildir; mevcut `grammaticalType` alanını hedeflenen kullanıma göre doldur.
+- Mecaz anlam soruluyorsa asıl soruda açıkça **“Mecazi olarak”** veya **“Mecaz anlamda”** de. Sadece ek ipucunda belirtmek yeterli değildir. Gerçek ve mecaz anlamı birlikte kullanan soruda da mecaz bölümünü açıkça işaretle.
+- Argo kullanım soruluyorsa asıl soruda açıkça **“Argoda”** de. Her gündelik veya halk ağzı söyleyişini argo sayma; kaynakta seçilen anlamın gerçekten argo olarak işaretlendiğini doğrula. Aynı titizliği mecaz etiketi için de uygula.
+- Yaygın ve anlaşılır, aşağılayıcı olmayan argo ifadeleri tercih et. Küfür, nefret söylemi, kimlik gruplarını hedef alan veya cinsel açıdan açık ifadeler kullanma. Argo/mecaz eklemek için yapay kullanım üretme; her soruyu bu türlere dönüştürme.
+- Editör, belirtilen kullanım etiketini, seçilen anlamı ve ayrı ipucunun aynı anlamla tutarlılığını kaynak üzerinden ayrıca denetlesin. Doğrulanmamış bir mecaz/argo anlamı onaylı gösterme; mevcut kaynak eksikliği kuralları burada da geçerlidir.
+- Uzunluk, tek/iki kelime sınırı, özgünlük, eş anlamlı toleransı ve kök sızıntısı kuralları bu cevaplarda da aynen geçerlidir.
+
 ## Eş anlamlılar — gevşetilmiş, bilinçli politika
 
 **Gerçek bir eş anlamlının bulunması tek başına ret nedeni değildir.** Amaç bütün Türkçede tek olası yazılışı olan cevap bulmak değildir; asıl soru adil biçimde tek bir hedef kavrama yönelsin.
@@ -90,21 +99,23 @@ Kullanıcının beğendiği üslup örnekleri — **bu soruları/cevapları yeni
 
 ## Her soru için ayrı ek ipucu
 
-`hint`, asıl soruya ek olarak oyuncunun isteyebileceği kısa yardımcı bilgidir.
+`hints`, asıl soruya ek olarak oyuncunun sırayla açabileceği **tam iki farklı, boş olmayan metinden oluşan string listesidir**. Her iki ipucu da anlamı bulmaya yardımcı olmalıdır. Sabit bir “önce kelime sayısı, sonra anlam” şablonu kullanma.
 
 - Asıl soruyu eş anlamlı kelimelerle tekrar etmesin; **yeni ve doğrulanabilir** bilgi versin.
 - Soru veya ipucunda ana cevabı, kabul edilmiş eşdeğerini, cevabı bariz biçimde veren kökünü/çekimini, harflerini, hecelerini veya baş harfini yazma.
 - Sızıntı denetimini Türkçe/ASCII karşılıklarıyla da yap. `YAZI` için “yazı tura”, `ÖRTMEK` için “örtü”, `YAKLAŞMAK` için “yaklaştığında” gibi örnekler sorunludur.
 - İki kelimeli cevapta ayırt edici bileşeni doğrudan söyleyip diğerini tamamlattırma. Yaygın bir yardımcı sözcüğün tesadüfen geçmesini tek başına kök ortaklığı sayma; cevabı ne ölçüde ele verdiğini değerlendir.
 - İpucu cevabı bulmayı kolaylaştırsın; rastgele başka bir kavramı da doğru hâle getirmesin. Soru ve ipucu çelişmesin.
-- İpucuya özel kaynak desteği kaydet. Sadece `hint` metnini `hintEvidence` içine kopyalamak doğrulama değildir.
-- İçerik varsayımı: 14 soruluk oyunda oyuncu başına **10 ek ipucu hakkı**, soru başına en fazla bir kullanım. Bu görev butonu/sayacı uygulamaz; hakkın bulunması her soruda ayrı bir `hint` yazma zorunluluğunu değiştirmez.
+- İki ipucunun da kaynak desteğini `hintEvidence` içinde ayrı ayrı açıkla. İpucu metnini kanıt diye kopyalamak doğrulama değildir.
+- “İki kelime” veya “mastar biçiminde” tek başına bir ipucu olamaz. Yararlı olduğunda anlamı buldurmaya yardımcı açıklamaya virgülle ekle. Her soruda aynı tür veya sırada ipucu yazma.
+- İki ipucu birbirini veya soruyu yalnız başka kelimelerle tekrar etmesin; tamamlayıcı bilgiler versin.
+- Oyun kuralı: 14 soruda **oyuncu başına toplam 10 ipucu hakkı**, her soruda en fazla **2 kullanım**. Açılan ipucu tekrar okunabilir ve yeniden hak tüketmez. Haklar oyuncuya özeldir; ortak harf alma oylamasından ve puanından ayrıdır.
 
 ## Üretim ve editör süreci
 
 1. **Planla.** Önce cevapları uzunluk, anlam, konu ve tür açısından dağıt. Verilmiş dışlama listeleriyle karşılaştır. Kök ailesi ve kavram tekrarını erkenden ele.
 2. **Kaynağı kontrol et.** Yazımı ve seçilen anlamı gerçekten açıp okuduğun TDK maddesi veya uygun birincil kaynaktan doğrula. Özel bir olgu/teknik ipucu için konunun yetkili kaynağını kullan. Sözlükte başka anlamın bulunması, seçtiğin anlamı doğrulamaz.
-3. **Yaz.** Kaynağı kopyalamadan özgün asıl soru ve ayrı ipucu oluştur. En iyi son metni seç; ara adayları ve düşünce zincirini çıktı olarak dökme.
+3. **Yaz.** Kaynağı kopyalamadan özgün asıl soru ve iki ayrı ipucu oluştur. En iyi son metni seç; ara adayları ve düşünce zincirini çıktı olarak dökme.
 4. **Editör rolüne geç.** Yazım turundan ayrı bir turda bütün son metinleri Türkçe içerik editörü gibi yeniden değerlendir. Daha önce senin yazmış olman kabul gerekçesi değildir. Her soru için aşağıdaki denetimleri gerçekten yap.
 5. **Düzelt ve tekrar denetle.** Sorunlu metni yerinde düzelt; son metin değiştiğinde önceki kontrol sonuçlarını otomatik geçerli sayma. Sorun giderilemiyorsa adayı değiştir veya eksikliği bildir.
 6. **Seti kontrol et.** Sadece soru bazında onay yetmez; uzunluk sırası, benzersizlik, kök/kavram, konu, zorluk ve tür dengesi set düzeyinde de geçsin.
@@ -113,7 +124,7 @@ Kullanıcının beğendiği üslup örnekleri — **bu soruları/cevapları yeni
 Editörün kontrol listesi:
 
 - `spelling`: doğru Türkçe yazım, harf/kelime sayısı ve hedef dil bilgisi biçimi.
-- `meaning`: asıl soru seçilen anlamı doğru tarif ediyor; her iddia destekli.
+- `meaning`: asıl soru seçilen anlamı doğru tarif ediyor; her iddia destekli. Mecaz/argo kullanımı doğru etiketlenmiş ve kaynakta aynı anlamıyla doğrulanmış.
 - `uniqueAnswer`: gevşetilmiş eş anlam politikasına göre adil hedef kavram; kabul edilecek eşdeğerler değerlendirilmiş.
 - `noLeak`: asıl soru ana cevabı, kabul edilmiş eşdeğerini veya bariz kökünü vermiyor.
 - `originality`: soru ve ipucu bu görev için özgün; televizyon sorusunun hafifçe değiştirilmiş biçimi değil.
@@ -192,7 +203,7 @@ Aktarım şeması **`kelime-yarisi-content-pilot-1`** olarak kalır. Aşağıdak
           "wordLengths": [5],
           "meaning": "Seçilen anlamın özgün ve doğrulanmış kısa özeti",
           "clue": "Oyuncuya gösterilecek özgün asıl soru",
-          "hint": "Asıl sorudan farklı bilgi veren özgün ek ipucu",
+          "hints": ["Anlamı bulmaya yardımcı ilk özgün bilgi", "Farklı bir çağrışımla yardımcı ikinci bilgi"],
           "topic": "gerçek_konu_etiketi",
           "difficulty": 2,
           "rootText": "ÖRNEK",
@@ -200,7 +211,7 @@ Aktarım şeması **`kelime-yarisi-content-pilot-1`** olarak kalır. Aşağıdak
           "source": {
             "reference": null,
             "meaningEvidence": "Okunan kaynağın seçilen anlamı nasıl desteklediğinin özgün özeti",
-            "hintEvidence": "Ek ipucundaki özel bilginin kaynak desteği",
+            "hintEvidence": "İlk ve ikinci ipucunun kaynak desteğini ayrı ayrı açıklayan özet",
             "hintReference": null,
             "retrievedAt": null,
             "verificationStatus": "needs_recheck",
@@ -236,7 +247,7 @@ Aktarım şeması **`kelime-yarisi-content-pilot-1`** olarak kalır. Aşağıdak
     "localPoolDuplicatesChecked": false,
     "currentBackendCompatible": null,
     "requiresUpdatedRuntime": true,
-    "hintUiImplemented": false,
+    "hintUiImplemented": true,
     "technicalChecksMethod": "Çalıştırılan araç/kod veya yalnız metin üzerinden denetim",
     "sourceVerificationNote": "Kaynak doğrulamasının gerçek kapsamı ve varsa eksikleri",
     "issues": []
@@ -255,7 +266,7 @@ Aktarım şeması **`kelime-yarisi-content-pilot-1`** olarak kalır. Aşağıdak
 
 - Tam denetlenen kayıtta `verificationStatus="verified"`, gerçek URL/tarih, `decision="approve"` ve gerçekten geçen sekiz kontrol için `true` bulunur. Yapılmayan kontrol `null`, başarısız kontrol `false` olur. Eksik/başarısız kayıt onaylı veya yayına hazır diye sunulmaz; `revise`, `reject` veya `needs_recheck` kararıyla sorunu belirtilir.
 - `questionCount`, gerçekten döndürülen kayıt sayısıdır. `completeSets`, bütün içerik/kaynak/editör kontrollerinden geçen tam setlerin sayısıdır. Tamamlanmayanları bu sayıya katma.
-- `requiresModelUpdate=false`, açıklanan güncel veri alanlarıyla uyumu anlatır. `requiresUpdatedRuntime=true`, bu alanları desteklemeyen eski uygulamaların güncellenmesi gerektiğini belirtir. `hintUiImplemented=false` kalır; içerik üretimi ipucu arayüzünü uygulamaz.
+- `requiresModelUpdate=false`, açıklanan güncel veri alanlarıyla uyumu anlatır. `requiresUpdatedRuntime=true`, bu alanları desteklemeyen eski uygulamaların güncellenmesi gerektiğini belirtir. `hintUiImplemented=true`, mevcut uygulamanın iki ipucunu ve 10/2 sınırını desteklediğini belirtir; içerik görevi arayüzü değiştirmez.
 - Proje dönüştürme aracı gerçekten çalıştırılmadıysa `currentBackendCompatible=null` bırak. Kurallara uygun JSON yazmak, backend entegrasyon testi yapmış olmak değildir.
 - Bu JSON **taşıma ve inceleme formatıdır**, doğrudan yayın dosyası değildir. Gerçek `answerId`, `rootId`, inceleme hash’leri veya yayın onayı üretmeye çalışma. Projede kaynak/tekrar kontrollerinden sonra `functions/tools/prepare_exchange.js` ile dönüştürülür. Her kaydın `publication` değeri **`unpublished`** kalır.
 

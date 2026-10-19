@@ -1,0 +1,74 @@
+{
+  "projectId": "kelime-yarisi-yalin",
+  "groups": {
+    "published": {
+      "questions": 672,
+      "beforeBytes": 2369832,
+      "afterBytes": 1668292
+    },
+    "draft": {
+      "questions": 13,
+      "beforeBytes": 79102,
+      "afterBytes": 56222
+    },
+    "backlog": {
+      "questions": 0,
+      "beforeBytes": 2,
+      "afterBytes": 2
+    },
+    "rejections": {
+      "questions": 20,
+      "beforeBytes": 88491,
+      "afterBytes": 62508
+    }
+  },
+  "playableSets": 48,
+  "twoHintsRequired": true,
+  "backendTestsPassed": 83,
+  "removedFields": [
+    "meaningId",
+    "review.contentDigest",
+    "review.sourceVerificationScope",
+    "source.inheritedVerification",
+    "source.verificationOrigin",
+    "source.hintVerificationMethod",
+    "generation.originalWording",
+    "generation.candidates"
+  ],
+  "deduplicatedFields": [
+    "source.evidence",
+    "source.encyclopedia",
+    "source.hintReference",
+    "review.sourceSupport"
+  ],
+  "licenceReferencesPreserved": true,
+  "questionTextsUnchanged": true,
+  "deployed": true,
+  "verified": true,
+  "beforeBytes": 2537427,
+  "afterBytes": 1787024,
+  "savedBytes": 750403,
+  "savingPercent": 30,
+  "paidApiRequestsTriggered": 0,
+  "generatorEnabled": true,
+  "leaseReleased": true,
+  "lastVerifiedAtMs": 1792390370585,
+  "dailyHintVerification": {
+    "today": "2026-10-19",
+    "apiCalls": 10,
+    "approvedToday": 4,
+    "todayReviewedWithTwoHints": 5,
+    "publishedSetsToday": 0,
+    "stopReason": "source-stock-exhausted",
+    "draftQuestions": 13,
+    "totalPlayableQuestions": 672,
+    "totalPlayableSets": 48,
+    "generatorEnabled": true,
+    "manualLeaseReleased": true,
+    "functions": {
+      "prepareQuestionHistory": "ACTIVE",
+      "startQuestionGame": "ACTIVE",
+      "generateDailyQuestions": "ACTIVE"
+    }
+  }
+}

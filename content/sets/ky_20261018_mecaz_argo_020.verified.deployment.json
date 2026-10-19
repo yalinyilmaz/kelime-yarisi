@@ -1,0 +1,17 @@
+{
+  "projectId": "kelime-yarisi-yalin",
+  "batchId": "ky_20261018_mecaz_argo_020",
+  "contentDigest": "83597449eea86bcb44f508368831a7f05081f6b01812331bc6cc051d04ca95fb",
+  "setIds": [
+    "ky_20261018_mecaz_argo_020_s01",
+    "ky_20261018_mecaz_argo_020_s03"
+  ],
+  "questionCount": 28,
+  "publishedAtMs": 1792347348922,
+  "draftSetsExcluded": 18,
+  "verified": true,
+  "totalPlayableSets": 30,
+  "totalPlayableQuestions": 420,
+  "allImportedHintsVerified": true,
+  "productionTouched": false
+}

@@ -18,6 +18,7 @@ class GameState extends Equatable {
     this.isConnected = false,
     this.isSaving = false,
     this.isVoting = false,
+    this.isRequestingClueHint = false,
     this.currentUserId = '',
     this.isLeaving = false,
     this.feedback,
@@ -34,6 +35,7 @@ class GameState extends Equatable {
   final bool isConnected;
   final bool isSaving;
   final bool isVoting;
+  final bool isRequestingClueHint;
   final String currentUserId;
   final bool isLeaving;
   final String? feedback;
@@ -76,6 +78,22 @@ class GameState extends Equatable {
   bool get hasAnsweredCurrent => progress.questionIndex > questionIndex;
   bool get hasVoted => hints.firstVoterId == currentUserId;
   bool get canVote => canAct && !hasVoted && questionValue > 100;
+  Map<int, int> get clueHintUsage =>
+      room.clueHintUsage[currentUserId] ?? const {};
+  int get currentClueHintCount => clueHintUsage[questionIndex] ?? 0;
+  int get remainingClueHints =>
+      (10 - clueHintUsage.values.fold<int>(0, (sum, count) => sum + count))
+          .clamp(0, 10)
+          .toInt();
+  List<String> get visibleClueHints =>
+      question?.hints.take(currentClueHintCount).toList(growable: false) ??
+      const [];
+  bool get canRequestClueHint =>
+      room.isRace &&
+      canAct &&
+      question!.hints.length == 2 &&
+      currentClueHintCount < 2 &&
+      remainingClueHints > 0;
   bool isRevealed(int index) =>
       question != null &&
       (hints.revealedMask(room.id, questionIndex, question!.letterCount) &
@@ -109,7 +127,7 @@ class GameState extends Equatable {
           : room.gameplayVersion == 'sync-v1') &&
       question != null;
 
-  bool get canAct => canEditAnswer && !isVoting;
+  bool get canAct => canEditAnswer && !isVoting && !isRequestingClueHint;
 
   bool get isHost => room.hostId == currentUserId;
 
@@ -149,6 +167,7 @@ class GameState extends Equatable {
     bool? isConnected,
     bool? isSaving,
     bool? isVoting,
+    bool? isRequestingClueHint,
     bool? isLeaving,
     String? feedback,
     String? errorMessage,
@@ -165,6 +184,7 @@ class GameState extends Equatable {
     isConnected: isConnected ?? this.isConnected,
     isSaving: isSaving ?? this.isSaving,
     isVoting: isVoting ?? this.isVoting,
+    isRequestingClueHint: isRequestingClueHint ?? this.isRequestingClueHint,
     currentUserId: currentUserId,
     isLeaving: isLeaving ?? this.isLeaving,
     feedback: clearFeedback ? null : feedback ?? this.feedback,
@@ -184,6 +204,7 @@ class GameState extends Equatable {
     isConnected,
     isSaving,
     isVoting,
+    isRequestingClueHint,
     currentUserId,
     isLeaving,
     feedback,

@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {answerId, approveQuestion, normalizeWord, reviewDigest, validatePool, REVIEW_CHECKS} from '../src/content.js';
 import {mergePublishedPool} from '../src/published_pool.js';
 import {selectSet} from '../src/set_selector.js';
+import {compactQuestion} from '../src/question_storage.js';
 
 // Offline conversion only. No Firebase connection, credentials or paid API.
 export function prepareExchange(batch, existingPool = [], now = Date.now()) {
@@ -20,7 +21,7 @@ export function prepareExchange(batch, existingPool = [], now = Date.now()) {
     for (const input of set.questions) {
       if (input.review?.decision !== 'approve' ||
           [...REVIEW_CHECKS, 'hintConsistency', 'hintNoLeak'].some(key => input.review.checks?.[key] !== true) ||
-          input.source?.verificationStatus !== 'verified' || !input.hint?.trim() || !input.source.hintEvidence?.trim()) {
+          input.source?.verificationStatus !== 'verified' || input.hints?.length !== 2 || !input.source.hintEvidence?.trim()) {
         throw new Error(`Editorial/source checks incomplete: ${input.id}`);
       }
       const answer = normalizeWord(input.answer), identity = answerId(answer);
@@ -31,7 +32,7 @@ export function prepareExchange(batch, existingPool = [], now = Date.now()) {
         wordLengths: input.wordLengths, answerType: input.answerType,
         grammaticalType: input.grammaticalType, acceptedAnswers: input.acceptedAnswers ?? [],
         meaningId: `${input.id}_sense`, meaning: input.meaning,
-        clue: input.clue, hint: input.hint, topic: input.topic, difficulty: input.difficulty,
+        clue: input.clue, hints: input.hints, topic: input.topic, difficulty: input.difficulty,
         rootText: normalizeWord(input.rootText), rootId: answerId(input.rootText),
         relatedAnswerIds: (input.relatedAnswers ?? []).map(answerId), origin: 'production',
         source: {...input.source, termsReference: 'Project-authored questions, hints and factual summaries. Reference material is not reproduced; no television question archive used.'},
@@ -46,7 +47,8 @@ export function prepareExchange(batch, existingPool = [], now = Date.now()) {
         alternativePolicy: input.review.alternativePolicy,
         alternativesRejected: input.review.alternativesRejected,
         sourceVerificationScope: input.review.sourceVerificationScope};
-      converted.push(checked); questions.push(checked);
+      const compacted=compactQuestion(checked);
+      converted.push(compacted); questions.push(compacted);
     }
     const lengths = converted.map(q => q.letterCount).sort((a, b) => a - b);
     if (JSON.stringify(lengths) !== JSON.stringify([4,4,5,5,6,6,7,7,8,8,9,9,10,10])) throw new Error(`Invalid length balance: ${set.id}`);
@@ -65,7 +67,7 @@ export function prepareExchange(batch, existingPool = [], now = Date.now()) {
     summary: {batchId: batch.batchId, sets, questionCount: questions.length,
       acceptedAlternatives: questions.reduce((sum, q) => sum + q.acceptedAnswers.length, 0),
       combinedPoolQuestions: merged.length, localChecksPassed: true, deployed: false,
-      requiresRuntimeUpdate: true, hintUiImplemented: false,
+      requiresRuntimeUpdate: true, hintUiImplemented: true,
       sourceVerificationNote: batch.validation?.sourceVerificationNote ?? null}};
 }
 

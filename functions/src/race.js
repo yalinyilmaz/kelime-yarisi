@@ -40,7 +40,7 @@ function resolve(room, winnerId, at) {
 }
 
 // Pure reducer: RTDB reruns it against the latest committed room on contention.
-export function reduceRace(current, uid, {action = 'sync', questionIndex, input, expectedRevealedCount} = {}, now) {
+export function reduceRace(current, uid, {action = 'sync', questionIndex, input, expectedRevealedCount, expectedHintCount} = {}, now) {
   if (!current?.players?.[uid]) throw new ServiceError('permission-denied', 'Oda üyeliği gerekli.');
   if (current.gameplayVersion !== 'race-v1' || !current.race || !current.questions?.length) {
     throw new ServiceError('failed-precondition', 'Yeni bir yarış odası oluşturun.');
@@ -63,7 +63,16 @@ export function reduceRace(current, uid, {action = 'sync', questionIndex, input,
   }
   if (action === 'sync' || questionIndex !== index || room.race.nextAtMs ||
       (room.progress?.[uid]?.questionIndex ?? 0) > index) return room;
-  if (action === 'hint') {
+  if (action === 'clueHint') {
+    const usage = room.clueHintUsage?.[uid] ?? {};
+    const used = usage[index] ?? 0;
+    const total = Object.values(usage).reduce((sum, count) => sum + count, 0);
+    // Expected count makes retries and simultaneous taps spend at most one right.
+    if (used !== expectedHintCount || used >= 2 || total >= 10 ||
+        room.questions[index].hints?.length !== 2) return room;
+    room.clueHintUsage ??= {};
+    room.clueHintUsage[uid] = {...usage, [index]:used + 1};
+  } else if (action === 'hint') {
     const old = room.hints?.[index] ?? {questionIndex: index, revealedCount: 0};
     if (old.revealedCount !== expectedRevealedCount) return room;
     if (old.revealedCount >= letters(room.questions[index].answer).length - 1 || old.firstVoterId === uid) return room;
@@ -126,9 +135,10 @@ export class RaceService {
   }
 
   async play(uid, data) {
-    if (!['sync', 'answer', 'hint', 'giveUp'].includes(data.action) ||
+    if (!['sync', 'answer', 'hint', 'clueHint', 'giveUp'].includes(data.action) ||
         (data.action !== 'sync' && (!Number.isInteger(data.questionIndex) || data.questionIndex < 0 || data.questionIndex > 13)) ||
         (data.action === 'hint' && (!Number.isInteger(data.expectedRevealedCount) || data.expectedRevealedCount < 0 || data.expectedRevealedCount > 9)) ||
+        (data.action === 'clueHint' && (!Number.isInteger(data.expectedHintCount) || data.expectedHintCount < 0 || data.expectedHintCount > 1)) ||
         (data.action === 'answer' && (typeof data.input !== 'string' || data.input.length > 64))) {
       throw new ServiceError('invalid-argument', 'Oyun işlemi geçersiz.');
     }

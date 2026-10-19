@@ -1,0 +1,1398 @@
+{
+  "schemaVersion": "kelime-yarisi-content-pilot-1",
+  "batchId": "ky_20261018_mecaz_argo_020",
+  "model": null,
+  "sets": [
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01",
+      "grammaticalTypeCounts": {
+        "noun": 11,
+        "infinitive": 3
+      },
+      "questions": [
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q01",
+          "answer": "AKIL",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 4,
+          "wordLengths": [
+            4
+          ],
+          "meaning": "Bir çıkmazdan yalnız güçle değil, düşünerek kurtulmayı sağlayan zihinsel yeti.",
+          "clue": "Bir çıkmazdan yalnız güçle değil, düşünerek kurtulmayı sağlayan zihinsel yeti.",
+          "hint": "Bu sözcük, bir şeyi hatırda tutma anlamında da kullanılır.",
+          "topic": "insan",
+          "difficulty": 2,
+          "rootText": "AKIL",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/AKIL",
+            "meaningEvidence": "AKIL–AKL maddesinin ilk anlamı düşünme, anlama ve kavrama yetisidir; ÂKIL–ÂKİL maddesiyle karıştırılmadı.",
+            "hintEvidence": "İkinci anlam belleği ve hatırda tutmayı karşılar; hatırlamayla ilgili kullanım örnekleri vardır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/AKIL",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Zihinsel yeti ile fiziksel güç karşılaştırılıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q02",
+          "answer": "ARPA",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 4,
+          "wordLengths": [
+            4
+          ],
+          "meaning": "At yeminde de bira üretiminde de kullanılan, başaklı tahıl.",
+          "clue": "At yeminde de bira üretiminde de kullanılan, başaklı tahıl.",
+          "hint": "Buğdaygiller ailesindendir.",
+          "topic": "doğa",
+          "difficulty": 2,
+          "rootText": "ARPA",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ARPA",
+            "meaningEvidence": "Tahılın buğdaygillerden oluşu, bira ve yem amaçlı kullanımı aynı maddede belirtiliyor.",
+            "hintEvidence": "Buğdaygiller sınıflaması madde metninde açık.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ARPA",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Yem ve bira kullanımı birlikte ayırt edici. Anlam ve ipucu kaynak kontrolü tamam.",
+            "sourceVerificationScope": "Seçilen anlam ve ipucu, belirtilen birincil sözlük maddesinden okundu."
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q03",
+          "answer": "DÖNÜT",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 5,
+          "wordLengths": [
+            5
+          ],
+          "meaning": "Bir işin nasıl yapıldığına ilişkin, yapan kişiye sonradan ulaşan geri bildirim.",
+          "clue": "Bir işin nasıl yapıldığına ilişkin, yapan kişiye sonradan ulaşan geri bildirim.",
+          "hint": "Eğitimde öğrencinin hatasını düzeltmesine yardım eder.",
+          "topic": "toplum",
+          "difficulty": 3,
+          "rootText": "DÖN",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://sozluk.gov.tr/gts?ara=d%C3%B6n%C3%BCt",
+            "meaningEvidence": "TDK Güncel Türkçe Sözlük maddesi bu kelimeyi geri bildirim ile karşılar.",
+            "hintEvidence": "MEB Türkçe dersi programı okuma hatalarından sonra öğrenciye geri dönüş verilmesini ve metnin yeniden okutulmasını ister; MEB makalesi hatanın fark edilip düzeltilmesini açıklar.",
+            "hintReference": "https://dhgm.meb.gov.tr/yayimlar/dergiler/milli_egitim_dergisi/164/guven.htm",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Geri bildirimin eğitimdeki karşılığı hedefleniyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q04",
+          "answer": "BAVUL",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [
+            "VALİZ"
+          ],
+          "letterCount": 5,
+          "wordLengths": [
+            5
+          ],
+          "meaning": "Tatile giderken giysileri içine yerleştirip, dönüşte çoğu zaman zor kapattığımız yol arkadaşı.",
+          "clue": "Tatile giderken giysileri içine yerleştirip, dönüşte çoğu zaman zor kapattığımız yol arkadaşı.",
+          "hint": "Tekerlekli modelleri, kaldırmadan taşımaya imkân verir.",
+          "topic": "gündelik",
+          "difficulty": 1,
+          "rootText": "BAVUL",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/BAVUL",
+            "meaningEvidence": "Madde, yolculukta eşya taşınan büyük çantayı tanımlar.",
+            "hintEvidence": "Samsonite Essens ürününün özelliklerinde üst/yan/alt taşıma tutamakları ve dört tekerlek ayrı ayrı listelenir; yuvarlayarak taşıma fiziksel işlevinden çıkarılır.",
+            "hintReference": "https://www.samsonite.com.tr/samsonite-essens--spinner-7528-buyuk-boy-valiz-4863",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Yolculuk ve kapatma sahnesi doğal. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q05",
+          "answer": "ASALAK",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 6,
+          "wordLengths": [
+            6
+          ],
+          "meaning": "Besinini başka bir canlının üzerinden sağlayıp ona zarar verebilen organizma.",
+          "clue": "Besinini başka bir canlının üzerinden sağlayıp ona zarar verebilen organizma.",
+          "hint": "Tenya bunun bir örneğidir.",
+          "topic": "bilim",
+          "difficulty": 2,
+          "rootText": "ASALAK",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ASALAK",
+            "meaningEvidence": "İlk, biyolojik anlam başka canlı üzerinde veya dokusunda beslenen, konağına zarar veren canlıyı tanımlar.",
+            "hintEvidence": "CDC Taeniasis kaynağı Taenia türlerinin bağırsak parazitleri olduğunu, erişkinlerin insanın ince bağırsağına tutunduğunu açıklar.",
+            "hintReference": "https://www.cdc.gov/dpdx/taeniasis/",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Biyolojik konak ilişkisi doğru daraltılıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q06",
+          "answer": "ATÖLYE",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 6,
+          "wordLengths": [
+            6
+          ],
+          "meaning": "Bir ustanın üretip onardığı, bir sanatçının da eser hazırladığı çalışma yeri.",
+          "clue": "Bir ustanın üretip onardığı, bir sanatçının da eser hazırladığı çalışma yeri.",
+          "hint": "Uzmanların belli bir konuda birlikte çalıştığı toplantı için de bu ad kullanılır.",
+          "topic": "gündelik",
+          "difficulty": 1,
+          "rootText": "ATÖLYE",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/AT%C3%96LYE",
+            "meaningEvidence": "İlk iki anlam zanaatkârların ve sanatçıların çalışma yerlerini belirtir.",
+            "hintEvidence": "Üçüncü anlam, uzmanların veya bilim insanlarının bir konuda hazırlık amacıyla yaptığı çalışma ve toplantıdır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/AT%C3%96LYE",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Usta ve sanatçı ortak çalışma yeri. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q07",
+          "answer": "ALABORA",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 7,
+          "wordLengths": [
+            7
+          ],
+          "meaning": "Bir teknenin dengesini kaybedip devrilmesi için kullanılan denizcilik sözü.",
+          "clue": "Bir teknenin dengesini kaybedip devrilmesi için kullanılan denizcilik sözü.",
+          "hint": "Şiddetli rüzgâr bu duruma yol açabilir.",
+          "topic": "gündelik",
+          "difficulty": 2,
+          "rootText": "ALABORA",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ALABORA",
+            "meaningEvidence": "İlk anlam teknenin devrilip ters dönmesidir.",
+            "hintEvidence": "Madde içindeki kullanım örnekleri sert rüzgârın tekneyi devirmesini ve fırtınada sandalın ters dönmesini içerir.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ALABORA",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Teknenin devrilmesi, genel sallanmadan ayrılıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q08",
+          "answer": "ALIŞMAK",
+          "answerType": "word",
+          "grammaticalType": "infinitive",
+          "acceptedAnswers": [],
+          "letterCount": 7,
+          "wordLengths": [
+            7
+          ],
+          "meaning": "İlk başta yabancı gelen bir durumu, zamanla yadırgamaz olmak.",
+          "clue": "İlk başta yabancı gelen bir durumu, zamanla yadırgamaz olmak.",
+          "hint": "Yeni bir parçanın yuvasına tam uyup işler duruma gelmesi de bu fiille anlatılır.",
+          "topic": "insan",
+          "difficulty": 1,
+          "rootText": "ALIŞ",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ALI%C5%9EMAK",
+            "meaningEvidence": "Dördüncü anlam yadırgamaz duruma gelmektir; çeşitli ortamlara uyum örnekleri içerir.",
+            "hintEvidence": "Yedinci anlam araç parçasının yuvasına tam uyması ve işler duruma gelmesidir; dolap kapısı örneği vardır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ALI%C5%9EMAK",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Yadırgamamanın zamanla gelişmesi esas alınıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q09",
+          "answer": "KÖSTEBEK",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 8,
+          "wordLengths": [
+            8
+          ],
+          "meaning": "Toprağın altında tüneller açıp yaşayan, görme yetisi zayıf küçük memeli.",
+          "clue": "Toprağın altında tüneller açıp yaşayan, görme yetisi zayıf küçük memeli.",
+          "hint": "Kazdığı yerlerin üstünde küçük toprak yığınları bırakır.",
+          "topic": "doğa",
+          "difficulty": 2,
+          "rootText": "KÖSTEBEK",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/K%C3%96STEBEK",
+            "meaningEvidence": "Sözlükte toprak altında yuva yapan, görüşü çok zayıf memeli tanımı vardır. Maddede geçen kemirgen sınıflaması kullanılmadı; NHM de tünel açan memelileri anlatır.",
+            "hintEvidence": "Natural History Museum yazısı, kazı sırasında yüzeye çıkarılan toprağın yığın oluşturduğunu ve Avrupa türündeki tümsekleri açıklar.",
+            "hintReference": "https://www.nhm.ac.uk/discover/star-nosed-moles-have-a-hand-on-their-face.html",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Yer altı yaşamı ve zayıf görüş birlikte. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q10",
+          "answer": "ALABALIK",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 8,
+          "wordLengths": [
+            8
+          ],
+          "meaning": "Benekli gövdesiyle tanınan, soğuk ve temiz sularda yaşayan tatlı su canlısı.",
+          "clue": "Benekli gövdesiyle tanınan, soğuk ve temiz sularda yaşayan tatlı su canlısı.",
+          "hint": "Küçük pullarla kaplıdır; kırmızı benekli türü Anadolu’da da yaşar.",
+          "topic": "doğa",
+          "difficulty": 2,
+          "rootText": "ALABALIK",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://bolge10.tarimorman.gov.tr/Sayfalar/GormeEngellilerDetay.aspx?Liste=Haber&OgeId=1167",
+            "meaningEvidence": "Tarım ve Orman Bakanlığı kaynağı, benekleri ve soğuk sulardaki yaşamı anlatır; sözlük maddesi de temiz, soğuk tatlı su yaşamını doğrular.",
+            "hintEvidence": "Bakanlığın yazısında küçük pullar ve Anadolu’daki kırmızı benekli türler belirtilir. Modern bitişik yazım resmî sayfada da kullanılır.",
+            "hintReference": "https://bolge10.tarimorman.gov.tr/Sayfalar/GormeEngellilerDetay.aspx?Liste=Haber&OgeId=1167",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Tatlı su ve benekli gövde ayırt edici. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q11",
+          "answer": "AÇIKLAMAK",
+          "answerType": "word",
+          "grammaticalType": "infinitive",
+          "acceptedAnswers": [],
+          "letterCount": 9,
+          "wordLengths": [
+            9
+          ],
+          "meaning": "Bir konunun anlaşılmayan yanlarını, dinleyenin kavrayacağı biçimde anlatmak.",
+          "clue": "Bir konunun anlaşılmayan yanlarını, dinleyenin kavrayacağı biçimde anlatmak.",
+          "hint": "Bir kararı veya haberi kamuya duyurmayı da anlatır.",
+          "topic": "dil",
+          "difficulty": 1,
+          "rootText": "AÇIK",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/A%C3%87IKLAMAK",
+            "meaningEvidence": "İkinci ve üçüncü anlam, ince noktaları anlatarak anlaşılır kılmayı ve belirsizliği gidermeyi karşılar.",
+            "hintEvidence": "Beşinci anlam herkese bildirmektir; sözlükte bir nişanın toplantıda duyurulması örneği vardır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/A%C3%87IKLAMAK",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Anlaşılmayan yanları giderme anlamı seçili. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q12",
+          "answer": "AKARYAKIT",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 9,
+          "wordLengths": [
+            9
+          ],
+          "meaning": "Benzin ve motorin gibi, motorlara enerji sağlayan sıvı maddelerin ortak adı.",
+          "clue": "Benzin ve motorin gibi, motorlara enerji sağlayan sıvı maddelerin ortak adı.",
+          "hint": "Gaz yağı da bu grubun üyelerinden biridir.",
+          "topic": "gündelik",
+          "difficulty": 2,
+          "rootText": "AKARYAKIT",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/AKARYAKIT",
+            "meaningEvidence": "Madde petrol, mazot ve benzin gibi sıvı yakacakların ortak adını tanımlar.",
+            "hintEvidence": "Gaz yağı, aynı maddede ayrıca bu gruba örnek olarak sayılır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/AKARYAKIT",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Motor yakıtlarının sıvı ortaklığı açık. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q13",
+          "answer": "EZBERLEMEK",
+          "answerType": "word",
+          "grammaticalType": "infinitive",
+          "acceptedAnswers": [],
+          "letterCount": 10,
+          "wordLengths": [
+            10
+          ],
+          "meaning": "Bir bilgiyi, bakmadan aynı biçimde söyleyebilecek kadar zihne yerleştirmek.",
+          "clue": "Bir bilgiyi, bakmadan aynı biçimde söyleyebilecek kadar zihne yerleştirmek.",
+          "hint": "Bunu çok mekanik yapanlar, bir papağana benzetilir.",
+          "topic": "insan",
+          "difficulty": 1,
+          "rootText": "EZBER",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/EZBERLEMEK",
+            "meaningEvidence": "İlk anlam bir yazıya bakmadan ve yardım almadan aynen tekrarlayacak şekilde zihne yerleştirmeyi tanımlar.",
+            "hintEvidence": "İkinci anlamın örnekleri arasında papağana benzetilerek tekrar etme kullanımı vardır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/EZBERLEMEK",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Bakmadan aynen söyleme koşulu belirleyici. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s01_q14",
+          "answer": "ANAHTARLIK",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 10,
+          "wordLengths": [
+            10
+          ],
+          "meaning": "Kapıları açan küçük metal parçaları bir arada tutan halka veya süslü takı.",
+          "clue": "Kapıları açan küçük metal parçaları bir arada tutan halka veya süslü takı.",
+          "hint": "Süs kısmı deri veya camdan yapılmış olabilir.",
+          "topic": "gündelik",
+          "difficulty": 1,
+          "rootText": "ANAHTARLIK",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ANAHTARLIK",
+            "meaningEvidence": "Madde, kapı açan parçaları taşımaya yarayan halka veya kılıfı tanımlar.",
+            "hintEvidence": "Uca takılan küçük süslerin deri, cam ve metalden yapılabildiği aynı maddede belirtilir.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ANAHTARLIK",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Metalin adı söylenmeden taşıma işlevi kuruluyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        }
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03",
+      "grammaticalTypeCounts": {
+        "noun": 9,
+        "infinitive": 2,
+        "adjective": 3
+      },
+      "questions": [
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q01",
+          "answer": "AŞÇI",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 4,
+          "wordLengths": [
+            4
+          ],
+          "meaning": "Tencerelerin başında durup başkalarının önüne lezzetli tabaklar koymayı meslek edinen kişi.",
+          "clue": "Tencerelerin başında durup başkalarının önüne lezzetli tabaklar koymayı meslek edinen kişi.",
+          "hint": "Büyük evlerde ve konaklarda da görev yapan bir meslek sahibidir.",
+          "topic": "gündelik",
+          "difficulty": 1,
+          "rootText": "AŞÇI",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/A%C5%9E%C3%87I",
+            "meaningEvidence": "İlk anlam yemek pişirmeyi meslek edinmiş kişiyi tanımlar.",
+            "hintEvidence": "Aynı anlamda evlerde ve konaklarda bu görevle çalışan kişilerden söz edilir.",
+            "hintReference": "https://eski.lugatim.com/rest/s/A%C5%9E%C3%87I",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Meslek, yemek pişirme göreviyle daraltılıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q02",
+          "answer": "AVLU",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 4,
+          "wordLengths": [
+            4
+          ],
+          "meaning": "Bir yapının ortasında ya da önünde, duvarlarla çevrili üstü açık alan.",
+          "clue": "Bir yapının ortasında ya da önünde, duvarlarla çevrili üstü açık alan.",
+          "hint": "Duvar yerine çitle çevrilmiş örnekleri de olabilir.",
+          "topic": "gündelik",
+          "difficulty": 2,
+          "rootText": "AVLU",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/AVLU",
+            "meaningEvidence": "Madde binanın ortasında, yanında veya çevresinde bulunan üstü açık alanı tanımlar.",
+            "hintEvidence": "Alanı çevreleyen öğeler arasında duvarın yanında çit de açıkça sayılır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/AVLU",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Üstü açık çevrili alan ayırt edici. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q03",
+          "answer": "EKMEK",
+          "answerType": "word",
+          "grammaticalType": "infinitive",
+          "acceptedAnswers": [],
+          "letterCount": 5,
+          "wordLengths": [
+            5
+          ],
+          "meaning": "Uydurma bir gerekçeyle birini ortada bırakıp savuşmak.",
+          "clue": "Argoda, uydurma bir gerekçeyle birini ortada bırakıp savuşmak.",
+          "hint": "Toprağa tohum bırakma işiyle aynı sözcüktür.",
+          "topic": "dil",
+          "difficulty": 3,
+          "rootText": "EK",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://sozluk.gov.tr/gts?ara=ekmek",
+            "meaningEvidence": "Bahane ile birini bırakıp gitme anlamı argo olarak işaretli.",
+            "hintEvidence": "Toprağa tohum bırakma, fiilin birinci anlamı.",
+            "hintReference": "https://sozluk.gov.tr/gts?ara=ekmek",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Argo anlam, tohum bırakma anlamından ayrılıyor. Anlam ve ipucu kaynak kontrolü tamam.",
+            "sourceVerificationScope": "Seçilen anlam ve ipucu, belirtilen birincil sözlük maddesinden okundu."
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q04",
+          "answer": "BAMYA",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 5,
+          "wordLengths": [
+            5
+          ],
+          "meaning": "Pişerken uzayan suyuyla bilinen, küçük yeşil kapsülleri yenen sebze.",
+          "clue": "Pişerken uzayan suyuyla bilinen, küçük yeşil kapsülleri yenen sebze.",
+          "hint": "Kurutulmuş hâli de pişirilerek yenebilir.",
+          "topic": "doğa",
+          "difficulty": 2,
+          "rootText": "BAMYA",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://samsun.tarimorman.gov.tr/Belgeler/Yayinlar/Samtim_dergi/samtim57.pdf",
+            "meaningEvidence": "Samsun İl Tarım yayınının 10–11. sayfaları yeşil meyveleri ve suda kıvam oluşturan müsilajı anlatır.",
+            "hintEvidence": "Kubbealtı maddesinin ikinci anlamı meyvenin hem yaş hem kurutulmuş olarak pişirilip yenildiğini doğrular; tarım yayını da kurutmalık hasadı anlatır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/BAMYA",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Sebzenin kıvam özelliği hedefi daraltıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q05",
+          "answer": "BOSTAN",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 6,
+          "wordLengths": [
+            6
+          ],
+          "meaning": "Sebze yetiştirilen bahçe için kullanılan, eski şehir hayatında da duyulan söz.",
+          "clue": "Sebze yetiştirilen bahçe için kullanılan, eski şehir hayatında da duyulan söz.",
+          "hint": "Kavun ve karpuz yetiştirilen tarla için de aynı ad kullanılır.",
+          "topic": "doğa",
+          "difficulty": 2,
+          "rootText": "BOSTAN",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/BOSTAN",
+            "meaningEvidence": "İlk anlam sebze yetiştirilen bahçedir; örnekte köye ürün sağlayan bahçeler anlatılır.",
+            "hintEvidence": "İkinci anlam kavun ve karpuz yetiştirilen tarladır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/BOSTAN",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Sebze yetiştirilen bahçe anlamı seçili. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q06",
+          "answer": "BALKON",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 6,
+          "wordLengths": [
+            6
+          ],
+          "meaning": "Evin dış duvarından dışarı uzanan, açık havaya çıkabildiğimiz döşemeli bölüm.",
+          "clue": "Evin dış duvarından dışarı uzanan, açık havaya çıkabildiğimiz döşemeli bölüm.",
+          "hint": "Tiyatro ve sinemaların üst kat seyirci bölümüne de bu ad verilir.",
+          "topic": "gündelik",
+          "difficulty": 1,
+          "rootText": "BALKON",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/BALKON",
+            "meaningEvidence": "İlk anlam dış cephede çıkıntı oluşturan, çevrili açık bölümü tanımlar.",
+            "hintEvidence": "İkinci anlam tiyatro ve sinemalarda asma kat biçimindeki seyirci yeridir.",
+            "hintReference": "https://eski.lugatim.com/rest/s/BALKON",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Dış cephede çıkıntı ve korkuluk uyumlu. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q07",
+          "answer": "ARMAĞAN",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 7,
+          "wordLengths": [
+            7
+          ],
+          "meaning": "Birini sevindirmek için karşılık beklemeden verilen şey.",
+          "clue": "Birini sevindirmek için karşılık beklemeden verilen şey.",
+          "hint": "Bir bilim insanının anısına hazırlanan ortak kitaba da bu ad verilir.",
+          "topic": "insan",
+          "difficulty": 1,
+          "rootText": "ARMAĞAN",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ARMA%C4%9EAN",
+            "meaningEvidence": "İlk anlam bir kimseye karşılıksız verilen şeyi belirtir.",
+            "hintEvidence": "Üçüncü anlam, bir bilim insanı için çeşitli kişilerin çalışmalarından hazırlanan anma kitabıdır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ARMA%C4%9EAN",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Karşılık beklememe, alışverişten ayırıyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q08",
+          "answer": "ATLETİK",
+          "answerType": "word",
+          "grammaticalType": "adjective",
+          "acceptedAnswers": [],
+          "letterCount": 7,
+          "wordLengths": [
+            7
+          ],
+          "meaning": "Güçlü, çevik ve spor yapmaya elverişli bir vücudu anlatan sıfat.",
+          "clue": "Güçlü, çevik ve spor yapmaya elverişli bir vücudu anlatan sıfat.",
+          "hint": "Bir kişinin omuzlarını anlatırken de kullanılabilir.",
+          "topic": "spor",
+          "difficulty": 2,
+          "rootText": "ATLET",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ATLET%C4%B0K",
+            "meaningEvidence": "İlk anlam bir sporcunun beden yapısına sahip olmayı belirtir.",
+            "hintEvidence": "Aynı anlam için verilen edebî örnekte bir kişinin omuzları bu sıfatla nitelenir.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ATLET%C4%B0K",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Vücut yapısını anlatan sıfat doğru. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q09",
+          "answer": "AYRIŞMAK",
+          "answerType": "word",
+          "grammaticalType": "infinitive",
+          "acceptedAnswers": [],
+          "letterCount": 8,
+          "wordLengths": [
+            8
+          ],
+          "meaning": "Kimyada bir bileşiğin, daha basit maddelere dönüşerek yapısının bozulması.",
+          "clue": "Kimyada bir bileşiğin, daha basit maddelere dönüşerek yapısının bozulması.",
+          "hint": "Sıcaklık veya elektrik etkisiyle gerçekleşebilir.",
+          "topic": "bilim",
+          "difficulty": 2,
+          "rootText": "AYIR",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/AYRI%C5%9EMAK",
+            "meaningEvidence": "İkinci, kimya anlamı birleşik yapının daha küçük moleküllere veya atomlara bölünmesiyle bozulmasıdır.",
+            "hintEvidence": "Aynı tanım bu olayın nedenleri arasında sıcaklık, basınç ve elektriği sayar.",
+            "hintReference": "https://eski.lugatim.com/rest/s/AYRI%C5%9EMAK",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Kimyasal bileşenlere ayrılma anlamı seçili. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q10",
+          "answer": "BAĞIMSIZ",
+          "answerType": "word",
+          "grammaticalType": "adjective",
+          "acceptedAnswers": [
+            "MÜSTAKİL"
+          ],
+          "letterCount": 8,
+          "wordLengths": [
+            8
+          ],
+          "meaning": "Kararlarını başka bir gücün buyruğuna girmeden verebilen.",
+          "clue": "Kararlarını başka bir gücün buyruğuna girmeden verebilen.",
+          "hint": "Bu sıfat devletler için de kullanılabilir.",
+          "topic": "toplum",
+          "difficulty": 1,
+          "rootText": "BAĞ",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/BA%C4%9EIMSIZ",
+            "meaningEvidence": "İlk anlam başka bir güç veya devletin yönetimi altında bulunmamaktır; hürlük ve müstakillik karşılıkları verilir.",
+            "hintEvidence": "Aynı anlamın örneğinde milletler yer alır ve tanım devletlerin yönetim ilişkisini içerir.",
+            "hintReference": "https://eski.lugatim.com/rest/s/BA%C4%9EIMSIZ",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Başka buyruğa girmeme açıklaması doğal. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q11",
+          "answer": "ANLAYIŞLI",
+          "answerType": "word",
+          "grammaticalType": "adjective",
+          "acceptedAnswers": [
+            "HOŞGÖRÜLÜ"
+          ],
+          "letterCount": 9,
+          "wordLengths": [
+            9
+          ],
+          "meaning": "Karşısındakinin durumunu kavrayıp güçlüklerine sabır ve incelikle yaklaşan.",
+          "clue": "Karşısındakinin durumunu kavrayıp güçlüklerine sabır ve incelikle yaklaşan.",
+          "hint": "Başka bir kullanımında, kavrayışı güçlü ve zeki kimseyi de niteler.",
+          "topic": "insan",
+          "difficulty": 1,
+          "rootText": "ANLA",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ANLAYI%C5%9ELI",
+            "meaningEvidence": "İkinci anlam karşısındakinin durumunu gözeten, hoşgörülü kişiyi anlatır.",
+            "hintEvidence": "İlk anlam güçlü kavrayış, zekâ ve feraseti karşılar; bu kullanımı gösteren örnek vardır.",
+            "hintReference": "https://eski.lugatim.com/rest/s/ANLAYI%C5%9ELI",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Doğal eşdeğer de kabul listesinde. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q12",
+          "answer": "ARABULUCU",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 9,
+          "wordLengths": [
+            9
+          ],
+          "meaning": "Anlaşamayan tarafların, ortak bir çözüm bulması için araya giren kişi.",
+          "clue": "Anlaşamayan tarafların, ortak bir çözüm bulması için araya giren kişi.",
+          "hint": "Mahkemeye gidilmeden önce de görev alabilir.",
+          "topic": "toplum",
+          "difficulty": 2,
+          "rootText": "ARABULUCU",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/ARABULUCU",
+            "meaningEvidence": "Sözlük maddesi anlaşmazlık yaşayan taraflara anlaşma noktası bulmaya çalışan kişiyi tanımlar. Modern bitişik yazım Adalet Bakanlığının sayfasında doğrulanır.",
+            "hintEvidence": "Adalet Bakanlığı Arabuluculuk Daire Başkanlığının SSS yanıtı, bu yola dava açılmadan önce de dava sırasında da başvurulabildiğini belirtir.",
+            "hintReference": "https://adb.adalet.gov.tr/Home/SSSorularDetay/1",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Tarafları uzlaştırma işlevi ayırt edici. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q13",
+          "answer": "AYAKKABICI",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 10,
+          "wordLengths": [
+            10
+          ],
+          "meaning": "Yeni bir çift almak ya da el işçiliğiyle yaptırmak için gidilen esnaf.",
+          "clue": "Yeni bir çift almak ya da el işçiliğiyle yaptırmak için gidilen esnaf.",
+          "hint": "Bu meslek, satışın yanında üretimi de kapsayabilir.",
+          "topic": "gündelik",
+          "difficulty": 1,
+          "rootText": "AYAKKABI",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/AYAKKABICI",
+            "meaningEvidence": "Madde, giyilen çiftleri yapan veya satan esnafı tanımlar.",
+            "hintEvidence": "Tanım hem imalatı hem satışı açıkça kapsar; yeni ipucu onarımın zorunlu görev olduğu varsayımını içermez.",
+            "hintReference": "https://eski.lugatim.com/rest/s/AYAKKABICI",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Meslek adı, cevap kökü söylenmeden kuruluyor. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        },
+        {
+          "id": "ky_20261018_mecaz_argo_020_s03_q14",
+          "answer": "BİÇERDÖVER",
+          "answerType": "word",
+          "grammaticalType": "noun",
+          "acceptedAnswers": [],
+          "letterCount": 10,
+          "wordLengths": [
+            10
+          ],
+          "meaning": "Tarlada ürünü kesip tanelerini sapından ayıran tarım makinesi.",
+          "clue": "Tarlada ürünü kesip tanelerini sapından ayıran tarım makinesi.",
+          "hint": "Hububat hasadında kullanılır.",
+          "topic": "gündelik",
+          "difficulty": 2,
+          "rootText": "BİÇERDÖVER",
+          "relatedAnswers": [],
+          "source": {
+            "reference": "https://eski.lugatim.com/rest/s/B%C4%B0%C3%87ERD%C3%96VER",
+            "meaningEvidence": "Kubbealtı maddesi ekini hasat edip harman eden makineyi tanımlar; harman tanelerin saplardan ayrıldığı işlemdir.",
+            "hintEvidence": "Bilecik İl Tarım kaynağı tahıl hasat ve harmanında bu makinelerin kullanıldığını, buğday ve arpa örneklerini açıkça belirtir. Modern bitişik yazımı da doğrular.",
+            "hintReference": "https://bilecik.tarimorman.gov.tr/Sayfalar/Detay.aspx?Liste=Haber&OgeId=94",
+            "retrievedAt": "2026-10-18",
+            "verificationStatus": "verified",
+            "rights": "original"
+          },
+          "review": {
+            "kind": "ai-self-review",
+            "decision": "approve",
+            "alternativePolicy": "allow-synonyms",
+            "checks": {
+              "spelling": true,
+              "meaning": true,
+              "uniqueAnswer": true,
+              "noLeak": true,
+              "originality": true,
+              "sourceRights": true,
+              "hintConsistency": true,
+              "hintNoLeak": true
+            },
+            "alternativesRejected": [],
+            "rationale": "Kesme ve tane ayırma birlikte belirleyici. Asıl soru ve ayrı ipucu, açılıp okunan kaynaklarla son kez eşleştirildi.",
+            "sourceVerificationScope": "Belirtilen anlam ve ipucu kaynakları açılıp okundu; olgusal dayanaklar ayrı ayrı özetlendi. Türkçe editör öz incelemesi; insan veya bağımsız model onayı değildir.",
+            "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274"
+          },
+          "requiresModelUpdate": false,
+          "publication": "unpublished"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "questionCount": 28,
+    "completeSets": 2,
+    "structurallyCompleteSets": 2,
+    "localPoolDuplicatesChecked": true,
+    "excludedApprovedAnswerCount": 401,
+    "currentBackendCompatible": null,
+    "requiresUpdatedRuntime": true,
+    "hintUiImplemented": false,
+    "technicalChecksMethod": "Python ile NFC/Türkçe karakter, 20×14 kayıt, 4–10 harf sırası, benzersizlik, 401 mevcut cevap dışlaması, alternatif düzeni, tür/konu/zorluk sayımları ve sözcük/kök sızıntısı kontrolü; ardından metin öz incelemesi.",
+    "sourceVerificationNote": "40 soru için anlam ve ayrı ipucu kaynakları okundu. Yalnız 2 setin 14 sorusu da tam doğrulandı; diğer 18 set yayıma kapalı taslak kalır. Toplu HTTP yanıtı alınması editör onayı sayılmadı.",
+    "issues": [],
+    "sourceVerifiedQuestions": 40,
+    "draftSets": 0
+  },
+  "usage": {
+    "elapsedSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "costUsd": null,
+    "quotaBefore": null,
+    "quotaAfter": null,
+    "measurementNote": "Faturalanan kullanım ölçülmedi. Harici ücretli üretim API çağrısı yapılmadı; içerik bu sohbette yazıldı."
+  }
+}

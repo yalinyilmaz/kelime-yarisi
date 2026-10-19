@@ -1,0 +1,360 @@
+{
+  "batchId": "ky_20261018_mecaz_argo_020",
+  "sets": [
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s02_q01",
+        "ky_20261018_mecaz_argo_020_s02_q02",
+        "ky_20261018_mecaz_argo_020_s02_q03",
+        "ky_20261018_mecaz_argo_020_s02_q04",
+        "ky_20261018_mecaz_argo_020_s02_q05",
+        "ky_20261018_mecaz_argo_020_s02_q06",
+        "ky_20261018_mecaz_argo_020_s02_q07",
+        "ky_20261018_mecaz_argo_020_s02_q08",
+        "ky_20261018_mecaz_argo_020_s02_q09",
+        "ky_20261018_mecaz_argo_020_s02_q10",
+        "ky_20261018_mecaz_argo_020_s02_q11",
+        "ky_20261018_mecaz_argo_020_s02_q12",
+        "ky_20261018_mecaz_argo_020_s02_q13",
+        "ky_20261018_mecaz_argo_020_s02_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s04_q01",
+        "ky_20261018_mecaz_argo_020_s04_q02",
+        "ky_20261018_mecaz_argo_020_s04_q03",
+        "ky_20261018_mecaz_argo_020_s04_q04",
+        "ky_20261018_mecaz_argo_020_s04_q05",
+        "ky_20261018_mecaz_argo_020_s04_q06",
+        "ky_20261018_mecaz_argo_020_s04_q07",
+        "ky_20261018_mecaz_argo_020_s04_q08",
+        "ky_20261018_mecaz_argo_020_s04_q09",
+        "ky_20261018_mecaz_argo_020_s04_q10",
+        "ky_20261018_mecaz_argo_020_s04_q11",
+        "ky_20261018_mecaz_argo_020_s04_q12",
+        "ky_20261018_mecaz_argo_020_s04_q13",
+        "ky_20261018_mecaz_argo_020_s04_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s05_q01",
+        "ky_20261018_mecaz_argo_020_s05_q02",
+        "ky_20261018_mecaz_argo_020_s05_q03",
+        "ky_20261018_mecaz_argo_020_s05_q04",
+        "ky_20261018_mecaz_argo_020_s05_q05",
+        "ky_20261018_mecaz_argo_020_s05_q06",
+        "ky_20261018_mecaz_argo_020_s05_q07",
+        "ky_20261018_mecaz_argo_020_s05_q08",
+        "ky_20261018_mecaz_argo_020_s05_q09",
+        "ky_20261018_mecaz_argo_020_s05_q10",
+        "ky_20261018_mecaz_argo_020_s05_q11",
+        "ky_20261018_mecaz_argo_020_s05_q12",
+        "ky_20261018_mecaz_argo_020_s05_q13",
+        "ky_20261018_mecaz_argo_020_s05_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s06_q01",
+        "ky_20261018_mecaz_argo_020_s06_q02",
+        "ky_20261018_mecaz_argo_020_s06_q03",
+        "ky_20261018_mecaz_argo_020_s06_q04",
+        "ky_20261018_mecaz_argo_020_s06_q05",
+        "ky_20261018_mecaz_argo_020_s06_q06",
+        "ky_20261018_mecaz_argo_020_s06_q07",
+        "ky_20261018_mecaz_argo_020_s06_q08",
+        "ky_20261018_mecaz_argo_020_s06_q09",
+        "ky_20261018_mecaz_argo_020_s06_q10",
+        "ky_20261018_mecaz_argo_020_s06_q11",
+        "ky_20261018_mecaz_argo_020_s06_q12",
+        "ky_20261018_mecaz_argo_020_s06_q13",
+        "ky_20261018_mecaz_argo_020_s06_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s07_q01",
+        "ky_20261018_mecaz_argo_020_s07_q02",
+        "ky_20261018_mecaz_argo_020_s07_q03",
+        "ky_20261018_mecaz_argo_020_s07_q04",
+        "ky_20261018_mecaz_argo_020_s07_q05",
+        "ky_20261018_mecaz_argo_020_s07_q06",
+        "ky_20261018_mecaz_argo_020_s07_q07",
+        "ky_20261018_mecaz_argo_020_s07_q08",
+        "ky_20261018_mecaz_argo_020_s07_q09",
+        "ky_20261018_mecaz_argo_020_s07_q10",
+        "ky_20261018_mecaz_argo_020_s07_q11",
+        "ky_20261018_mecaz_argo_020_s07_q12",
+        "ky_20261018_mecaz_argo_020_s07_q13",
+        "ky_20261018_mecaz_argo_020_s07_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s08_q01",
+        "ky_20261018_mecaz_argo_020_s08_q02",
+        "ky_20261018_mecaz_argo_020_s08_q03",
+        "ky_20261018_mecaz_argo_020_s08_q04",
+        "ky_20261018_mecaz_argo_020_s08_q05",
+        "ky_20261018_mecaz_argo_020_s08_q06",
+        "ky_20261018_mecaz_argo_020_s08_q07",
+        "ky_20261018_mecaz_argo_020_s08_q08",
+        "ky_20261018_mecaz_argo_020_s08_q09",
+        "ky_20261018_mecaz_argo_020_s08_q10",
+        "ky_20261018_mecaz_argo_020_s08_q11",
+        "ky_20261018_mecaz_argo_020_s08_q12",
+        "ky_20261018_mecaz_argo_020_s08_q13",
+        "ky_20261018_mecaz_argo_020_s08_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s09_q01",
+        "ky_20261018_mecaz_argo_020_s09_q02",
+        "ky_20261018_mecaz_argo_020_s09_q03",
+        "ky_20261018_mecaz_argo_020_s09_q04",
+        "ky_20261018_mecaz_argo_020_s09_q05",
+        "ky_20261018_mecaz_argo_020_s09_q06",
+        "ky_20261018_mecaz_argo_020_s09_q07",
+        "ky_20261018_mecaz_argo_020_s09_q08",
+        "ky_20261018_mecaz_argo_020_s09_q09",
+        "ky_20261018_mecaz_argo_020_s09_q10",
+        "ky_20261018_mecaz_argo_020_s09_q11",
+        "ky_20261018_mecaz_argo_020_s09_q12",
+        "ky_20261018_mecaz_argo_020_s09_q13",
+        "ky_20261018_mecaz_argo_020_s09_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s10_q01",
+        "ky_20261018_mecaz_argo_020_s10_q02",
+        "ky_20261018_mecaz_argo_020_s10_q03",
+        "ky_20261018_mecaz_argo_020_s10_q04",
+        "ky_20261018_mecaz_argo_020_s10_q05",
+        "ky_20261018_mecaz_argo_020_s10_q06",
+        "ky_20261018_mecaz_argo_020_s10_q07",
+        "ky_20261018_mecaz_argo_020_s10_q08",
+        "ky_20261018_mecaz_argo_020_s10_q09",
+        "ky_20261018_mecaz_argo_020_s10_q10",
+        "ky_20261018_mecaz_argo_020_s10_q11",
+        "ky_20261018_mecaz_argo_020_s10_q12",
+        "ky_20261018_mecaz_argo_020_s10_q13",
+        "ky_20261018_mecaz_argo_020_s10_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s11_q01",
+        "ky_20261018_mecaz_argo_020_s11_q02",
+        "ky_20261018_mecaz_argo_020_s11_q03",
+        "ky_20261018_mecaz_argo_020_s11_q04",
+        "ky_20261018_mecaz_argo_020_s11_q05",
+        "ky_20261018_mecaz_argo_020_s11_q06",
+        "ky_20261018_mecaz_argo_020_s11_q07",
+        "ky_20261018_mecaz_argo_020_s11_q08",
+        "ky_20261018_mecaz_argo_020_s11_q09",
+        "ky_20261018_mecaz_argo_020_s11_q10",
+        "ky_20261018_mecaz_argo_020_s11_q11",
+        "ky_20261018_mecaz_argo_020_s11_q12",
+        "ky_20261018_mecaz_argo_020_s11_q13",
+        "ky_20261018_mecaz_argo_020_s11_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s12_q01",
+        "ky_20261018_mecaz_argo_020_s12_q02",
+        "ky_20261018_mecaz_argo_020_s12_q03",
+        "ky_20261018_mecaz_argo_020_s12_q04",
+        "ky_20261018_mecaz_argo_020_s12_q05",
+        "ky_20261018_mecaz_argo_020_s12_q06",
+        "ky_20261018_mecaz_argo_020_s12_q07",
+        "ky_20261018_mecaz_argo_020_s12_q08",
+        "ky_20261018_mecaz_argo_020_s12_q09",
+        "ky_20261018_mecaz_argo_020_s12_q10",
+        "ky_20261018_mecaz_argo_020_s12_q11",
+        "ky_20261018_mecaz_argo_020_s12_q12",
+        "ky_20261018_mecaz_argo_020_s12_q13",
+        "ky_20261018_mecaz_argo_020_s12_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s13_q01",
+        "ky_20261018_mecaz_argo_020_s13_q02",
+        "ky_20261018_mecaz_argo_020_s13_q03",
+        "ky_20261018_mecaz_argo_020_s13_q04",
+        "ky_20261018_mecaz_argo_020_s13_q05",
+        "ky_20261018_mecaz_argo_020_s13_q06",
+        "ky_20261018_mecaz_argo_020_s13_q07",
+        "ky_20261018_mecaz_argo_020_s13_q08",
+        "ky_20261018_mecaz_argo_020_s13_q09",
+        "ky_20261018_mecaz_argo_020_s13_q10",
+        "ky_20261018_mecaz_argo_020_s13_q11",
+        "ky_20261018_mecaz_argo_020_s13_q12",
+        "ky_20261018_mecaz_argo_020_s13_q13",
+        "ky_20261018_mecaz_argo_020_s13_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s14_q01",
+        "ky_20261018_mecaz_argo_020_s14_q02",
+        "ky_20261018_mecaz_argo_020_s14_q03",
+        "ky_20261018_mecaz_argo_020_s14_q04",
+        "ky_20261018_mecaz_argo_020_s14_q05",
+        "ky_20261018_mecaz_argo_020_s14_q06",
+        "ky_20261018_mecaz_argo_020_s14_q07",
+        "ky_20261018_mecaz_argo_020_s14_q08",
+        "ky_20261018_mecaz_argo_020_s14_q09",
+        "ky_20261018_mecaz_argo_020_s14_q10",
+        "ky_20261018_mecaz_argo_020_s14_q11",
+        "ky_20261018_mecaz_argo_020_s14_q12",
+        "ky_20261018_mecaz_argo_020_s14_q13",
+        "ky_20261018_mecaz_argo_020_s14_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s15_q01",
+        "ky_20261018_mecaz_argo_020_s15_q02",
+        "ky_20261018_mecaz_argo_020_s15_q03",
+        "ky_20261018_mecaz_argo_020_s15_q04",
+        "ky_20261018_mecaz_argo_020_s15_q05",
+        "ky_20261018_mecaz_argo_020_s15_q06",
+        "ky_20261018_mecaz_argo_020_s15_q07",
+        "ky_20261018_mecaz_argo_020_s15_q08",
+        "ky_20261018_mecaz_argo_020_s15_q09",
+        "ky_20261018_mecaz_argo_020_s15_q10",
+        "ky_20261018_mecaz_argo_020_s15_q11",
+        "ky_20261018_mecaz_argo_020_s15_q12",
+        "ky_20261018_mecaz_argo_020_s15_q13",
+        "ky_20261018_mecaz_argo_020_s15_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s16_q01",
+        "ky_20261018_mecaz_argo_020_s16_q02",
+        "ky_20261018_mecaz_argo_020_s16_q03",
+        "ky_20261018_mecaz_argo_020_s16_q04",
+        "ky_20261018_mecaz_argo_020_s16_q05",
+        "ky_20261018_mecaz_argo_020_s16_q06",
+        "ky_20261018_mecaz_argo_020_s16_q07",
+        "ky_20261018_mecaz_argo_020_s16_q08",
+        "ky_20261018_mecaz_argo_020_s16_q09",
+        "ky_20261018_mecaz_argo_020_s16_q10",
+        "ky_20261018_mecaz_argo_020_s16_q11",
+        "ky_20261018_mecaz_argo_020_s16_q12",
+        "ky_20261018_mecaz_argo_020_s16_q13",
+        "ky_20261018_mecaz_argo_020_s16_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s17_q01",
+        "ky_20261018_mecaz_argo_020_s17_q02",
+        "ky_20261018_mecaz_argo_020_s17_q03",
+        "ky_20261018_mecaz_argo_020_s17_q04",
+        "ky_20261018_mecaz_argo_020_s17_q05",
+        "ky_20261018_mecaz_argo_020_s17_q06",
+        "ky_20261018_mecaz_argo_020_s17_q07",
+        "ky_20261018_mecaz_argo_020_s17_q08",
+        "ky_20261018_mecaz_argo_020_s17_q09",
+        "ky_20261018_mecaz_argo_020_s17_q10",
+        "ky_20261018_mecaz_argo_020_s17_q11",
+        "ky_20261018_mecaz_argo_020_s17_q12",
+        "ky_20261018_mecaz_argo_020_s17_q13",
+        "ky_20261018_mecaz_argo_020_s17_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s18_q01",
+        "ky_20261018_mecaz_argo_020_s18_q02",
+        "ky_20261018_mecaz_argo_020_s18_q03",
+        "ky_20261018_mecaz_argo_020_s18_q04",
+        "ky_20261018_mecaz_argo_020_s18_q05",
+        "ky_20261018_mecaz_argo_020_s18_q06",
+        "ky_20261018_mecaz_argo_020_s18_q07",
+        "ky_20261018_mecaz_argo_020_s18_q08",
+        "ky_20261018_mecaz_argo_020_s18_q09",
+        "ky_20261018_mecaz_argo_020_s18_q10",
+        "ky_20261018_mecaz_argo_020_s18_q11",
+        "ky_20261018_mecaz_argo_020_s18_q12",
+        "ky_20261018_mecaz_argo_020_s18_q13",
+        "ky_20261018_mecaz_argo_020_s18_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s19_q01",
+        "ky_20261018_mecaz_argo_020_s19_q02",
+        "ky_20261018_mecaz_argo_020_s19_q03",
+        "ky_20261018_mecaz_argo_020_s19_q04",
+        "ky_20261018_mecaz_argo_020_s19_q05",
+        "ky_20261018_mecaz_argo_020_s19_q06",
+        "ky_20261018_mecaz_argo_020_s19_q07",
+        "ky_20261018_mecaz_argo_020_s19_q08",
+        "ky_20261018_mecaz_argo_020_s19_q09",
+        "ky_20261018_mecaz_argo_020_s19_q10",
+        "ky_20261018_mecaz_argo_020_s19_q11",
+        "ky_20261018_mecaz_argo_020_s19_q12",
+        "ky_20261018_mecaz_argo_020_s19_q13",
+        "ky_20261018_mecaz_argo_020_s19_q14"
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20",
+      "questionIds": [
+        "ky_20261018_mecaz_argo_020_s20_q01",
+        "ky_20261018_mecaz_argo_020_s20_q02",
+        "ky_20261018_mecaz_argo_020_s20_q03",
+        "ky_20261018_mecaz_argo_020_s20_q04",
+        "ky_20261018_mecaz_argo_020_s20_q05",
+        "ky_20261018_mecaz_argo_020_s20_q06",
+        "ky_20261018_mecaz_argo_020_s20_q07",
+        "ky_20261018_mecaz_argo_020_s20_q08",
+        "ky_20261018_mecaz_argo_020_s20_q09",
+        "ky_20261018_mecaz_argo_020_s20_q10",
+        "ky_20261018_mecaz_argo_020_s20_q11",
+        "ky_20261018_mecaz_argo_020_s20_q12",
+        "ky_20261018_mecaz_argo_020_s20_q13",
+        "ky_20261018_mecaz_argo_020_s20_q14"
+      ]
+    }
+  ],
+  "questionCount": 252,
+  "acceptedAlternatives": 31,
+  "combinedPoolQuestions": 681,
+  "localChecksPassed": true,
+  "deployed": true,
+  "requiresRuntimeUpdate": false,
+  "hintUiImplemented": false,
+  "sourceVerificationNote": "Bu kalan 18 setin 252 sorusunun anlamı ve ayrı ipucu kaynağı açılarak denetlendi. Tüm 20 setin 280 sorusu için kaynak denetimi tamamlandı. Önceden yayımlanan s01 ve s03 bu ekleme dosyasında bulunmaz.",
+  "currentBackendCompatible": true,
+  "handoffDigest": "162d8ce64a05c558a400d3042d67990176ee8e15c7fed7ad59db28ff73a09274",
+  "projectId": "kelime-yarisi-yalin",
+  "totalPlayableSets": 48,
+  "totalPlayableQuestions": 672
+}

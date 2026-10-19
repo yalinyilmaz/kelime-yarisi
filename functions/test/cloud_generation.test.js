@@ -22,7 +22,7 @@ class MemoryDatabase {
 }
 const examples=JSON.parse(readFileSync(new URL('../content/examples.json',import.meta.url)));
 const sources=JSON.parse(readFileSync(new URL('../content/published.json',import.meta.url))).map(q=>({...q,publication:'unpublished',review:{status:'draft'}}));
-const checks=Object.fromEntries(REVIEW_CHECKS.map(k=>[k,true]));
+const checks=Object.fromEntries([...REVIEW_CHECKS,'hintConsistency','hintNoLeak'].map(k=>[k,true]));
 const now=()=>Date.parse('2026-10-15T10:00:00Z');
 function approved(source) {
   const q=approveQuestion(source,'Mock AI Turkish editor',checks,now());
@@ -138,7 +138,7 @@ test('real cloud generation path publishes a conjunction and two-word verb with 
    const value=body.text.format.name==='turkish_question_candidates'?
     {meaning:'Test kaynağındaki hedef anlam.',candidates:(body.input.includes('Cevap: VEYA')?
       ['İki seçenek arasında tercih ilişkisi kuran bağlayıcı.', 'Alternatiflerden birini seçmeyi belirten söz.', 'Seçim yaparken iki olasılığı birbirine bağlayan kelime.']:
-      ['Dinlenenlerin önemli kısımlarını kısa satırlara kaydetme eylemi.', 'Dersi sonradan hatırlamak üzere ana bilgileri deftere geçirme.', 'Konuşmadaki temel noktaları unutmamak amacıyla kâğıda aktarma.']).map(clue=>({clue}))}:
+      ['Dinlenenlerin önemli kısımlarını kısa satırlara kaydetme eylemi.', 'Dersi sonradan hatırlamak üzere ana bilgileri deftere geçirme.', 'Konuşmadaki temel noktaları unutmamak amacıyla kâğıda aktarma.']).map(clue=>({clue,hints:['Eğitimde de kullanılabilir.','Bir ders sırasında bu kullanım görülebilir.'],hintEvidence:'Test kaynağında örneklenen kullanım.'}))}:
     {decision:'approve',selectedIndex:0,checks,rationale:'Test hedef anlamına uygun.',sourceSupport:'Yalnız test kaynağına dayanır.',alternativesRejected:[],acceptedAnswers:[]};
    return {ok:true,json:async()=>({id:'test-response',model:'gpt-6-luna',status:'completed',usage:{input_tokens:100,output_tokens:50},
     output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(value)}]}]})};
@@ -147,7 +147,7 @@ test('real cloud generation path publishes a conjunction and two-word verb with 
  assert.equal((await loadPublishedPool(database,[])).length,0);
  const drafts=Object.values(database.value('questionGeneration/draft/questions')).map(JSON.parse);
  assert.equal(drafts.length,2);assert(drafts.some(q=>q.answer==='NOT TUTMAK'&&q.letterCount===9));
- assert(drafts.every(q=>q.review.alternativePolicy==='allow-synonyms'));
+ assert(drafts.every(q=>q.review.alternativePolicy==='allow-synonyms'&&q.hints?.length===2&&q.source.hintEvidence));
 });
 
 test('an unfinished draft resumes on the next day without regenerating its accepted questions',async()=>{

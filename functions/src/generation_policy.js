@@ -34,7 +34,7 @@ export function requestReservation(url,request) {
   const body=JSON.parse(request.body);
   if(url!=='https://api.openai.com/v1/responses'||body.model!=='gpt-6-luna'||body.service_tier!=='default'||body.tools?.length)throw new Error('Budget pricing is configured only for gpt-6-luna at the default service tier; model unchanged, no request sent.');
   const bytes=Buffer.byteLength(request.body,'utf8');
-  if(bytes>32000||!integer(body.max_output_tokens)||body.max_output_tokens<512||body.max_output_tokens>12000)throw new Error('Request exceeds local size/token limits.');
+  if(bytes>96000||!integer(body.max_output_tokens)||body.max_output_tokens<512||body.max_output_tokens>12000)throw new Error('Request exceeds local size/token limits.');
   const inputBound=bytes+4096;
   return {inputBound,outputLimit:body.max_output_tokens,reservedMicros:Math.ceil(inputBound*0.10+body.max_output_tokens*0.50)};
 }

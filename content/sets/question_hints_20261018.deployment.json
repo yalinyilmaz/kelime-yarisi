@@ -1,0 +1,44 @@
+{
+  "projectId": "kelime-yarisi-yalin",
+  "publishedQuestions": 672,
+  "privateBacklogQuestions": 9,
+  "hintsPerQuestion": 2,
+  "totalHints": 1362,
+  "gameLimit": 10,
+  "questionLimit": 2,
+  "reviewScope": "Türkçe editör öz incelemesi: mevcut hedef anlam, kayıtlı kaynak açıklamaları ve özgün kullanım örnekleri üzerinden iki tamamlayıcı ipucu gözden geçirildi. Dış kaynak bağlantılarının tamamı bu geçişte yeniden açılmadı. İnsan veya bağımsız model onayı değildir.",
+  "removedSingleHintFields": 462,
+  "removedCandidateLists": 56,
+  "appliedAtMs": 1792350787781,
+  "contentDigest": "405e1f28d01126d2ccbe00cde321887aea112d48246492afd36b84e9393a7f3e",
+  "deployed": true,
+  "verified": true,
+  "functions": [
+    "playRace",
+    "startQuestionGame",
+    "startDemoRaceGame",
+    "generateDailyQuestions"
+  ],
+  "totalPlayableSets": 48,
+  "totalPlayableQuestions": 672,
+  "generatorEnabled": true,
+  "importLeaseReleased": true,
+  "postDeployVerifiedAtMs": 1792350945116,
+  "lastVerifiedAtMs": 1792388117398,
+  "activeFunctions": [
+    "playRace",
+    "startQuestionGame",
+    "startDemoRaceGame",
+    "generateDailyQuestions"
+  ],
+  "latestPrivateVerification": {
+    "privateBacklogQuestions": 0,
+    "privateDraftQuestions": 13,
+    "privateOutboxQuestions": 0,
+    "allPrivateQuestionsHaveTwoHints": true
+  },
+  "backendTestsPassed": 79,
+  "flutterTestsPassed": 29,
+  "flutterAnalyze": "clean",
+  "realDeviceVerified": false
+}

@@ -132,6 +132,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         state.room.id,
         serverTimeOffsetMs: state.serverTimeOffsetMs,
         gameMode: state.room.gameMode,
+        questionEngine: state.room.questionEngine,
       );
     } catch (error) {
       emit(

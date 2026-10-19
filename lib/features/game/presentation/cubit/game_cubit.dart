@@ -131,6 +131,34 @@ class GameCubit extends Cubit<GameState> {
     _tick();
   }
 
+  Future<void> requestClueHint() async {
+    _tick();
+    if (!state.canRequestClueHint) return;
+    final index = state.questionIndex;
+    final count = state.currentClueHintCount;
+    emit(state.copyWith(isRequestingClueHint: true, clearError: true));
+    try {
+      await _service.playRace(
+        state.room.id,
+        action: 'clueHint',
+        questionIndex: index,
+        expectedHintCount: count,
+      );
+    } catch (error) {
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            errorMessage: error is RoomServiceException
+                ? error.message
+                : 'İpucu alınamadı. Bağlantını kontrol edip tekrar dene.',
+          ),
+        );
+      }
+    } finally {
+      if (!isClosed) emit(state.copyWith(isRequestingClueHint: false));
+    }
+  }
+
   Future<void> submitAnswer(String input) async {
     _tick();
     if (!state.canAct) return;

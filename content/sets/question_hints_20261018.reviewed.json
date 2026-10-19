@@ -1,0 +1,5455 @@
+{
+  "schemaVersion": "question-hints-migration-1",
+  "projectId": "kelime-yarisi-yalin",
+  "reviewScope": "Türkçe editör öz incelemesi: mevcut hedef anlam, kayıtlı kaynak açıklamaları ve özgün kullanım örnekleri üzerinden iki tamamlayıcı ipucu gözden geçirildi. Dış kaynak bağlantılarının tamamı bu geçişte yeniden açılmadı. İnsan veya bağımsız model onayı değildir.",
+  "questions": [
+    {
+      "id": "initial_001_q01",
+      "answer": "VETO",
+      "hints": [
+        "Bir öneri çoğunluk desteği alsa bile bu yetkiyle durdurulabilir.",
+        "Karar sürecinde yalnız itiraz etmekten daha güçlü bir engellemedir."
+      ]
+    },
+    {
+      "id": "initial_001_q02",
+      "answer": "KOZA",
+      "hints": [
+        "İçindeki canlı gelişirken dışarıya karşı bir korunak oluşturur.",
+        "İpek üretiminde içindeki ince lifler çözülerek işlenir."
+      ]
+    },
+    {
+      "id": "initial_001_q03",
+      "answer": "NABIZ",
+      "hints": [
+        "Kalbin ritmi hakkında bilgi verir.",
+        "Heyecanlanınca hızlanabilir; bilekten hissedilebilir."
+      ]
+    },
+    {
+      "id": "initial_001_q04",
+      "answer": "MAKAM",
+      "hints": [
+        "Bir bürokratın kartvizitinde görevini belirten konum olabilir.",
+        "Rast ve hicaz, sözcüğün müzikteki kullanımına örnektir."
+      ]
+    },
+    {
+      "id": "initial_001_q05",
+      "answer": "MERHEM",
+      "hints": [
+        "Hap gibi yutulmaz, dışarıdan uygulanır.",
+        "İnce bir tabaka hâlinde deri üzerine yayılabilir."
+      ]
+    },
+    {
+      "id": "initial_001_q06",
+      "answer": "TÖHMET",
+      "hints": [
+        "Ortada kesinleşmiş bir mahkûmiyet bulunması şart değildir.",
+        "Birine yöneltilen suç şüphesi, masum kişiyi de zor durumda bırakabilir."
+      ]
+    },
+    {
+      "id": "initial_001_q07",
+      "answer": "İSTİSNA",
+      "hints": [
+        "Bir uygulamanın herkesi kapsamadığı özel durumdur.",
+        "“Herkes giremez” kuralında izinli kişi için ayrı bir hüküm olabilir."
+      ]
+    },
+    {
+      "id": "initial_001_q08",
+      "answer": "FERAGAT",
+      "hints": [
+        "Zorla alınmasından farklı olarak kişinin kendi iradesi söz konusudur.",
+        "Bir alacağı istememe kararı bu davranışa örnek olabilir."
+      ]
+    },
+    {
+      "id": "initial_001_q09",
+      "answer": "ÇEKİMSER",
+      "hints": [
+        "Oy kullanan kişi iki taraftan birini desteklemez.",
+        "Lehte ve aleyhte oyların yanında ayrı bir hanede sayılır."
+      ]
+    },
+    {
+      "id": "initial_001_q10",
+      "answer": "MÜTEVAZI",
+      "hints": [
+        "Kendisini başkalarından üstün göstermeye çalışmaz.",
+        "Övgü karşısında başarısını büyütmeden konuşan kişiyi düşündürür."
+      ]
+    },
+    {
+      "id": "initial_001_q11",
+      "answer": "KARABORSA",
+      "hints": [
+        "Kıtlık ve mal azlığı böyle bir satış ortamını besleyebilir.",
+        "Resmî fiyatın üzerinde ve kayıt dışı alışverişle ilişkilidir."
+      ]
+    },
+    {
+      "id": "initial_001_q12",
+      "answer": "AYAKBASTI",
+      "hints": [
+        "Ödeme, bir yere dışarıdan varışla bağlantılıdır.",
+        "Tarihî bir giriş bedeli veya resim türünü düşündürür."
+      ]
+    },
+    {
+      "id": "initial_001_q13",
+      "answer": "HAZIRCEVAP",
+      "hints": [
+        "Bir sohbet sırasında söz altında kalması zordur.",
+        "Esprili bir karşılık için uzun uzun düşünmesi gerekmez."
+      ]
+    },
+    {
+      "id": "initial_001_q14",
+      "answer": "KALEMTIRAŞ",
+      "hints": [
+        "Küçük modellerinin içinde bir bıçak bulunur.",
+        "İşini yaparken ince talaşlar çıkarır."
+      ]
+    },
+    {
+      "id": "initial_002_q01",
+      "answer": "KARE",
+      "hints": [
+        "İskambil oyununda aynı değerden dört kart bir araya geldiğinde bu ad kullanılır.",
+        "Kenar uzunluğunun kendisiyle çarpımı alanını verir."
+      ]
+    },
+    {
+      "id": "initial_002_q02",
+      "answer": "DİZE",
+      "hints": [
+        "Ölçülü şiirde bu satır birimi hece ya da aruz düzeniyle kurulabilir.",
+        "Birkaçı bir araya geldiğinde bir kıta oluşturabilir."
+      ]
+    },
+    {
+      "id": "initial_002_q03",
+      "answer": "KIVAM",
+      "hints": [
+        "Hazırlanan karışım soğudukça akışkanlığı yeniden değişebilir.",
+        "Ne su kadar ince ne hamur kadar katı olması istenen bir sosu düşün."
+      ]
+    },
+    {
+      "id": "initial_002_q04",
+      "answer": "KORNA",
+      "hints": [
+        "Bisikletteki sesli uyarı aracına da aynı ad verilir.",
+        "Basınca duyulan ses, çevredekilere bir uyarıdır."
+      ]
+    },
+    {
+      "id": "initial_002_q05",
+      "answer": "ÇARŞAF",
+      "hints": [
+        "Aynı sözcük, bazı yörelerde kadınların kullandığı bir dış giysinin adı olarak da geçer.",
+        "Yatağa girmeden önce temiz olanı serilebilir."
+      ]
+    },
+    {
+      "id": "initial_002_q06",
+      "answer": "PİŞMAN",
+      "hints": [
+        "Kişi, geçmişteki davranışını değiştiremese de sonucundan hoşnut olmadığını dile getirebilir.",
+        "Kişi, geçmişteki kararını geri almak isteyebilir."
+      ]
+    },
+    {
+      "id": "initial_002_q07",
+      "answer": "ŞÖVALYE",
+      "hints": [
+        "Sözcüğün güncel kullanımlarından biri bir onur nişanının adıdır.",
+        "Zırhı, kalkanı ve atıyla anılan bir savaşçıdır."
+      ]
+    },
+    {
+      "id": "initial_002_q08",
+      "answer": "BİRİKİM",
+      "hints": [
+        "Hane bütçesinde kenara ayrılan mal veya para toplamı için de kullanılır.",
+        "Bir kişinin yıllar içinde öğrendikleri bu toplamı artırır."
+      ]
+    },
+    {
+      "id": "initial_002_q09",
+      "answer": "GÜZELLİK",
+      "hints": [
+        "İyi ahlaki veya zihinsel özellikler için de aynı sözcük kullanılır.",
+        "Bir yüzün, ezginin veya yapıtın beğenilen yönünü anlatabilir."
+      ]
+    },
+    {
+      "id": "initial_002_q10",
+      "answer": "MÜZİSYEN",
+      "hints": [
+        "Sahnede yorumladığı eseri kendisinin bestelemiş olması gerekmez.",
+        "Bir çalgıyı profesyonelce çalan kişi bu genel adla anılabilir."
+      ]
+    },
+    {
+      "id": "initial_002_q11",
+      "answer": "ÇAY KAZANI",
+      "hints": [
+        "Ev tipi bir demlikten farklı olarak toplu servis hazırlığına yarar.",
+        "Sıcak içeceğin çok kişiye peş peşe sunulmasını sağlar, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_002_q12",
+      "answer": "KONUŞMACI",
+      "hints": [
+        "Panel ve söyleşilerde bu görev, etkinlikteki sıfatından çok topluluk önünde söz almasına dayanır.",
+        "Dinleyiciler karşısında kürsüye çıkan kişiyi düşün."
+      ]
+    },
+    {
+      "id": "initial_002_q13",
+      "answer": "TUTARLILIK",
+      "hints": [
+        "Edebî anlatımda konu ile anlatımın uyuşması da bu sözcüğün özel kullanımıdır.",
+        "Bir açıklamanın kendi içinde çelişmemesi beklenir."
+      ]
+    },
+    {
+      "id": "initial_002_q14",
+      "answer": "KARARLILIK",
+      "hints": [
+        "Kimyada boya, zamanla özelliklerini koruduğunda bu nitelikle tanımlanır.",
+        "Engeller karşısında amaç değiştirmeden sürdürme tutumudur."
+      ]
+    },
+    {
+      "id": "initial_003_q01",
+      "answer": "KÖŞK",
+      "hints": [
+        "“Camlı” sözüyle kurulan birleşimde, kapalı bir salon anlamı da taşır.",
+        "Saraydan daha küçük, özenli ve gösterişli bir konut olabilir."
+      ]
+    },
+    {
+      "id": "initial_003_q02",
+      "answer": "OYUK",
+      "hints": [
+        "Kıyıda dalgaların kayayı aşındırmasıyla oluşan girintiye de bu ad verilir.",
+        "Düz olması beklenen yüzeyde içeri doğru bir eksiklik görünür."
+      ]
+    },
+    {
+      "id": "initial_003_q03",
+      "answer": "YANKI",
+      "hints": [
+        "Ses olayı, sert bir duvar ya da dağ yamacı gibi yüzeylerden geri dönüşle de duyulur.",
+        "Dağda bağırınca aynı sözü biraz sonra yeniden duyabilirsin."
+      ]
+    },
+    {
+      "id": "initial_003_q04",
+      "answer": "DİKEN",
+      "hints": [
+        "Bu sivri çıkıntılar, bitkiyi otlayan hayvanlara karşı da koruyabilir.",
+        "Bitkinin sivri parçası deriye batabilir."
+      ]
+    },
+    {
+      "id": "initial_003_q05",
+      "answer": "MERMER",
+      "hints": [
+        "İşlenmiş yüzeyi parlatılabildiği için iç mekân kaplamasında ve heykelde kullanılabilir.",
+        "Doğal damar desenleriyle kaplama yüzeyinde görülebilir."
+      ]
+    },
+    {
+      "id": "initial_003_q06",
+      "answer": "KIVRIM",
+      "hints": [
+        "Bir kâğıt buruşturulup açıldığında üzerinde kalan çizgi de bu sözcükle anlatılır.",
+        "Düz bir çizginin dönerek yön değiştiren bölümü olabilir."
+      ]
+    },
+    {
+      "id": "initial_003_q07",
+      "answer": "SERAMİK",
+      "hints": [
+        "Çömlek, fayans ve porselen bu geniş ürün grubuna girer.",
+        "Ham malzeme biçimlendirildikten sonra fırında sertleşir."
+      ]
+    },
+    {
+      "id": "initial_003_q08",
+      "answer": "AĞIRLIK",
+      "hints": [
+        "Gündelik kullanımda bir konuya verilen önem payı için de aynı sözcük seçilir.",
+        "Fizikte kuvvet birimi olan newtonla belirtilir."
+      ]
+    },
+    {
+      "id": "initial_003_q09",
+      "answer": "BAĞLANTI",
+      "hints": [
+        "Bilişimde iki cihaz arasındaki veri yoluna da bu ad verilir.",
+        "İnternet kesilince cihazın ağla arasındaki bu ilişki kopabilir."
+      ]
+    },
+    {
+      "id": "initial_003_q10",
+      "answer": "KALDIRIM",
+      "hints": [
+        "Eski kullanımda taşla kaplanmış yolun bütünü için de söylenirdi.",
+        "Yolun yayaya ayrılmış kenarında yürüdüğünü düşün."
+      ]
+    },
+    {
+      "id": "initial_003_q11",
+      "answer": "KARŞILAMA",
+      "hints": [
+        "Trakya ve Marmara düğünlerinde oyun eşliğindeki ezgi için de aynı ad kullanılır.",
+        "Gelen yolcuyu terminalde el sallayarak beklemek de aynı adla anlatılır."
+      ]
+    },
+    {
+      "id": "initial_003_q12",
+      "answer": "DÜZENLEME",
+      "hints": [
+        "Müzikte bir eser farklı çalgılara göre yeniden yazıldığında da aynı işlem adı kullanılır.",
+        "Bir şarkının başka çalgılarla çalınabilmesi için de yapılabilir."
+      ]
+    },
+    {
+      "id": "initial_003_q13",
+      "answer": "BAŞKALDIRI",
+      "hints": [
+        "Bir buyruğa itaat etmeyi reddetmek de sözcüğün kapsamındaki kullanımlardandır.",
+        "Emre sessizce uymak yerine açıkça direnmek söz konusudur."
+      ]
+    },
+    {
+      "id": "initial_003_q14",
+      "answer": "GELİŞTİRME",
+      "hints": [
+        "Ar-Ge sırasında mevcut ürünün niteliğini artırma işi de aynı kapsamda anılır.",
+        "Mevcut ürüne yararlı özellikler eklemek bu çalışmanın parçasıdır."
+      ]
+    },
+    {
+      "id": "initial_004_q01",
+      "answer": "YAKA",
+      "hints": [
+        "Boğazın iki yanında kalan bölgeler için de bu sözcük kullanılır.",
+        "Kravat takıldığında gömleğin bu bölümü boynun çevresindedir."
+      ]
+    },
+    {
+      "id": "initial_004_q02",
+      "answer": "ÇAPA",
+      "hints": [
+        "Aletin adı, onunla yapılan yüzeysel toprak işleme işi için de kullanılır.",
+        "Sapına bağlı demir uç toprağın yüzeyini işler."
+      ]
+    },
+    {
+      "id": "initial_004_q03",
+      "answer": "KİLİM",
+      "hints": [
+        "Göçebe topluluklarda kız çeyizi için daha süslü türleri dokunmuştur.",
+        "Halıdaki gibi tüylü ve kabarık bir yüzeyi yoktur."
+      ]
+    },
+    {
+      "id": "initial_004_q04",
+      "answer": "LİMAN",
+      "hints": [
+        "Deniz haritalarında bu tür tesisler, gemiler için güvenli yanaşma alanı olarak gösterilir.",
+        "Rıhtım ve iskeleler bu kıyı alanında bulunabilir."
+      ]
+    },
+    {
+      "id": "initial_004_q05",
+      "answer": "GÖZLÜK",
+      "hints": [
+        "Atlarda yan görüşü sınırlayan ve dalışta su altına yardımcı olan özel türleri vardır.",
+        "Sapları kulaklara dayanabilir; burun üzerinde taşınır."
+      ]
+    },
+    {
+      "id": "initial_004_q06",
+      "answer": "MANTIK",
+      "hints": [
+        "Çıkarımda bir sonucun öncüllerden zorunlu çıkıp çıkmadığını da bu alan inceler.",
+        "“Bütün insanlar ölümlüdür” türü öncüllerden sonuç çıkarmayla ilgilenir."
+      ]
+    },
+    {
+      "id": "initial_004_q07",
+      "answer": "KARINCA",
+      "hints": [
+        "Döküm sırasında metal yüzeyde oluşan küçük boşluklar için de aynı sözcük kullanılır.",
+        "Yuvasında farklı görevleri olan bireyler birlikte yaşar."
+      ]
+    },
+    {
+      "id": "initial_004_q08",
+      "answer": "GELENEK",
+      "hints": [
+        "Bayramda her yıl yinelenen ortak uygulamalar buna örnek olabilir.",
+        "Bir davranış kuşaktan kuşağa aktarılarak sürdürülür."
+      ]
+    },
+    {
+      "id": "initial_004_q09",
+      "answer": "YALINLIK",
+      "hints": [
+        "Edebiyat dışındaki kullanımında, bir yapının bileşik ya da karmaşık olmama niteliğini anlatır.",
+        "Gereksiz süslerden arınmış bir anlatımda bu özellik görülür."
+      ]
+    },
+    {
+      "id": "initial_004_q10",
+      "answer": "KÜLTÜREL",
+      "hints": [
+        "Bir müze koleksiyonunun ortak geçmişi yansıtan özellikleri bu sıfatla nitelenebilir.",
+        "Bir toplumun mirasını ve ortak yaşamını niteleyebilir."
+      ]
+    },
+    {
+      "id": "initial_004_q11",
+      "answer": "SERAMİKÇİ",
+      "hints": [
+        "Bu zanaat dalında kap-kacak dışında karo ve dekoratif parçalar da üretilir.",
+        "Kile biçim verip fırında işleyen kişi bu mesleği yapabilir."
+      ]
+    },
+    {
+      "id": "initial_004_q12",
+      "answer": "KATILIMCI",
+      "hints": [
+        "Programda bu rolde bulunan kişi, etkinliğin türüne göre konuşabilir, dinleyebilir ya da uygulama yapabilir.",
+        "Bir toplantıda yer almak için kaydını yaptıran kişidir."
+      ]
+    },
+    {
+      "id": "initial_004_q13",
+      "answer": "KONUKSEVER",
+      "hints": [
+        "Bir topluluğun ziyaretçilere sıcak yaklaşımı için de aynı nitelik söylenebilir.",
+        "Evinin kapısını gelenlere içtenlikle açan kişiyi düşün."
+      ]
+    },
+    {
+      "id": "initial_004_q14",
+      "answer": "YÜREKLİLİK",
+      "hints": [
+        "Korku hissetmemek şart değildir; zor durumda adım atabilmek bu niteliği gösterebilir.",
+        "Tehlike görünce sırf korkudan geri çekilmeme niteliğidir."
+      ]
+    },
+    {
+      "id": "initial_005_q01",
+      "answer": "GİBİ",
+      "hints": [
+        "Benzetme yanında yaklaşık zaman bildiren kullanımı da vardır.",
+        "“Çocuk, annesi ... gülüyor” cümlesindeki benzetmeyi kurar."
+      ]
+    },
+    {
+      "id": "initial_005_q02",
+      "answer": "KÜME",
+      "hints": [
+        "Matematikte elemanlar bir arada düşünülerek bir bütün oluşturur.",
+        "Elemanları parantezler içinde sıralanarak gösterilebilir."
+      ]
+    },
+    {
+      "id": "initial_005_q03",
+      "answer": "KADAR",
+      "hints": [
+        "Bir şeyin başka bir şeyle eşitliğini de anlatabilir.",
+        "“Senin ... uzun” denince bir eşitlik ölçüsü kurar."
+      ]
+    },
+    {
+      "id": "initial_005_q04",
+      "answer": "SAKİN",
+      "hints": [
+        "Birine telaşlanmamasını söylerken de kullanılır.",
+        "Gergin bir anda bile bağırmadan konuşan kişiyi niteler."
+      ]
+    },
+    {
+      "id": "initial_005_q05",
+      "answer": "DİKKAT",
+      "hints": [
+        "Tehlike belirtirken tek başına uyarı olarak da söylenir.",
+        "Bir ayrıntıyı kaçırmamak için zihni ona yöneltmektir."
+      ]
+    },
+    {
+      "id": "initial_005_q06",
+      "answer": "YÖNTEM",
+      "hints": [
+        "Bilimsel araştırmada veriye ulaşma ve onu işleme düzenini anlatır.",
+        "Aynı sonuca ulaşmak için izlenebilecek farklı yollar olabilir."
+      ]
+    },
+    {
+      "id": "initial_005_q07",
+      "answer": "SIRADAN",
+      "hints": [
+        "“Olağan” ve “her zamanki” anlamlarına yaklaşır.",
+        "Olağanüstü veya seçkin sayılmayan bir örneği niteler."
+      ]
+    },
+    {
+      "id": "initial_005_q08",
+      "answer": "BESLEME",
+      "hints": [
+        "Anne kuşun yavrusuna yiyecek taşıması bu bakımın doğadaki bir örneğidir.",
+        "Bir canlıya yaşamını sürdürmesi için yiyecek sağlanır."
+      ]
+    },
+    {
+      "id": "initial_005_q09",
+      "answer": "DÜŞÜNMEK",
+      "hints": [
+        "Bazen birini hatırlamak veya varsaymak anlamında da kullanılır.",
+        "Henüz karar vermeden zihinde seçenekleri tartarsın, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_005_q10",
+      "answer": "BAŞLAMAK",
+      "hints": [
+        "Bir olayın gerçekleşmeye koyulması için de kullanılır.",
+        "Bir işin ilk adımını atınca gerçekleşir, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_005_q11",
+      "answer": "YÜKSELMEK",
+      "hints": [
+        "Fiyat, ses veya görev düzeyi artarken de kullanılır.",
+        "Asansörle üst kata çıkma yönündeki harekettir."
+      ]
+    },
+    {
+      "id": "initial_005_q12",
+      "answer": "GÜVENİLİR",
+      "hints": [
+        "Bir kaynak veya araç için de kullanılabilir.",
+        "İnsan, verdiği sözü tutan kaynağa tereddütsüz başvurabilir."
+      ]
+    },
+    {
+      "id": "initial_005_q13",
+      "answer": "YÜKÜMLÜLÜK",
+      "hints": [
+        "Hukukta, yapılması kişinin tercihine bırakılmayan işleri kapsar.",
+        "Yerine getirilmesi yalnız kişinin keyfine bırakılmayan görevdir."
+      ]
+    },
+    {
+      "id": "initial_005_q14",
+      "answer": "İYİMSERLİK",
+      "hints": [
+        "Felsefede dünyanın ve insanlığın iyiye gideceği inancını da anlatır.",
+        "Kötü olasılıklara rağmen iyi sonucu umut eden bakıştır."
+      ]
+    },
+    {
+      "id": "initial_006_q01",
+      "answer": "GÖRE",
+      "hints": [
+        "Karşılaştırmalarda bir kişiyi veya durumu ölçüt almayı da sağlar.",
+        "“Kurala ...” ifadesinde bir dayanağa uygunluğu bildirir."
+      ]
+    },
+    {
+      "id": "initial_006_q02",
+      "answer": "YAZI",
+      "hints": [
+        "Madeni paranın değer belirten yüzüne de bu ad verilir.",
+        "Söylenenlerin kalıcı işaretlere dönüşmesini sağlar."
+      ]
+    },
+    {
+      "id": "initial_006_q03",
+      "answer": "ÇÜNKÜ",
+      "hints": [
+        "Kendisinden sonra açıklayıcı bir neden gelir.",
+        "“Neden?” sorusuna yanıt veren açıklamanın başına gelir."
+      ]
+    },
+    {
+      "id": "initial_006_q04",
+      "answer": "DERİN",
+      "hints": [
+        "Düşünce ya da duygunun yüzeysel olmadığını anlatmak için de kullanılır.",
+        "Yüzeyle dip arasındaki uzaklığı fazla olan yeri niteler."
+      ]
+    },
+    {
+      "id": "initial_006_q05",
+      "answer": "KARŞIT",
+      "hints": [
+        "Bir düşünceyi çürütmek için ileri sürülen görüş de bu adla anılabilir.",
+        "Aynı yönde veya aynı görüşte olmayan iki tarafı düşündürür."
+      ]
+    },
+    {
+      "id": "initial_006_q06",
+      "answer": "KORUMA",
+      "hints": [
+        "Finansta değer kaybına karşı önlem anlamında da kullanılır.",
+        "Zarar görmesini engellemek için bir şeye göz kulak olmaktır."
+      ]
+    },
+    {
+      "id": "initial_006_q07",
+      "answer": "DÜŞÜNCE",
+      "hints": [
+        "Bir konu üzerinde kafa yorma eylemiyle karıştırılmamalıdır.",
+        "Zihinde oluşan bir görüş, sözle başkasına aktarılabilir."
+      ]
+    },
+    {
+      "id": "initial_006_q08",
+      "answer": "YÖNELME",
+      "hints": [
+        "Dil bilgisinde adın -e durumuyla anılan çekim türüdür.",
+        "Bir ilginin veya hareketin belli bir hedefe dönmesidir."
+      ]
+    },
+    {
+      "id": "initial_006_q09",
+      "answer": "GÖZETMEK",
+      "hints": [
+        "Bir karar alırken ilgili koşulları dikkate almak anlamı da vardır.",
+        "Küçüğün güvenliğine göz kulak olmakla ilişkilidir, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_006_q10",
+      "answer": "LAF ETMEK",
+      "hints": [
+        "Daha nötr bağlamda bir konudan söz açmayı da anlatır.",
+        "Bazen bir kusuru yüzünden birini eleştirmeyi anlatır, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_006_q11",
+      "answer": "KULLANMAK",
+      "hints": [
+        "Bir sözcüğü cümlede belirli anlamıyla söylemek için de geçer.",
+        "Bir araçtan amacına uygun biçimde yararlanırsın."
+      ]
+    },
+    {
+      "id": "initial_006_q12",
+      "answer": "YAKALAMAK",
+      "hints": [
+        "Bir fırsatı değerlendirmek ya da bir anı fark etmek anlamı da vardır.",
+        "Kaçan birinin kolundan tutup uzaklaşmasını engellemek de bu fiille anlatılır."
+      ]
+    },
+    {
+      "id": "initial_006_q13",
+      "answer": "DUYARLILIK",
+      "hints": [
+        "Duygusal, toplumsal veya çevresel konularda görülebilir.",
+        "Başkalarının yaşadıklarını fark edip önemsemeyi sağlayan özelliktir."
+      ]
+    },
+    {
+      "id": "initial_006_q14",
+      "answer": "ALIŞKANLIK",
+      "hints": [
+        "Tekrar, zamanla otomatikleşen bir tepki hâline getirebilir.",
+        "Sık yinelenen davranış, zamanla düşünmeden yapılabilir."
+      ]
+    },
+    {
+      "id": "initial_007_q01",
+      "answer": "BERİ",
+      "hints": [
+        "Mekân için kullanıldığında öteye karşılık, konuşana daha yakın tarafı da anlatır.",
+        "“Sabahleyinden ...” sözü başlangıç anıyla şimdiyi birleştirir."
+      ]
+    },
+    {
+      "id": "initial_007_q02",
+      "answer": "ŞAKA",
+      "hints": [
+        "Başarısız olduğunda ortamı neşelendirmek yerine bozabilir.",
+        "Söylenen her sözün ciddi olarak alınması amaçlanmaz."
+      ]
+    },
+    {
+      "id": "initial_007_q03",
+      "answer": "MERAK",
+      "hints": [
+        "Bir işi edinme, yapma veya bir konuyla uğraşma isteği için de kullanılır.",
+        "“Acaba içinde ne var?” sorusunu sorduran istektir."
+      ]
+    },
+    {
+      "id": "initial_007_q04",
+      "answer": "ÖLÇÜT",
+      "hints": [
+        "Başarıyı kıyaslarken aynı dayanağın herkese uygulanması gerekir.",
+        "Bir şeye başarılı veya başarısız demeden önce kullanılan dayanaktır."
+      ]
+    },
+    {
+      "id": "initial_007_q05",
+      "answer": "BİLİNÇ",
+      "hints": [
+        "Uyku veya bayılma durumlarında kapanabildiği söylenir.",
+        "Kişinin kendisini ve çevresini fark etmesiyle ilişkilidir."
+      ]
+    },
+    {
+      "id": "initial_007_q06",
+      "answer": "SÜZMEK",
+      "hints": [
+        "Bakışını birinin üzerinde gezdirmek anlamında da kullanılır.",
+        "Delikli araç sıvıyı geçirirken katı parçaları geride bırakır."
+      ]
+    },
+    {
+      "id": "initial_007_q07",
+      "answer": "KIRINTI",
+      "hints": [
+        "Mecazen geriye kalan çok az miktar için de söylenir.",
+        "Büyük bir parçadan kopup masaya dökülen çok küçük kalıntıdır."
+      ]
+    },
+    {
+      "id": "initial_007_q08",
+      "answer": "GİZEMLİ",
+      "hints": [
+        "Bir olayın nedeni bilinmediğinde de bu sıfat kullanılır.",
+        "Açıklanmamış yönleriyle zihni meşgul eden olayı niteler."
+      ]
+    },
+    {
+      "id": "initial_007_q09",
+      "answer": "ÇÖZÜLMEK",
+      "hints": [
+        "Bir sorunun yanıtı ortaya çıktığında da bu edilgen fiil kullanılır.",
+        "Bir bağın gevşeyip tutma gücünü kaybetmesiyle gerçekleşebilir."
+      ]
+    },
+    {
+      "id": "initial_007_q10",
+      "answer": "YOL ALMAK",
+      "hints": [
+        "Bir proje için de ilerleme kaydetmek anlamına gelir.",
+        "Hedefe kalan mesafeyi geride bırakarak ilerlemektir, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_007_q11",
+      "answer": "SAYDAMLIK",
+      "hints": [
+        "Yönetimde açık ve anlaşılır olma anlamında da kullanılır.",
+        "Işığın geçip arkadaki nesnenin seçilebilmesini sağlar."
+      ]
+    },
+    {
+      "id": "initial_007_q12",
+      "answer": "TİYATROCU",
+      "hints": [
+        "Perde açılmadan önce prova yapar; sahne arkasındaki ekiple birlikte çalışır.",
+        "Rolünü sahnede seyircinin önünde oynayabilir."
+      ]
+    },
+    {
+      "id": "initial_007_q13",
+      "answer": "GÖNÜLLÜLÜK",
+      "hints": [
+        "Sivil toplum faaliyetlerinde sık rastlanır.",
+        "Bir işe zorunlu olmadığı hâlde isteyerek katılmayı anlatır."
+      ]
+    },
+    {
+      "id": "initial_007_q14",
+      "answer": "NEFES ALMAK",
+      "hints": [
+        "Verme eylemiyle dönüşümlü gerçekleşir.",
+        "Diyaframın hareketiyle hava akciğerlere girer, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_008_q01",
+      "answer": "OYSA",
+      "hints": [
+        "“Hâlbuki” ile yakın anlamlı kullanılır.",
+        "Bir önceki cümlenin beklentisini tersine çevirebilir."
+      ]
+    },
+    {
+      "id": "initial_008_q02",
+      "answer": "KAYA",
+      "hints": [
+        "Deniz kıyısında dalgaların çarptığı doğal engel olarak da görülür.",
+        "Bir kişi eline alıp atamayacak kadar iri bir taş kütlesi olabilir."
+      ]
+    },
+    {
+      "id": "initial_008_q03",
+      "answer": "MEĞER",
+      "hints": [
+        "Cümlede sonradan öğrenilen gerçeğe geçiş yapar.",
+        "Kişi gerçeği sonradan öğrenince bu sözü kullanabilir."
+      ]
+    },
+    {
+      "id": "initial_008_q04",
+      "answer": "KÖRÜK",
+      "hints": [
+        "Akordeonun katlanıp açılan bölümü de bu adla bilinir.",
+        "Ateşi güçlendirmek için içine hava gönderir."
+      ]
+    },
+    {
+      "id": "initial_008_q05",
+      "answer": "YAZMAK",
+      "hints": [
+        "Bir imzanın kâğıda aktarılması da bu eylemin bir örneğidir.",
+        "Klavye yardımıyla da yapılabilen bir anlatma eylemidir."
+      ]
+    },
+    {
+      "id": "initial_008_q06",
+      "answer": "SEVMEK",
+      "hints": [
+        "Hoşlanılan yiyecek veya etkinlik için de söylenir.",
+        "Bir kişiyle birlikte olmaktan mutluluk duyabilirsin."
+      ]
+    },
+    {
+      "id": "initial_008_q07",
+      "answer": "KÖPRÜCÜ",
+      "hints": [
+        "Askerî bağlamda geçici geçit kuran birlik görevlisi için de kullanılır.",
+        "Bir geçiş yapısının kurulması veya bakımıyla uğraşan kişidir."
+      ]
+    },
+    {
+      "id": "initial_008_q08",
+      "answer": "FIRTINA",
+      "hints": [
+        "Hızı saatte yaklaşık 62–74 kilometre arasındadır.",
+        "Kuvvetli hava akımı, denizde yolculuğu güçleştirir."
+      ]
+    },
+    {
+      "id": "initial_008_q09",
+      "answer": "YARATICI",
+      "hints": [
+        "Sanat, tasarım ve problem çözme için kullanılabilir.",
+        "Var olanı tekrarlamak yerine yeni bir çözüm ortaya koyar."
+      ]
+    },
+    {
+      "id": "initial_008_q10",
+      "answer": "KIRILGAN",
+      "hints": [
+        "Kişinin duygusal olarak çabuk etkilenmesini de anlatır.",
+        "Darbeye dayanamadığı için paketlerken özen ister."
+      ]
+    },
+    {
+      "id": "initial_008_q11",
+      "answer": "ARAŞTIRMA",
+      "hints": [
+        "Bilimsel bir çalışmanın temel aşamalarından biridir.",
+        "Sonuca varmadan önce bilgi ve kanıt toplanır."
+      ]
+    },
+    {
+      "id": "initial_008_q12",
+      "answer": "YANSITMAK",
+      "hints": [
+        "Bir sanat eseri kişinin yaşantısını da dışa vurabilir.",
+        "Gelen ışığı yüzeyden geri göndermeyi anlatır."
+      ]
+    },
+    {
+      "id": "initial_008_q13",
+      "answer": "ÜRETKENLİK",
+      "hints": [
+        "Tarım, ekonomi ve çalışma düzeninde verimle birlikte değerlendirilir.",
+        "Emek karşılığında ortaya çıkan sonuçların çokluğuyla ilişkilidir."
+      ]
+    },
+    {
+      "id": "initial_008_q14",
+      "answer": "GÖREV ALMAK",
+      "hints": [
+        "Bir kurum veya projede rol üstlenmek anlamında kullanılır.",
+        "Bir işin belirli bölümünden sorumlu olmayı kabul edersin, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_009_q01",
+      "answer": "YA DA",
+      "hints": [
+        "İki olasılıktan birinin seçilebileceğini gösterir.",
+        "Birini seçebileceğin iki olasılığı birbirine bağlar, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_009_q02",
+      "answer": "BÜFE",
+      "hints": [
+        "Eskiden tabak ve kadehlerin konduğu dolap anlamı da vardır.",
+        "Bir içecek veya sandviç almak için önünde sıraya girilebilir."
+      ]
+    },
+    {
+      "id": "initial_009_q03",
+      "answer": "BİLEK",
+      "hints": [
+        "Güç ve dayanıklılık anlamında mecazen de kullanılır.",
+        "El ile ön kol arasındaki hareketli bölgedir."
+      ]
+    },
+    {
+      "id": "initial_009_q04",
+      "answer": "SİVRİ",
+      "hints": [
+        "Mecazen dikkat çeken, göze batan davranış için de söylenir.",
+        "Uç kısmı incelip batan bir nesnenin özelliğidir."
+      ]
+    },
+    {
+      "id": "initial_009_q05",
+      "answer": "KIRMAK",
+      "hints": [
+        "Birini incitmek ya da yön değiştirerek ilerlemek anlamları da vardır.",
+        "Bir nesnenin bütünlüğünü kuvvetle bozarsın, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_009_q06",
+      "answer": "DÜŞMEK",
+      "hints": [
+        "Değer, sıcaklık veya hız azalırken de kullanılır.",
+        "Desteksiz kalan bir şey aşağıya doğru hareket eder."
+      ]
+    },
+    {
+      "id": "initial_009_q07",
+      "answer": "YÜCELME",
+      "hints": [
+        "Yalnız fiziksel boy artışını değil, kişinin manevi değer kazanmasını da anlatır.",
+        "Kişinin başkaları gözündeki değerinin artmasıyla ilişkilidir."
+      ]
+    },
+    {
+      "id": "initial_009_q08",
+      "answer": "YANKILI",
+      "hints": [
+        "Geniş ve sert yüzeyli mekânlarda bu özellik daha belirgin olabilir.",
+        "Sesin kaybolmak yerine geri dönüp işitildiği yeri niteler."
+      ]
+    },
+    {
+      "id": "initial_009_q09",
+      "answer": "ÖZGÜRLÜK",
+      "hints": [
+        "Toplumsal ve siyasal kullanımları da vardır.",
+        "Dış baskı olmadan tercih yapabilmeyle ilişkilidir."
+      ]
+    },
+    {
+      "id": "initial_009_q10",
+      "answer": "ÇALIŞKAN",
+      "hints": [
+        "Düzenli çaba ve üretkenlikle birlikte anılır.",
+        "Görevlerini savsaklamadan emek veren kişiyi niteler."
+      ]
+    },
+    {
+      "id": "initial_009_q11",
+      "answer": "BAŞLANGIÇ",
+      "hints": [
+        "Bir olayın ilk ortaya çıkış zamanı için de kullanılır.",
+        "Sonun karşısında, bir sürecin ilk bölümüdür."
+      ]
+    },
+    {
+      "id": "initial_009_q12",
+      "answer": "GÜLÜMSEME",
+      "hints": [
+        "Sözsüz biçimde dostça karşılık vermenin yollarından biridir.",
+        "Dudakların hafifçe kıvrıldığı, ses çıkarmayan bir ifadedir."
+      ]
+    },
+    {
+      "id": "initial_009_q13",
+      "answer": "ÖNEM VERMEK",
+      "hints": [
+        "Bir konuya zaman ve özen ayırmak anlamına da gelir.",
+        "Bir konuyu değersiz saymayıp ciddiye alırsın, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_009_q14",
+      "answer": "BAĞIŞLAMAK",
+      "hints": [
+        "Bir kurum veya kişiye para/eşya hibe etmek anlamı da vardır.",
+        "Bir hatanın karşılığında kin veya ceza aramaktan vazgeçersin."
+      ]
+    },
+    {
+      "id": "initial_010_q01",
+      "answer": "KULP",
+      "hints": [
+        "Bir şeye kusur bulmayı anlatan bir deyimde de geçer.",
+        "Tencereyi eline alırken tuttuğun çıkıntılı bölüm olabilir."
+      ]
+    },
+    {
+      "id": "initial_010_q02",
+      "answer": "ESER",
+      "hints": [
+        "Bir etkinin bıraktığı iz anlamında da kullanılabilir.",
+        "Bir yaratımın sonunda ortaya çıkan somut veya düşünsel üründür."
+      ]
+    },
+    {
+      "id": "initial_010_q03",
+      "answer": "KATKI",
+      "hints": [
+        "Yemekte lezzeti değiştiren ek madde için de kullanılır.",
+        "Sonucu birlikte oluşturanların her birinin sağladığı paydır."
+      ]
+    },
+    {
+      "id": "initial_010_q04",
+      "answer": "TATLI",
+      "hints": [
+        "Güzel ve hoşa giden bir konuşma için de sıfat olarak kullanılır.",
+        "Baklava veya sütlaç bu yiyecek grubuna örnektir."
+      ]
+    },
+    {
+      "id": "initial_010_q05",
+      "answer": "DOLAYI",
+      "hints": [
+        "Çoğunlukla bir adın -den ekiyle birlikte kullanılır.",
+        "Bir olayın sebebini bildirirken “-den” ekiyle kurulan sözdür."
+      ]
+    },
+    {
+      "id": "initial_010_q06",
+      "answer": "SİLMEK",
+      "hints": [
+        "Bir yüzeyi kurulayıp temizlemek anlamında da söylenir.",
+        "Kâğıttaki kurşun izini özel bir araçla giderebilirsin."
+      ]
+    },
+    {
+      "id": "initial_010_q07",
+      "answer": "HAYALCİ",
+      "hints": [
+        "Olumsuz kullanıldığında gerçekçi olmayan beklentiyi de ima edebilir.",
+        "Gerçekleşmesi zor tasarıları zihninde canlandıran kişiyi niteler."
+      ]
+    },
+    {
+      "id": "initial_010_q08",
+      "answer": "BULUŞMA",
+      "hints": [
+        "Önceden kararlaştırılan zaman ve yer bu eylemi kolaylaştırır.",
+        "İki kişinin aynı zamanda aynı yerde bir araya gelmesidir."
+      ]
+    },
+    {
+      "id": "initial_010_q09",
+      "answer": "SAKİNLİK",
+      "hints": [
+        "Bir ortamın telaşsız ve kontrollü oluşunu anlatır.",
+        "Telaşın ve gürültünün bulunmadığı hâli düşündürür."
+      ]
+    },
+    {
+      "id": "initial_010_q10",
+      "answer": "YAKLAŞIM",
+      "hints": [
+        "Eğitim veya bilimde izlenen tutum ve bakış açısı için de söylenir.",
+        "Aynı mesele farklı bakış açılarıyla ele alınabilir."
+      ]
+    },
+    {
+      "id": "initial_010_q11",
+      "answer": "YÖNELTMEK",
+      "hints": [
+        "Bir soruyu karşıdakine sormayı anlatırken de bu fiil kullanılabilir.",
+        "Bir nesnenin veya ilginin doğrultusunu hedefe çevirirsin."
+      ]
+    },
+    {
+      "id": "initial_010_q12",
+      "answer": "YENİLEMEK",
+      "hints": [
+        "Bakımla ilk günkü duruma yaklaştırma ve bir işi tekrar yapma anlamları da bulunur.",
+        "Yıpranmış bir parçanın yerine sağlamını koymak bu işleme örnektir."
+      ]
+    },
+    {
+      "id": "initial_010_q13",
+      "answer": "SORGULAMAK",
+      "hints": [
+        "Bir düşüncenin doğruluğunu kuşkuyla ele almayı da anlatır.",
+        "Bir yargıyı hemen kabul etmek yerine dayanaklarını sorarsın."
+      ]
+    },
+    {
+      "id": "initial_010_q14",
+      "answer": "HESAPLAŞMA",
+      "hints": [
+        "Mecazen geçmişteki bir meseleyle yüz yüze gelmeyi de anlatabilir.",
+        "Önceden açık kalan anlaşmazlıklarla yüzleşme söz konusudur."
+      ]
+    },
+    {
+      "id": "initial_011_q01",
+      "answer": "TEMA",
+      "hints": [
+        "Müzikte yinelenen ana motif için de aynı söz kullanılabilir.",
+        "Eserin ayrıntılarını birbirine bağlayan ana düşüncedir."
+      ]
+    },
+    {
+      "id": "initial_011_q02",
+      "answer": "İSİM",
+      "hints": [
+        "Dil bilgisinde “ad” karşılığıyla da anılır.",
+        "Bir varlığı çağırmaya veya belirtmeye yarar."
+      ]
+    },
+    {
+      "id": "initial_011_q03",
+      "answer": "KANUN",
+      "hints": [
+        "Çok sayıda teli olan bir müzik çalgısı da bu adı taşır.",
+        "İnsanların uyması gereken hukuk kurallarındandır."
+      ]
+    },
+    {
+      "id": "initial_011_q04",
+      "answer": "DENGE",
+      "hints": [
+        "Ekonomi ve siyasette karşılıklı güçlerin uyumunu da anlatabilir.",
+        "Etkilerin birbirini karşılayıp durumun değişmeden kalmasıdır."
+      ]
+    },
+    {
+      "id": "initial_011_q05",
+      "answer": "YALNIZ",
+      "hints": [
+        "Tek başınalık ya da “sadece” anlamı veren kullanımı da vardır.",
+        "Bu kullanımda bir önceki isteğin önüne sınırlama getirir."
+      ]
+    },
+    {
+      "id": "initial_011_q06",
+      "answer": "TAŞIMA",
+      "hints": [
+        "Nakliye işinin genel adı olarak da geçer.",
+        "Bir yükü bulunduğu yerden başka bir yere götürmedir."
+      ]
+    },
+    {
+      "id": "initial_011_q07",
+      "answer": "DİRENME",
+      "hints": [
+        "Bir durumu değiştirmeye çalışan güce karşı sürdürülür.",
+        "Baskı altında hemen boyun eğmeme davranışıdır."
+      ]
+    },
+    {
+      "id": "initial_011_q08",
+      "answer": "SALLAMA",
+      "hints": [
+        "Poşet içinde sıcak suya batırılarak hazırlanan çay türünün adında da geçer.",
+        "Bir şeyi iki yana gidip gelecek biçimde hareket ettirmedir."
+      ]
+    },
+    {
+      "id": "initial_011_q09",
+      "answer": "BULUŞMAK",
+      "hints": [
+        "Tesadüfen karşılaşmak anlamında da kullanılır.",
+        "İki arkadaş aynı yerde bir araya gelir, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_011_q10",
+      "answer": "YENİLMEK",
+      "hints": [
+        "Bir yiyeceğin tüketilmesi de aynı yazılışlı başka bir fiille anlatılır.",
+        "Karşılaşmanın kazanan tarafı olamamakla ilişkilidir."
+      ]
+    },
+    {
+      "id": "initial_011_q11",
+      "answer": "BASAMAKLI",
+      "hints": [
+        "Bir düzenin aşamalara ayrıldığını anlatmak için de kullanılabilir.",
+        "Bir düzeye tek hamlede değil, aşama aşama ulaşılan yapıyı niteler."
+      ]
+    },
+    {
+      "id": "initial_011_q12",
+      "answer": "HİSSETMEK",
+      "hints": [
+        "Dokunma yoluyla algılama için de kullanılır.",
+        "Bir duyguyu veya fiziksel etkiyi kendi içinde algılarsın."
+      ]
+    },
+    {
+      "id": "initial_011_q13",
+      "answer": "YENİLENMEK",
+      "hints": [
+        "Kişi veya kurum için tazelenme anlamında da kullanılır.",
+        "Eskiyen durum değişip daha güncel hâle gelir."
+      ]
+    },
+    {
+      "id": "initial_011_q14",
+      "answer": "ÇALIŞTIRMA",
+      "hints": [
+        "Birine görev yaptırmayı anlatan eylemin adı da olabilir.",
+        "Duran bir makinenin işlemeye geçirilmesi olabilir."
+      ]
+    },
+    {
+      "id": "initial_012_q01",
+      "answer": "SÜRE",
+      "hints": [
+        "Sinema afişlerinde dakika cinsinden belirtilir.",
+        "Başlama ve bitiş anı arasındaki zaman miktarıdır."
+      ]
+    },
+    {
+      "id": "initial_012_q02",
+      "answer": "ÖLÇÜ",
+      "hints": [
+        "Şiirde dizelerin düzenini belirleyen kalıba da denir.",
+        "Bir uzunluk veya miktarı belirlerken elde edilen değerdir."
+      ]
+    },
+    {
+      "id": "initial_012_q03",
+      "answer": "FİKİR",
+      "hints": [
+        "Bir işi yapma niyeti anlamında da kullanılabilir.",
+        "Zihindeki bir öneri çözümün ilk adımı olabilir."
+      ]
+    },
+    {
+      "id": "initial_012_q04",
+      "answer": "GÜVEN",
+      "hints": [
+        "Cesaret anlamında da kullanılabilir.",
+        "Karşındakinden zarar veya aldatma beklememe hâlidir."
+      ]
+    },
+    {
+      "id": "initial_012_q05",
+      "answer": "ÖRTMEK",
+      "hints": [
+        "Bir gerçeği gizleme anlamına da gelir.",
+        "Açık bir yüzeyin üstüne koruyucu bir şey serersin."
+      ]
+    },
+    {
+      "id": "initial_012_q06",
+      "answer": "BÖLMEK",
+      "hints": [
+        "Matematikte çarpmanın ters işlemi olarak öğretilir.",
+        "Bütünü parçalara ayırırsın, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_012_q07",
+      "answer": "GEREKÇE",
+      "hints": [
+        "Bir kararın nedenini açıklamak için sunulan bilgi olarak da kullanılır.",
+        "“Bu karar niçin verildi?” sorusuna dayanak sunar."
+      ]
+    },
+    {
+      "id": "initial_012_q08",
+      "answer": "YÜRÜMEK",
+      "hints": [
+        "Bir işin veya sürecin yolunda gitmesi anlamında da kullanılır.",
+        "Ayaklarını sırayla basarak ilerlersin, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_012_q09",
+      "answer": "KURULMAK",
+      "hints": [
+        "Bir yere yerleşip oturmak için de kullanılır.",
+        "Daha önce olmayan bir derneğin faaliyete geçmesidir."
+      ]
+    },
+    {
+      "id": "initial_012_q10",
+      "answer": "GEZİNMEK",
+      "hints": [
+        "Müzik doğaçlamasında seslerin belirli bir kalıba bağlı kalmadan ilerlemesi için de kullanılır.",
+        "Belirli bir hedefe aceleyle gitmeden dolaşırsın."
+      ]
+    },
+    {
+      "id": "initial_012_q11",
+      "answer": "YAKLAŞMAK",
+      "hints": [
+        "Takvimde beklenen bir gün için kullanıldığında arada kalan zamanın azaldığını anlatır.",
+        "Hedefle arandaki uzaklık gittikçe azalır."
+      ]
+    },
+    {
+      "id": "initial_012_q12",
+      "answer": "DÜRÜSTLÜK",
+      "hints": [
+        "Söz ile davranışın birbirini tutması bu niteliği güçlendirir.",
+        "Kişinin gerçeği saklamadan, hileye başvurmadan davranmasıdır."
+      ]
+    },
+    {
+      "id": "initial_012_q13",
+      "answer": "GERİ DÖNMEK",
+      "hints": [
+        "Bir karar veya sözden vazgeçme anlamı da kullanılır.",
+        "Yola çıktığın yere tekrar varırsın, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_012_q14",
+      "answer": "SERİNLEMEK",
+      "hints": [
+        "Havanın da sıcaklığının hafif azalması için kullanılır.",
+        "Bunaltıcı sıcaklığın etkisi azalınca gerçekleşir."
+      ]
+    },
+    {
+      "id": "initial_013_q01",
+      "answer": "TAVA",
+      "hints": [
+        "Balık veya sebze gibi yiyeceklerin pişirme biçimiyle anılır.",
+        "Sapından tutulup ocakta kızartma yapmakta kullanılabilir."
+      ]
+    },
+    {
+      "id": "initial_013_q02",
+      "answer": "YAMA",
+      "hints": [
+        "Deride farklı renkte görülen iz için de kullanılır.",
+        "Eksik veya yırtık kısmın üstüne uygun bir parça eklenir."
+      ]
+    },
+    {
+      "id": "initial_013_q03",
+      "answer": "ÖRNEK",
+      "hints": [
+        "Davranışı başkalarına yol gösteren kişi veya iş için de sıfat olur.",
+        "Bütünün niteliğini göstermek için küçük bir bölüm sunulur."
+      ]
+    },
+    {
+      "id": "initial_013_q04",
+      "answer": "KALIP",
+      "hints": [
+        "Sık tekrarlanan söz veya davranış düzenine mecazen denir.",
+        "Malzemenin alacağı biçimi önceden belirleyen araçtır."
+      ]
+    },
+    {
+      "id": "initial_013_q05",
+      "answer": "DURMAK",
+      "hints": [
+        "Bir yerde konaklamak veya beklemek anlamı da vardır.",
+        "Hareketin sürmesi yerine kesilmesi söz konusudur."
+      ]
+    },
+    {
+      "id": "initial_013_q06",
+      "answer": "ÇÖZMEK",
+      "hints": [
+        "Bir bilmecenin yanıtını bulmak için de aynı fiil kullanılır.",
+        "Birbirine dolanmış bağları açmayı anlatır, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_013_q07",
+      "answer": "BOYUNCA",
+      "hints": [
+        "Zamanla kullanıldığında bir etkinliğin tüm süresini belirtir.",
+        "“Tatil ...” ifadesinde bütün zaman aralığını kapsar."
+      ]
+    },
+    {
+      "id": "initial_013_q08",
+      "answer": "MADEMKİ",
+      "hints": [
+        "Ardından gelen yargının önceki bilgiden kaynaklandığını gösterir.",
+        "Bir durumu kabul edip ondan sonuç çıkarırken söylenir."
+      ]
+    },
+    {
+      "id": "initial_013_q09",
+      "answer": "BÜYÜTMEK",
+      "hints": [
+        "Bir çocuğu yetiştirme anlamında da kullanılır.",
+        "Bir nesnenin görüntüsünü olduğundan daha iri gösterirsin."
+      ]
+    },
+    {
+      "id": "initial_013_q10",
+      "answer": "ANLATMAK",
+      "hints": [
+        "Hikâye etme ve açıklamada bulunma anlamları da vardır.",
+        "Bilgiyi karşıdakinin anlayacağı biçimde aktarırsın."
+      ]
+    },
+    {
+      "id": "initial_013_q11",
+      "answer": "YORGUNLUK",
+      "hints": [
+        "Uyku ve dinlenmeyle hafifleyebilir.",
+        "Enerji harcadıktan sonra mola ihtiyacıyla ortaya çıkar."
+      ]
+    },
+    {
+      "id": "initial_013_q12",
+      "answer": "DENEYİMLİ",
+      "hints": [
+        "Tecrübeli sözüyle yakın anlam taşır.",
+        "İşin içinde uzun zaman geçirmiş kişinin niteliğidir."
+      ]
+    },
+    {
+      "id": "initial_013_q13",
+      "answer": "DENETLEMEK",
+      "hints": [
+        "Kontrol etme ve teftiş etme anlamlarına yakındır.",
+        "İşin kurallara uygun yapılıp yapılmadığına bakarsın."
+      ]
+    },
+    {
+      "id": "initial_013_q14",
+      "answer": "DÜZENLEMEK",
+      "hints": [
+        "Etkinlik hazırlamak ve müzik aletini akort etmek anlamları da vardır.",
+        "Karışık parçaları belirli bir sıraya koyarsın."
+      ]
+    },
+    {
+      "id": "initial_014_q01",
+      "answer": "UÇAK",
+      "hints": [
+        "Havaalanında pistten hız alıp yükselir.",
+        "Uçuş sırasında taşıma kuvvetini sabit kanatlarından alır."
+      ]
+    },
+    {
+      "id": "initial_014_q02",
+      "answer": "KÜRK",
+      "hints": [
+        "Bu malzemenin yapımında kullanılan post işlenmiş olmalıdır.",
+        "Hayvanın tüylü postundan elde edilen malzemedir."
+      ]
+    },
+    {
+      "id": "initial_014_q03",
+      "answer": "HEMEN",
+      "hints": [
+        "Bazı bağlamlarda çok yakın çevrede bulunmayı da anlatabilir.",
+        "Bir işi ertelemeden o anda yapmayı belirtir."
+      ]
+    },
+    {
+      "id": "initial_014_q04",
+      "answer": "AKICI",
+      "hints": [
+        "Bir sıvının durmadan yer değiştirmesini anlatırken de bu sıfat kullanılabilir.",
+        "Düşünceyi izlerken okuru zorlamayan anlatımı niteler."
+      ]
+    },
+    {
+      "id": "initial_014_q05",
+      "answer": "GİYMEK",
+      "hints": [
+        "Yöneltilen ağır sözleri sessizce dinleme anlamı da vardır.",
+        "Montun kollarına kollarını geçirirsin, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_014_q06",
+      "answer": "SAYGIN",
+      "hints": [
+        "Toplumda itibarlı olmayı anlatır.",
+        "İnsanların değer verip hürmet ettiği kişiyi niteler."
+      ]
+    },
+    {
+      "id": "initial_014_q07",
+      "answer": "ÖYLEYSE",
+      "hints": [
+        "“Bu durumda” ifadesine yakın bir çıkarım kurar.",
+        "Önceki yargıyı kabul ettikten sonra mantıksal sonuca geçilir."
+      ]
+    },
+    {
+      "id": "initial_014_q08",
+      "answer": "GÜVENLİ",
+      "hints": [
+        "Bir şifre için kullanıldığında kolayca ele geçirilememeyi düşündürür.",
+        "Tehlike ihtimali için gerekli tedbirlerin alındığı yeri niteler."
+      ]
+    },
+    {
+      "id": "initial_014_q09",
+      "answer": "ESNEKLİK",
+      "hints": [
+        "Çalışma düzeninin koşullara uyarlanabilmesi için de mecazen kullanılır.",
+        "Bükülen veya gerilen malzemenin eski biçimine dönebilmesidir."
+      ]
+    },
+    {
+      "id": "initial_014_q10",
+      "answer": "BİRLEŞME",
+      "hints": [
+        "Kimyasal süreçlerde maddelerin bir araya gelmesi için de kullanılır.",
+        "Önceden ayrı olan parçalar tek bir bütün oluşturur."
+      ]
+    },
+    {
+      "id": "initial_014_q11",
+      "answer": "SÖZ VERMEK",
+      "hints": [
+        "Güven ilişkisini güçlendiren bir beyan olabilir.",
+        "Gelecekte yapacağın iş için karşındakine taahhütte bulunursun, iki kelime."
+      ]
+    },
+    {
+      "id": "initial_014_q12",
+      "answer": "GÖNÜLLÜCE",
+      "hints": [
+        "Çekingen bir kabuldeki, tam heves kadar güçlü olmayan isteği de anlatabilir.",
+        "Dışarıdan zorlama olmadan, kendi isteğiyle yapmayı anlatır."
+      ]
+    },
+    {
+      "id": "initial_014_q13",
+      "answer": "İNCELENMEK",
+      "hints": [
+        "Bir mikroskobun altına konan örnek için de aynı fiil söylenir.",
+        "Bir şeyin ayrıntılarına dikkatle bakılmasıdır, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "initial_014_q14",
+      "answer": "YARATILMAK",
+      "hints": [
+        "Eser, düşünce veya koşul gibi şeylerin ortaya çıkışı için kullanılabilir.",
+        "Ortada yokken bir düşünce veya eserin meydana getirilmesidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q01",
+      "answer": "AKIL",
+      "hints": [
+        "Bu sözcük, bir şeyi hatırda tutma anlamında da kullanılır.",
+        "İnsan bir sorunu çözmek için seçenekler arasında değerlendirme yapar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q02",
+      "answer": "ARPA",
+      "hints": [
+        "Buğdaygiller ailesindendir.",
+        "Küçük taneleri öğütülerek de değerlendirilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q03",
+      "answer": "DÖNÜT",
+      "hints": [
+        "Eğitimde öğrencinin hatasını düzeltmesine yardım eder.",
+        "Yaptığı işi iyileştirmek isteyen kişiye sonucunun nasıl karşılandığını gösterir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q04",
+      "answer": "BAVUL",
+      "hints": [
+        "Tekerlekli modelleri, kaldırmadan taşımaya imkân verir.",
+        "Yolculukta giysilerin dağılmadan taşınmasına yarar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q05",
+      "answer": "ASALAK",
+      "hints": [
+        "Tenya bunun bir örneğidir.",
+        "Üzerinde yaşadığı canlı konak diye anılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q06",
+      "answer": "ATÖLYE",
+      "hints": [
+        "Uzmanların belli bir konuda birlikte çalıştığı toplantı için de bu ad kullanılır.",
+        "Bir marangozun aletleriyle üretim yaptığı mekân olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q07",
+      "answer": "ALABORA",
+      "hints": [
+        "Şiddetli rüzgâr bu duruma yol açabilir.",
+        "Tekne ters dönünce içindekiler suya düşebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q08",
+      "answer": "ALIŞMAK",
+      "hints": [
+        "Yeni bir parçanın yuvasına tam uyup işler duruma gelmesi de bu fiille anlatılır.",
+        "Tekrarlandıkça başlangıçtaki yabancılık duygusu azalır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q09",
+      "answer": "KÖSTEBEK",
+      "hints": [
+        "Kazdığı yerlerin üstünde küçük toprak yığınları bırakır.",
+        "Güçlü ön ayakları kazmaya uygundur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q10",
+      "answer": "ALABALIK",
+      "hints": [
+        "Küçük pullarla kaplıdır; kırmızı benekli türü Anadolu’da da yaşar.",
+        "Akarsularda yaşayan benekli bir balığı düşün."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q11",
+      "answer": "AÇIKLAMAK",
+      "hints": [
+        "Bir kararı veya haberi kamuya duyurmayı da anlatır.",
+        "Karmaşık bir fikrin ne demek olduğunu anlaşılır kılarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q12",
+      "answer": "AKARYAKIT",
+      "hints": [
+        "Gaz yağı da bu grubun üyelerinden biridir.",
+        "Benzin istasyonunun pompasından depoya doldurulur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q13",
+      "answer": "EZBERLEMEK",
+      "hints": [
+        "Bunu çok mekanik yapanlar, bir papağana benzetilir.",
+        "Bir şiiri kitaba bakmadan söyleyebilmek için yapılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s01_q14",
+      "answer": "ANAHTARLIK",
+      "hints": [
+        "Süs kısmı deri veya camdan yapılmış olabilir.",
+        "Küçük parçaların cepten tek tek kaybolmasını önler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q01",
+      "answer": "ALEV",
+      "hints": [
+        "Mızrağın ucuna takılan küçük kırmızı bayrağa da bu ad verilir.",
+        "Yanma sırasında ısı ve ışıkla birlikte görülebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q02",
+      "answer": "ALÇI",
+      "hints": [
+        "Duvar süslemelerinde de kullanılır.",
+        "Toz hâldeyken suyla karıştırılarak hazırlanabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q03",
+      "answer": "İÇMEK",
+      "hints": [
+        "İlaç kullanmak için de bu fiile başvurulur.",
+        "Bir yudum suyun ağızdan mideye ilerlemesini düşün, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q04",
+      "answer": "BAKIR",
+      "hints": [
+        "Kimyasal simgesi Cu'dur.",
+        "Isıyı ve elektriği iyi iletir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q05",
+      "answer": "DANTEL",
+      "hints": [
+        "Elde yapılabildiği gibi makinede de üretilebilir.",
+        "Masa veya giysi kenarlarında ince bir süs olarak kullanılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q06",
+      "answer": "BAĞLAM",
+      "hints": [
+        "Eski anlamlarından biri, bir arada tutulan demet veya destedir.",
+        "Aynı sözcük, bulunduğu cümle değişince başka anlam kazanabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q07",
+      "answer": "ÇİZELGE",
+      "hints": [
+        "Nöbetlerin kime düştüğünü göstermekte kullanılabilir.",
+        "Bir ders programında gün ve saatleri birlikte görmeni sağlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q08",
+      "answer": "ANTİKOR",
+      "hints": [
+        "Bazı kan testleri bunun varlığını araştırır.",
+        "Vücudun savunma sisteminin hedefe özgü ürettiği bir moleküldür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q09",
+      "answer": "ARTIRMAK",
+      "hints": [
+        "Bir cihazın sesine de uygulanabilir.",
+        "Öncekinden daha çok hâle getirmek söz konusudur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q10",
+      "answer": "AYDINLIK",
+      "hints": [
+        "Gerçek anlamı, bir yerde ışığın bol bulunmasıyla ilgilidir.",
+        "Bir metnin kapalı ve anlaşılmaz olmayışını düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q11",
+      "answer": "AKIL OYUNU",
+      "hints": [
+        "Mantıksal çıkarım gerektirebilir.",
+        "Rakibin hamlesini önceden düşünmek işe yarayabilir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q12",
+      "answer": "ALIŞVERİŞ",
+      "hints": [
+        "Mecaz anlamda, iki konu arasındaki ilgi veya ilişkiyi de anlatabilir.",
+        "Kasada para ödeyip ürünü almak bu işlemi tamamlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q13",
+      "answer": "ANLATILMAK",
+      "hints": [
+        "Bir masalın dinleyicilere sunulması için de aynı fiil kullanılır.",
+        "Dinleyen kişi bir olayı başkasının sözleriyle öğrenir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s02_q14",
+      "answer": "ARKADAŞLIK",
+      "hints": [
+        "Bir okulda tanışan iki kişi arasında da kurulabilir.",
+        "Birlikte geçirilen zaman ve dayanışmayla gelişebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q01",
+      "answer": "AŞÇI",
+      "hints": [
+        "Büyük evlerde ve konaklarda da görev yapan bir meslek sahibidir.",
+        "Mutfağın işlerini ve yemeklerin hazırlanmasını üstlenir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q02",
+      "answer": "AVLU",
+      "hints": [
+        "Duvar yerine çitle çevrilmiş örnekleri de olabilir.",
+        "Üstünü tavan değil açık gökyüzü örter."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q03",
+      "answer": "EKMEK",
+      "hints": [
+        "Toprağa tohum bırakma işiyle aynı sözcüktür.",
+        "Argodaki kullanımında verilen randevuya gelmemek de kastedilebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q04",
+      "answer": "BAMYA",
+      "hints": [
+        "Kurutulmuş hâli de pişirilerek yenebilir.",
+        "Kapsülleri fazla büyümeden toplanıp pişirilebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q05",
+      "answer": "BOSTAN",
+      "hints": [
+        "Kavun ve karpuz yetiştirilen tarla için de aynı ad kullanılır.",
+        "İçinde sebze yatakları ve sulama yolları olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q06",
+      "answer": "BALKON",
+      "hints": [
+        "Tiyatro ve sinemaların üst kat seyirci bölümüne de bu ad verilir.",
+        "Korkuluğu, dış kenarda güvenlik sağlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q07",
+      "answer": "ARMAĞAN",
+      "hints": [
+        "Bir bilim insanının anısına hazırlanan ortak kitaba da bu ad verilir.",
+        "Bir doğum gününde paketlenip sunulabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q08",
+      "answer": "ATLETİK",
+      "hints": [
+        "Bir kişinin omuzlarını anlatırken de kullanılabilir.",
+        "Bedensel gücü ve çevikliği belirgin kişiyi niteler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q09",
+      "answer": "AYRIŞMAK",
+      "hints": [
+        "Sıcaklık veya elektrik etkisiyle gerçekleşebilir.",
+        "Birlikte bulunan yapı, daha küçük bileşenlere dağılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q10",
+      "answer": "BAĞIMSIZ",
+      "hints": [
+        "Bu sıfat devletler için de kullanılabilir.",
+        "Başkasının iznine ihtiyaç duymadan kendi kararını verir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q11",
+      "answer": "ANLAYIŞLI",
+      "hints": [
+        "Başka bir kullanımında, kavrayışı güçlü ve zeki kimseyi de niteler.",
+        "Bir hata karşısında önce karşıdakinin koşullarını düşünür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q12",
+      "answer": "ARABULUCU",
+      "hints": [
+        "Mahkemeye gidilmeden önce de görev alabilir.",
+        "İki tarafın da kabul edebileceği bir anlaşma arar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q13",
+      "answer": "AYAKKABICI",
+      "hints": [
+        "Bu meslek, satışın yanında üretimi de kapsayabilir.",
+        "Raflarında farklı numaralarda çizme ve kunduralar bulunabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s03_q14",
+      "answer": "BİÇERDÖVER",
+      "hints": [
+        "Hububat hasadında kullanılır.",
+        "Ayrı ayrı yapılabilecek hasat işlerini tek makinede toplar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q01",
+      "answer": "AYAZ",
+      "hints": [
+        "Rüzgârın sakin olduğu gecelerde de görülebilir.",
+        "Gökyüzü açıkken gece sıcaklığının düşmesini çağrıştırır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q02",
+      "answer": "BAHT",
+      "hints": [
+        "Evlenmek isteyen biri için de açılması dilenebilir.",
+        "Kişinin kendi çabasından bağımsız talih payıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q03",
+      "answer": "İNMEK",
+      "hints": [
+        "Bir taşıttan dışarı çıkmayı da anlatabilir.",
+        "Üstteki bir düzeyden alttakine geçersin, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q04",
+      "answer": "BASIN",
+      "hints": [
+        "Bir kurum, gazetecileri açıklama yapmak üzere toplantıya çağırabilir.",
+        "Muhabirler ve süreli yayınlar bu dünyanın parçasıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q05",
+      "answer": "BECERİ",
+      "hints": [
+        "El işlerinde de kişinin kendi bakımında da kendini gösterebilir.",
+        "Deneyip uyguladıkça güçlenebilen bir yapabilme yeteneğidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q06",
+      "answer": "TAKMAK",
+      "hints": [
+        "Gerçek anlamında bir şeyi yerine iliştirmeyi anlatır.",
+        "Argodaki anlamında ödeme yapılmadan alacaklı bırakılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q07",
+      "answer": "AYRILIK",
+      "hints": [
+        "Evlilik birlikteliğine mahkeme kararıyla bir süre ara verilmesini de anlatabilir.",
+        "Daha önce yan yana olanlar artık birlikte değildir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q08",
+      "answer": "BALERİN",
+      "hints": [
+        "Gösterilerde tütü denilen etek giyebilir.",
+        "Bale gösterisinde rol alan kadın dansçıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q09",
+      "answer": "MERHAMET",
+      "hints": [
+        "Güçsüz durumdaki bir canlıya karşı da duyulabilir.",
+        "Acı çekenin hâline üzülüp destek olmayı düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q10",
+      "answer": "GÜNDELİK",
+      "hints": [
+        "Başka bir anlamıyla sıradan olayları da niteleyebilir.",
+        "Bir işçinin tek vardiyalık emeği için hesaplanabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q11",
+      "answer": "AZIMSAMAK",
+      "hints": [
+        "Beklenenden düşük bir ücret karşısında yapılabilir.",
+        "Sunulan miktarı beklentinin altında bulursun."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q12",
+      "answer": "BAĞDAŞMAK",
+      "hints": [
+        "Bir davranışla savunulan ilkenin ilişkisi için de söylenir.",
+        "İki koşul bir arada çelişmeden bulunabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q13",
+      "answer": "BİLİNÇALTI",
+      "hints": [
+        "Bastırılmış istekler üzerine kurulan açıklamalarda anılır.",
+        "Doğrudan fark edilmeyen ruhsal içerikle ilişkilidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s04_q14",
+      "answer": "ÇÖZÜMLEMEK",
+      "hints": [
+        "Bir matematik problemini sonuca bağlamak için de kullanılır.",
+        "Bir konuyu parçalarına ayırıp ilişkilerini incelemek gerekebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q01",
+      "answer": "BANT",
+      "hints": [
+        "Ses kaydetmekte kullanılan özel plastik şeride de bu ad verilir.",
+        "Makasla kesilip paketin açık yerini tutturabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q02",
+      "answer": "BAZA",
+      "hints": [
+        "Adı dilimize İtalyancadan geçmiştir.",
+        "Yatağın altındaki eşyaları saklayan bölümü açılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q03",
+      "answer": "YEMEK",
+      "hints": [
+        "Aynı sözcük sofraya konan öğünün adıdır.",
+        "Lokmayı çiğneyip yutmak bu eylemin parçasıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q04",
+      "answer": "BATON",
+      "hints": [
+        "Tutma bölümü ahşap, mantar veya reçineden yapılabilir.",
+        "Şefin hareketlerini müzisyenlerin görmesini kolaylaştırır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q05",
+      "answer": "EGOİST",
+      "hints": [
+        "Sözcük Fransızcadan dilimize geçmiştir.",
+        "Paylaşırken önce kendisini düşünen kişiyi niteler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q06",
+      "answer": "BODRUM",
+      "hints": [
+        "Oturmaya elverişli bir kat olarak da düzenlenebilir.",
+        "İçeri girmek için sokak düzeyinden aşağıya inilebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q07",
+      "answer": "BEREKET",
+      "hints": [
+        "Satıcı, alışveriş eden kişiye bunu dileyebilir.",
+        "Eldeki yiyeceğin çok kişiye yetmesi bu sözü hatırlatır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q08",
+      "answer": "DİLEKÇE",
+      "hints": [
+        "Tek kişinin ya da birden fazla kişinin imzasıyla verilebilir.",
+        "Tarih, imza ve isteğin belirtildiği bir metindir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q09",
+      "answer": "BİREYSEL",
+      "hints": [
+        "Bir kişinin kendi gayretiyle yaptığı girişimi de niteleyebilir.",
+        "Takım yerine tek başına yapılan spor için de söylenebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q10",
+      "answer": "BİTİRMEK",
+      "hints": [
+        "Öğrencinin okulunu başarıyla tamamlamasını da anlatabilir.",
+        "Yarım kalan işin son adımını da yaparsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q11",
+      "answer": "BAŞVURMAK",
+      "hints": [
+        "Bilmediğimiz bir şeyi öğrenmek için sözlüğe yönelmeyi de anlatır.",
+        "İsteğini değerlendirmeye yetkili kuruma iletirsin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q12",
+      "answer": "GÖZ BEBEĞİ",
+      "hints": [
+        "Gerçek anlamında irisin ortasındaki açıklığı anlatır.",
+        "Bir ailenin en çok üzerine titrediği kişi için söylenebilir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q13",
+      "answer": "MİKRODALGA",
+      "hints": [
+        "Bazı tıbbi görüntüleme cihazlarında da kullanılabilir.",
+        "Dalga boyu kızılötesinden daha uzundur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s05_q14",
+      "answer": "SİS LAMBASI",
+      "hints": [
+        "Sarı ışık veren türleri vardır.",
+        "Yolun önünde görüş azalınca kullanılan özel aydınlatmadır, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q01",
+      "answer": "BENT",
+      "hints": [
+        "Taşkın sırasında, tuttuğu suyun gücüyle yıkılabilir.",
+        "Su akışını tutarak seviyesinin yükselmesini sağlayabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q02",
+      "answer": "DİYE",
+      "hints": [
+        "Bir kişinin söylediğini aktaran cümlede de görev alabilir.",
+        "“Uyansın ... seslendim” cümlesinde amaç ilgisi kurar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q03",
+      "answer": "EKRAN",
+      "hints": [
+        "Televizyon yayınlarının bütünü için de bu ad kullanılabilir.",
+        "Bilginin ışıklı görüntüye dönüştüğü yüzeydir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q04",
+      "answer": "BERAT",
+      "hints": [
+        "Osmanlı dönemine ait örnekleri arşivlerde saklanır.",
+        "Belge sahibine bir yetki veya hak tanındığını gösterir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q05",
+      "answer": "BAĞNAZ",
+      "hints": [
+        "Dinî görüşleri savunan bir kişiyi de niteleyebilir.",
+        "Kendi yargısını sorgulamak yerine değişmez sayar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q06",
+      "answer": "CEVHER",
+      "hints": [
+        "Gerçek anlamlarından biri de elmas ve zümrüt gibi değerli taşlardır.",
+        "Bir kişinin henüz işlenmemiş yeteneğini düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q07",
+      "answer": "BUDAMAK",
+      "hints": [
+        "Yalnız ağaçta değil, üzüm veren asmalarda da uygulanır.",
+        "Fazla veya zarar görmüş dalları ayırmak için yapılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q08",
+      "answer": "CANAVAR",
+      "hints": [
+        "İnsan dışı özelliklerle betimlenebilir.",
+        "Gerçek bir hayvana benzemesi şart olmayan korkunç bir varlıktır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q09",
+      "answer": "KUM SAATİ",
+      "hints": [
+        "Yeniden başlatmak için ters çevrilir.",
+        "Akış tamamlanınca belirli bir zaman aralığı geçmiş olur, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q10",
+      "answer": "CANLANMA",
+      "hints": [
+        "Pazar yerinde müşteri sayısının artmasıyla görülebilir.",
+        "Daha önce boş duran dükkânlara yeniden müşteriler gelmesi örnek olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q11",
+      "answer": "BENZETMEK",
+      "hints": [
+        "Edebiyatta bir anlatım sanatının temelini oluşturur.",
+        "Bir bulutla pamuk arasında ortak özellik kurularak anlatılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q12",
+      "answer": "BİYODİZEL",
+      "hints": [
+        "Atık kızartma yağları da üretiminde değerlendirilebilir.",
+        "Fosil kaynak yerine yağlardan elde edilen bir yakıt türüdür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q13",
+      "answer": "DOĞAÇLAMAK",
+      "hints": [
+        "Telli, üflemeli ya da tuşlu bir çalgıyla da yapılabilir.",
+        "Sonraki sözü veya ezgiyi önceden yazılı bir metinden almazsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s06_q14",
+      "answer": "DONDURMACI",
+      "hints": [
+        "Bu ürünün satıldığı dükkâna da aynı ad verilebilir.",
+        "Satarken soğuk tutması gereken bir yiyecekle uğraşır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q01",
+      "answer": "BORU",
+      "hints": [
+        "Kesiti çoğunlukla dairedir.",
+        "Bir yerden başka yere sıvı aktarılmasını sağlayabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q02",
+      "answer": "BOĞA",
+      "hints": [
+        "İspanya'daki geleneksel gösterilerle de ilişkilendirilir.",
+        "Dişisi inek olan hayvanın yetişkin erkeğidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q03",
+      "answer": "ANMAK",
+      "hints": [
+        "Bir ölüm yıl dönümünde yapılan törenin temel eylemidir.",
+        "Birini unutmamak için adını ve yaptıklarını söz konusu edersin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q04",
+      "answer": "BESİN",
+      "hints": [
+        "Protein, yağ veya karbonhidrat içerebilir.",
+        "Canlının büyümesi ve yaşamını sürdürmesi için gereklidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q05",
+      "answer": "ÇEMBER",
+      "hints": [
+        "Çocukların bir değnekle döndürüp peşinden koştuğu halka oyuncağına da bu ad verilir.",
+        "Merkezle üzerindeki bir nokta arasındaki uzaklık yarıçaptır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q06",
+      "answer": "ÇENTİK",
+      "hints": [
+        "Bıçakla da oluşturulabilir.",
+        "Bir kenarın düzlüğünü bozan küçük girinti olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q07",
+      "answer": "AMBARGO",
+      "hints": [
+        "Bir geminin limandan ayrılmasını yasaklayan karar için de kullanılır.",
+        "Ticaretin kısıtlanmasıyla karşı tarafa baskı kurulur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q08",
+      "answer": "DAKTİLO",
+      "hints": [
+        "Yazarken mürekkepli bir şerit kullanır.",
+        "Tuşa basınca harfin izi kâğıt üzerinde oluşur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q09",
+      "answer": "ÇALIŞMAK",
+      "hints": [
+        "Bir makinenin işler durumda olmasını da anlatır.",
+        "Bir amaca ulaşmak için zaman ve emek harcarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q10",
+      "answer": "DAMLALIK",
+      "hints": [
+        "Yıkanan kapların suyunu lavaboya akıtan oluklu bölüme de bu ad verilir.",
+        "Ucu sıkıldığında sıvıyı azar azar bırakabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q11",
+      "answer": "BORÇ ALMAK",
+      "hints": [
+        "Taraflar dönüş tarihini önceden kararlaştırabilir.",
+        "Edindiğin şeyin kalıcı sahibi sayılmazsın; geri verme yükümlülüğü vardır, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q12",
+      "answer": "BÜTÜNLEME",
+      "hints": [
+        "Sınav dışında, eksik parçaları tamamlama işini de anlatır.",
+        "İlk sınavı geçemeyen öğrenci için ikinci bir olanaktır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q13",
+      "answer": "ELEKTRONİK",
+      "hints": [
+        "Bu alanın ilkeleriyle çalışan cihazları nitelemek için de kullanılır.",
+        "Transistör ve diyot gibi devre elemanlarıyla ilişkilidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s07_q14",
+      "answer": "ENGELLEMEK",
+      "hints": [
+        "Bürokratik bir kuralın bir işi durdurması için de söylenebilir.",
+        "Bir kişinin hedefine ulaşmasının önünü kesersin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q01",
+      "answer": "CENK",
+      "hints": [
+        "Destanlarda kahramanların katıldığı çarpışmalar için kullanılır.",
+        "Kahramanların kılıçlarla karşı karşıya gelişini düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q02",
+      "answer": "HATA",
+      "hints": [
+        "Kasıt olmadan yapılanı da aynı adla anılabilir.",
+        "Doğru sonuca ulaşmak için giderilmesi gereken yanlıştır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q03",
+      "answer": "EĞMEK",
+      "hints": [
+        "Her zaman öne doğru yapılmaz; yana doğru da olabilir.",
+        "Dik duran nesnenin doğrultusunu yana veya öne değiştirebilirsin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q04",
+      "answer": "BİDON",
+      "hints": [
+        "Akaryakıt taşımaya uygun türleri vardır.",
+        "Sıvının dökülmesini önlemek için kapağı kapatılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q05",
+      "answer": "ÇÖMLEK",
+      "hints": [
+        "Turşu saklamak için de kullanılabilir.",
+        "Kil biçimlendirildikten sonra fırında sertleştirilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q06",
+      "answer": "YAZMAN",
+      "hints": [
+        "Özel kuruluşlarda da kamu kurumlarında da görev yapabilir.",
+        "Alınan kararların sonradan okunacak kaydını hazırlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q07",
+      "answer": "DANIŞMA",
+      "hints": [
+        "Ziyaretçiye hangi katta işlem yapacağını söyleyebilir.",
+        "Bir binada doğru birime ulaşmak için ilk uğradığın yer olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q08",
+      "answer": "DEVAMLI",
+      "hints": [
+        "İşine ara vermeden gelen kişi de böyle nitelenebilir.",
+        "Tek seferlik olmayan, süregelen durumu niteler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q09",
+      "answer": "ÇEKİLMEK",
+      "hints": [
+        "Birinin odasına kapanıp yalnız kalmayı seçmesini de anlatabilir.",
+        "Önde durduğun yerden başkasına alan açarak uzaklaşırsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q10",
+      "answer": "ÇEVİRMEN",
+      "hints": [
+        "Konferansta konuşmacıyla aynı anda görev yapan türü vardır.",
+        "İki dili bilip anlamı birinden ötekine geçirir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q11",
+      "answer": "CESARETLİ",
+      "hints": [
+        "Herkesin sustuğu yerde haksızlığa karşı konuşabilir.",
+        "Korksa bile yapılması gerekeni yapabilen kişiyi niteler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q12",
+      "answer": "KIRLANGIÇ",
+      "hints": [
+        "Yuvasını binaların saçak altlarına yapabilir.",
+        "Uzun, sivri kanatlarıyla havada çevik hareket eder."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q13",
+      "answer": "ALIŞTIRMAK",
+      "hints": [
+        "Bir parçayı yuvasına uygun ve işler duruma getirmek için de söylenir.",
+        "Bir davranışın tekrar edilerek tanıdık hâle gelmesini sağlarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s08_q14",
+      "answer": "GERÇEKÜSTÜ",
+      "hints": [
+        "Bir sanat yapıtında imkânsız birleşimlerle karşılaşabiliriz.",
+        "Rüyadaki gibi, günlük mantığa uymayan sahneleri düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q01",
+      "answer": "CİPS",
+      "hints": [
+        "Adı dilimize İngilizceden geçmiştir.",
+        "Tuzlu atıştırmalık olarak paketlenip satılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q02",
+      "answer": "DADI",
+      "hints": [
+        "Bu görev için kullanılan ad, Tanzimat sonrasında yaygınlaşmıştır.",
+        "Ebeveynler yokken çocuğun günlük gereksinimleriyle ilgilenebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q03",
+      "answer": "ÖPMEK",
+      "hints": [
+        "Bayram ziyaretinde büyüğün eline uygulanabilir.",
+        "Sevgiyle yanağa veya saygıyla ele yapılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q04",
+      "answer": "BİLET",
+      "hints": [
+        "Şans oyunlarına katılmak için de alınabilir.",
+        "Katılma veya seyahat hakkını kontrol sırasında gösterirsin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q05",
+      "answer": "AVUKAT",
+      "hints": [
+        "Bir davanın dışında, hukuki konuda danışmanlık da yapabilir.",
+        "Müvekkili adına hukuki işlemleri takip edebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q06",
+      "answer": "DEĞNEK",
+      "hints": [
+        "Düzgün bir ağaç dalından da yapılabilir.",
+        "Yürürken yere dayanan bir destek olarak tutulabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q07",
+      "answer": "BİLEZİK",
+      "hints": [
+        "Bir borunun çevresine geçirilen halkaya da bu ad verilir.",
+        "Saat gibi zamanı göstermez; süs olarak takılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q08",
+      "answer": "DİNAMİT",
+      "hints": [
+        "Alfred Nobel’in geliştirdiği buluşlardan biridir.",
+        "Tünel açarken sert kayaların parçalanmasında kullanılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q09",
+      "answer": "ÇÖREK OTU",
+      "hints": [
+        "Yemeklik yağı da elde edilir.",
+        "Hamur işine serpilince siyah taneleri beyaz yüzeyde seçilir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q10",
+      "answer": "ÇARPIŞMA",
+      "hints": [
+        "Küçük çaplı silahlı çatışma için de bu ad kullanılır.",
+        "İki aracın hareket sırasında birbirine vurması olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q11",
+      "answer": "ÇELİŞKİLİ",
+      "hints": [
+        "Aynı olayla ilgili iki tanık anlatımı böyle bulunabilir.",
+        "İki yargı aynı anda doğru olamıyorsa böyle nitelenebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q12",
+      "answer": "DEPREMSEL",
+      "hints": [
+        "Bir bölgenin tehlike haritalarında bu tür veriler kullanılabilir.",
+        "Sarsıntıya karşı yapıların davranışını incelerken kullanılan bir sıfattır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q13",
+      "answer": "GÖLGELENME",
+      "hints": [
+        "Güneşli bir günde bulut geçişiyle oluşabilir.",
+        "Bir cisim araya girince yüzeye daha az ışık ulaşır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s09_q14",
+      "answer": "GÜNEŞ SAATİ",
+      "hints": [
+        "Gece aynı yöntemle kullanılamaz.",
+        "Üzerine düşen gölgenin konumu gün içinde değişir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q01",
+      "answer": "DARP",
+      "hints": [
+        "Eski kullanımında madenî para basma işini de anlatır.",
+        "Birinin bedenine fiziksel şiddet uygulanmasıyla ilgilidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q02",
+      "answer": "DERS",
+      "hints": [
+        "Haftalık çizelgede hangi gün yapılacağı belirtilir.",
+        "Öğretmenle öğrencinin belirli bir konuyu işlediği zaman dilimidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q03",
+      "answer": "ETMEK",
+      "hints": [
+        "Bir sıfatı, o duruma getirmeyi anlatan eyleme dönüştürebilir.",
+        "Bazı isimlere eklenerek birleşik eylem kurar, mastar biçiminde."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q04",
+      "answer": "BOHÇA",
+      "hints": [
+        "Geleneksel düğün hazırlıklarında karşı aileye götürülebilir.",
+        "Fermuar veya sap olmadan uçları bağlanarak taşınabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q05",
+      "answer": "EFSANE",
+      "hints": [
+        "Sözlü kültürde kuşaktan kuşağa aktarılabilir.",
+        "Anlatıdaki olağanüstü olayın bir yer veya kişiyle bağlantısı olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q06",
+      "answer": "BİLLUR",
+      "hints": [
+        "Düzenli bir yapıda katılaşmış kristale de bu ad verilir.",
+        "Parlak ve saydam görünüşüyle süs eşyasında kullanılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q07",
+      "answer": "EKLEMEK",
+      "hints": [
+        "Bir belgeye sonradan fotoğraf da bu yolla katılır.",
+        "Mevcut miktarın veya parçaların sayısının artmasını sağlarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q08",
+      "answer": "ELÇİLİK",
+      "hints": [
+        "Yalnız binayı değil, temsilcinin görev ve makamını da anlatabilir.",
+        "Başka ülkedeki resmî temsil işlemlerinin yürütüldüğü yerdir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q09",
+      "answer": "DONDURMA",
+      "hints": [
+        "Yalnız sütle değil, meyve suyuyla da hazırlanabilir.",
+        "Sıcak ortamda katılığını kaybederek eriyebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q10",
+      "answer": "EL FENERİ",
+      "hints": [
+        "Kampçının gece çantasında aradığı araçlardan biridir.",
+        "Piliyle çalışan türü, priz olmadan karanlığı aydınlatır, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q11",
+      "answer": "EŞ ANLAMLI",
+      "hints": [
+        "Siyah ile kara buna örnek oluşturur.",
+        "Birbirinin yerine kullanılabilen farklı sözcüklerdir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q12",
+      "answer": "GERÇEKLİK",
+      "hints": [
+        "Düş ve kurmaca ile karşıtlık içinde ele alınabilir.",
+        "Bir şeyin düşünceden ibaret olmadan var olmasıyla ilişkilidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q13",
+      "answer": "HAVA DURUMU",
+      "hints": [
+        "İklimden daha kısa bir zaman ölçeğiyle ilgilidir.",
+        "Yarın yağmur beklenip beklenmediğini öğrenmek için izlenir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s10_q14",
+      "answer": "İÇTENLİKLİ",
+      "hints": [
+        "Dostça söylenen bir teşekkür böyle nitelenebilir.",
+        "İnsan söylediğini yalnız nezaket gereği değil, gerçekten öyle düşündüğü için söyler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q01",
+      "answer": "DOKU",
+      "hints": [
+        "Kas ve sinir bunun iki ayrı örneğidir.",
+        "Organın tamamı değil, onu oluşturan hücresel yapılardan biridir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q02",
+      "answer": "DOST",
+      "hints": [
+        "Sırlarını güvenle anlatabildiğin biri olabilir.",
+        "Sıkıntılı gününde seni yalnız bırakmayan kişiyi düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q03",
+      "answer": "FAKAT",
+      "hints": [
+        "Bir uyarıyı cümleye bağlamak için de kullanılabilir.",
+        "İkinci yargı, birinciden beklenen sonucu sınırlayabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q04",
+      "answer": "BUHAR",
+      "hints": [
+        "Ütü yaparken narin kumaşların kırışıklıklarını açmakta kullanılabilir.",
+        "Soğuk yüzeye değince küçük su damlacıklarına dönüşebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q05",
+      "answer": "ELBİSE",
+      "hints": [
+        "Gelinler için hazırlanan özel bir türü vardır.",
+        "Belden aşağısı etek olarak uzanan tek parçalı kıyafettir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q06",
+      "answer": "ERİŞTE",
+      "hints": [
+        "Adı, Farsçada iplik anlamına gelen bir sözcükle ilişkilidir.",
+        "Pişirilmeden önce kurutularak kış için saklanabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q07",
+      "answer": "EROZYON",
+      "hints": [
+        "Bitki örtüsünün azalması bunu hızlandırabilir.",
+        "Verimli üst tabakanın bulunduğu yerden uzaklaşmasına neden olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q08",
+      "answer": "FISILTI",
+      "hints": [
+        "Sessiz olunması gereken bir salonda tercih edilebilir.",
+        "Yanındakine söylenen sözü uzaktakilerin duymaması amaçlanabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q09",
+      "answer": "ETKİLEME",
+      "hints": [
+        "Bir eleştirinin muhatabı üzerinde yaratmak istediği sonuçlardan biridir.",
+        "Bir söz veya olay, kişinin kararını değiştirebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q10",
+      "answer": "FARKINDA",
+      "hints": [
+        "Habersiz sözcüğüyle karşıtlık kurar.",
+        "Kişi çevresindeki durumu sezmiş ve bilmiş olur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q11",
+      "answer": "GÖKKUŞAĞI",
+      "hints": [
+        "Görülürken güneş genellikle gözlemcinin arkasındadır.",
+        "Farklı renkler gökyüzünde yan yana bir kemer oluşturur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q12",
+      "answer": "BELİRTMEK",
+      "hints": [
+        "Bir belgeye tarih eklerken de yapılan işlemlerden biridir.",
+        "Bir noktayı kapalı bırakmak yerine açıkça ifade edersin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q13",
+      "answer": "İNANDIRMAK",
+      "hints": [
+        "İnsan bunu yalnız başkasına değil, kendi kendine de yapabilir.",
+        "Karşıdakinin kuşku duyduğu düşünceyi kabul etmesini sağlarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s11_q14",
+      "answer": "KALIPLAŞMA",
+      "hints": [
+        "Deyimler bu sürecin dildeki sonuçları arasında düşünülebilir.",
+        "Bir ifade kullanıla kullanıla yerleşik ve değişmez biçime yaklaşır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q01",
+      "answer": "EBAT",
+      "hints": [
+        "Mobilya alırken odana uyup uymayacağını belirlemeye yarar.",
+        "Bir ürünü alırken enini ve boyunu karşılaştırmayı sağlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q02",
+      "answer": "EPEY",
+      "hints": [
+        "Zamanın da miktarın da fazlalığını belirtebilir.",
+        "Beklenenden fazla miktarı veya zamanı bildirir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q03",
+      "answer": "LAKİN",
+      "hints": [
+        "Bu görevde cümle başında da bulunabilir.",
+        "İlk cümle olumlu olsa da ardından bir sınırlama getirebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q04",
+      "answer": "CÜMLE",
+      "hints": [
+        "Başka bir anlamıyla herkes veya bütün karşılığında da kullanılır.",
+        "Sonunda nokta, ünlem veya soru işareti bulunabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q05",
+      "answer": "FERMAN",
+      "hints": [
+        "Osmanlı'da önemli kararları duyurmakta kullanılırdı.",
+        "Yönetimden gelen emrin yazılı belgesidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q06",
+      "answer": "FİLTRE",
+      "hints": [
+        "Fotoğrafçılıkta ışığı değiştiren türleri de vardır.",
+        "Geçen akışkandaki bazı maddeleri geride tutar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q07",
+      "answer": "GÖSTERİ",
+      "hints": [
+        "Bir topluluğun görüşünü duyurmak için yaptığı eyleme de bu ad verilir.",
+        "İzleyiciler önünde sergilenen beceri veya eğlencedir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q08",
+      "answer": "GÖZDAĞI",
+      "hints": [
+        "Henüz zarar vermeden caydırmayı amaçlayabilir.",
+        "Amaç, karşı tarafın korkup davranışını değiştirmesidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q09",
+      "answer": "GELİNCİK",
+      "hints": [
+        "Hayvan olanı sansargiller ailesindendir.",
+        "Bitki olanı, tarlalarda kırmızı taç yapraklarıyla görülür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q10",
+      "answer": "GİRİŞKEN",
+      "hints": [
+        "Bir toplulukta sözü ilk alan kişilerde görülebilen bir özellik.",
+        "Tanımadığı insanlarla iletişime geçmekten kaçınmaz."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q11",
+      "answer": "GÜN DOĞUMU",
+      "hints": [
+        "Şafak aydınlığı bu andan önce başlayabilir.",
+        "Yıldızın üst kenarının ufukta görünmesiyle başlar, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q12",
+      "answer": "HAK VERMEK",
+      "hints": [
+        "Bir tartışmada karşı tarafın gerekçesini dinledikten sonra yapılabilir.",
+        "“Senin yerinde olsam ben de öyle yapardım” diyebilirsin, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q13",
+      "answer": "KARABUĞDAY",
+      "hints": [
+        "Yeşil kısımları hayvan yemi olarak da kullanılabilir.",
+        "Adı tahılı andırsa da farklı bir bitki ailesindedir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s12_q14",
+      "answer": "KARŞILAŞMA",
+      "hints": [
+        "İki sporcu veya takım arasındaki müsabaka için de kullanılır.",
+        "İki kişinin yolları aynı anda kesişebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q01",
+      "answer": "EŞİK",
+      "hints": [
+        "Telli çalgılarda tellerin üzerinden geçtiği küçük köprüye de bu ad verilir.",
+        "Kapının alt kenarı boyunca uzanan bir parçadır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q02",
+      "answer": "ETAP",
+      "hints": [
+        "Bisiklet turlarında bir günün mücadelesi olabilir.",
+        "Büyük bir hedefe giden yolun ayrı bir aşaması olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q03",
+      "answer": "ANCAK",
+      "hints": [
+        "Başka kullanımında yalnızca anlamı da taşır.",
+        "Bağlaç olarak beklenen sonucun gerçekleşmediğini gösterebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q04",
+      "answer": "EMZİK",
+      "hints": [
+        "Kauçuktan yapılmış türleri vardır.",
+        "Bebeğin ağzında tutabileceği biçimde hazırlanır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q05",
+      "answer": "GAYRET",
+      "hints": [
+        "Birini yüreklendirmek için tek başına da söylenebilir.",
+        "Başarıyı yalnız dilemek yerine emek harcamayı gerektirir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q06",
+      "answer": "GİRDAP",
+      "hints": [
+        "Ters yönlerde karşılaşan akıntılar, bu adın ilk anlamındaki oluşumu yaratabilir.",
+        "Gerçek anlamında su, bir merkez çevresinde dönerek akar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q07",
+      "answer": "PALAVRA",
+      "hints": [
+        "Gerçek bir bilgiymiş gibi sunulabilir.",
+        "Söylenenin gerçekle desteklenmemesi temel özelliğidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q08",
+      "answer": "HAVADAR",
+      "hints": [
+        "Pencerelerin karşılıklı olması bu niteliği destekleyebilir.",
+        "İçerideki hava kolayca değişebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q09",
+      "answer": "GÖSTERGE",
+      "hints": [
+        "Otomobilin deposundaki miktarı bildiren türü vardır.",
+        "Bir ölçümün sonucunu okumamızı sağlayabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q10",
+      "answer": "GÖZETMEN",
+      "hints": [
+        "Sınav dışında, bir işin kurallara uygun yürütülmesini denetleyen kişi için de kullanılabilir.",
+        "Görevi sırasında sınav salonundaki davranışları takip eder."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q11",
+      "answer": "İNANDIRMA",
+      "hints": [
+        "Reklamın ve savunma konuşmasının hedeflerinden biri olabilir.",
+        "Karşıdakinin kuşkusunu giderip bir düşünceyi kabul ettirmektir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q12",
+      "answer": "KAYNAŞMAK",
+      "hints": [
+        "Renkler uyumlu bir bütün oluşturduğunda da aynı fiil kullanılır.",
+        "Başta yabancı olan kişiler zamanla samimi bir bütün oluşturur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q13",
+      "answer": "ÇİZGİ ROMAN",
+      "hints": [
+        "Sayfalardaki olay sırasını resimler de taşır.",
+        "Olaylar hem görsellerle hem kısa metinlerle aktarılır, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s13_q14",
+      "answer": "KARDAN ADAM",
+      "hints": [
+        "Üst üste yerleştirilen büyük beyaz kürelerle yapılır.",
+        "Eriyen malzemesi yüzünden sıcak havada biçimini koruyamaz, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q01",
+      "answer": "FARK",
+      "hints": [
+        "Skor tabelasında da hesaplanabilir.",
+        "Birbirine eşit iki sayı çıkarılırsa sonuç sıfırdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q02",
+      "answer": "FİLE",
+      "hints": [
+        "Saçları toplamak için başa geçirilen ince örgüye de bu ad verilir.",
+        "İplerin birbirine düğümlenmesiyle gözlü bir yapı oluşur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q03",
+      "answer": "HATTA",
+      "hints": [
+        "Öncekinden daha güçlü bir örneği cümleye katarken kullanılabilir.",
+        "Anlatılana ek olarak daha ileri bir durum belirtir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q04",
+      "answer": "ÇEVRE",
+      "hints": [
+        "Korunması için atıkların azaltılması istenir.",
+        "Canlıların birbirleriyle ve yaşadıkları yerle ilişkisini kapsar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q05",
+      "answer": "HALHAL",
+      "hints": [
+        "Altından ya da gümüşten yapılabilir.",
+        "Süsün yeri ayağın bacağa bağlandığı eklem çevresidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q06",
+      "answer": "HANÇER",
+      "hints": [
+        "Eski şiirlerde sevgilinin keskin bakışı için de kullanılır.",
+        "Kılıca göre daha kısa, elle tutulan kesici bir silahtır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q07",
+      "answer": "HOŞGÖRÜ",
+      "hints": [
+        "Toplumdaki farklılıklarla birlikte yaşamayı kolaylaştırır.",
+        "Aynı fikirde olmasan da karşıdakinin varlığına saygı duyarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q08",
+      "answer": "IHLAMUR",
+      "hints": [
+        "Hafif kerestesi marangozlukta da kullanılır.",
+        "Kokulu çiçekleri demleme bir içecekte değerlendirilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q09",
+      "answer": "GÜNAYDIN",
+      "hints": [
+        "Bir iyi dilek cümlesinin kısalmış biçimidir.",
+        "Günün erken saatlerine uygun iyi dilek sözüdür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q10",
+      "answer": "BİÇİMSEL",
+      "hints": [
+        "Bir yazıdaki başlıkların yerleşimi bu açıdan değerlendirilebilir.",
+        "Ne söylendiğinden çok nasıl bir şekle sokulduğunu ele alır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q11",
+      "answer": "KAYTARMAK",
+      "hints": [
+        "Sorumluluğu başkasına yüklemek bunun bir yolu olabilir.",
+        "Yapması gereken işi başkasının üstlenmesini bekleyebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q12",
+      "answer": "ZAMANLAMA",
+      "hints": [
+        "İyi bir esprinin etkisini de değiştirebilir.",
+        "Aynı hareket, uygun anda yapılınca farklı sonuç verebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q13",
+      "answer": "MİSAFİRLİK",
+      "hints": [
+        "Ev sahibinin ikramıyla ilişkilendirilebilir.",
+        "Bir evde ev sahibi değil ağırlanan kişi olarak bulunursun."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s14_q14",
+      "answer": "ŞAKALAŞMAK",
+      "hints": [
+        "Yetişkinler kendi çocuklarıyla da bu şekilde konuşabilir.",
+        "Karşılıklı konuşmada amaç eğlenip gülmektir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q01",
+      "answer": "FREN",
+      "hints": [
+        "Taşıtların yanında hareketli makinelerde de bulunur.",
+        "Dönen tekerleğin hareketini azaltmaya yardımcı olur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q02",
+      "answer": "FÜME",
+      "hints": [
+        "Dumanı andıran koyu gri giysiler için de kullanılabilir.",
+        "Yiyecek, dumanın etkisiyle aroma ve dayanıklılık kazanabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q03",
+      "answer": "SANKİ",
+      "hints": [
+        "Bir soru cümlesinde dikkat çekmek veya uyarmak için de kullanılabilir.",
+        "Gerçek olduğu kesinleşmemiş bir durumu öyleymiş gibi sunabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q04",
+      "answer": "ÇOBAN",
+      "hints": [
+        "Yalnız koyun değil, sığır ve manda sürülerini de güdebilir.",
+        "Otlama boyunca hayvanların güvenliğiyle de ilgilenir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q05",
+      "answer": "HAFIZA",
+      "hints": [
+        "Yeni öğrendiğimiz bir telefon numarasını da burada tutarız.",
+        "Geçmiş bir olay yeniden akla geldiğinde bu yeti devrededir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q06",
+      "answer": "İSKELE",
+      "hints": [
+        "İnşaatta işçinin yüksekte çalışmasını sağlayan düzeneğe de aynı ad verilir.",
+        "Tekne ile kara arasında geçiş sağlamaya yarar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q07",
+      "answer": "ISIRMAK",
+      "hints": [
+        "Bazı böceklerin tenimize zarar vermesi için de aynı fiil kullanılır.",
+        "Dişlerini bir nesneye bastırarak parça koparabilirsin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q08",
+      "answer": "İMTİHAN",
+      "hints": [
+        "Okulda yazılı veya sözlü yapılabilir.",
+        "Başarı, bilgi veya dayanma gücü sınanır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q09",
+      "answer": "GÜVENMEK",
+      "hints": [
+        "Tehlikede destek olacağını düşündüğümüz birine yönelirken hissedilir.",
+        "Karşındakinin sözünü tutacağı beklentisiyle rahat davranırsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q10",
+      "answer": "İÇTENLİK",
+      "hints": [
+        "Kuru bir nezaketin ötesinde hissedilebilir.",
+        "Söylenenlerle gerçek duyguların birbirini tutmasıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q11",
+      "answer": "LAĞVETMEK",
+      "hints": [
+        "Geçici olarak durdurmaktan daha kesin bir sona erdirmedir.",
+        "Resmî olarak yürürlükte olan bir düzeni kaldırmak söz konusudur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q12",
+      "answer": "OYALANMAK",
+      "hints": [
+        "Hazırlanırken gereksiz yere gecikmek için de söylenir.",
+        "Yapılacak asıl iş varken başka şeylerle vakit geçirebilirsin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q13",
+      "answer": "ÖDÜN VERMEK",
+      "hints": [
+        "Müzakere sırasında karşılıklı olarak yapılabilir.",
+        "Anlaşma sağlansın diye talebinin bir bölümünü bırakırsın, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s15_q14",
+      "answer": "PEKİŞTİRME",
+      "hints": [
+        "Ders sonundaki alıştırmalar bu amaca hizmet edebilir.",
+        "Yeni bilgi, tekrarlarla daha kalıcı hâle getirilmeye çalışılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q01",
+      "answer": "GRAM",
+      "hints": [
+        "Bir metrik ton, bu birimden bir milyon tanedir.",
+        "Bir kilogramın binde biridir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q02",
+      "answer": "ZULA",
+      "hints": [
+        "Bir cezaevinde yasak nesnelerin saklandığı bölme de bu adla anılır.",
+        "Eşyanın yerini yalnız saklayan kişinin bilmesi istenir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q03",
+      "answer": "ESANS",
+      "hints": [
+        "Bitkiden çıkarılabildiği gibi kimyasal yolla da elde edilebilir.",
+        "Parfüm hazırlanırken az miktarı güçlü koku verebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q04",
+      "answer": "DELTA",
+      "hints": [
+        "Yunan alfabesindeki dördüncü harfin de adıdır.",
+        "Akarsuyun getirdiği tortular kıyıda yeni toprak oluşturur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q05",
+      "answer": "KAYISI",
+      "hints": [
+        "Ortasında tek, sert bir çekirdek bulunur.",
+        "Taze veya kurutulmuş olarak tüketilebilen çekirdekli meyvedir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q06",
+      "answer": "KİBRİT",
+      "hints": [
+        "İçindeki çöpleri taşıyan küçük kutuya da aynı ad verilir.",
+        "Ucu yandığında kısa süreli bir alev verir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q07",
+      "answer": "KAFADAR",
+      "hints": [
+        "Bir işe birlikte girişmek için birbirlerini seçebilirler.",
+        "Birlikte plan yaparken kolay anlaşan kişiler için kullanılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q08",
+      "answer": "KARAVAN",
+      "hints": [
+        "İçinde yatak ve küçük bir mutfak bulunabilir.",
+        "Yolculukta konaklama yeri de içinde taşınır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q09",
+      "answer": "KARŞILIK",
+      "hints": [
+        "Alışverişte bir şeyin bedelini de anlatabilir.",
+        "Yapılan bir davranışa verilen tepki olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q10",
+      "answer": "KAZANMAK",
+      "hints": [
+        "Geçimini bir işten sağlamak için de aynı fiil kullanılır.",
+        "Karşılaşmadan başarılı veya üstün çıkan taraf olursun."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q11",
+      "answer": "PAYLAŞMAK",
+      "hints": [
+        "Birinin sevincine ya da derdine ortak olmak için de söylenir.",
+        "Eldekinin tamamını kendinde tutmak yerine başkasını da yararlandırırsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q12",
+      "answer": "PORTMANTO",
+      "hints": [
+        "Adı dilimize Fransızcadan geçmiştir.",
+        "Dışarıdan gelince üst giysini askısına bırakabilirsin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q13",
+      "answer": "SAYGIDEĞER",
+      "hints": [
+        "Resmî bir konuşmanın hitap bölümünde de yer alabilir.",
+        "Bir hitapta kişinin itibarını belirtmek için kullanılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s16_q14",
+      "answer": "SERİNLETME",
+      "hints": [
+        "Kolonyalı suya batırılmış bir bezle yüze uygulanabilir.",
+        "Bunaltıcı sıcaklığın etkisi azaltılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q01",
+      "answer": "CİLA",
+      "hints": [
+        "Ahşap döşemelere de uygulanabilir.",
+        "Mobilyanın son yüzey işlemlerinden biri olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q02",
+      "answer": "HİZA",
+      "hints": [
+        "Yalnız omuzların değil, bir eşyanın durduğu seviyeyi de anlatabilir.",
+        "Bir sıradakilerin aynı doğrultuda durmasını sağlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q03",
+      "answer": "AÇMAK",
+      "hints": [
+        "Radyoyu çalışır duruma getirmek için de aynı fiil kullanılır.",
+        "Kapalı tutulan bir şeyin içeriğine ulaşılmasını sağlarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q04",
+      "answer": "DÜMEN",
+      "hints": [
+        "Gerçek anlamında geminin yönünü değiştiren düzeneğin adıdır.",
+        "Argoda, görünenin arkasında kandırmaya yönelik bir düzen vardır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q05",
+      "answer": "MIZRAK",
+      "hints": [
+        "Atletizmde tek elle savrulan bir spor aracına da bu ad verilir.",
+        "Uzun gövdesiyle uzaktaki hedefe uzatılabilir veya atılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q06",
+      "answer": "MİNBER",
+      "hints": [
+        "Genellikle mihrabın sağında bulunur.",
+        "Cuma günü imamın topluluğa seslendiği yerdir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q07",
+      "answer": "KAVANOZ",
+      "hints": [
+        "Konserveleri saklamakta da kullanılır.",
+        "Kapağı kapatılarak içindeki yiyecek dış etkilerden korunur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q08",
+      "answer": "KEREVİZ",
+      "hints": [
+        "Maydanozgiller ailesindendir.",
+        "Kesildiğinde belirgin kokusuyla fark edilen bir sebzedir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q09",
+      "answer": "KESTİRME",
+      "hints": [
+        "Yumurta ve limonla hazırlanan bir yemek terbiyesine de bu ad verilir.",
+        "Hedefe daha az mesafe giderek varmayı sağlar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q10",
+      "answer": "KIZILCIK",
+      "hints": [
+        "Meyvesi küçük ve tek çekirdeklidir.",
+        "Meyvesinin tadı ekşi ve buruktur."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q11",
+      "answer": "SESSİZLİK",
+      "hints": [
+        "Kütüphanede korunması beklenir.",
+        "Etrafta işitilecek gürültü bulunmamasıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q12",
+      "answer": "ÇİZGİ FİLM",
+      "hints": [
+        "Geleneksel üretiminde her kare kâğıt üzerinde elle hazırlanabilir.",
+        "Birbirini izleyen kareler gözde hareket izlenimi yaratır, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q13",
+      "answer": "SERTLEŞMEK",
+      "hints": [
+        "Gerçek anlamında, bir maddenin daha zor biçim alır hâle gelmesini anlatır.",
+        "Kişinin konuşması daha katı ve uzlaşmaz hâle gelebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s17_q14",
+      "answer": "SUÇ İŞLEMEK",
+      "hints": [
+        "Hukuki sorumluluğun doğmasına neden olabilir.",
+        "Kanunen yasaklanmış davranışı gerçekleştirmiş olursun, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q01",
+      "answer": "İLÇE",
+      "hints": [
+        "Eskiden kaza adıyla da anılan idari birimdir.",
+        "Kendisi bir ile bağlı olan idari bölümdür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q02",
+      "answer": "İVME",
+      "hints": [
+        "Uluslararası birim sisteminde metre bölü saniye kareyle ölçülür.",
+        "Hızın zamanla ne kadar değiştiğini gösterir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q03",
+      "answer": "UMMAK",
+      "hints": [
+        "Bir olayı olacağını sanarak tahmin etmek için de kullanılabilir.",
+        "Gelecekte istediğin sonucun çıkmasını beklersin."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q04",
+      "answer": "ÇELİK",
+      "hints": [
+        "Dayanıklı kapıların yapımında da kullanılabilir.",
+        "Sertlik ve dayanıklılık gerektiren araçlarda kullanılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q05",
+      "answer": "MUSLUK",
+      "hints": [
+        "Eski kullanımında, el ve yüz yıkanan yerin bütünü için de söylenebilir.",
+        "Su tesisatının akışı kontrol eden çıkış parçasıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q06",
+      "answer": "OMURGA",
+      "hints": [
+        "Gerçek anlamında sırtımızdaki kemik dizisini anlatır.",
+        "Gemi iskeletinin uzunlamasına ana dayanağıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q07",
+      "answer": "KILAVUZ",
+      "hints": [
+        "Gemilere tehlikeli geçitlerde yol gösteren kaptan için de kullanılır.",
+        "Yolu veya bir işi bilmeyene nasıl ilerleyeceğini gösterir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q08",
+      "answer": "KISKANÇ",
+      "hints": [
+        "Değer verdiği bir şeyi herkesten esirgeyen kişi için de kullanılabilir.",
+        "Birinin başarısı veya ilgisi karşısında huzursuz olabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q09",
+      "answer": "BOŞBOĞAZ",
+      "hints": [
+        "Kendisine emanet edilen bir sırrı saklamakta zorlanabilir.",
+        "Gereğinden çok konuşarak saklanması gereken bilgiyi açığa vurabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q10",
+      "answer": "LİMONATA",
+      "hints": [
+        "Adı dilimize İtalyancadan geçmiştir.",
+        "Sıkılmış meyve suyunun tatlandırılıp sulandırıldığı içecektir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q11",
+      "answer": "YOL VERMEK",
+      "hints": [
+        "Başka bir kullanımında, bir çalışanın işine son vermeyi de anlatır.",
+        "Dar geçitte karşıdakinin önce ilerlemesine izin verirsin, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q12",
+      "answer": "ÇALAKALEM",
+      "hints": [
+        "Sonradan metni yeniden elden geçirme ihtiyacı doğurabilir.",
+        "Metin, üstünde fazla durulmadan aceleyle kâğıda aktarılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q13",
+      "answer": "SÜREKLİLİK",
+      "hints": [
+        "Bir hizmetin her gün sunulması bu açıdan değerlendirilir.",
+        "Başlayan bir işte araya kopukluk girmemesi beklenir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s18_q14",
+      "answer": "ŞEHİR PLANI",
+      "hints": [
+        "Yön bulmak için üzerinde bulunduğun noktayı arayabilirsin.",
+        "Kentin bir noktasından diğerine giden sokaklar izlenebilir, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q01",
+      "answer": "JEST",
+      "hints": [
+        "Sahnedeki oyuncunun beden dilinin bir parçasıdır.",
+        "Birine beklemediği bir iyilik yapmak da bu adla anılabilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q02",
+      "answer": "İÇİN",
+      "hints": [
+        "Bir şeyin kime ayrıldığını da gösterebilir.",
+        "“Sana yardım ... buradayım” sözünde gayeyi bildirir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q03",
+      "answer": "DAMLA",
+      "hints": [
+        "Göz ilaçları bu küçük miktarlarla uygulanabilir.",
+        "Sıvının yüzey gerilimiyle bir arada duran küçük miktarıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q04",
+      "answer": "FOSİL",
+      "hints": [
+        "Tortul kayaçlarda bulunabilir.",
+        "Bir zamanlar yaşamış canlının geçmişine ilişkin kanıt sunar."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q05",
+      "answer": "PAROLA",
+      "hints": [
+        "Birbirini tanımak isteyen askerlerin önceden kararlaştırdığı söz için de kullanılır.",
+        "Gizli tutulması, yetkisiz kişinin girişini güçleştirir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q06",
+      "answer": "PİRİNÇ",
+      "hints": [
+        "Tanelerinin öğütülmesiyle elde edilen un, muhallebi yapımında kullanılır.",
+        "Metal olanı sarı renkli bir bakır alaşımıdır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q07",
+      "answer": "KUMBARA",
+      "hints": [
+        "Metalden, topraktan veya plastikten yapılabilir.",
+        "Harcama yerine biriktirmeyi teşvik eden küçük bir kaptır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q08",
+      "answer": "LAUBALİ",
+      "hints": [
+        "Resmî bir görüşmede bu tutum yadırganabilir.",
+        "Tanışıklık derecesine uymayan aşırı rahatlık gösterir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q09",
+      "answer": "BAŞARMAK",
+      "hints": [
+        "Zor bir sınavı geçmek bunun bir örneği olabilir.",
+        "Planlanan işi istenen sonuca götürmüş olursun."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q10",
+      "answer": "OLGUNLUK",
+      "hints": [
+        "Bir meyvenin yenecek hâle gelmesi de aynı adla anlatılır.",
+        "Aceleci tepki yerine ölçülü davranmayı düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q11",
+      "answer": "ZİYARETÇİ",
+      "hints": [
+        "Müzede de hastane kapısında da bulunabilir.",
+        "Bulunduğu yerde kalıcı değil, görmeye gelen kişidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q12",
+      "answer": "BAL KABAĞI",
+      "hints": [
+        "İçinden iri çekirdekler çıkar.",
+        "Yemeklik kısmı turuncu olan iri bir üründür, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q13",
+      "answer": "BEL ÇANTASI",
+      "hints": [
+        "Seyahatte pasaport gibi küçük belgeler için kullanılabilir.",
+        "Elleri serbest bırakarak küçük eşyayı üzerinde taşımanı sağlar, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s19_q14",
+      "answer": "TARİHÇİLİK",
+      "hints": [
+        "Arşiv çalışması bu uğraşın temel yollarındandır.",
+        "Eski belgeler ve kaynaklar mesleğin çalışma malzemeleridir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q01",
+      "answer": "BEZE",
+      "hints": [
+        "Açılmak üzere ayrılmış hamur topağına da bu ad verilir.",
+        "İçi hafif, dışı kırılgan bir şekerli hamur işini düşündürür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q02",
+      "answer": "SARP",
+      "hints": [
+        "Bir meselenin çözümü zorlaştığında söylenen bir deyimde de kullanılır.",
+        "Düz ve kolay yürünür yolun karşıtı bir araziyi niteler."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q03",
+      "answer": "GÖLGE",
+      "hints": [
+        "Resimlerde bir yüzeye derinlik vermek için çizilen koyuluğa da bu ad verilir.",
+        "Güneşli yerde bir ağacın altında daha koyu görünür."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q04",
+      "answer": "HAMUR",
+      "hints": [
+        "Gerçek anlamında unun sıvıyla yoğrulmuş biçimidir.",
+        "Bir insanın karakterinin temel malzemesi gibi düşünülebilir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q05",
+      "answer": "PRİZMA",
+      "hints": [
+        "Geometride, tabanları birbirine eş iki çokgen olan katı cisme de bu ad verilir.",
+        "Gelen ışığın farklı renkleri farklı açılarla kırılır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q06",
+      "answer": "REÇETE",
+      "hints": [
+        "Bir sorunun çözümü için önerilen yol anlamında da kullanılır.",
+        "Eczaneye gidildiğinde hangi ilaçların alınacağını belirtir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q07",
+      "answer": "LAVANTA",
+      "hints": [
+        "Kurusu dolaplara güzel koku vermek için konabilir.",
+        "Güzel kokusu için yetiştirilen mor çiçekli bitkidir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q08",
+      "answer": "MALZEME",
+      "hints": [
+        "Bir tarifte, işe başlamadan önce listesi verilir.",
+        "İşin sonunda ürünün oluşmasına katılan girdilerdir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q09",
+      "answer": "PUL BİBER",
+      "hints": [
+        "Kurutulduktan sonra dövülerek hazırlanır.",
+        "Acı veya tatlı türleri yemeğe renk ve lezzet katar, iki kelime."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q10",
+      "answer": "ŞÜPHESİZ",
+      "hints": [
+        "Bir şeyi kesin olarak niteleyen sıfat görevinde de kullanılabilir.",
+        "Söyleyen kişi yargısından kuşku duymadığını belirtir."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q11",
+      "answer": "YUMUŞAMAK",
+      "hints": [
+        "Öfkeli birinin sakin bir konuşmadan sonra değişen tavrı için söylenebilir.",
+        "Bir tartışmada daha uzlaşmacı davranmaya başlarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q12",
+      "answer": "YÜZLEŞMEK",
+      "hints": [
+        "Geçmişte yapılan bir hatayı kabullenmeyi gerektirebilir.",
+        "Görmezden gelinen mesele artık açıkça ele alınır."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q13",
+      "answer": "TASARLAMAK",
+      "hints": [
+        "Bir mimar, çizime geçmeden önce de bunu yapar.",
+        "Ürün yapılmadan önce nasıl olacağını zihinde kurarsın."
+      ]
+    },
+    {
+      "id": "ky_20261018_mecaz_argo_020_s20_q14",
+      "answer": "ÜNİVERSİTE",
+      "hints": [
+        "Fakültelerin yanında enstitü ve yüksekokulları da barındırabilir.",
+        "Lise sonrasında bilimsel eğitim alınabilen bir kurumdur."
+      ]
+    },
+    {
+      "id": "source_mixed_00adf5d5115706a91f470e38",
+      "answer": "LAF ATMAK",
+      "hints": [
+        "Bazen alay ederek birinin dikkatini çekmeye yöneliktir, iki kelime.",
+        "Karşı tarafa yöneltilen sözlü bir takılmadır, mastarla biter."
+      ]
+    },
+    {
+      "id": "source_mixed_14ceffd711d0d64491e339f3",
+      "answer": "BİLMEK",
+      "hints": [
+        "Bir konuda gerekli malumata sahip olma durumudur.",
+        "Bir sorunun yanıtı zihnindeyse kişi bu eylemi yapabilecek durumdadır."
+      ]
+    },
+    {
+      "id": "source_mixed_35232b4a4e20d17d27fa705c",
+      "answer": "NOT TUTMAK",
+      "hints": [
+        "Bir ders sırasında ana noktaları deftere geçirirsin, iki kelime.",
+        "Sonradan başvurmak için kısa kayıtlar oluşturmayı anlatır, mastarla biter."
+      ]
+    },
+    {
+      "id": "source_mixed_35c4b4d4b00131ba63f86c88",
+      "answer": "CAN SİMİDİ",
+      "hints": [
+        "Batmadan su üzerinde durmaya yardımcı olur, iki kelime.",
+        "Genellikle halka biçimindedir; denize düşene uzatılabilir."
+      ]
+    },
+    {
+      "id": "source_mixed_41ee3b966aac98f0fbad7bf8",
+      "answer": "OKUMAK",
+      "hints": [
+        "Kitap sayfasındaki işaretleri zihninde anlamlandırırsın.",
+        "Sessizce yapılabileceği gibi sesli olarak da gerçekleştirilebilir."
+      ]
+    },
+    {
+      "id": "source_mixed_6f114f7de2020d0327efd78f",
+      "answer": "BEKLEMEK",
+      "hints": [
+        "Henüz gelmeyen otobüs için durakta yaptığın şeydir.",
+        "İstenen olay gerçekleşene kadar acele etmeden durmayı anlatır."
+      ]
+    },
+    {
+      "id": "source_mixed_722010a41bc412c6a9da6317",
+      "answer": "ANLAMAK",
+      "hints": [
+        "Bir açıklamadan sonra zihindeki belirsizlik ortadan kalkabilir.",
+        "“Şimdi taşlar yerine oturdu” diyen kişinin yaşadığı kavrayıştır."
+      ]
+    },
+    {
+      "id": "source_mixed_d87266a0be62d87c94d20c34",
+      "answer": "HATIRLAMAK",
+      "hints": [
+        "Unutulduğu sanılan bir ayrıntı yeniden zihne gelir.",
+        "Eski bir fotoğraf, geçmişteki bir olayı akla getirebilir."
+      ]
+    },
+    {
+      "id": "tr_010c27d6b9ff6bf34fba5c14",
+      "answer": "PAPATYA",
+      "hints": [
+        "Sarı bir orta bölümün çevresinde beyaz dilsi çiçekler görülebilir.",
+        "Çayı da yapılan türleri vardır; çiçekli bir bitki aranıyor."
+      ]
+    },
+    {
+      "id": "tr_0160df6cd3d74ff39ad1ab0d",
+      "answer": "MERDİVEN",
+      "hints": [
+        "Asansör çalışmayınca üst kata bununla çıkılabilir.",
+        "Her adımda bir üst basamağa geçersin."
+      ]
+    },
+    {
+      "id": "tr_0327ede82d52a77e0cce3cef",
+      "answer": "ÖLÇEK",
+      "hints": [
+        "Çizim büyüdükçe veya küçüldükçe gerçek nesneyle ilişkiyi belirtir.",
+        "Bir haritada 1/1000 gibi bir oranla gösterilebilir."
+      ]
+    },
+    {
+      "id": "tr_066033749f1baaeb534c98e0",
+      "answer": "PAZARTESİ",
+      "hints": [
+        "Hafta sonundan sonra mesaiye dönülen ilk gündür.",
+        "Yedi günlük sıralamada salının hemen önündedir."
+      ]
+    },
+    {
+      "id": "tr_06ad8007ce53b157058f7f36",
+      "answer": "YAPRAK",
+      "hints": [
+        "Damarları ve çoğu zaman bir sapı bulunur.",
+        "Sonbaharda bazı ağaçların dallarından dökülen bölümüdür."
+      ]
+    },
+    {
+      "id": "tr_0956c70474a9ca1e2540a57c",
+      "answer": "PENCERE",
+      "hints": [
+        "Dışarıyı görmek için perdesini aralarsın.",
+        "Açılıp kapanan bir kanadı ve onu çevreleyen çerçevesi olabilir."
+      ]
+    },
+    {
+      "id": "tr_0c5d8d18bb0c286197ee11ff",
+      "answer": "HALI",
+      "hints": [
+        "Üzerindeki desenlerle odaya renk katabilir.",
+        "İpliklerin düğümlenmesiyle dokunan türleri vardır."
+      ]
+    },
+    {
+      "id": "tr_0d44dc565917a89aeb3856e8",
+      "answer": "ARMUT",
+      "hints": [
+        "Ağacı gülgiller ailesindendir.",
+        "Meyvesi sulu ve tatlı olabilir; bazı türleri sonradan yumuşar."
+      ]
+    },
+    {
+      "id": "tr_0ebc4c5e11813360fac9e8f5",
+      "answer": "ŞİMŞEK",
+      "hints": [
+        "Gökteki ışık önce, ona eşlik eden gürültü sonra algılanabilir.",
+        "Fırtınalı bir gecede bulutları bir anlığına aydınlatabilir."
+      ]
+    },
+    {
+      "id": "tr_133940ad90c43c5cb6d4e7db",
+      "answer": "ZÜRAFA",
+      "hints": [
+        "Uzun boynu ağaçların yüksek dallarına erişmesini sağlar.",
+        "Başında boynuz benzeri küçük çıkıntılar bulunur."
+      ]
+    },
+    {
+      "id": "tr_14cad32fe1bb7d5dbc387393",
+      "answer": "DOMATES",
+      "hints": [
+        "Salça yapımında da kullanılır.",
+        "Botanik bakımından meyve olsa da mutfakta sebzelerle anılır."
+      ]
+    },
+    {
+      "id": "tr_15ad88514b0d71717b6453f3",
+      "answer": "CEVİZ",
+      "hints": [
+        "Sert dış bölümünü kırmak için özel bir el aleti kullanılabilir.",
+        "İç kısmı kıvrımlı ve yağ bakımından zengindir."
+      ]
+    },
+    {
+      "id": "tr_172160348fde27958488fbc7",
+      "answer": "MOTOSİKLET",
+      "hints": [
+        "Çoğu modelde iki tekerlek aynı doğrultudadır.",
+        "Bisikletten farklı olarak ilerlemek için pedal çevirmek gerekmez."
+      ]
+    },
+    {
+      "id": "tr_1761550efb8ae0f6ed4d8b84",
+      "answer": "TERMOMETRE",
+      "hints": [
+        "Santigrat dereceyle değer gösteren türleri vardır.",
+        "Ateş ölçerken başvurulan araçlardan biridir."
+      ]
+    },
+    {
+      "id": "tr_17e926fdf10a0e5fdff4780b",
+      "answer": "SEPET",
+      "hints": [
+        "Pazar dönüşü meyve ve sebze taşımakta kullanılabilir.",
+        "Malzemeleri birbirinin arasından geçirilerek biçim verilebilir."
+      ]
+    },
+    {
+      "id": "tr_1803cebcd60c2232fc97142c",
+      "answer": "SALYANGOZ",
+      "hints": [
+        "İlerlerken arkasında parlak bir iz bırakabilir.",
+        "Dokunulduğunda yumuşak gövdesini kabuğuna çekebilir."
+      ]
+    },
+    {
+      "id": "tr_185b2c2f4e3e92c6f68508fe",
+      "answer": "KRONOMETRE",
+      "hints": [
+        "Bir yarışçının parkuru ne kadar zamanda bitirdiğini belirleyebilir.",
+        "Günün kaç olduğunu değil, iki an arasında geçen süreyi izler."
+      ]
+    },
+    {
+      "id": "tr_18ba540da315f5af4cf2b77a",
+      "answer": "BİYOGRAFİ",
+      "hints": [
+        "Doğumdan başlayıp kişinin önemli dönüm noktalarına uzanabilir.",
+        "Anlatılan kişinin kendi yazdığı yaşam öyküsünden ayrılır."
+      ]
+    },
+    {
+      "id": "tr_18eae578d60471eaa8975106",
+      "answer": "GEMİ",
+      "hints": [
+        "Limanlarda yanaşıp yük alabilir.",
+        "Güverte ve kamaralar bu taşıtta karşılaşılabilecek bölümlerdir."
+      ]
+    },
+    {
+      "id": "tr_197ed7b13af092013b12f09e",
+      "answer": "ORKESTRA",
+      "hints": [
+        "Müzisyenler çoğu zaman bir şefin işaretlerini izler.",
+        "Bir eserde birden fazla çalgı ailesi birlikte duyulabilir."
+      ]
+    },
+    {
+      "id": "tr_1a9235c0ed97198e1b8ee5bc",
+      "answer": "AHTAPOT",
+      "hints": [
+        "Yumuşak gövdesiyle dar aralıklardan geçebilir.",
+        "Tehlike karşısında mürekkep salabilen deniz canlılarındandır."
+      ]
+    },
+    {
+      "id": "tr_1abc186307bd4bdb6f28ed35",
+      "answer": "HAMBURGER",
+      "hints": [
+        "İçine marul, turşu veya peynir eklenebilir.",
+        "Hızlı yemek lokantalarının sık sunduğu bir yiyecektir."
+      ]
+    },
+    {
+      "id": "tr_1b6c4b900faed2f20cc5e498",
+      "answer": "DENİZANASI",
+      "hints": [
+        "Balık olmasına gerek yoktur; omurgasız bir canlıdır.",
+        "Dokunaçları avını yakalamasına yardımcı olur."
+      ]
+    },
+    {
+      "id": "tr_1b94080c12cd7b5ccb973976",
+      "answer": "ARMONİKA",
+      "hints": [
+        "Tuşlu bir piyano gibi büyük bir gövdeye ihtiyaç duymaz.",
+        "Ses, içindeki metal dillerin hava akımıyla titreşmesinden doğar."
+      ]
+    },
+    {
+      "id": "tr_1c8c9568461401423e406cfa",
+      "answer": "OKSİJEN",
+      "hints": [
+        "Soluduğumuz havada bulunur.",
+        "Suyun yapısında hidrojenle birlikte yer alır."
+      ]
+    },
+    {
+      "id": "tr_1ccc0358e3e0076bc6d76516",
+      "answer": "MENEKŞE",
+      "hints": [
+        "Saksıda yetiştirilen çiçeklerle de aynı adla anılır.",
+        "Adını bir renk tonuna da vermiştir."
+      ]
+    },
+    {
+      "id": "tr_1ddf7e0da463c810e5357012",
+      "answer": "ŞİİR",
+      "hints": [
+        "Kafiye ve ölçü kullanılabilir, fakat ikisi de zorunlu değildir.",
+        "Duygu ve imgelerin yoğunlaştığı dizelerden oluşabilir."
+      ]
+    },
+    {
+      "id": "tr_1e8d080e80b4143e533847b0",
+      "answer": "YANARDAĞ",
+      "hints": [
+        "Püskürttüğü erimiş madde yüzeye çıkınca lav diye anılır.",
+        "Tepe bölümünde krater bulunabilir."
+      ]
+    },
+    {
+      "id": "tr_1fa7f2db17dcd31c0b77a507",
+      "answer": "KAMERA",
+      "hints": [
+        "Objektif, görüntünün oluşmasında görev alır.",
+        "Sinema ve televizyon çekimlerinde kullanılır."
+      ]
+    },
+    {
+      "id": "tr_20ef1f604aa8b2573824dde3",
+      "answer": "VAGON",
+      "hints": [
+        "Raylar üzerinde ilerler, çekişi çoğunlukla başka bir makine sağlar.",
+        "Yataklı veya yemekli türleri de bulunabilir."
+      ]
+    },
+    {
+      "id": "tr_21d82e41b544c39f45f3421e",
+      "answer": "KALABALIK",
+      "hints": [
+        "Konser çıkışında aynı yere yığılan insanlar bunu oluşturabilir.",
+        "Bir mekânın tenha olmasının karşıtını düşündürür."
+      ]
+    },
+    {
+      "id": "tr_2296469c0048c0663b83c94c",
+      "answer": "GÖKBİLİMCİ",
+      "hints": [
+        "Çalışma alanı Dünya dışındaki cisimleri de kapsar.",
+        "Teleskoplardan gelen verileri değerlendirebilir."
+      ]
+    },
+    {
+      "id": "tr_234cffbabbf54748296ff534",
+      "answer": "KALE",
+      "hints": [
+        "Kuşatma altında içeridekileri korumak için yapılmıştır.",
+        "Giriş kapıları ve yüksek savunma duvarları bulunabilir."
+      ]
+    },
+    {
+      "id": "tr_25d3e36db11c45044cfd2077",
+      "answer": "ANANAS",
+      "hints": [
+        "Dışında sert, pullu görünümlü bölmeler bulunur.",
+        "Üst kısmında sivri yeşil yapraklardan bir taç vardır."
+      ]
+    },
+    {
+      "id": "tr_26934737eb9f37360e58e89b",
+      "answer": "KARBÜRATÖR",
+      "hints": [
+        "İçten yanmalı motorun besleme sistemiyle ilişkilidir.",
+        "Yanma odasına gidecek yakıt-hava oranını hazırlayan parçadır."
+      ]
+    },
+    {
+      "id": "tr_26cc0dca12c46f95cf1ad280",
+      "answer": "SAAT",
+      "hints": [
+        "Duvara asılan veya bileğe takılan türleri vardır.",
+        "Kadranında dakikaları ve zamanı izleriz."
+      ]
+    },
+    {
+      "id": "tr_26e2023da5389e730a76f3c0",
+      "answer": "ALÜMİNYUM",
+      "hints": [
+        "İçecek kutularında ve mutfak folyolarında kullanılır.",
+        "Hafifliği nedeniyle uçak yapımında da tercih edilir."
+      ]
+    },
+    {
+      "id": "tr_27dcb8113b8fa06191101b02",
+      "answer": "AĞAÇ",
+      "hints": [
+        "Odunsu gövdesinden dallar ayrılır.",
+        "Ormanları oluşturan uzun ömürlü canlılardandır."
+      ]
+    },
+    {
+      "id": "tr_28daf3ab3acfad712ab02885",
+      "answer": "SATRANÇ",
+      "hints": [
+        "Oyunun amacı karşı tarafın şahını kaçamayacağı tehdide sokmaktır.",
+        "Her oyuncu başlangıçta on altı taşla oynar."
+      ]
+    },
+    {
+      "id": "tr_2ab3bc0e835c70ef607c6b99",
+      "answer": "TROMPET",
+      "hints": [
+        "Sesi, çalan kişinin dudaklarının titreşimiyle başlar.",
+        "Ucunda dışa doğru genişleyen bir çan bölümü bulunur."
+      ]
+    },
+    {
+      "id": "tr_2b3e4dfac327a1383b14ebc6",
+      "answer": "DİPLOMAT",
+      "hints": [
+        "Büyükelçilik gibi temsilciliklerde görev yapabilir.",
+        "Ülkeler arasındaki görüşmelerde mesleki rol üstlenir."
+      ]
+    },
+    {
+      "id": "tr_2c0b3bac5eb39dc0651e406c",
+      "answer": "ÇANAK",
+      "hints": [
+        "Çorba veya benzeri yiyecekler içine konabilir.",
+        "Düz tabaktan daha çukur bir biçimi düşündürür."
+      ]
+    },
+    {
+      "id": "tr_2e96ab297381d588d069fd67",
+      "answer": "BULUT",
+      "hints": [
+        "Rüzgârla yer değiştirebilir.",
+        "Yağış bırakan türleri gökyüzünde görülür."
+      ]
+    },
+    {
+      "id": "tr_3073d61e36c9c456f6a516a6",
+      "answer": "HOPARLÖR",
+      "hints": [
+        "Bir müzik sisteminin dışarı ses veren parçasıdır.",
+        "Titreşen bir yüzey aracılığıyla havada ses dalgaları oluşturur."
+      ]
+    },
+    {
+      "id": "tr_31689dc82ec9d6942441e8d1",
+      "answer": "GÜBRE",
+      "hints": [
+        "Bitkinin ihtiyaç duyduğu besin maddelerini sağlamaya yardımcı olur.",
+        "Hayvan atıkları veya kimyasal yollarla elde edilebilir."
+      ]
+    },
+    {
+      "id": "tr_33b3d824e4292e477731dd4b",
+      "answer": "ASTRONOM",
+      "hints": [
+        "Uzak gök cisimlerinden gelen ışığı inceleyebilir.",
+        "Mesleği yıldızlarla ilgili kehanet yorumlamak değildir."
+      ]
+    },
+    {
+      "id": "tr_34b35fb6b2be758765317f2b",
+      "answer": "DAVUL",
+      "hints": [
+        "Elle ya da tokmakla çalınabilir.",
+        "Gövdesine gerili yüzeye vurulunca ses çıkar."
+      ]
+    },
+    {
+      "id": "tr_35dff511dcc06b876ecaa4ed",
+      "answer": "TERAZİ",
+      "hints": [
+        "Pazarda alınan ürünün ağırlığını belirlerken kullanılır.",
+        "İki kefeli biçimi adaletin simgesi olarak da görülür."
+      ]
+    },
+    {
+      "id": "tr_385c9b442c101af51d6373ce",
+      "answer": "BİLGİSAYAR",
+      "hints": [
+        "Yazılım olmadan kendisine verilen işleri yapamaz.",
+        "Bellek ve işlemci gibi bileşenleri vardır."
+      ]
+    },
+    {
+      "id": "tr_3d3448a3631ccec38e18d0e1",
+      "answer": "KURDELE",
+      "hints": [
+        "Hediye paketinin üzerinde fiyonk yapılabilir.",
+        "İnce ve uzun bir kumaş şeridini düşündürür."
+      ]
+    },
+    {
+      "id": "tr_3d346b40c45bf6e1cc089277",
+      "answer": "KİREMİT",
+      "hints": [
+        "Çatıda birbirine bindirilerek suyun içeri girmesini önler.",
+        "Kilden üretilip yüksek sıcaklıkta sertleştirilebilir."
+      ]
+    },
+    {
+      "id": "tr_3df089ff2953bf400025d1d0",
+      "answer": "İSKAMBİL",
+      "hints": [
+        "Destede kupa, karo, sinek ve maça işaretleri görülebilir.",
+        "Papaz, kız ve vale gibi figürler içerir."
+      ]
+    },
+    {
+      "id": "tr_3eceb93f2bc12cb80dfa4264",
+      "answer": "MANDALİNA",
+      "hints": [
+        "Kabuğu elle kolayca ayrılabilir.",
+        "İçi dilimlerden oluşur ve hoş kokulu bir turunçgildir."
+      ]
+    },
+    {
+      "id": "tr_409e850226d1eb3eef938632",
+      "answer": "METEORİT",
+      "hints": [
+        "Atmosferde bütünüyle yanıp tükenmemiş bir parçadır.",
+        "Yeryüzünde bulunabilen uzay kökenli taşları düşündürür."
+      ]
+    },
+    {
+      "id": "tr_41796525c222661ab10e6f96",
+      "answer": "MİKROSKOP",
+      "hints": [
+        "Bir hücrenin ayrıntılarını incelemek için kullanılabilir.",
+        "Laboratuvarda merceklerle büyütme yapan türleri yaygındır."
+      ]
+    },
+    {
+      "id": "tr_4315e0506e5efe5cf5caa870",
+      "answer": "ARKEOLOJİ",
+      "hints": [
+        "Kazılardan çıkarılan buluntuları değerlendirir.",
+        "Eski yerleşimlerin nasıl yaşadığını maddi izlerden araştırır."
+      ]
+    },
+    {
+      "id": "tr_44011701d2224fb2da946243",
+      "answer": "JENERATÖR",
+      "hints": [
+        "Elektrik kesilince yedek güç kaynağı olabilir.",
+        "Dönen bir makineden elektrik akımı elde edilebilir."
+      ]
+    },
+    {
+      "id": "tr_44bad3de307604265b9c3f17",
+      "answer": "SİLİNDİR",
+      "hints": [
+        "Konserve kutusunun gövdesi bu şekli andırır.",
+        "Dik örneğinde iki paralel dairesel taban bulunur."
+      ]
+    },
+    {
+      "id": "tr_453e7736842afade4e8b92bd",
+      "answer": "HAVUÇ",
+      "hints": [
+        "Yenen kısmı çoğunlukla toprağın altında gelişir.",
+        "Çiğ olarak rendelenip salataya katılabilir."
+      ]
+    },
+    {
+      "id": "tr_476bd2e5e1b75d1b07f7f366",
+      "answer": "YAĞMURLUK",
+      "hints": [
+        "Dışarıdaki suyun giysilere ulaşmasını engellemek için giyilir.",
+        "Kapüşonlu modelleri başı da koruyabilir."
+      ]
+    },
+    {
+      "id": "tr_4a6c829c3b06b8e7ee590c4c",
+      "answer": "LOKOMOTİF",
+      "hints": [
+        "Demiryolu dizisinin hareketini sağlayan çekici birimdir.",
+        "Eski örneklerinde su buharının gücünden yararlanılırdı."
+      ]
+    },
+    {
+      "id": "tr_4a90850e9529b59ac51930d2",
+      "answer": "ORKİDE",
+      "hints": [
+        "Çiçekleri çok farklı renk ve biçimlerde olabilir.",
+        "Bazı türlerinin yumruları salep elde etmekte kullanılır."
+      ]
+    },
+    {
+      "id": "tr_4aa63e0a681f3cca8c961278",
+      "answer": "KERTENKELE",
+      "hints": [
+        "Soğukkanlı, omurgalı bir hayvandır.",
+        "Birçok türü dört bacağı ve uzun kuyruğuyla tanınır."
+      ]
+    },
+    {
+      "id": "tr_4d0d323ee2211fbb978f52b1",
+      "answer": "KAPI",
+      "hints": [
+        "Koluna basıp içeri geçeriz.",
+        "Kilit takılarak bir mekâna girişi sınırlayabilir."
+      ]
+    },
+    {
+      "id": "tr_4df6231a6d942845a5e88137",
+      "answer": "KANGURU",
+      "hints": [
+        "Ön bacakları arka bacaklarından daha küçüktür.",
+        "Dengesini korumada güçlü kuyruğundan yararlanır."
+      ]
+    },
+    {
+      "id": "tr_4e34767d517a5839a0fa9e02",
+      "answer": "KAHVERENGİ",
+      "hints": [
+        "Kırmızı, sarı ve siyahın karışımlarıyla elde edilebilen toprak tonudur.",
+        "Çikolatanın koyu tonunu çağrıştırır."
+      ]
+    },
+    {
+      "id": "tr_5159402dbc732da15e091ca3",
+      "answer": "FARE",
+      "hints": [
+        "Uzun kuyruğu ve keskin kesici dişleri vardır.",
+        "Küçük deliklerden evlere girebilen bir kemirgendir."
+      ]
+    },
+    {
+      "id": "tr_5223c3329b34d69fee66609e",
+      "answer": "BOYA",
+      "hints": [
+        "Fırça veya ruloyla uygulanabilen türleri vardır.",
+        "Süsleme yanında yüzeyi korumak için de kullanılır."
+      ]
+    },
+    {
+      "id": "tr_53d8b109357dfe07b55cb13d",
+      "answer": "ROMAN",
+      "hints": [
+        "Bölümler boyunca gelişen olaylar ve kişiler içerebilir.",
+        "Bir olay örgüsünü kitap uzunluğunda anlatabilir."
+      ]
+    },
+    {
+      "id": "tr_54a72ea939edbd1732679a62",
+      "answer": "KALİGRAFİ",
+      "hints": [
+        "Harflerin biçimi ve aralarındaki düzen önemlidir.",
+        "Yazının yalnız okunurluğuyla değil güzelliğiyle de ilgilenir."
+      ]
+    },
+    {
+      "id": "tr_54d68f34ef4379cddb467e09",
+      "answer": "KARİKATÜR",
+      "hints": [
+        "Bir yüzün burnu ya da çenesi bilerek abartılabilir.",
+        "Mizah dergilerinin sık başvurduğu bir çizim türüdür."
+      ]
+    },
+    {
+      "id": "tr_552b1e9e763d243ba39cbf1d",
+      "answer": "DENİZ",
+      "hints": [
+        "Kıyı, koy ve körfezleri bulunabilir.",
+        "Geniş bir tuzlu su alanında yüzdüğünü düşün."
+      ]
+    },
+    {
+      "id": "tr_57a6f49f2cfd3d539b203b12",
+      "answer": "KALEM",
+      "hints": [
+        "Yazarken ucu kâğıt üzerinde iz bırakır.",
+        "Kurşun adıyla anılan türünün içinde aslında grafit bulunur."
+      ]
+    },
+    {
+      "id": "tr_584e2b94de803a7ea286dc16",
+      "answer": "MANTAR",
+      "hints": [
+        "Şapkalı türleri doğada görülebilir.",
+        "Yenilebilen ve zehirli türleri vardır."
+      ]
+    },
+    {
+      "id": "tr_5a073153ef0d2554b36e12ff",
+      "answer": "BİSİKLET",
+      "hints": [
+        "Gidonla yönü değiştirilir.",
+        "Zincir, pedaldaki hareketi arka tekerleğe aktarabilir."
+      ]
+    },
+    {
+      "id": "tr_5ab31cdf3b2e8ba9dc3eddca",
+      "answer": "KARABİBER",
+      "hints": [
+        "Kurutulmuş taneleri değirmende öğütülebilir.",
+        "Yemeklere keskin tat veren bir baharattır."
+      ]
+    },
+    {
+      "id": "tr_5b63ed9948e585b47d558a1c",
+      "answer": "KEMAN",
+      "hints": [
+        "Yayın kılları tellere sürtünerek ses çıkarır.",
+        "Tiz sesli bir yaylı çalgıdır ve dört teli vardır."
+      ]
+    },
+    {
+      "id": "tr_5c18c07fa6da8bf8f9a70e24",
+      "answer": "MERCEK",
+      "hints": [
+        "Büyüteçte kullanılan temel parçadır.",
+        "Dışbükey veya içbükey biçimleri bulunur."
+      ]
+    },
+    {
+      "id": "tr_5c70202138bdfe81e30a5e4a",
+      "answer": "KARTAL",
+      "hints": [
+        "Keskin görüşüyle uzaktaki avı fark edebilir.",
+        "Kancalı gagası ve güçlü ayaklarıyla avcı bir kuştur."
+      ]
+    },
+    {
+      "id": "tr_5e02db471cc805fe9ae03337",
+      "answer": "PLAKA",
+      "hints": [
+        "Harf ve rakamları taşıtı diğerlerinden ayırır.",
+        "Türkiye'deki taşıtlarda ilk rakamlar ili belirtir."
+      ]
+    },
+    {
+      "id": "tr_5e31425a5f45dd4587d1dd00",
+      "answer": "MAKAS",
+      "hints": [
+        "Sapındaki halkalara parmaklar geçirilir.",
+        "Kâğıt ve kumaş kesmekte kullanılan türleri vardır."
+      ]
+    },
+    {
+      "id": "tr_5ec5c800dd6ad35c36d4899a",
+      "answer": "VOLEYBOLCU",
+      "hints": [
+        "Servis atıp smaç vurabilir.",
+        "Topu yere düşürmeden takım arkadaşına pas verir."
+      ]
+    },
+    {
+      "id": "tr_5f3d98515656f913c6b4cb1c",
+      "answer": "HEYKEL",
+      "hints": [
+        "Taş yontularak veya malzeme dökülerek üretilebilir.",
+        "Bir büst de bu sanat alanının ürünüdür."
+      ]
+    },
+    {
+      "id": "tr_6175a6d5d042c5820cdae631",
+      "answer": "AYVA",
+      "hints": [
+        "Çiğ yenebileceği gibi tatlısı da yapılabilir.",
+        "Sarı kabuğunun altında sert bir meyve eti bulunur."
+      ]
+    },
+    {
+      "id": "tr_62c8b30329016090f7cfb337",
+      "answer": "LAZER",
+      "hints": [
+        "Sıradan lambadan farklı, çok yönlü dağılmayan bir demet üretir.",
+        "Kesme işlemlerinde ve optik cihazlarda kullanılabilir."
+      ]
+    },
+    {
+      "id": "tr_6451012c7046c368d0457abc",
+      "answer": "HİGROMETRE",
+      "hints": [
+        "Serada veya kapalı ortamda havanın durumunu izlemeye yardım eder.",
+        "Sıcaklığı değil, su buharıyla ilişkili bir büyüklüğü gösterir."
+      ]
+    },
+    {
+      "id": "tr_645fd874018f000e9778c57a",
+      "answer": "KARANLIK",
+      "hints": [
+        "Aydınlatma kapanınca bir oda bu duruma geçebilir.",
+        "Gözün çevredeki nesneleri seçmekte zorlandığı ortamdır."
+      ]
+    },
+    {
+      "id": "tr_658d5a6259877739976478c5",
+      "answer": "BAROMETRE",
+      "hints": [
+        "Hava durumu gözlemlerinde başvurulan araçlardandır.",
+        "Cıvalı ve metal kutulu türleri bulunur."
+      ]
+    },
+    {
+      "id": "tr_66ef98e157d2ed465cdf1a09",
+      "answer": "KİMYACI",
+      "hints": [
+        "Laboratuvarda maddelerin birbiriyle etkileşimini araştırır.",
+        "Atomlar ve moleküllerle ilgili deneyler yapabilir."
+      ]
+    },
+    {
+      "id": "tr_673c5354cba2cfe823fd5fa9",
+      "answer": "ROBOT",
+      "hints": [
+        "Sanayide tekrarlanan işleri insan yerine yapabilir.",
+        "İnsan biçiminde olması zorunlu değildir."
+      ]
+    },
+    {
+      "id": "tr_67f936b12db99cb356330382",
+      "answer": "KARBON",
+      "hints": [
+        "Elmas ve grafit, bu elementin farklı biçimleridir.",
+        "Organik bileşiklerin yapısında temel bir yer tutar."
+      ]
+    },
+    {
+      "id": "tr_6cb8ade8565234c8c5d4bc66",
+      "answer": "GÖZLEMEVİ",
+      "hints": [
+        "Teleskop gibi aygıtların yer aldığı bir araştırma merkezidir.",
+        "Işık kirliliğinden uzak yerler bu çalışma için uygundur."
+      ]
+    },
+    {
+      "id": "tr_6e3eea878d486b49122107b8",
+      "answer": "ÖRDEK",
+      "hints": [
+        "Geniş gagasıyla su içindeki besinleri toplayabilir.",
+        "Yavruları annelerinin ardında sıra hâlinde yüzebilir."
+      ]
+    },
+    {
+      "id": "tr_6f55afbb1b398c7129e3c192",
+      "answer": "ÖYKÜ",
+      "hints": [
+        "Az sayıda olay veya kişi üzerinde yoğunlaşabilir.",
+        "Bir oturuşta okunabilen kısa kurmaca anlatıyı düşündürür."
+      ]
+    },
+    {
+      "id": "tr_6fec12015e3b55cb4b1b7466",
+      "answer": "BİLMECE",
+      "hints": [
+        "Yanıtı doğrudan söylemek yerine çağrışımlar sunar.",
+        "“Neymiş?” diye düşünerek çözülen bir söz oyunudur."
+      ]
+    },
+    {
+      "id": "tr_7174543d13fdb5d43e0302b5",
+      "answer": "GÜNLÜK",
+      "hints": [
+        "Anlatıcı kendi yaşadıklarını yakın zamanda kaydeder.",
+        "Sayfaların başında tarih bulunması bu türü çağrıştırır."
+      ]
+    },
+    {
+      "id": "tr_724345c04a920c64192b6ff9",
+      "answer": "ELEKTROLİZ",
+      "hints": [
+        "Elektrik enerjisi kimyasal değişimi sağlar.",
+        "Elektrotlar arasında iyonların hareketiyle ilişkilidir."
+      ]
+    },
+    {
+      "id": "tr_76115c3c5c3fcd00ab861c6f",
+      "answer": "KORO",
+      "hints": [
+        "Tek bir solist yerine birçok insanın sesi duyulur.",
+        "Üyeleri aynı eseri birlikte seslendirir."
+      ]
+    },
+    {
+      "id": "tr_769a9af7a194efb705a692ff",
+      "answer": "ASMA",
+      "hints": [
+        "Desteğe tutunarak uzanan dalları olabilir.",
+        "Bağlarda yetiştirilir ve salkımlar hâlinde meyve verir."
+      ]
+    },
+    {
+      "id": "tr_78c1cef5f787a31da05153dd",
+      "answer": "DEFTER",
+      "hints": [
+        "Sayfaları boş veya çizgili olabilir.",
+        "Öğrencinin ders sırasında yazdıklarını saklar."
+      ]
+    },
+    {
+      "id": "tr_7938700d29cb79290c95674d",
+      "answer": "BARDAK",
+      "hints": [
+        "Sıvıyı içebilmek için dudağa yaklaştırılır.",
+        "Çay veya su koyulan günlük bir kaptır."
+      ]
+    },
+    {
+      "id": "tr_7b591973a34be87df09a30fe",
+      "answer": "ANTİSEPTİK",
+      "hints": [
+        "Cansız yüzey temizleyicisinden farklı olarak canlı doku söz konusudur.",
+        "Kullanım amacı mikrobik bulaşma riskini azaltmaktır."
+      ]
+    },
+    {
+      "id": "tr_81ad45221057d446bfe22347",
+      "answer": "ÇİKOLATA",
+      "hints": [
+        "Kakao yağı ve şeker içeren çeşitleri bulunur.",
+        "Tablet, dolgu veya kaplama biçiminde sunulabilir."
+      ]
+    },
+    {
+      "id": "tr_842814110af2d0b46f550388",
+      "answer": "ÇEKİRGE",
+      "hints": [
+        "Arka bacakları sıçramaya uyarlanmıştır.",
+        "Çayır ve tarla bitkileriyle beslenen türleri vardır."
+      ]
+    },
+    {
+      "id": "tr_85a99de927247b187573fccf",
+      "answer": "VİYOLONSEL",
+      "hints": [
+        "Altındaki çubuk yere dayanır.",
+        "Kemandan daha büyük ve daha kalın sesli bir yaylıdır."
+      ]
+    },
+    {
+      "id": "tr_865a2ef7a5dc1ddd328cc69d",
+      "answer": "MİNERALOJİ",
+      "hints": [
+        "Kuvars ve feldispat gibi doğal maddelerle ilgilenir.",
+        "Kristallerin sertliği ve yapısı araştırma konuları arasındadır."
+      ]
+    },
+    {
+      "id": "tr_8743c7932806d47cf8fccd2c",
+      "answer": "MAGNEZYUM",
+      "hints": [
+        "Yandığında parlak beyaz ışık verebilir.",
+        "Hafif alaşımlarda kullanılan kimyasal elementlerdendir."
+      ]
+    },
+    {
+      "id": "tr_87927ae0a5b2b5d2d0d3b838",
+      "answer": "MASA",
+      "hints": [
+        "Düz üst yüzeyine tabak ya da defter koyulabilir.",
+        "Çevresine sandalyeler dizilebilir."
+      ]
+    },
+    {
+      "id": "tr_88d1cb216dd5334735b75b3b",
+      "answer": "JETON",
+      "hints": [
+        "Bir makineyi çalıştırmak veya oyunda değer belirtmek için kullanılabilir.",
+        "Alışverişte her yerde geçen resmî para olmak zorunda değildir."
+      ]
+    },
+    {
+      "id": "tr_8e2bb40da30ec8c654ad07f3",
+      "answer": "TELEFON",
+      "hints": [
+        "Ahize veya mikrofonla sesi alıp karşı tarafa iletir.",
+        "Numara çevirerek uzaktaki birine ulaşmayı düşündürür."
+      ]
+    },
+    {
+      "id": "tr_8f0261725dbca5e500698e41",
+      "answer": "TRAMPET",
+      "hints": [
+        "Askerî bandolarda duyulabilen vurmalı bir çalgıdır.",
+        "Sesindeki keskin cızırtıyla daha büyük vurmalılardan ayrılır."
+      ]
+    },
+    {
+      "id": "tr_8fd856b705252c8d09b0c2fe",
+      "answer": "MOZAİK",
+      "hints": [
+        "Bir bütün, yan yana getirilen çok sayıda küçük parçadan doğar.",
+        "Yapıştırılan renkli parçalarla resim veya desen oluşturulur."
+      ]
+    },
+    {
+      "id": "tr_9206f136ee564911368df4b5",
+      "answer": "SANDALYE",
+      "hints": [
+        "Oturulacak bölümünün arkasında dayanak bulunur.",
+        "Aynı anda genellikle bir kişi kullanır."
+      ]
+    },
+    {
+      "id": "tr_922804a324500f86f78f5a1c",
+      "answer": "ERİK",
+      "hints": [
+        "Taze yenebilir veya kurutulabilir.",
+        "Ortada sert bir çekirdek, çevresinde meyve eti bulunur."
+      ]
+    },
+    {
+      "id": "tr_92d97169d313925cedfdbefe",
+      "answer": "KİRAZ",
+      "hints": [
+        "Çoğunlukla uzun ince bir sapla ağaca bağlıdır.",
+        "Vişneden farklı olarak meyvesi genellikle tatlıdır."
+      ]
+    },
+    {
+      "id": "tr_939f34238170826d249f0103",
+      "answer": "ATOM",
+      "hints": [
+        "Merkezinde çekirdek, çevresinde elektronlar bulunur.",
+        "Bir elementin türünü proton sayısı belirler."
+      ]
+    },
+    {
+      "id": "tr_950b815c4c10528e2f76acf8",
+      "answer": "BÖĞÜRTLEN",
+      "hints": [
+        "Küçük yuvarlak parçacıkların birleşmiş görünümü vardır.",
+        "Dikenli çalıların üzerinde yetişir."
+      ]
+    },
+    {
+      "id": "tr_95de50a102fa1fc1990012ef",
+      "answer": "OTOMAT",
+      "hints": [
+        "İnsan görevli olmadan ödeme alıp ürün verebilir.",
+        "Seçim düğmesine basınca alınan ürün bir bölmeye düşebilir."
+      ]
+    },
+    {
+      "id": "tr_96e30a5920c77dfbcc3c51d3",
+      "answer": "EKOSİSTEM",
+      "hints": [
+        "Bir orman veya göl bu bütüne örnek olabilir.",
+        "Canlılar kadar su, ışık ve toprak da işin içindedir."
+      ]
+    },
+    {
+      "id": "tr_9851e52eea306943b4200a38",
+      "answer": "KİLİT",
+      "hints": [
+        "Doğru anahtar olmadan açılması engellenir.",
+        "Kapı, sandık veya çantanın güvenliğini sağlayabilir."
+      ]
+    },
+    {
+      "id": "tr_98ceceb21f7d4ebd901c0110",
+      "answer": "GÜNEŞ",
+      "hints": [
+        "Gezegenimize ışık ve ısı sağlar.",
+        "Bir gezegen değil, ışık yayan sıcak bir yıldızdır."
+      ]
+    },
+    {
+      "id": "tr_9a13d4a4238b4d3948d1d90e",
+      "answer": "JÜPİTER",
+      "hints": [
+        "Dış gezegenler arasında büyük bir gaz devidir.",
+        "Büyük Kırmızı Leke adlı fırtınasıyla tanınır."
+      ]
+    },
+    {
+      "id": "tr_9bc66bbf6166da796f8a4845",
+      "answer": "DİKDÖRTGEN",
+      "hints": [
+        "Karşılıklı kenarları birbirine paraleldir.",
+        "Dört açısının her biri doksan derecedir."
+      ]
+    },
+    {
+      "id": "tr_9cbfc329fac1e2a0009ae5b8",
+      "answer": "NOKTALAMA",
+      "hints": [
+        "Yazıda cümle sonunu ve duraklamaları belli eder.",
+        "Anlamın doğru anlaşılmasına yardımcı işaretleri kapsar."
+      ]
+    },
+    {
+      "id": "tr_9dbaefe172d2d514d8e4c4e6",
+      "answer": "PUSULA",
+      "hints": [
+        "İbresi kuzey-güney doğrultusunda yönelir.",
+        "Haritayla birlikte kullanılarak rota belirlenebilir."
+      ]
+    },
+    {
+      "id": "tr_9e0dd12b7889b18c78906a13",
+      "answer": "KULAKLIK",
+      "hints": [
+        "Kulağa yakın küçük ses vericileri vardır.",
+        "Müzik dinlerken çevreyi rahatsız etmemeye yardımcı olur."
+      ]
+    },
+    {
+      "id": "tr_9eb03b10b151b403f011a403",
+      "answer": "HELİKOPTER",
+      "hints": [
+        "Uçak gibi uzun bir piste ihtiyaç duymadan kalkabilir.",
+        "Dönen palalarıyla yukarı yönlü taşıma kuvveti üretir."
+      ]
+    },
+    {
+      "id": "tr_9f68e105a4526a448f3fb3ac",
+      "answer": "KÜTÜPHANE",
+      "hints": [
+        "Raflardaki kaynaklar belirli bir düzene göre sınıflandırılır.",
+        "Okuyucular bazı eserleri ödünç alıp geri getirir."
+      ]
+    },
+    {
+      "id": "tr_a13fc3a37e567cff3b2a88ec",
+      "answer": "MADALYA",
+      "hints": [
+        "Bir yarışmada derece alan sporcunun boynuna takılabilir.",
+        "Altın, gümüş ve bronz derecelerini düşündürür."
+      ]
+    },
+    {
+      "id": "tr_a29acf20a5467b8a9378153f",
+      "answer": "MASAL",
+      "hints": [
+        "Gerçek dünyada olması beklenmeyen olaylar içerebilir.",
+        "“Bir varmış” diye başlayan anlatıları çağrıştırır."
+      ]
+    },
+    {
+      "id": "tr_a344320e58f03fd7294ee9bd",
+      "answer": "DİSKOGRAFİ",
+      "hints": [
+        "Sanatçının ses kayıtlarına ilişkin bir döküm oluşturur.",
+        "Albümlerin yayımlanma bilgilerine ulaşmayı sağlar."
+      ]
+    },
+    {
+      "id": "tr_a526cc4ef5725362511bb4f8",
+      "answer": "KANO",
+      "hints": [
+        "Kürekçi çoğu türünde tek bir palayla suyu iter.",
+        "Küçük ve hafif bir su taşıtını düşündürür."
+      ]
+    },
+    {
+      "id": "tr_a57b2a2dd256326eacc9a011",
+      "answer": "KURT",
+      "hints": [
+        "Evcil köpekle yakın akrabadır.",
+        "Uluyarak da iletişim kuran bir yırtıcı memelidir."
+      ]
+    },
+    {
+      "id": "tr_a62c2ffcc3fdafa243b945bc",
+      "answer": "İĞNE",
+      "hints": [
+        "İpliğin ucunu küçük gözünden geçirirsin.",
+        "Kumaşı delip dikiş oluşturmak için kullanılır."
+      ]
+    },
+    {
+      "id": "tr_ab01b63fb4c157256937e80b",
+      "answer": "PERİSKOP",
+      "hints": [
+        "Bakılan yer göz hizasının dışında olabilir.",
+        "Denizaltından yüzeyi gözlemek için kullanılan türü vardır."
+      ]
+    },
+    {
+      "id": "tr_ac5b63a013e4b1a899a0addd",
+      "answer": "IZGARA",
+      "hints": [
+        "Yiyecek, ısının geldiği yerin üzerindeki çubuklara konabilir.",
+        "Mangalda et pişirirken başvurulan yöntemlerden biridir."
+      ]
+    },
+    {
+      "id": "tr_ac6c6b2cce546efc1e5f1a1b",
+      "answer": "KALDIRAÇ",
+      "hints": [
+        "Bir dayanak noktası çevresinde hareket eder.",
+        "Uzun koldan kuvvet uygulamak yükü kaldırmayı kolaylaştırabilir."
+      ]
+    },
+    {
+      "id": "tr_ae3f7a64e0fa5d5eb0e82eb8",
+      "answer": "AKVARYUM",
+      "hints": [
+        "Balıkların hareketleri dışarıdan izlenebilir.",
+        "İçinde suyun temiz kalması için filtre kullanılabilir."
+      ]
+    },
+    {
+      "id": "tr_ae8e1a32406b951d03ad1ce3",
+      "answer": "DÜRBÜN",
+      "hints": [
+        "Bir gözle bakılan teleskoptan bu yönüyle ayrılır.",
+        "Doğa gözlemlerinde uzaktaki kuşu yakından gösterir."
+      ]
+    },
+    {
+      "id": "tr_aefb1a70bb8a90eb377804b5",
+      "answer": "ENGİNAR",
+      "hints": [
+        "Çiçeklenmeden önce toplanan başı yemeklerde kullanılır.",
+        "Zeytinyağlı yemeğiyle tanınan bir sebzedir."
+      ]
+    },
+    {
+      "id": "tr_af318ee2bcb4581fb3b92389",
+      "answer": "AYNA",
+      "hints": [
+        "Düz bir türünde görüntü, karşısındaki nesneyle aynı boydadır.",
+        "Işığı geri yansıtan yüzeyiyle görüntü verir."
+      ]
+    },
+    {
+      "id": "tr_b50d8568597f41cc3b615ed6",
+      "answer": "ÇEKİRDEK",
+      "hints": [
+        "Atomun kütlesinin büyük bölümü burada toplanır.",
+        "Elektronların çevresinde bulunduğu merkezî yapıdır."
+      ]
+    },
+    {
+      "id": "tr_b5f995d189bc2ddf2e8fb486",
+      "answer": "PİDE",
+      "hints": [
+        "Hamurun üzerine iç malzemesi konup fırına sürülür.",
+        "Ramazanda sade ve yuvarlak biçimi de sık tüketilir."
+      ]
+    },
+    {
+      "id": "tr_b63c9c3b681efb8689ada20e",
+      "answer": "TENCERE",
+      "hints": [
+        "Derin gövdesi sıvı yemekleri de tutar.",
+        "Yemek pişerken kapağı kapatılabilir."
+      ]
+    },
+    {
+      "id": "tr_b9294477df86030e59bb1040",
+      "answer": "ÇADIR",
+      "hints": [
+        "Kamp sırasında geceyi içinde geçirebilirsin.",
+        "Taşınabilir iskeleti ve gerilen örtüsü vardır."
+      ]
+    },
+    {
+      "id": "tr_ba9375d75da661dcd5d45d8d",
+      "answer": "KELEBEK",
+      "hints": [
+        "Yaşamının erken döneminde tırtıl olarak görülür.",
+        "Ergin hâlinde kanatlarını açarak uçar."
+      ]
+    },
+    {
+      "id": "tr_bb1db9d8663b14490ec3539f",
+      "answer": "TELESKOP",
+      "hints": [
+        "Gece göğündeki çok uzak cisimleri incelemeye yardımcı olur.",
+        "Mercekli veya aynalı türleri bulunur."
+      ]
+    },
+    {
+      "id": "tr_bd25871d7a4c47924095da5d",
+      "answer": "KRİPTOLOJİ",
+      "hints": [
+        "Bir mesajı yetkisiz kişiden gizleme yöntemleriyle ilgilenir.",
+        "Şifreleme kadar şifreleri çözme çalışmalarını da kapsar."
+      ]
+    },
+    {
+      "id": "tr_be2ec88d35b978437a212c10",
+      "answer": "FÜZE",
+      "hints": [
+        "Hedefe yönelerek ilerleyen bir itki sistemine sahiptir.",
+        "Kendi taşıdığı yakıtla hareket edebilen türleri vardır."
+      ]
+    },
+    {
+      "id": "tr_bf7b09537776fe77f3e58c42",
+      "answer": "VİTAMİN",
+      "hints": [
+        "Vücudun bazı işlevleri için küçük miktarlarda gerekir.",
+        "Eksikliği beslenmeyle ilişkili sorunlara yol açabilir."
+      ]
+    },
+    {
+      "id": "tr_c007552c5a613be1e6b90f76",
+      "answer": "GAGA",
+      "hints": [
+        "Diş yerine sert dış yüzeylerden oluşur.",
+        "Kuşun türüne göre uzun, kancalı veya yassı olabilir."
+      ]
+    },
+    {
+      "id": "tr_c085bd29f924c2604b976409",
+      "answer": "DÜDÜK",
+      "hints": [
+        "Bir hakem işaret vermek için ağzına götürebilir.",
+        "İçinden hava geçirilerek keskin bir ses çıkarılır."
+      ]
+    },
+    {
+      "id": "tr_c148ff7f0676fdf20f20d8b5",
+      "answer": "ELMA",
+      "hints": [
+        "Kırmızı, yeşil veya sarı kabuklu çeşitleri vardır.",
+        "Ortadaki bölmelerde küçük çekirdekler bulunur."
+      ]
+    },
+    {
+      "id": "tr_c386cd77572273a4314bbc23",
+      "answer": "PORTAKAL",
+      "hints": [
+        "Kabuk altındaki meyve eti dilimlere ayrılır.",
+        "Suyu sıkılarak içilen turunçgillerdendir."
+      ]
+    },
+    {
+      "id": "tr_c4c8bfd4794bb7a11fd27612",
+      "answer": "DENİZALTI",
+      "hints": [
+        "Yüzeye çıkmadan suyun altında seyredebilir.",
+        "Balast tanklarıyla yüzme durumunu ayarlayan türleri vardır."
+      ]
+    },
+    {
+      "id": "tr_c4eb15f07a929dbacfa4e1d7",
+      "answer": "BALİNA",
+      "hints": [
+        "Balık değildir; solunum için hava alır.",
+        "Yavrularını sütle besleyen deniz canlılarındandır."
+      ]
+    },
+    {
+      "id": "tr_c4f94eeba1f52b97bfee8386",
+      "answer": "OBUA",
+      "hints": [
+        "Ses, yan yana iki kamışın titreşmesiyle oluşur.",
+        "Orkestradaki ince ve belirgin sesli üflemelilerdendir."
+      ]
+    },
+    {
+      "id": "tr_c51118786c0d98d096013268",
+      "answer": "DİPLOMASİ",
+      "hints": [
+        "Devletler sorunlarını savaş yerine görüşerek çözmeye çalışabilir.",
+        "Elçilikler ve uluslararası görüşmeler bu alanla ilişkilidir."
+      ]
+    },
+    {
+      "id": "tr_c93a117f1b1ec9ab33d6ef6f",
+      "answer": "ANAHTAR",
+      "hints": [
+        "Kilide uygun dişleri veya özel biçimi olabilir.",
+        "Doğru olanı takıp çevirmek kapıyı açabilir."
+      ]
+    },
+    {
+      "id": "tr_cb2fc6baee923e5028f04d1d",
+      "answer": "KARNABAHAR",
+      "hints": [
+        "Yemekte kullanılan bölümü sıklaşmış bir çiçek topluluğudur.",
+        "Dışındaki iri yeşil yapraklar beyaz başı çevreler."
+      ]
+    },
+    {
+      "id": "tr_cd294569503dc04d5410b819",
+      "answer": "FOTOĞRAFÇI",
+      "hints": [
+        "Işığı, kadrajı ve çekim anını seçer.",
+        "Portre veya manzara çekerek mesleğini yapabilir."
+      ]
+    },
+    {
+      "id": "tr_cf4dd776485add316e321862",
+      "answer": "JİMNASTİK",
+      "hints": [
+        "Sporcu bedeniyle kontrollü hareket dizileri yapar.",
+        "Denge, yer ve alet hareketleriyle ilişkilidir."
+      ]
+    },
+    {
+      "id": "tr_d19ae22100385bd02381f2f8",
+      "answer": "MANDOLİN",
+      "hints": [
+        "Telleri çoğunlukla çiftler hâlinde dizilir.",
+        "Mızrapla titreştirilen küçük gövdeli bir çalgıdır."
+      ]
+    },
+    {
+      "id": "tr_d205210ef8953b2519e24ccb",
+      "answer": "ASTEROİT",
+      "hints": [
+        "Birçok örneği Mars ile Jüpiter arasındaki bölgede dolanır.",
+        "Kuyruklu yıldızlardan farklı olarak çoğunlukla kayalık yapıdadır."
+      ]
+    },
+    {
+      "id": "tr_d488a051f267b792dd7481a3",
+      "answer": "KAPLUMBAĞA",
+      "hints": [
+        "Sırtındaki sert korunak vücudunun bir parçasıdır.",
+        "Karada veya suda yaşayan türleri bulunur."
+      ]
+    },
+    {
+      "id": "tr_d744979506ec423e9a57a9f7",
+      "answer": "AYAKKABI",
+      "hints": [
+        "Dışarı çıkarken çorapların üzerine giyilir.",
+        "Tabanı ayağı yerle doğrudan temastan korur."
+      ]
+    },
+    {
+      "id": "tr_d82679598755d2df12f2736a",
+      "answer": "TERMOSTAT",
+      "hints": [
+        "Ayarlanan değere ulaşılınca ısıtmayı durdurabilir.",
+        "Soğutma veya ısıtma sistemine açma-kapama komutu verir."
+      ]
+    },
+    {
+      "id": "tr_dc807ba8d8adbf30213c1905",
+      "answer": "TELEVİZYON",
+      "hints": [
+        "Yayınları bir ekran ve ses çıkışıyla sunar.",
+        "Kumandayla kanal seçilebilen ev aletini düşündürür."
+      ]
+    },
+    {
+      "id": "tr_de002b6151ab53381ca35eaa",
+      "answer": "ÇAMAŞIRLIK",
+      "hints": [
+        "Yıkanmış giysiler çubuklarının üzerine serilir.",
+        "Katlanıp kaldırılabilen modelleri vardır."
+      ]
+    },
+    {
+      "id": "tr_e279658c17255b3aac2202ac",
+      "answer": "TİYATRO",
+      "hints": [
+        "Sahne, dekor ve seyirciyle doğrudan bir ilişki kurar.",
+        "Oyuncular bir metni veya olayı canlı olarak canlandırır."
+      ]
+    },
+    {
+      "id": "tr_e3666bd6fbb9f5b585a09768",
+      "answer": "TRANSİSTÖR",
+      "hints": [
+        "Çok sayıda örneği bir yonganın içinde bulunabilir.",
+        "Küçük bir elektrik işaretiyle daha büyük akımı kontrol edebilir."
+      ]
+    },
+    {
+      "id": "tr_e5fee73849bd78244176959e",
+      "answer": "PENGUEN",
+      "hints": [
+        "Karada yürüyüşüyle, suda ise çevikliğiyle dikkat çeker.",
+        "Uçuş için değil yüzme için özelleşmiş kanatları vardır."
+      ]
+    },
+    {
+      "id": "tr_e7411dc9e59a56c85e820101",
+      "answer": "TOPRAK",
+      "hints": [
+        "Kayaların ayrışması ve canlı kalıntılarıyla oluşur.",
+        "Bitkinin su ve besin aldığı doğal ortamdır."
+      ]
+    },
+    {
+      "id": "tr_e8e2c42c82bc166d8f2b1036",
+      "answer": "NOTA",
+      "hints": [
+        "Porte üzerindeki yeri sesin inceliğini veya kalınlığını gösterir.",
+        "Biçimi, sesin ne kadar süreceğini belirtmeye yardımcı olur."
+      ]
+    },
+    {
+      "id": "tr_ea8ab4c035c7171a4a5d0d38",
+      "answer": "LİRA",
+      "hints": [
+        "Türkiye'deki banknotların üzerindeki para birimidir.",
+        "Kuruş, bu birimin yüzde biridir."
+      ]
+    },
+    {
+      "id": "tr_eb08a20847fc2126a081e19d",
+      "answer": "KİTAP",
+      "hints": [
+        "Sayfaları okumak için kapakları açarsın.",
+        "Basılı veya elektronik biçimde yayımlanabilir."
+      ]
+    },
+    {
+      "id": "tr_edd7236d7a2239b50121058c",
+      "answer": "YASTIK",
+      "hints": [
+        "Kılıfı değiştirilebilen modelleri vardır.",
+        "Başın daha rahat bir konumda durmasına yardım eder."
+      ]
+    },
+    {
+      "id": "tr_f008d8340f88294cad76c039",
+      "answer": "KAPTAN",
+      "hints": [
+        "Gemide rota ve güvenlik kararlarında yetkilidir.",
+        "Mürettebat onun yönetimi altında çalışır."
+      ]
+    },
+    {
+      "id": "tr_f55bcdb96e06d6ae5958c388",
+      "answer": "PATATES",
+      "hints": [
+        "Yenilen kısmı kök değil, yumrulaşmış gövdedir.",
+        "Haşlanıp ezilerek püre yapılabilir."
+      ]
+    },
+    {
+      "id": "tr_f69909f65ce2bae35c441a77",
+      "answer": "ŞEMSİYE",
+      "hints": [
+        "Katlanabilir bir iskeletin üstüne gerilmiş örtüsü vardır.",
+        "Açılınca başın üzerinde küçük bir korunak oluşturur."
+      ]
+    },
+    {
+      "id": "tr_f7e38f89d9bb08b5b6262cb4",
+      "answer": "TAVŞAN",
+      "hints": [
+        "Arka bacakları sıçramasına yardımcı olur.",
+        "Otla beslenen, uzun kulaklı bir memelidir."
+      ]
+    },
+    {
+      "id": "tr_f923d04af7763bd6548c59bd",
+      "answer": "PEYNİR",
+      "hints": [
+        "Sütün katılaşan bölümünden hazırlanır.",
+        "Taze veya olgunlaştırılmış çeşitleri yenir."
+      ]
+    },
+    {
+      "id": "tr_fa52b6dabe5f51a462f46ae3",
+      "answer": "FOTOĞRAF",
+      "hints": [
+        "Işığın etkisiyle elde edilmiş durağan bir görüntüdür.",
+        "Bir anı sonradan bakılabilecek biçimde saklar."
+      ]
+    },
+    {
+      "id": "tr_fa97ab10a12094626aefcb74",
+      "answer": "ÇİÇEK",
+      "hints": [
+        "Tozlaşma ve döllenme sürecinde görev alır.",
+        "Bitkinin üremeyle ilgili renkli bölümü olabilir."
+      ]
+    },
+    {
+      "id": "tr_fad03219877dfbcd6204325f",
+      "answer": "AKORDEON",
+      "hints": [
+        "Ses, körükten geçen havanın metal dilleri titreştirmesiyle çıkar.",
+        "Çalan kişi iki yanını açıp kapatarak hava akımı oluşturur."
+      ]
+    },
+    {
+      "id": "tr_fcb6ce2826973e502ccb5302",
+      "answer": "FOTOSENTEZ",
+      "hints": [
+        "Bu süreçte ışık enerjisi kimyasal enerjiye dönüşür.",
+        "Yeşil bitkilerde klorofil bu işte rol oynar."
+      ]
+    },
+    {
+      "id": "tr_fd21a2250134e61c137b1e44",
+      "answer": "KEDİ",
+      "hints": [
+        "Bıyıkları çevresini algılamasına yardımcı olur.",
+        "Küçük pençeli bir avcıyken evlerde de yaşar."
+      ]
+    },
+    {
+      "id": "tr_fe4f5ad6ab8f09167e80711e",
+      "answer": "ELEKTRİKÇİ",
+      "hints": [
+        "Arızalı bir priz veya aydınlatma hattı için çağrılabilir.",
+        "İşi kablo bağlantıları ve akımın güvenli iletilmesiyle ilişkilidir."
+      ]
+    },
+    {
+      "id": "tr_90cba64d846c3390bc1824fa",
+      "answer": "KASA",
+      "hints": [
+        "İçindekilere erişmek için anahtar veya şifre gerekebilir.",
+        "Para ve kıymetli belgeleri güvenle saklamaya yarar."
+      ]
+    },
+    {
+      "id": "tr_c3571d17c49570faefe34396",
+      "answer": "BİYOSFER",
+      "hints": [
+        "Yaşamın bulunduğu tüm yeryüzü ortamlarını birlikte kapsar.",
+        "Canlıların yaşadığı alan yalnız karalarla sınırlı değildir."
+      ]
+    },
+    {
+      "id": "tr_cb693b8bb4db2d0250f4ae93",
+      "answer": "MAKİNE",
+      "hints": [
+        "Enerjiyi işe dönüştüren parçaları bir araya getirir.",
+        "Bir işi insan gücünü azaltarak yapmaya yardımcı olabilir."
+      ]
+    },
+    {
+      "id": "tr_cdb8663306727d4299bee26b",
+      "answer": "İPEK",
+      "hints": [
+        "İnce ve parlak bir dokuma lifi olarak kullanılır.",
+        "Böceğin ördüğü koruyucu kılıftaki lifler çözülerek elde edilir."
+      ]
+    },
+    {
+      "id": "tr_d251906f3a90f6a25b473905",
+      "answer": "BALON",
+      "hints": [
+        "İçine üflendikçe hacmi büyüyen türleri vardır.",
+        "Şişirilen esnek bir kılıfı düşün; parti süsü olarak da kullanılır."
+      ]
+    },
+    {
+      "id": "tr_e92310ba6061113e14e7d62d",
+      "answer": "PARATONER",
+      "hints": [
+        "Yıldırıma karşı binayı korumayı amaçlayan düzeneğin parçasıdır.",
+        "Elektrik boşalmasını iletken bir hatla zemine yönlendirir."
+      ]
+    },
+    {
+      "id": "tr_eb5eafa3b93a64ab2a4e4c83",
+      "answer": "FASULYE",
+      "hints": [
+        "Taze kabukları veya kurutulmuş taneleri pişirilebilir.",
+        "Baklagillerden, sarmalanarak büyüyen türleri de bulunan bir bitkidir."
+      ]
+    },
+    {
+      "id": "tr_ef036526da0f5dda781c1136",
+      "answer": "AKUPUNKTUR",
+      "hints": [
+        "Uygulamada deriye belirli noktalardan ince iğneler yerleştirilir.",
+        "Geleneksel Çin uygulamalarıyla ilişkilidir; bir tedavi yöntemi adı aranıyor."
+      ]
+    },
+    {
+      "id": "tr_ff5c50d7e1edb817fa75e730",
+      "answer": "FIRIN",
+      "hints": [
+        "Yiyecekler kapalı sıcak bir bölümün içinde pişer.",
+        "Ekmek ve hamur işlerini yüksek ısıyla hazırlamakta kullanılır."
+      ]
+    }
+  ]
+}

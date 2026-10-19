@@ -4,6 +4,7 @@ import {generateQuestion,replenishmentPlan} from './content_generation.js';
 import {createQuestionSet,fitsDraft} from './question_sets.js';
 import {transaction} from './database_transaction.js';
 import {loadPublishedPool,decodeStoredQuestion} from './published_pool.js';
+import {compactQuestion} from './question_storage.js';
 import {GENERATION_LIMITS,generationDay,blankGenerationDay,validateGenerationLedger,approvedCounts,
   monthlyCharge,generationStopReason,reserveRequest,settleUsage} from './generation_policy.js';
 
@@ -64,7 +65,7 @@ export class CloudQuestionGenerator {
     for(const [id,entry] of entries){
       const manifest=createQuestionSet(id,entry.questions,entry.manifest.publishedAtMs);
       if(manifest.fingerprint!==entry.manifest.fingerprint)throw new Error('Invalid publication set.');
-      for(const q of entry.questions)updates[`questionPool/published/${q.id}`]=JSON.stringify(q);
+      for(const q of entry.questions)updates[`questionPool/published/${q.id}`]=JSON.stringify(compactQuestion(q));
       updates[`questionPool/sets/${id}`]=manifest;
       updates[`questionGeneration/ledger/days/${entry.date}/publishedSetIds/${id}`]=true;
       updates[`questionGeneration/outbox/${id}`]=null;
@@ -149,6 +150,7 @@ export class CloudQuestionGenerator {
             }});
           if(JSON.stringify(q).includes(key)||/sk-(?:(?:proj|svcacct)-)?[A-Za-z0-9_-]{20,}/u.test(JSON.stringify(q)))throw new Error('Credential-like generation result refused.');
           if(validateQuestion(q).length||!['approved','rejected'].includes(q.review?.status))throw new Error('Invalid editorial result.');
+          const storedQuestion=compactQuestion(q);
           state=await this.change(s=>{
             const day=s.ledger.days[this.date],attempt=day.attempts.at(-1);
             if(attempt.answerId!==q.answerId||attempt.status!=='started')throw new Error('Attempt identity changed.');
@@ -157,10 +159,10 @@ export class CloudQuestionGenerator {
             if(q.review.status==='approved'){
               s.draft??={id:`daily_${randomUUID().replaceAll('-','')}`,questions:{},startedAtMs:this.now()};
               if(!fitsDraft(q,Object.values(s.draft.questions).map(decodeStoredQuestion)))throw new Error('Editorial result does not fit the pending set.');
-              s.draft.questions[q.id]=JSON.stringify({...q,publication:'unpublished'});
+              s.draft.questions[q.id]=JSON.stringify({...storedQuestion,publication:'unpublished'});
             }
             // Rejections retain the editorial audit, never enter the published pool.
-            else s.rejections={...(s.rejections??{}),[q.id]:JSON.stringify(q)};
+            else s.rejections={...(s.rejections??{}),[q.id]:JSON.stringify(storedQuestion)};
           });
           state=await this.publishDraft(state);
           if(q.review.status==='approved')pool.push(q);

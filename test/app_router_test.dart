@@ -24,6 +24,7 @@ class FakeLobbyService extends FakeRoomService {
     String roomId, {
     required int serverTimeOffsetMs,
     required RoomGameMode gameMode,
+    required String questionEngine,
   }) async {
     starts++;
     publish(

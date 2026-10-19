@@ -2,71 +2,127 @@
   {
     "clue": "Bir odaya girerken açıp çıkarken kapattığımız geçit.",
     "answer": "KAPI",
-    "letterCount": 4
+    "letterCount": 4,
+    "hints": [
+      "Koluna basıp içeri geçeriz.",
+      "Kilit takılarak bir mekâna girişi sınırlayabilir."
+    ]
   },
   {
     "clue": "Zamanı, akrep ve yelkovanla gösteren araç.",
     "answer": "SAAT",
-    "letterCount": 4
+    "letterCount": 4,
+    "hints": [
+      "Duvara asılan veya bileğe takılan türleri vardır.",
+      "Kadranında dakikaları ve zamanı izleriz."
+    ]
   },
   {
     "clue": "Sayfaları bir araya getirilmiş, okunan basılı eser.",
     "answer": "KİTAP",
-    "letterCount": 5
+    "letterCount": 5,
+    "hints": [
+      "Sayfaları okumak için kapakları açarsın.",
+      "Basılı veya elektronik biçimde yayımlanabilir."
+    ]
   },
   {
     "clue": "Okyanustan küçük, tuzlu ve geniş su kütlesi.",
     "answer": "DENİZ",
-    "letterCount": 5
+    "letterCount": 5,
+    "hints": [
+      "Kıyı, koy ve körfezleri bulunabilir.",
+      "Geniş bir tuzlu su alanında yüzdüğünü düşün."
+    ]
   },
   {
     "clue": "Su veya çay içmek için kullanılan kap.",
     "answer": "BARDAK",
-    "letterCount": 6
+    "letterCount": 6,
+    "hints": [
+      "Sıvıyı içebilmek için dudağa yaklaştırılır.",
+      "Çay veya su koyulan günlük bir kaptır."
+    ]
   },
   {
     "clue": "Bitkilerin kök saldığı, yeryüzünün üst tabakası.",
     "answer": "TOPRAK",
-    "letterCount": 6
+    "letterCount": 6,
+    "hints": [
+      "Kayaların ayrışması ve canlı kalıntılarıyla oluşur.",
+      "Bitkinin su ve besin aldığı doğal ortamdır."
+    ]
   },
   {
     "clue": "Kilidi açmak için kullanılan küçük metal araç.",
     "answer": "ANAHTAR",
-    "letterCount": 7
+    "letterCount": 7,
+    "hints": [
+      "Kilide uygun dişleri veya özel biçimi olabilir.",
+      "Doğru olanı takıp çevirmek kapıyı açabilir."
+    ]
   },
   {
     "clue": "Toprak altında yetişen, kızartması yapılan yumru sebze.",
     "answer": "PATATES",
-    "letterCount": 7
+    "letterCount": 7,
+    "hints": [
+      "Yenilen kısmı kök değil, yumrulaşmış gövdedir.",
+      "Haşlanıp ezilerek püre yapılabilir."
+    ]
   },
   {
     "clue": "Basamakları kullanarak yukarı çıkmayı sağlayan yapı.",
     "answer": "MERDİVEN",
-    "letterCount": 8
+    "letterCount": 8,
+    "hints": [
+      "Asansör çalışmayınca üst kata bununla çıkılabilir.",
+      "Her adımda bir üst basamağa geçersin."
+    ]
   },
   {
     "clue": "Ayçiçeğinden elde edilen, kabuğu çıtlatılarak yenen atıştırmalık.",
     "answer": "ÇEKİRDEK",
-    "letterCount": 8
+    "letterCount": 8,
+    "hints": [
+      "Ayçiçeğinin içinde gelişen yenilebilir tohumdur.",
+      "Yemeden önce dışındaki sert kabuk ayıklanır."
+    ]
   },
   {
     "clue": "Yağmurdan sonra gökyüzünde oluşabilen renkli yay.",
     "answer": "GÖKKUŞAĞI",
-    "letterCount": 9
+    "letterCount": 9,
+    "hints": [
+      "Görülürken güneş genellikle gözlemcinin arkasındadır.",
+      "Farklı renkler gökyüzünde yan yana bir kemer oluşturur."
+    ]
   },
   {
     "clue": "Bir yerde toplanmış çok sayıda insan.",
     "answer": "KALABALIK",
-    "letterCount": 9
+    "letterCount": 9,
+    "hints": [
+      "Konser çıkışında aynı yere yığılan insanlar bunu oluşturabilir.",
+      "Bir mekânın tenha olmasının karşıtını düşündürür."
+    ]
   },
   {
     "clue": "Verileri işleyen, ekran ve klavyeyle kullanılan elektronik cihaz.",
     "answer": "BİLGİSAYAR",
-    "letterCount": 10
+    "letterCount": 10,
+    "hints": [
+      "Yazılım olmadan kendisine verilen işleri yapamaz.",
+      "Bellek ve işlemci gibi bileşenleri vardır."
+    ]
   },
   {
     "clue": "Görüntülü yayınları evde izlemeyi sağlayan cihaz.",
     "answer": "TELEVİZYON",
-    "letterCount": 10
+    "letterCount": 10,
+    "hints": [
+      "Yayınları bir ekran ve ses çıkışıyla sunar.",
+      "Kumandayla kanal seçilebilen ev aletini düşündürür."
+    ]
   }
 ]

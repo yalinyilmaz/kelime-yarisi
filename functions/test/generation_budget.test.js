@@ -89,7 +89,7 @@ test('API failures stop batch immediately, no automatic HTTP retries',async t=>{
 test('unsupported model and oversized requests are rejected without transport or switching',async t=>{
   const {budget}=setup(t);budget.begin(sources[0]);let calls=0;
   for(const body of [{model:'gpt-6-sol',service_tier:'default',max_output_tokens:6000},
-    {model:'gpt-6-luna',service_tier:'default',max_output_tokens:6000,input:'x'.repeat(33000)}]) {
+    {model:'gpt-6-luna',service_tier:'default',max_output_tokens:6000,input:'x'.repeat(97000)}]) {
     await assert.rejects(budget.fetch(endpoint,{body:JSON.stringify(body)},async()=>{calls++;}));
   }
   assert.equal(calls,0);

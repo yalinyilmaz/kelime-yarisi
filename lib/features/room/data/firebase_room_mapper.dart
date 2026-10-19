@@ -91,6 +91,9 @@ abstract final class FirebaseRoomMapper {
                     (question['acceptedAnswers'] as List? ?? const [])
                         .cast<String>(),
                   ),
+                  hints: List.unmodifiable(
+                    (question['hints'] as List? ?? const []).cast<String>(),
+                  ),
                 );
               })
               .toList(growable: false),
@@ -98,6 +101,19 @@ abstract final class FirebaseRoomMapper {
         _asMap(map['hints']).map(
           (index, value) =>
               MapEntry(int.parse(index), SharedHints.fromMap(value)),
+        ),
+      ),
+      clueHintUsage: Map.unmodifiable(
+        _asMap(map['clueHintUsage']).map(
+          (uid, usage) => MapEntry(
+            uid,
+            Map<int, int>.unmodifiable(
+              _asMap(usage).map(
+                (index, count) =>
+                    MapEntry(int.parse(index), (count as num).toInt()),
+              ),
+            ),
+          ),
         ),
       ),
       progress: Map.unmodifiable(

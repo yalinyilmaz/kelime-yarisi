@@ -6,6 +6,9 @@ import {answerId, isPublished, validateQuestion, validatePool} from '../src/cont
 import {allocate} from '../src/allocation.js';
 
 const batch = JSON.parse(readFileSync(new URL('../../content/sets/luna_sets_005_014_20261015.exchange.json', import.meta.url)));
+// Historical exchange inputs used one hint; exercise the current import contract.
+const reviewedHints=new Map(JSON.parse(readFileSync(new URL('../../content/sets/question_hints_20261018.reviewed.json',import.meta.url))).questions.map(q=>[q.answer,q.hints]));
+for(const set of batch.sets)for(const q of set.questions)q.hints=reviewedHints.get(q.answer);
 const batchIds = new Set(batch.sets.flatMap(set => set.questions.map(q => q.id)));
 const original = JSON.parse(readFileSync(new URL('../content/published.json', import.meta.url)))
   .filter(q => !batchIds.has(q.id));
@@ -38,6 +41,9 @@ test('changed hints or alternatives invalidate approval, and direct hint leaks a
   assert(validateQuestion({...q, hint: 'Madeni parada yazı yüzü.'}).includes('hint-answer-leak'));
   assert(validateQuestion({...q, hint: 'Different fact.'}).includes('invalid-editor-approval'));
   assert(validateQuestion({...q, acceptedAnswers: ['HARF']}).includes('invalid-editor-approval'));
+  assert(validateQuestion({...q, hints: ['İki kelime.', q.hints[1]]}).includes('bare-structural-hint'));
+  assert(validateQuestion({...q, hints: [q.hints[0]]}).includes('invalid-hints'));
+  assert(validateQuestion({...q, hints: [q.hints[0], q.hints[0]]}).includes('invalid-hints'));
 });
 
 test('incomplete source/editor evidence and duplicates cannot become upload artifacts', () => {
@@ -57,5 +63,6 @@ test('allocated room questions carry accepted alternatives without exposing edit
   const q = session.questions.find(q => q.answer === 'NEFES ALMAK');
   assert.deepEqual(q.acceptedAnswers, ['SOLUK ALMAK']);
   assert.equal(q.letterCount, 10); assert.equal(q.source, undefined);
-  assert.equal(q.hint, undefined); // Hint UI/quota is a separate feature.
+  assert.deepEqual(q.hints, set.find(question=>question.id===q.id).hints);
+  assert.equal(q.review, undefined);
 });

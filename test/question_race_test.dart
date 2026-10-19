@@ -26,6 +26,7 @@ class RaceRoomService extends FakeRoomService {
     int? questionIndex,
     String? input,
     int? expectedRevealedCount,
+    int? expectedHintCount,
   }) async {
     actions.add((action: action, index: questionIndex, input: input));
     await onPlay?.call();
@@ -64,6 +65,58 @@ GameRoom winnerRoom(GameRoom room, int nextAt) => room.copyWith(
 );
 
 void main() {
+  testWidgets(
+    'clues reveal in the card, keep the keyboard and stop after two uses',
+    (tester) async {
+      final service = RaceRoomService()
+        ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000);
+      service.onPlay = () async {
+        if (service.actions.last.action != 'clueHint') return;
+        final used = service.room.clueHintUsage[service.uid]?[0] ?? 0;
+        service.publish(
+          service.room.copyWith(
+            clueHintUsage: {
+              service.uid: {0: used + 1},
+            },
+          ),
+        );
+      };
+      await tester.pumpWidget(
+        RepositoryProvider<FirebaseRoomService>.value(
+          value: service,
+          child: MaterialApp(
+            theme: AppTheme.dark,
+            home: GamePage(room: service.room, sounds: FakeGameSounds()),
+          ),
+        ),
+      );
+      service.offsets.add(0);
+      service.connections.add(true);
+      await tester.pump();
+      await tester.showKeyboard(find.byType(TextField));
+      final focus = tester.widget<TextField>(find.byType(TextField)).focusNode!;
+      final action = find.byKey(const ValueKey('clue-hint-action'));
+      expect(find.text('10/10'), findsOneWidget);
+      await tester.tap(action);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('9/10'), findsOneWidget);
+      expect(find.text('1. Koluna basıp içeri geçeriz.'), findsOneWidget);
+      expect(focus.hasFocus, isTrue);
+      await tester.tap(action);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('8/10'), findsOneWidget);
+      expect(tester.widget<TextButton>(action).onPressed, isNull);
+      expect(
+        service.actions.where((a) => a.action == 'clueHint'),
+        hasLength(2),
+      );
+      expect(focus.hasFocus, isTrue);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      await service.disposeStreams();
+    },
+  );
+
   test('authoritative winner locks both clients, preserves loser score and advances before the old deadline', () async {
     final service = RaceRoomService()..room = raceRoom(1000);
     var now = 1000;

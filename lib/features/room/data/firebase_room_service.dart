@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -22,6 +23,7 @@ class FirebaseRoomService {
     FirebaseDatabase? database,
     RoomCodeGenerator? codeGenerator,
     this.functions,
+    this.appCheck,
     QuestionHistoryStore? questionHistory,
   }) : _auth = auth ?? FirebaseAuth.instance,
        _database = database ?? FirebaseDatabase.instance,
@@ -32,6 +34,7 @@ class FirebaseRoomService {
   final FirebaseDatabase _database;
   final RoomCodeGenerator _codeGenerator;
   final FirebaseFunctions? functions;
+  final FirebaseAppCheck? appCheck;
   final QuestionHistoryStore _questionHistory;
 
   FirebaseFunctions get _questionFunctions =>
@@ -170,6 +173,7 @@ class FirebaseRoomService {
     int? questionIndex,
     String? input,
     int? expectedRevealedCount,
+    int? expectedHintCount,
   }) async {
     await _callQuestionFunction('playRace', {
       'roomId': roomId,
@@ -177,6 +181,7 @@ class FirebaseRoomService {
       'questionIndex': ?questionIndex,
       'input': ?input,
       'expectedRevealedCount': ?expectedRevealedCount,
+      'expectedHintCount': ?expectedHintCount,
     });
   }
 
@@ -224,14 +229,22 @@ class FirebaseRoomService {
     String roomId, {
     required int serverTimeOffsetMs,
     required RoomGameMode gameMode,
+    required String questionEngine,
   }) async {
-    if (await _usesQuestionPool(roomId)) {
+    // The lobby already knows the engine; do not route through a second cache read.
+    if (questionEngine == 'pool-v1') {
       await prepareQuestionHistory(roomId);
       await _callQuestionFunction('startQuestionGame', {
         'roomId': roomId,
         'debugSolo': kDebugMode,
       });
       return;
+    }
+    if (questionEngine != 'demo-v1') {
+      throw const RoomServiceException(
+        'unsupported-question-engine',
+        'Odanın soru kaynağı desteklenmiyor. Yeni bir oda oluşturun.',
+      );
     }
     await _callQuestionFunction('startDemoRaceGame', {
       'roomId': roomId,
@@ -318,10 +331,38 @@ class FirebaseRoomService {
     Map<String, Object?> data,
   ) async {
     try {
-      return (await _questionFunctions.httpsCallable(name).call(data)).data;
+      final callable = _questionFunctions.httpsCallable(name);
+      try {
+        return (await callable.call(data)).data;
+      } on FirebaseFunctionsException catch (error) {
+        if (error.code != 'unauthenticated') rethrow;
+        // Reuse the current identity. A new anonymous user would lose the room.
+        final verifier =
+            appCheck ??
+            FirebaseAppCheck.instanceFor(app: _questionFunctions.app);
+        String? token;
+        try {
+          token = await verifier.getToken(true);
+        } on FirebaseException {
+          // Native errors can contain credentials; never forward them to UI.
+        }
+        if (token == null || token.isEmpty) {
+          throw RoomServiceException(
+            'app-check-failed',
+            kDebugMode && defaultTargetPlatform == TargetPlatform.iOS
+                ? 'Uygulama doğrulanamadı. iOS debug sürümünde güncel App Check debug tokenını doğru Firebase uygulamasına kaydedin.'
+                : 'Uygulama doğrulanamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.',
+          );
+        }
+        // Retry only once, after the SDK has cached a fresh App Check token.
+        return (await callable.call(data)).data;
+      }
     } on FirebaseFunctionsException catch (error) {
       final details = error.details;
       String message = error.message ?? 'Soru servisine bağlanılamadı.';
+      if (error.code == 'unauthenticated') {
+        message = 'Oturum veya uygulama doğrulanamadı. Uygulamayı kapatıp tekrar açın.';
+      }
       if (error.code == 'resource-exhausted' && details is Map) {
         final capacity = details['capacity'];
         final lengths = capacity is Map ? capacity['blockedLengths'] : null;

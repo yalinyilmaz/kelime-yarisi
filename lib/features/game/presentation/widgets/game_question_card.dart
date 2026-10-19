@@ -8,6 +8,7 @@ import '../cubit/game_feedback_cubit.dart';
 import '../cubit/game_state.dart';
 import 'answer_feedback_banner.dart';
 import 'word_pin_input.dart';
+import 'game_clue_hints.dart';
 
 class GameQuestionCard extends StatelessWidget {
   const GameQuestionCard({
@@ -38,8 +39,16 @@ class GameQuestionCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: StudioSectionLabel(
-                  'SORU ${state.questionIndex + 1} / ${state.questions.length}',
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: StudioSectionLabel(
+                        'SORU ${state.questionIndex + 1} / ${state.questions.length}',
+                      ),
+                    ),
+                    if (question.hints.length == 2)
+                      GameClueHintButton(state: state),
+                  ],
                 ),
               ),
               const SizedBox(height: 12),
@@ -50,6 +59,7 @@ class GameQuestionCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
+              GameClueHints(state: state),
               const SizedBox(height: 24),
               WordPinInput(
                 question: question,

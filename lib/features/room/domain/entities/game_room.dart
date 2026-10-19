@@ -25,6 +25,7 @@ class GameRoom extends Equatable {
     this.progress = const {},
     this.gameplayVersion,
     this.hints = const {},
+    this.clueHintUsage = const {},
     this.questions = const [],
     this.questionEngine = 'demo-v1',
     this.questionOrigin = 'example',
@@ -45,6 +46,7 @@ class GameRoom extends Equatable {
   final Map<String, GameProgress> progress;
   final String? gameplayVersion;
   final Map<int, SharedHints> hints;
+  final Map<String, Map<int, int>> clueHintUsage;
   final List<GameQuestion> questions;
   final String questionEngine;
   final String questionOrigin;
@@ -69,6 +71,7 @@ class GameRoom extends Equatable {
     String? questionSetId,
     Map<String, GameProgress>? progress,
     Map<int, SharedHints>? hints,
+    Map<String, Map<int, int>>? clueHintUsage,
     String? gameplayVersion,
     QuestionRace? race,
   }) {
@@ -86,6 +89,7 @@ class GameRoom extends Equatable {
       contentSetId: contentSetId,
       progress: progress ?? this.progress,
       hints: hints ?? this.hints,
+      clueHintUsage: clueHintUsage ?? this.clueHintUsage,
       questions: questions,
       questionEngine: questionEngine,
       questionOrigin: questionOrigin,
@@ -110,6 +114,7 @@ class GameRoom extends Equatable {
     progress,
     gameplayVersion,
     hints,
+    clueHintUsage,
     questions,
     questionEngine,
     questionOrigin,

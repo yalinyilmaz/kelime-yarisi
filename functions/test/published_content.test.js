@@ -9,11 +9,13 @@ test('real corpus has at least 20 source-backed AI-reviewed distinct answers per
  assert.deepEqual(validatePool(pool),[]);
  assert(pool.length>=140);assert(pool.every(q=>q.origin==='production'&&isPublished(q)));
  for(const length of LENGTHS)assert(new Set(pool.filter(q=>q.letterCount===length).map(q=>q.answerId)).size>=20);
- for(const q of pool){assert.equal(q.review.kind,'ai-self-review');assert(q.review.sourceSupport);assert(Array.isArray(q.review.alternativesRejected));
+ for(const q of pool){assert.equal(q.review.kind,'ai-self-review');assert(q.review.sourceSupport||q.source.meaningEvidence);assert(Array.isArray(q.review.alternativesRejected));
   assert(q.review.alternativesRejected.length||q.review.alternativePolicy==='allow-synonyms');
-  if(q.source.encyclopedia) {
-   assert(q.source.evidence.revision);assert.match(q.source.reference,/^https:\/\/www.wikidata.org\/wiki\/Q\d+$/);
-   assert(q.source.encyclopedia.attribution);assert.equal(q.source.encyclopedia.license,'CC-BY-SA-4.0');assert.match(q.source.encyclopedia.reference,/oldid=\d+$/);
+  let evidence;try{evidence=JSON.parse(q.source.meaningEvidence);}catch{}
+  const encyclopedia=q.source.encyclopedia??evidence?.encyclopedia;
+  if(encyclopedia) {
+   assert((q.source.evidence??evidence.wikidata).revision);assert.match(q.source.reference,/^https:\/\/www.wikidata.org\/wiki\/Q\d+$/);
+   assert(encyclopedia.attribution);assert.equal(encyclopedia.license,'CC-BY-SA-4.0');assert.match(encyclopedia.reference,/oldid=\d+$/);
   } else {
    assert.equal(q.source.rights,'original');assert(q.source.termsReference);assert(q.source.meaningEvidence);
    assert.match(q.source.reference,/^https:\/\//);

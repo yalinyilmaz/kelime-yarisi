@@ -74,6 +74,7 @@ void main() {
           room.id,
           serverTimeOffsetMs: 0,
           gameMode: RoomGameMode.classic,
+          questionEngine: room.questionEngine,
         );
         final started = await service
             .watchRoom(room.id)
@@ -104,6 +105,21 @@ void main() {
       final first = await create();
       final before = await service.prepareQuestionHistory(first.id);
       final firstSet = await start(first);
+      expect(firstSet.questions.every((q) => q.hints.length == 2), isTrue);
+      await waitUntil(() => game!.state.canRequestClueHint);
+      await game!.requestClueHint();
+      await waitUntil(() => game!.state.visibleClueHints.length == 1);
+      expect(game!.state.remainingClueHints, 9);
+      await game!.requestClueHint();
+      await waitUntil(() => game!.state.visibleClueHints.length == 2);
+      expect(game!.state.remainingClueHints, 8);
+      expect(game!.state.canRequestClueHint, isFalse);
+      final reconnectRoom = game!.state.room;
+      await game!.close();
+      game = GameCubit(service, reconnectRoom)..setForeground(true);
+      await waitUntil(() => game!.state.canAct);
+      expect(game!.state.remainingClueHints, 8);
+      expect(game!.state.visibleClueHints, hasLength(2));
       for (var index = 0; index < 14; index++) {
         await waitUntil(
           () => game!.state.questionIndex == index && game!.state.canAct,
@@ -122,6 +138,7 @@ void main() {
       final after = await service.prepareQuestionHistory(second.id);
       expect(after['availableSets'], (before['availableSets'] as int) - 1);
       final secondSet = await start(second);
+      expect(game!.state.remainingClueHints, 10);
       expect(secondSet.contentSetId, isNot(firstSet.contentSetId));
       final database = FirebaseDatabase.instanceFor(app: firebase);
       await expectLater(

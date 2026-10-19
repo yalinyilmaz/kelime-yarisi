@@ -89,7 +89,8 @@ test('Turkish ASCII, spaces and approved synonyms work on the server; countdown 
   assert.throws(() => reduceRace(r, 'arman', answer(0, 'a'), 1000), e => e.code === 'invalid-argument');
   const dart = readFileSync(new URL('../../lib/features/game/data/question_bank.dart', import.meta.url), 'utf8');
   const pairs = [...dart.matchAll(/clue: '([^']*)',\s+answer: '([^']*)'/gu)].map(m => ({clue:m[1],answer:m[2],letterCount:m[2].length}));
-  assert.deepEqual(demo, pairs, 'Demo server/client questions must stay identical.');
+  assert.deepEqual(demo.map(({hints,...q})=>q), pairs, 'Demo server/client questions must stay identical.');
+  for(const q of demo){assert.equal(q.hints.length,2);for(const h of q.hints)assert(dart.includes(h));}
 });
 
 test('four-player votes require two distinct players and winning locks further votes', () => {
@@ -103,4 +104,39 @@ test('four-player votes require two distinct players and winning locks further v
   assert.deepEqual(reduceRace(b, 'arman', {action:'hint',questionIndex:0,expectedRevealedCount:0}, 1004), b);
   const twoPlayer = reduceRace(room(), 'arman', {action:'hint',questionIndex:0,expectedRevealedCount:0}, 1001);
   assert.deepEqual(reduceRace(twoPlayer, 'yalin', {action:'hint',questionIndex:0,expectedRevealedCount:0}, 1002), twoPlayer);
+});
+
+test('personal clues cost one right each, preserve score/letters and retry without double spending', () => {
+ const original=room();
+ let r=reduceRace(original,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},1100);
+ assert.equal(r.clueHintUsage.arman[0],1);
+ assert.equal(original.clueHintUsage,undefined);
+ assert.equal(r.hints,undefined);assert.equal(r.progress,undefined);
+ assert.deepEqual(reduceRace(r,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},1150),r);
+ r=reduceRace(r,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:1},1200);
+ assert.equal(r.clueHintUsage.arman[0],2);
+ assert.deepEqual(reduceRace(r,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:2},1250),r);
+ const guest=reduceRace(r,'yalin',{action:'clueHint',questionIndex:0,expectedHintCount:0},1300);
+ assert.equal(guest.clueHintUsage.yalin[0],1);assert.equal(guest.clueHintUsage.arman[0],2);
+});
+
+test('ten-right limit survives reconnect and spans questions; late or resolved requests spend nothing', () => {
+ let r=room(),at=1000;
+ for(let index=0;index<5;index++) {
+  r=reduceRace(r,'arman',{action:'clueHint',questionIndex:index,expectedHintCount:0},at);
+  r=reduceRace(r,'arman',{action:'clueHint',questionIndex:index,expectedHintCount:1},at+1);
+  r=reduceRace(r,'yalin',answer(index,r.questions[index].answer),at+2);
+  at+=REVEAL_MS+2;r=reduceRace(r,'arman',{action:'sync'},at);
+ }
+ r=JSON.parse(JSON.stringify(r));
+ assert.equal(Object.values(r.clueHintUsage.arman).reduce((a,b)=>a+b,0),10);
+ assert.deepEqual(reduceRace(r,'arman',{action:'clueHint',questionIndex:5,expectedHintCount:0},at+1),r);
+ const other=reduceRace(r,'yalin',{action:'clueHint',questionIndex:5,expectedHintCount:0},at+1);
+ assert.equal(other.clueHintUsage.yalin[5],1);
+ const expired=reduceRace(room(),'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},26000);
+ assert.equal(expired.clueHintUsage,undefined);
+ const wrong=reduceRace(room(),'arman',answer(0,'aaaa'),1100);
+ assert.deepEqual(reduceRace(wrong,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},1200),wrong);
+ const absent=room();delete absent.questions[0].hints;
+ assert.deepEqual(reduceRace(absent,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},1100),absent);
 });

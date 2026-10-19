@@ -3,6 +3,31 @@ import 'package:kelime_yarisi/features/room/data/firebase_room_mapper.dart';
 import 'package:kelime_yarisi/features/game/domain/shared_hints.dart';
 
 void main() {
+  test('two clue texts and per-player dense or sparse usage survive Firebase mapping', () {
+    final room = FirebaseRoomMapper.fromMap('abc234', {
+      'questions': [
+        {
+          'clue': 'Bir giriş bölümü.',
+          'answer': 'KAPI',
+          'hints': ['Kilidi olabilir.', 'Koluna basıp geçersin.'],
+        },
+      ],
+      'clueHintUsage': {
+        'host': [2, null, 1],
+        'guest': {'0': 1, '2': 2},
+      },
+    });
+    expect(room.questions.single.hints, [
+      'Kilidi olabilir.',
+      'Koluna basıp geçersin.',
+    ]);
+    expect(room.clueHintUsage['host'], {0: 2, 2: 1});
+    expect(room.clueHintUsage['guest'], {0: 1, 2: 2});
+    expect(
+      room.copyWith(status: room.status).clueHintUsage,
+      room.clueHintUsage,
+    );
+  });
   test('legacy room payloads remain compatible with live rules before pool deployment', () {
     final legacy = FirebaseRoomMapper.fromMap('abc234', {});
     expect(
