@@ -1,3 +1,5 @@
+import '../../../../core/monitoring/error_reporter.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/firebase_room_service.dart';
@@ -59,10 +61,20 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
         return;
       }
       emit(state.copyWith(room: room, isSubmitting: false, clearError: true));
-    } on RoomServiceException catch (error) {
+    } on RoomServiceException catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'room_setup_cubit.submit',
+      );
       if (isClosed) return;
       emit(state.copyWith(isSubmitting: false, errorMessage: error.message));
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'room_setup_cubit.submit',
+      );
       if (isClosed) return;
       emit(
         state.copyWith(

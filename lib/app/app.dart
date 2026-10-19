@@ -1,3 +1,5 @@
+import '../core/monitoring/error_reporter.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -29,7 +31,8 @@ class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
     final storage = widget.soloScoreStorage;
     if (storage != null) {
       unawaited(
-        storage.close().catchError((Object _) {
+        storage.close().catchError((Object error, StackTrace stackTrace) {
+          ErrorReporter.report(error, stackTrace, operation: 'app.dispose');
           debugPrint('Skor depolaması kapatılamadı.');
         }),
       );
@@ -42,7 +45,8 @@ class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
     return RepositoryProvider(
       create: (_) => widget.roomService ?? FirebaseRoomService(),
       dispose: (service) => unawaited(
-        service.dispose().catchError((Object _) {
+        service.dispose().catchError((Object error, StackTrace stackTrace) {
+          ErrorReporter.report(error, stackTrace, operation: 'app.dispose');
           debugPrint('Uygulama kaynakları kapatılamadı.');
         }),
       ),

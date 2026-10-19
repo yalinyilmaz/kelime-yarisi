@@ -10,10 +10,14 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 import 'app/app.dart';
+import 'core/monitoring/error_reporter.dart';
 import 'features/room/data/firebase_room_service.dart';
 
-Future<void> main() async {
+Future<void> main() => initializeErrorReporting(_bootstrap);
+
+Future<void> _bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = ErrorReportingBlocObserver();
   final app = await Firebase.initializeApp();
   final auth = FirebaseAuth.instanceFor(app: app);
   final database = FirebaseDatabase.instanceFor(app: app);

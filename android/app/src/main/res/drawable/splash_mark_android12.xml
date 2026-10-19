@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12 masks splash icons to a circle with a 192dp diameter inside a
+     288dp square. Keep the shared 160x116dp mark centered inside that safe area.
+     Fractional insets preserve its proportions if the system scales the icon. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/splash_mark"
+    android:insetLeft="22.222222%"
+    android:insetTop="29.861111%"
+    android:insetRight="22.222222%"
+    android:insetBottom="29.861111%" />

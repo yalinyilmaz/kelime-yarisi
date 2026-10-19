@@ -1,3 +1,4 @@
+import {reportFailure} from './monitoring.js';
 import {readFileSync} from 'node:fs';
 import {initializeApp} from 'firebase-admin/app';
 import {getDatabase} from 'firebase-admin/database';
@@ -21,23 +22,27 @@ const service = new QuestionService({database: getDatabase(), pool, includeExamp
   loadSetIds:useExamples?undefined:()=>loadPublishedSetIds(getDatabase()),
   loadSet:useExamples?undefined:id=>loadPublishedSet(getDatabase(),id)});
 const options = {region: 'europe-west1', maxInstances: 3, enforceAppCheck: !emulator};
-const callable = action => onCall(options, async request => {
+const callable = (name, action) => onCall(options, async request => {
   try {return await action(request.auth?.uid, request.data ?? {});}
   catch (error) {
+    await reportFailure(error, name, {expected:error instanceof ServiceError});
     if (error instanceof ServiceError) throw new HttpsError(error.code, error.message, error.details);
     console.error('question-service-failed', error.name);
     throw new HttpsError('internal', 'Soru servisi geçici olarak kullanılamıyor.');
   }
 });
-export const prepareQuestionHistory = callable((uid, data) => service.prepare(uid, data));
-export const startQuestionGame = callable((uid, data) => service.start(uid, data));
-export const getSoloQuestionSet = callable((uid, data) => service.solo(uid, data));
+export const prepareQuestionHistory = callable('prepareQuestionHistory', (uid, data) => service.prepare(uid, data));
+export const startQuestionGame = callable('startQuestionGame', (uid, data) => service.start(uid, data));
+export const getSoloQuestionSet = callable('getSoloQuestionSet', (uid, data) => service.solo(uid, data));
 const raceService = new RaceService({database: getDatabase(),
   demoQuestions: JSON.parse(readFileSync(new URL('../content/demo.json', import.meta.url))),
   allowDebugSolo: emulator || projectId === 'kelime-yarisi-yalin'});
-export const startDemoRaceGame = callable((uid, data) => raceService.startDemo(uid, data));
-export const playRace = callable((uid, data) => raceService.play(uid, data));
-export const cleanupQuestionReservations = onSchedule({schedule: 'every 10 minutes', region: 'europe-west1', maxInstances: 1}, () => service.cleanup());
+export const startDemoRaceGame = callable('startDemoRaceGame', (uid, data) => raceService.startDemo(uid, data));
+export const playRace = callable('playRace', (uid, data) => raceService.play(uid, data));
+export const cleanupQuestionReservations = onSchedule({schedule: 'every 10 minutes', region: 'europe-west1', maxInstances: 1}, async () => {
+  try {return await service.cleanup();}
+  catch(error){await reportFailure(error,'cleanupQuestionReservations');throw error;}
+});
 
 const generationKey=defineSecret('OPENAI_API_KEY');
 const generationSources=JSON.parse(readFileSync(new URL('../content/source_queue.json',import.meta.url)));
@@ -48,6 +53,9 @@ export const generateDailyQuestions=onSchedule({schedule:'0 4 * * *',timeZone:'E
   if(emulator)throw new Error('Scheduled paid generation is disabled in the emulator. Use injected mock-provider tests.');
   const job=new CloudQuestionGenerator({database:getDatabase(),projectId,
     bundledPool:pool,sources:generationSources,model:'gpt-6-luna',apiKey:()=>generationKey.value()});
-  try {console.info('daily-question-generation',await job.run(event));}
-  catch {console.error('daily-question-generation-failed');throw new Error('Daily generation failed; inspect private status.');}
+  try {
+    console.info('daily-question-generation',await job.run(event));
+    if(job.failure)await reportFailure(job.failure,'generateDailyQuestions.provider');
+  }
+  catch(error) {await reportFailure(error,'generateDailyQuestions');console.error('daily-question-generation-failed');throw new Error('Daily generation failed; inspect private status.');}
 });

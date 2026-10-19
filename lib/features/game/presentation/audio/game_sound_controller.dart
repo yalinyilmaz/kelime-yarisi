@@ -1,3 +1,5 @@
+import '../../../../core/monitoring/error_reporter.dart';
+
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -89,7 +91,12 @@ class GameSoundController {
         await entry.key.setSourceAsset(entry.value.$1);
       }
       _ready = !_disposed;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_sound_controller._prepare',
+      );
       // Audio is optional: a device/backend failure must not interrupt gameplay.
       debugPrint('Oyun sesleri yüklenemedi.');
     }
@@ -166,7 +173,12 @@ class GameSoundController {
     if (_disposed || !_foreground) return;
     try {
       await effect();
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_sound_controller._vibrate',
+      );
       // Unsupported hardware or a platform failure must not affect gameplay.
     }
   }
@@ -181,7 +193,12 @@ class GameSoundController {
           generation == _playbackGeneration) {
         await player.resume();
       }
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_sound_controller._play',
+      );
       debugPrint('Oyun sesi çalınamadı.');
     }
   }
@@ -210,7 +227,12 @@ class GameSoundController {
         _correctPlayer.stop(),
         _wrongPlayer.stop(),
       ]);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_sound_controller._silence',
+      );
       // A backend that failed to initialize may also reject stop().
     }
   }
@@ -227,7 +249,12 @@ class GameSoundController {
     ]) {
       try {
         await player.dispose();
-      } catch (_) {
+      } catch (error, stackTrace) {
+        ErrorReporter.report(
+          error,
+          stackTrace,
+          operation: 'game_sound_controller.dispose',
+        );
         // Failed audio initialization should not prevent leaving the room.
       }
     }

@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/config/question_environment.dart';
+import '../../../core/monitoring/error_reporter.dart';
 import '../../game/data/question_history_store.dart';
 import '../../game/domain/question_capacity.dart';
 import '../../game/domain/game_progress.dart';
@@ -277,24 +278,32 @@ class FirebaseRoomService {
     await previous?.cancel();
     // A newer room, leave or dispose may have arrived while cancellation waited.
     if (_disposed || generation != _presenceGeneration) return;
-    _presenceSubscription = _database.ref('.info/connected').onValue.listen((
-      event,
-    ) {
-      if (event.snapshot.value == true) {
-        unawaited(
-          _registerConnectedPresence(roomId, generation).catchError((
-            Object error,
-          ) async {
-            if (error is FirebaseException &&
-                error.code == 'permission-denied' &&
-                generation == _presenceGeneration) {
-              await _stopPresence();
-            }
-            debugPrint('Oda bağlantı durumu güncellenemedi.');
-          }),
-        );
-      }
-    }, onError: (Object _) => debugPrint('Oda bağlantı durumu dinlenemedi.'));
+    _presenceSubscription = _database.ref('.info/connected').onValue.listen(
+      (event) {
+        if (event.snapshot.value == true) {
+          unawaited(
+            _registerConnectedPresence(roomId, generation).catchError((
+              Object error,
+              StackTrace stack,
+            ) async {
+              ErrorReporter.report(
+                error,
+                stack,
+                operation: 'presence.register',
+              );
+              if (error is FirebaseException &&
+                  error.code == 'permission-denied' &&
+                  generation == _presenceGeneration) {
+                await _stopPresence();
+              }
+              debugPrint('Oda bağlantı durumu güncellenemedi.');
+            }),
+          );
+        }
+      },
+      onError: (Object error, StackTrace stack) =>
+          ErrorReporter.report(error, stack, operation: 'presence.stream'),
+    );
   }
 
   Future<void> _stopPresence() {
@@ -344,7 +353,11 @@ class FirebaseRoomService {
             .child('players/$currentUserId')
             .update({'isOnline': false, 'lastSeenAt': ServerValue.timestamp})
             .catchError(
-              (Object _) => debugPrint('Oda çevrimdışı durumu gönderilemedi.'),
+              (Object error, StackTrace stack) => ErrorReporter.report(
+                error,
+                stack,
+                operation: 'presence.offline',
+              ),
             ),
       );
     }
@@ -390,7 +403,8 @@ class FirebaseRoomService {
         String? token;
         try {
           token = await verifier.getToken(true);
-        } on FirebaseException {
+        } on FirebaseException catch (error, stack) {
+          ErrorReporter.report(error, stack, operation: 'app_check.refresh');
           // Native errors can contain credentials; never forward them to UI.
         }
         if (token == null || token.isEmpty) {
@@ -460,9 +474,10 @@ class FirebaseRoomService {
       code.replaceAll(RegExp('[^A-Za-z0-9]'), '').toLowerCase();
 }
 
-class RoomServiceException implements Exception {
+class RoomServiceException implements Exception, DiagnosticFailure {
   const RoomServiceException(this.code, this.message, {this.capacity});
 
+  @override
   final String code;
   final String message;
   final QuestionCapacity? capacity;

@@ -65,3 +65,9 @@ app.*.map.json
 /.env.*
 /content/*.lock
 /content/*.tmp
+
+# Sentry symbol-upload authentication stays on this computer/CI only.
+/sentry.properties
+/.sentryclirc
+**/sentry.properties
+**/.sentryclirc

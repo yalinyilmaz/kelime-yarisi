@@ -65,3 +65,16 @@ test('request ceiling is explicit, redirects are refused and per-call token limi
  assert.deepEqual(result.value,{});assert.equal(request.redirect,'error');assert.equal(JSON.parse(request.body).max_output_tokens,1200);
  await assert.rejects(callStructured({model:'m',apiKey:fakeKey,maxOutputTokens:0}),/512/);
 });
+
+test('public Sentry DSN is allowed but upload credentials and non-Sentry endpoints are refused',()=>sandbox(dir=>{
+ const env=resolve(dir,'functions/.env.kelime-yarisi-yalin');
+ writeFileSync(env,`SENTRY_DSN=https://${'a'.repeat(32)}@o123.ingest.de.sentry.io/123\n`);
+ assert.equal(checkDeployment(dir).functionsEnvChecked,true);
+ writeFileSync(env,'SENTRY_AUTH_TOKEN=do-not-deploy\n');
+ assert.throws(()=>checkDeployment(dir),/Only QUESTION_POOL_EXAMPLES/);
+ writeFileSync(env,`SENTRY_DSN=https://${'a'.repeat(32)}@example.com/123\n`);
+ assert.throws(()=>checkDeployment(dir),/Only QUESTION_POOL_EXAMPLES/);
+ rmSync(env);
+ writeFileSync(resolve(dir,'functions/sentry.properties'),'auth.token=private-upload-token');
+ assert.throws(()=>checkDeployment(dir),/upload authentication/);
+}));

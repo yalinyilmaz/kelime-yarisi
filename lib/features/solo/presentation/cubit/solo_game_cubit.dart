@@ -1,3 +1,5 @@
+import '../../../../core/monitoring/error_reporter.dart';
+
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +48,12 @@ class SoloGameCubit extends Cubit<SoloGameState> {
         const Duration(milliseconds: 200),
         (_) => refreshTime(),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'solo_game_cubit.start',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -192,7 +199,12 @@ class SoloGameCubit extends Cubit<SoloGameState> {
       if (!isClosed) {
         emit(state.copyWith(isSavingCompletion: false, completionSaved: true));
       }
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'solo_game_cubit._persistCompletion',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(

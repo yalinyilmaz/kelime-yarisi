@@ -10,7 +10,8 @@
       "toolArgs": [
         "--flavor",
         "dev",
-        "--dart-define=QUESTION_POOL_ENABLED=true"
+        "--dart-define=QUESTION_POOL_ENABLED=true",
+        "--dart-define-from-file=.local/sentry.dev.json"
       ]
     },
     {
@@ -22,7 +23,8 @@
       "toolArgs": [
         "--flavor",
         "dev",
-        "--dart-define=QUESTION_POOL_ENABLED=true"
+        "--dart-define=QUESTION_POOL_ENABLED=true",
+        "--dart-define-from-file=.local/sentry.dev.json"
       ]
     },
     {
@@ -33,7 +35,8 @@
       "flutterMode": "debug",
       "toolArgs": [
         "--flavor",
-        "prod"
+        "prod",
+        "--dart-define-from-file=.local/sentry.prod.json"
       ]
     },
     {
@@ -44,7 +47,8 @@
       "flutterMode": "release",
       "toolArgs": [
         "--flavor",
-        "prod"
+        "prod",
+        "--dart-define-from-file=.local/sentry.prod.json"
       ]
     }
   ]

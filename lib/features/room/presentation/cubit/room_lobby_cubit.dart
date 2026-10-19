@@ -1,3 +1,5 @@
+import '../../../../core/monitoring/error_reporter.dart';
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -45,7 +47,12 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
           state.copyWith(questionCapacity: QuestionCapacity.fromMap(report)),
         );
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'room_lobby_cubit.loadQuestionCapacity',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -91,7 +98,12 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         state.room.id,
         isReady: !currentPlayer.isReady,
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'room_lobby_cubit.toggleCurrentPlayerReady',
+      );
       if (isClosed) return;
       emit(
         state.copyWith(
@@ -108,7 +120,12 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
     emit(state.copyWith(isLeaving: true, clearError: true));
     try {
       await _roomService.leaveRoom(state.room.id);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'room_lobby_cubit.leaveRoom',
+      );
       if (isClosed) return;
       emit(
         state.copyWith(
@@ -153,7 +170,12 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         gameMode: state.room.gameMode,
         questionEngine: state.room.questionEngine,
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'room_lobby_cubit._startCountdown',
+      );
       if (isClosed) return;
       emit(
         state.copyWith(
@@ -192,7 +214,12 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       unawaited(
         _roomService
             .markPlaying(state.room.id)
-            .catchError((Object error) {
+            .catchError((Object error, StackTrace stackTrace) {
+              ErrorReporter.report(
+                error,
+                stackTrace,
+                operation: 'room_lobby_cubit._tickCountdown',
+              );
               if (!isClosed) {
                 emit(
                   state.copyWith(
@@ -207,6 +234,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   }
 
   void _streamFailed(Object error, StackTrace stackTrace) {
+    ErrorReporter.report(error, stackTrace, operation: 'lobby.stream');
     if (isClosed || state.isLeaving) return;
     final message = error is RoomServiceException
         ? error.message

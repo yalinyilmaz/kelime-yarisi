@@ -192,3 +192,26 @@ Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profili
 - Skor ve cevap doğrulaması istemciye güvenmemeli; oyun motoru aşamasında güvenilir sunucu tarafında uygulanmalıdır.
 
 Sayfa geçişleri GoRouter ile ana sayfa, oluştur/katıl formu, oda ve oyun rotalarından yönetilir. Oda/oyun verisi bulunmayan bir rota ana sayfaya döner. Presentation widget’ları kendi dosyalarındadır. `GameCubit` puan, harf oyu ve ortak soru senkronizasyonunu; `GameFeedbackCubit` sonuç gösterim süresini; `GameAudioCubit` ses tercihi ve ses yaşam döngüsünü yönetir. Harf Al ve Cevapla klavyeyi kapatmaz; diğer alanlara dokunma ve sayfayı kaydırma kapatır. Cevap kaydedilince giriş kilitlenir, odak bağlantısı yeni soruya kadar korunur.
+
+## Sentry hata takibi
+
+Tek organizasyon: `yalin-yilmaz`. Projeler: `kelime-yarisi-flutter` (Android/iOS) ve `kelime-yarisi-functions` (Firebase). Her projede ortam etiketi `dev` veya `prod` olur; ayrı Sentry hesabı gerekmez. Flutter ortamı flavor'dan, Functions ortamı Firebase proje kimliğinden belirlenir. Prod Firebase deploy'u ayrıca yapılmalıdır.
+
+VS Code launch ayarları `.local/sentry.dev.json` / `.local/sentry.prod.json` dosyalarını okur. Bu dosyalar Git'e girmez. Yeni bilgisayarda ilgili dosyaları oluşturun: `{"SENTRY_DSN":"Sentry Client Keys ekranındaki DSN"}`. DSN, istemcide bulunması gereken bir olay gönderme adresidir; yönetim yetkisi veren `SENTRY_AUTH_TOKEN` değildir. Eksik DSN durumunda uygulama çalışır, Sentry devre dışı kalır ve geliştirme konsolunda uyarı görünür.
+
+Terminalden çalıştırma:
+
+```sh
+flutter run --flavor dev --dart-define-from-file=.local/sentry.dev.json
+flutter run --flavor prod --dart-define-from-file=.local/sentry.prod.json
+```
+
+Functions için hedefe özel, Git tarafından ignore edilen `functions/.env.kelime-yarisi-yalin` dosyasındaki `SENTRY_DSN` kullanılır. Prod karşılığı `functions/.env.kelime-yarisi-prod` dosyasıdır; hedef proje değiştirilmeden dev dosyasını prod'a taşımayın. Deploy koruması yalnızca Sentry'nin genel ingestion DSN adresine izin verir; API anahtarı ve upload auth tokenları reddedilir.
+
+SDK, Flutter framework/async hatalarını ve desteklediği Android/iOS native crashlerini yakalar. Cubit hataları, yakalanan oyun/oda/stream, yerel kayıt ve ses hataları ortak `ErrorReporter` üzerinden raporlanır. Callable hataları ve zamanlanmış görev hataları backend'de ayrı kaydedilir; Functions yanıtı tamamlanmadan önce en fazla 2 saniye gönderim beklenir. Aynı işlem/tip/kod için yakalanan tekrarlı hatalar süreç başına dakikada bir gönderilir. Yanlış cevap ve normal oyun eylemleri hata kaydı oluşturmaz.
+
+Hata tipi, kodu, işlem ve stack trace korunur. Ham exception mesajı, Firebase/OpenAI yanıtları, kullanıcı girdisi, cevap, oyuncu adı, oda ve geçmiş verileri gönderilmez. Breadcrumb, ekran görüntüsü, replay, performance ve genişletilmiş log toplama kapalıdır. Native SDK için sunucu tarafındaki varsayılan scrubber'lar ve ek hassas alan filtreleri de açık tutulmalıdır. İzleme bağlantısındaki bir hata oyunu kesmez.
+
+Release öncesinde native sembolleri (iOS dSYM, Android mapping/native semboller, obfuscation varsa Dart sembolleri) ilgili Sentry projesine yükleyin: https://docs.sentry.io/platforms/flutter/upload-debug/ . Upload için gereken auth token yalnız yerel/CI secret olmalıdır; Flutter'a veya Functions paketine eklenmez. Debugger bağlıyken native crash yakalama davranışı farklı olabilir; son native crash doğrulamasını debugger olmadan gerçek cihazdaki profile/release sürümünde yapın. Bu çalışma cihazda crash testi yapmaz.
+
+Panel: https://yalin-yilmaz.sentry.io/issues/ . Proje seçimiyle istemci/backend, ortam filtresiyle dev/prod ayrılır. Prod ortamı ilk gerçek prod kaydı geldiğinde listelenir.

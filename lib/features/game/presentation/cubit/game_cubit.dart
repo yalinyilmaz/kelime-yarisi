@@ -1,3 +1,5 @@
+import '../../../../core/monitoring/error_reporter.dart';
+
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,7 +77,12 @@ class GameCubit extends Cubit<GameState> {
           throw StateError('Soru setinde yinelenen cevap var.');
         }
       }
-    } on StateError catch (e) {
+    } on StateError catch (e, stackTrace) {
+      ErrorReporter.report(
+        e,
+        stackTrace,
+        operation: 'game_cubit._initialState',
+      );
       questions = const [];
       error = e.message;
     }
@@ -118,7 +125,12 @@ class GameCubit extends Cubit<GameState> {
         );
       }
       emit(state.copyWith(isVoting: false));
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit.revealLetter',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -144,7 +156,12 @@ class GameCubit extends Cubit<GameState> {
         questionIndex: index,
         expectedHintCount: count,
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit.requestClueHint',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -209,7 +226,12 @@ class GameCubit extends Cubit<GameState> {
         input: input,
         expectedRevealedCount: voting ? state.hints.revealedCount : null,
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit._raceAction',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -271,7 +293,8 @@ class GameCubit extends Cubit<GameState> {
       );
       _recordCompletedSet();
       return true;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(error, stackTrace, operation: 'game_cubit._save');
       if (isClosed) return false;
       // Firebase streams emit pending local writes too; restore the last acknowledged state.
       emit(
@@ -385,7 +408,12 @@ class GameCubit extends Cubit<GameState> {
     try {
       await _service.playRace(state.room.id);
       _retryAtMs = _nowMs() + 1000;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit._syncRace',
+      );
       _retryAtMs = _nowMs() + 3000;
       if (!isClosed) {
         emit(
@@ -446,7 +474,12 @@ class GameCubit extends Cubit<GameState> {
       await _service.recordCompletedSet(state.room.contentSetId!);
       _completedSetRecorded = true;
       if (!isClosed) emit(state.copyWith(clearError: true));
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit._saveCompletedSet',
+      );
       _historyRetryAtMs = _nowMs() + 3000;
       if (!isClosed) {
         emit(
@@ -478,7 +511,12 @@ class GameCubit extends Cubit<GameState> {
           state.room.status != RoomStatus.results) {
         await _service.markResults(state.room.id);
       }
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit._completeRound',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -513,7 +551,12 @@ class GameCubit extends Cubit<GameState> {
     emit(state.copyWith(isLeaving: true, clearError: true));
     try {
       await _service.leaveRoom(state.room.id);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'game_cubit.leaveRoom',
+      );
       if (!isClosed) {
         emit(
           state.copyWith(
@@ -526,6 +569,7 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void _streamFailed(Object error, StackTrace stack) {
+    ErrorReporter.report(error, stack, operation: 'game.stream');
     if (isClosed || state.isLeaving) return;
     emit(
       state.copyWith(

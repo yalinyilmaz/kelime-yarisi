@@ -3,7 +3,7 @@ import {resolve,relative} from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {containsSecret,loadLocalConfig} from './local_config.js';
 
-const requiredIgnores=['node_modules','test','tools','.env','.env.*','**/.env','**/.env.*','.local','**/.local/**','.secret.local','**/.secret.local','src/content_quality.js','*.log'];
+const requiredIgnores=['node_modules','test','tools','.env','.env.*','**/.env','**/.env.*','.local','**/.local/**','.secret.local','**/.secret.local','src/content_quality.js','*.log','sentry.properties','**/sentry.properties','.sentryclirc','**/.sentryclirc'];
 const localOnly=new Set(['node_modules','test','tools','.local']);
 const excludedSources=new Set(['src/content_quality.js','content/examples.json']);
 
@@ -27,14 +27,15 @@ export function checkDeployment(root) {
       const stat=lstatSync(path);
       if(stat.isSymbolicLink())throw new Error('Symlinks are not allowed in the functions upload.');
       if(stat.isDirectory()){scan(path);continue;}
+      if(['sentry.properties','.sentryclirc'].includes(name))throw new Error('Sentry upload authentication must remain outside the functions upload.');
       const text=readFileSync(path,'utf8');
       // Firebase can read .env before packaging. Ignore patterns alone do not stop that.
       if(name==='.env'||name.startsWith('.env.')||name==='.secret.local') {
         const assignments=text.split(/\r?\n/u).filter(line=>line.trim()&&!line.trimStart().startsWith('#'));
-        if(assignments.some(line=>!/^QUESTION_POOL_EXAMPLES=(?:true|false)\s*$/u.test(line)))throw new Error('Only QUESTION_POOL_EXAMPLES is allowed in functions env files. Keep API credentials in the root .local directory.');
+        if(assignments.some(line=>!/^QUESTION_POOL_EXAMPLES=(?:true|false)\s*$/u.test(line)&&!/^SENTRY_DSN=https:\/\/[a-f\d]{32}@[a-z\d.-]+\.ingest(?:\.[a-z]+)?\.sentry\.io\/\d+\s*$/u.test(line)))throw new Error('Only QUESTION_POOL_EXAMPLES and a public SENTRY_DSN ingestion address are allowed in functions env files. Keep API/auth credentials in the root .local directory.');
         continue;
       }
-      if(containsSecret(text,apiKey)||/-----BEGIN (?:[A-Z ]*PRIVATE KEY)-----|"private_key"\s*:\s*"[^"\s]/u.test(text)||/\.(?:pem|p8|p12|pfx|key)$/iu.test(name))throw new Error('A credential or private-key file was detected in the functions upload. Deployment stopped; values are not printed.');
+      if(/(?:sntrys|sntryu)_[a-z\d_-]{20,}|SENTRY_AUTH_TOKEN\s*[=:]\s*['"][^'"\s]+/iu.test(text)||containsSecret(text,apiKey)||/-----BEGIN (?:[A-Z ]*PRIVATE KEY)-----|"private_key"\s*:\s*"[^"\s]/u.test(text)||/\.(?:pem|p8|p12|pfx|key)$/iu.test(name))throw new Error('A credential or private-key file was detected in the functions upload. Deployment stopped; values are not printed.');
       filesChecked++;
     }
   };
