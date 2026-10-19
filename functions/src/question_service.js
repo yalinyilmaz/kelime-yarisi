@@ -1,7 +1,7 @@
 import {transaction} from './database_transaction.js';
 import {activeAllocations, allocate, PREPARATION_MS, release, roomKey, validateHistory} from './allocation.js';
 import {capacityReport, PoolError} from './set_selector.js';
-import {selectSetId,setIdCapacityReport} from './question_sets.js';
+import {selectSetId,setIdCapacityReport,playableQuestions} from './question_sets.js';
 
 // A device's completed-set snapshot stays valid while it waits in this lobby.
 const SET_PREPARATION_MS = 60 * 60 * 1000;
@@ -13,6 +13,22 @@ export class ServiceError extends Error {
 export class QuestionService {
   constructor({database, pool, now = Date.now, includeExamples = false, allowSolo = false,allowDebugSolo=false,loadPool,loadSetIds,loadSet}) {
     Object.assign(this, {database, pool, now, includeExamples, allowSolo,allowDebugSolo,loadPool,loadSetIds,loadSet});
+  }
+  async solo(uid, {history}) {
+    if (!uid) throw new ServiceError('unauthenticated', 'Oturum açılmalı.');
+    let checked;
+    try {checked = validateHistory(history);} catch {throw new ServiceError('invalid-argument', 'Geçmiş biçimi geçersiz.');}
+    if (!this.loadSetIds || !this.loadSet) throw new ServiceError('failed-precondition', 'Tek oyunculu soru havuzu hazır değil.');
+    try {
+      const id = selectSetId(await this.loadSetIds(), [checked]);
+      const set = await this.loadSet(id);
+      return {id: set.id, questions: playableQuestions(set.questions)};
+    } catch (error) {
+      if (error instanceof PoolError) throw new ServiceError('resource-exhausted',
+        'Oynamadığın tamamlanmış bir set kalmadı. Yeni setler yayımlandığında tekrar dene.',
+        {reason: error.code, capacity: error.report});
+      throw error;
+    }
   }
   async room(id, uid) {
     if (!uid) throw new ServiceError('unauthenticated', 'Oturum açılmalı.');

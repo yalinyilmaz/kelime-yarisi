@@ -6,6 +6,9 @@ import '../features/room/presentation/cubit/room_setup_state.dart';
 import '../features/room/presentation/pages/room_home_page.dart';
 import '../features/room/presentation/pages/room_lobby_page.dart';
 import '../features/room/presentation/pages/room_setup_page.dart';
+import '../features/room/presentation/pages/multiplayer_home_page.dart';
+import '../features/solo/presentation/pages/solo_home_page.dart';
+import '../features/solo/presentation/pages/solo_game_page.dart';
 
 GoRouter createAppRouter() => GoRouter(
   routes: [
@@ -13,6 +16,17 @@ GoRouter createAppRouter() => GoRouter(
       path: '/',
       builder: (_, _) => const RoomHomePage(),
       routes: [
+        GoRoute(
+          path: 'multiplayer',
+          builder: (_, _) => const MultiplayerHomePage(),
+        ),
+        GoRoute(
+          path: 'solo',
+          builder: (_, _) => const SoloHomePage(),
+          routes: [
+            GoRoute(path: 'play', builder: (_, _) => const SoloGamePage()),
+          ],
+        ),
         GoRoute(
           path: 'create',
           builder: (_, _) => const RoomSetupPage(flow: RoomSetupFlow.create),

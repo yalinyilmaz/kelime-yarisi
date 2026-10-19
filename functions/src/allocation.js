@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {capacityReport, PoolError, selectSet} from './set_selector.js';
-import {selectPublishedSet} from './question_sets.js';
+import {selectPublishedSet,playableQuestions} from './question_sets.js';
 
 export const QUESTION_MS = 25000;
 // Shorter than the reservation grace period: stale snapshots cannot outlive a
@@ -58,10 +58,7 @@ export function allocate(state, {sessionId, roomId, mode, participantIds, histor
   const session = {sessionId, roomId, mode, participantIds, startsAtMs,
     expiresAtMs: startsAtMs + selected.questions.length * QUESTION_MS + 30000,
     fingerprint: selected.fingerprint, ...(sets?{contentSetId:selected.id}:{}),
-    questions: selected.questions.map(q =>
-      ({id:q.id, answerId:q.answerId, answer:q.answer, clue:q.clue, letterCount:q.letterCount,
-        ...(q.hints?.length === 2 ? {hints:q.hints} : {}),
-        ...(q.acceptedAnswers?.length ? {acceptedAnswers:q.acceptedAnswers} : {})}))};
+    questions: playableQuestions(selected.questions)};
   sessions[sessionId] = session;
   return {state: {sessions}, session};
 }

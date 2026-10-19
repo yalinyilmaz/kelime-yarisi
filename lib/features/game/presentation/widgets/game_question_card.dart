@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../../domain/game_answer_feedback.dart';
 import '../cubit/game_feedback_cubit.dart';
+import '../cubit/game_cubit.dart';
 import '../cubit/game_state.dart';
 import 'answer_feedback_banner.dart';
 import 'word_pin_input.dart';
@@ -47,7 +48,14 @@ class GameQuestionCard extends StatelessWidget {
                       ),
                     ),
                     if (question.hints.length == 2)
-                      GameClueHintButton(state: state),
+                      GameClueHintButton(
+                        remaining: state.remainingClueHints,
+                        used: state.currentClueHintCount,
+                        isLoading: state.isRequestingClueHint,
+                        onPressed: state.canRequestClueHint
+                            ? context.read<GameCubit>().requestClueHint
+                            : null,
+                      ),
                   ],
                 ),
               ),
@@ -59,7 +67,7 @@ class GameQuestionCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              GameClueHints(state: state),
+              GameClueHints(hints: state.visibleClueHints),
               const SizedBox(height: 24),
               WordPinInput(
                 question: question,

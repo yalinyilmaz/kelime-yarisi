@@ -1,6 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class GameQuestion extends Equatable {
+  factory GameQuestion.fromMap(Map map) => GameQuestion(
+    id: map['id'] as String?,
+    answerId: map['answerId'] as String?,
+    clue: map['clue'] as String? ?? '',
+    answer: map['answer'] as String? ?? '',
+    acceptedAnswers: List<String>.unmodifiable(
+      (map['acceptedAnswers'] as List? ?? const []).cast<String>(),
+    ),
+    hints: List<String>.unmodifiable(
+      (map['hints'] as List? ?? const []).cast<String>(),
+    ),
+  );
   const GameQuestion({
     required this.clue,
     required this.answer,

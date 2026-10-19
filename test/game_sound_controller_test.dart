@@ -117,6 +117,29 @@ void main() {
   });
   tearDown(() => sounds.dispose());
 
+  test('solo events play matching cues and haptics, and stop when backgrounded or disposed', () async {
+    sounds.playLetterReveal();
+    sounds.playAnswerFeedback(true);
+    sounds.playAnswerFeedback(false);
+    sounds.playClockTick();
+    await flush();
+    expect([hint.plays, correct.plays, wrong.plays, tick.plays], [1, 1, 1, 1]);
+    expect(hintVibrations, 1);
+    expect(wrongVibrations, 1);
+    await sounds.setForeground(false);
+    sounds.playLetterReveal();
+    sounds.playAnswerFeedback(false);
+    sounds.playClockTick();
+    await flush();
+    expect([hint.plays, correct.plays, wrong.plays, tick.plays], [1, 1, 1, 1]);
+    expect([hintVibrations, wrongVibrations], [1, 1]);
+    await sounds.dispose();
+    sounds.playLetterReveal();
+    sounds.playAnswerFeedback(false);
+    await flush();
+    expect([hintVibrations, wrongVibrations], [1, 1]);
+  });
+
   test('A remote winner plays the reveal cue once without a wrong-answer sound or vibration', () async {
     sounds.update(soundState());
     sounds.update(soundState(outcome: AnswerOutcome.beaten));

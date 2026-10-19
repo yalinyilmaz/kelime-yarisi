@@ -5,6 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 import 'app/app.dart';
 import 'features/room/data/firebase_room_service.dart';
@@ -25,8 +28,17 @@ Future<void> main() async {
         : const AppleAppAttestProvider(),
   );
   database.setPersistenceEnabled(true);
+  final scoreStorage = await HydratedStorage.build(
+    storageDirectory: HydratedStorageDirectory(
+      path.join(
+        (await getApplicationSupportDirectory()).path,
+        'solo_score_${app.options.projectId}',
+      ),
+    ),
+  );
   runApp(
     KelimeYarisiApp(
+      soloScoreStorage: scoreStorage,
       roomService: FirebaseRoomService(
         auth: auth,
         database: database,

@@ -43,6 +43,26 @@ class GameSoundController {
 
   bool get enabled => _enabled;
 
+  void playLetterReveal() {
+    if (_disposed) return;
+    unawaited(_vibrate(_hintHaptic));
+    if (_ready && _foreground && _enabled) unawaited(_play(_hintPlayer));
+  }
+
+  void playAnswerFeedback(bool correct) {
+    if (_disposed) return;
+    if (!correct) unawaited(_vibrate(_wrongHaptic));
+    if (_ready && _foreground && _enabled) {
+      unawaited(_play(correct ? _correctPlayer : _wrongPlayer));
+    }
+  }
+
+  void playClockTick() {
+    if (!_disposed && _ready && _foreground && _enabled) {
+      unawaited(_play(_tickPlayer));
+    }
+  }
+
   Future<void> initialize() => _initialization ??= _prepare();
 
   Future<void> _prepare() async {

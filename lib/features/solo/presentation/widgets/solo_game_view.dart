@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/widgets/studio_components.dart';
+import '../../../game/presentation/widgets/game_confirmation_dialogs.dart';
+import '../cubit/solo_game_cubit.dart';
+import '../cubit/solo_game_state.dart';
+import 'solo_game_board.dart';
+import 'solo_game_dialogs.dart';
+
+class SoloGameView extends StatefulWidget {
+  const SoloGameView({super.key});
+
+  @override
+  State<SoloGameView> createState() => _SoloGameViewState();
+}
+
+class _SoloGameViewState extends State<SoloGameView>
+    with WidgetsBindingObserver {
+  final _answer = TextEditingController();
+  bool _leaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    context.read<SoloGameCubit>().setForeground(
+      WidgetsBinding.instance.lifecycleState == null ||
+          WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed,
+    );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) => context
+      .read<SoloGameCubit>()
+      .setForeground(state == AppLifecycleState.resumed);
+
+  void _submit() => context.read<SoloGameCubit>().submitAnswer(_answer.text);
+
+  Future<void> _giveUp() async {
+    final cubit = context.read<SoloGameCubit>();
+    final index = cubit.state.questionIndex;
+    final confirmed = await GameConfirmationDialogs.giveUp(
+      context,
+      points: cubit.state.questionValue,
+      advanceImmediately: true,
+    );
+    if (mounted && confirmed) cubit.giveUp(index);
+  }
+
+  Future<void> _leave() async {
+    if (_leaving) return;
+    _leaving = true;
+    try {
+      final cubit = context.read<SoloGameCubit>();
+      if (cubit.state.progress.finished && !cubit.state.completionSaved) {
+        await cubit.saveCompletion();
+        if (!mounted) return;
+      }
+      if ((cubit.state.phase == SoloGamePhase.playing &&
+              !cubit.state.progress.finished) ||
+          (cubit.state.progress.finished && !cubit.state.completionSaved)) {
+        final confirmed = await SoloGameDialogs.leave(context);
+        if (!mounted || !confirmed) return;
+      }
+      cubit.leave();
+      if (mounted) context.go('/solo');
+    } finally {
+      _leaving = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _answer.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocSelector<SoloGameCubit, SoloGameState, (bool, bool)>(
+        selector: (state) => (state.isLeaving, state.soundEnabled),
+        builder: (context, values) => PopScope(
+          canPop: values.$1,
+          onPopInvokedWithResult: (didPop, _) {
+            if (!didPop) _leave();
+          },
+          child: NightStudioScaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                tooltip: 'Oyundan çık',
+                onPressed: _leave,
+                icon: const Icon(Icons.arrow_back_rounded),
+              ),
+              title: const Text('Tek Oyunculu'),
+              actions: [
+                IconButton(
+                  tooltip: values.$2 ? 'Sesi kapat' : 'Sesi aç',
+                  onPressed: context.read<SoloGameCubit>().toggleSound,
+                  icon: Icon(
+                    values.$2
+                        ? Icons.volume_up_rounded
+                        : Icons.volume_off_rounded,
+                  ),
+                ),
+              ],
+            ),
+            body: SoloGameBoard(
+              answerController: _answer,
+              onSubmit: _submit,
+              onGiveUp: _giveUp,
+              onLeave: _leave,
+            ),
+          ),
+        ),
+      );
+}

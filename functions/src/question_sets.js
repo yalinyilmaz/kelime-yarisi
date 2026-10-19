@@ -51,6 +51,11 @@ export function selectSetId(ids, histories, random = Math.random) {
   return available[Math.min(available.length - 1, Math.floor(random() * available.length))];
 }
 
+export const playableQuestions = questions => questions.map(q => ({id: q.id,
+  answerId: q.answerId, answer: q.answer, clue: q.clue, letterCount: q.letterCount,
+  ...(q.hints?.length === 2 ? {hints: q.hints} : {}),
+  ...(q.acceptedAnswers?.length ? {acceptedAnswers: q.acceptedAnswers} : {})}));
+
 export function setCapacityReport(sets, histories = [], options = {}) {
   const available = availableSets(sets, histories);
   const unique = new Map(available.flatMap(s => s.questions).map(q => [q.id, q]));

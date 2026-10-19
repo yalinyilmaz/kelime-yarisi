@@ -10,6 +10,7 @@ import '../../../core/config/question_environment.dart';
 import '../../game/data/question_history_store.dart';
 import '../../game/domain/question_capacity.dart';
 import '../../game/domain/game_progress.dart';
+import '../../game/domain/game_question_set.dart';
 import '../../game/domain/shared_hints.dart';
 import '../domain/entities/game_room.dart';
 import '../domain/entities/room_game_mode.dart';
@@ -352,6 +353,14 @@ class FirebaseRoomService {
 
   Future<void> recordCompletedSet(String setId) =>
       _questionHistory.recordCompleted(setId);
+
+  Future<GameQuestionSet> loadSoloSet() async {
+    await ensureSignedIn();
+    final data = await _callQuestionFunction('getSoloQuestionSet', {
+      'history': await _questionHistory.snapshot(),
+    });
+    return GameQuestionSet.fromMap(data as Map);
+  }
 
   Future<bool> _usesQuestionPool(String roomId) async =>
       (await _roomRef(roomId).child('questionEngine').get()).value == 'pool-v1';

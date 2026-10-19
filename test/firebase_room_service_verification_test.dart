@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/game/data/question_history_store.dart';
+import 'package:kelime_yarisi/features/game/data/question_bank.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/room_game_mode.dart';
 
 void main() {
@@ -29,6 +30,32 @@ void main() {
   });
 
   tearDown(() => debugDefaultTargetPlatformOverride = null);
+
+  test('solo uses the same local completion history and decodes one full set with two hints', () async {
+    callable.result = {
+      'id': 'unseen-set',
+      'questions': [
+        for (final (index, q) in QuestionBank.forSet('classic-v1').indexed)
+          {
+            'id': 'q_$index',
+            'answerId': 'a_$index',
+            'clue': q.clue,
+            'answer': q.answer,
+            'hints': q.hints,
+          },
+      ],
+    };
+    final set = await service.loadSoloSet();
+    expect(functions.names, ['getSoloQuestionSet']);
+    expect(callable.requests.single, {
+      'history': {
+        'completedSetIds': ['completed-set'],
+      },
+    });
+    expect(set.id, 'unseen-set');
+    expect(set.questions, hasLength(14));
+    expect(set.questions.every((q) => q.hints.length == 2), isTrue);
+  });
 
   test(
     'pool lobby prepares history and starts pool game with debug solo enabled',
@@ -211,6 +238,7 @@ class _Callable extends Fake implements HttpsCallable {
   final failures = <String>[];
   final requests = <Object?>[];
   int calls = 0;
+  Object? result = <String, dynamic>{};
 
   @override
   Future<HttpsCallableResult<T>> call<T>([dynamic parameters]) async {
@@ -222,13 +250,15 @@ class _Callable extends Fake implements HttpsCallable {
         message: 'Callable rejected',
       );
     }
-    return _Result<T>();
+    return _Result<T>(result);
   }
 }
 
 class _Result<T> extends Fake implements HttpsCallableResult<T> {
+  _Result(this.value);
+  final Object? value;
   @override
-  T get data => <String, dynamic>{} as T;
+  T get data => value as T;
 }
 
 class _AppCheck extends Fake implements FirebaseAppCheck {

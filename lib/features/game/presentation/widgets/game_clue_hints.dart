@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../cubit/game_cubit.dart';
-import '../cubit/game_state.dart';
 
 class GameClueHintButton extends StatelessWidget {
-  const GameClueHintButton({required this.state, super.key});
+  const GameClueHintButton({
+    required this.remaining,
+    required this.used,
+    this.onPressed,
+    this.isLoading = false,
+    super.key,
+  });
 
-  final GameState state;
+  final int remaining;
+  final int used;
+  final VoidCallback? onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) => TextFieldTapRegion(
     child: TextButton.icon(
       key: const ValueKey('clue-hint-action'),
-      onPressed: state.canRequestClueHint
-          ? context.read<GameCubit>().requestClueHint
-          : null,
+      onPressed: onPressed,
       style: TextButton.styleFrom(
         foregroundColor: Colors.amber.shade300,
         minimumSize: const Size(48, 48),
         padding: const EdgeInsets.symmetric(horizontal: 8),
       ),
-      icon: state.isRequestingClueHint
+      icon: isLoading
           ? const SizedBox.square(
               dimension: 18,
               child: CircularProgressIndicator(
@@ -31,17 +34,17 @@ class GameClueHintButton extends StatelessWidget {
             )
           : const Icon(Icons.lightbulb_rounded, size: 22),
       label: Tooltip(
-        message: 'İpucu · Bu soruda ${state.currentClueHintCount}/2 kullanıldı',
-        child: Text('${state.remainingClueHints}/10'),
+        message: 'İpucu · Bu soruda $used/2 kullanıldı',
+        child: Text('$remaining/10'),
       ),
     ),
   );
 }
 
 class GameClueHints extends StatelessWidget {
-  const GameClueHints({required this.state, super.key});
+  const GameClueHints({required this.hints, super.key});
 
-  final GameState state;
+  final List<String> hints;
 
   @override
   Widget build(BuildContext context) => AnimatedSize(
@@ -49,12 +52,10 @@ class GameClueHints extends StatelessWidget {
     alignment: Alignment.topCenter,
     child: AnimatedSwitcher(
       duration: const Duration(milliseconds: 180),
-      child: state.visibleClueHints.isEmpty
+      child: hints.isEmpty
           ? const SizedBox.shrink()
           : Container(
-              key: ValueKey(
-                '${state.questionIndex}-${state.currentClueHintCount}',
-              ),
+              key: ValueKey(hints.join('\n')),
               width: double.infinity,
               margin: const EdgeInsets.fromLTRB(8, 12, 8, 0),
               padding: const EdgeInsets.all(12),
@@ -67,9 +68,9 @@ class GameClueHints extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 6,
                 children: [
-                  for (var i = 0; i < state.visibleClueHints.length; i++)
+                  for (var i = 0; i < hints.length; i++)
                     Text(
-                      '${i + 1}. ${state.visibleClueHints[i]}',
+                      '${i + 1}. ${hints[i]}',
                       style: TextStyle(color: Colors.amber.shade100),
                     ),
                 ],

@@ -181,12 +181,16 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.tap(find.text('Çok Oyunculu'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Oda Oluştur'));
       await tester.pumpAndSettle();
       expect(find.byType(RoomSetupPage), findsOneWidget);
       router.pop();
       await tester.pumpAndSettle();
       expect(find.byType(RoomHomePage), findsOneWidget);
+      await tester.tap(find.text('Çok Oyunculu'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Odaya Katıl'));
       await tester.pumpAndSettle();
       expect(find.byType(RoomSetupPage), findsOneWidget);

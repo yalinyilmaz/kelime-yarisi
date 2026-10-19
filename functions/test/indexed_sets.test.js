@@ -108,3 +108,16 @@ test('selection ignores words and answers, and unfinished sets stay replayable',
   assert.equal(selectSetId([selected.id],[history([])]),selected.id);
   assert.throws(()=>selectSetId([selected.id],[history([selected.id])]),error=>error.code==='sets-exhausted');
 });
+
+test('solo selection is authenticated, ID-only and reads no rooms or allocations',async()=>{
+ const {database,service}=setup(1);
+ await assert.rejects(service.solo(null,{history:history([])}),e=>e.code==='unauthenticated');
+ await assert.rejects(service.solo('user0',{history:history(['../unsafe'])}),e=>e.code==='invalid-argument');
+ const set=await service.solo('user0',{history:history([])});
+ assert.equal(set.id,selected.id);assert.equal(set.questions.length,14);
+ assert(set.questions.every(q=>q.hints.length===2&&!q.source&&!q.review));
+ assert.equal(database.reads.filter(path=>path.startsWith('questionPool/published/')).length,14);
+ assert(database.reads.every(path=>path.startsWith('questionPool/')));
+ assert.equal(database.value('questionAllocations'),null);
+ await assert.rejects(service.solo('user0',{history:history([selected.id])}),e=>e.code==='resource-exhausted');
+});

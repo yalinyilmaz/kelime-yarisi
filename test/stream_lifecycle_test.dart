@@ -141,6 +141,8 @@ void main() {
     (tester) async {
       final service = _PendingService();
       await tester.pumpWidget(KelimeYarisiApp(roomService: service));
+      await tester.tap(find.text('Çok Oyunculu'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Oda Oluştur'));
       await tester.pumpAndSettle();
       await tester.pumpWidget(const SizedBox());

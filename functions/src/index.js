@@ -31,6 +31,7 @@ const callable = action => onCall(options, async request => {
 });
 export const prepareQuestionHistory = callable((uid, data) => service.prepare(uid, data));
 export const startQuestionGame = callable((uid, data) => service.start(uid, data));
+export const getSoloQuestionSet = callable((uid, data) => service.solo(uid, data));
 const raceService = new RaceService({database: getDatabase(),
   demoQuestions: JSON.parse(readFileSync(new URL('../content/demo.json', import.meta.url))),
   allowDebugSolo: emulator || projectId === 'kelime-yarisi-yalin'});
