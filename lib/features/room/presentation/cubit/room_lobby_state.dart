@@ -11,6 +11,7 @@ class RoomLobbyState extends Equatable {
     this.isLeaving = false,
     this.errorMessage,
     this.questionCapacity,
+    this.isLoadingQuestionCapacity = false,
     this.collectiveCapacity = false,
   });
 
@@ -20,6 +21,7 @@ class RoomLobbyState extends Equatable {
   final bool isLeaving;
   final String? errorMessage;
   final QuestionCapacity? questionCapacity;
+  final bool isLoadingQuestionCapacity;
   final bool collectiveCapacity;
 
   int get serverNowMs =>
@@ -42,6 +44,7 @@ class RoomLobbyState extends Equatable {
     String? errorMessage,
     bool clearError = false,
     QuestionCapacity? questionCapacity,
+    bool? isLoadingQuestionCapacity,
     bool? collectiveCapacity,
   }) {
     return RoomLobbyState(
@@ -51,6 +54,8 @@ class RoomLobbyState extends Equatable {
       isLeaving: isLeaving ?? this.isLeaving,
       errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
       questionCapacity: questionCapacity ?? this.questionCapacity,
+      isLoadingQuestionCapacity:
+          isLoadingQuestionCapacity ?? this.isLoadingQuestionCapacity,
       collectiveCapacity: collectiveCapacity ?? this.collectiveCapacity,
     );
   }
@@ -63,6 +68,7 @@ class RoomLobbyState extends Equatable {
     isLeaving,
     errorMessage,
     questionCapacity,
+    isLoadingQuestionCapacity,
     collectiveCapacity,
   ];
 }

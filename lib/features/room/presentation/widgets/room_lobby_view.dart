@@ -79,12 +79,35 @@ class RoomLobbyView extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(gutter, 8, gutter, 32),
                         children: [
                           RoomCodeCard(room: room),
-                          if (state.questionCapacity != null) ...[
+                          if (kDebugMode &&
+                              (state.isLoadingQuestionCapacity ||
+                                  state.questionCapacity != null)) ...[
                             const SizedBox(height: 16),
-                            QuestionCapacityCard(
-                              capacity: state.questionCapacity!,
-                              collective: state.collectiveCapacity,
-                            ),
+                            if (state.isLoadingQuestionCapacity)
+                              const Card(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Row(
+                                    children: [
+                                      SizedBox.square(
+                                        dimension: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2.5,
+                                        ),
+                                      ),
+                                      SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text('Soru havuzu yükleniyor…'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            else
+                              QuestionCapacityCard(
+                                capacity: state.questionCapacity!,
+                                collective: state.collectiveCapacity,
+                              ),
                           ],
                           if (room.status == RoomStatus.countdown) ...[
                             const SizedBox(height: 16),

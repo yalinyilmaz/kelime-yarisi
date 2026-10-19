@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,11 +12,16 @@ import 'package:kelime_yarisi/features/room/domain/entities/room_game_mode.dart'
 import 'package:kelime_yarisi/features/room/presentation/pages/room_home_page.dart';
 import 'package:kelime_yarisi/features/room/presentation/pages/room_lobby_page.dart';
 import 'package:kelime_yarisi/features/room/presentation/pages/room_setup_page.dart';
+import 'package:kelime_yarisi/features/room/presentation/widgets/question_capacity_card.dart';
 
 import 'game_cubit_test.dart' show FakeRoomService, testRoom;
 
 class FakeLobbyService extends FakeRoomService {
   int starts = 0;
+  final capacity = Completer<Map<String, dynamic>>();
+  @override
+  Future<Map<String, dynamic>> prepareQuestionHistory(String roomId) =>
+      capacity.future;
   @override
   Future<void> beginPresence(String roomId) async {}
   @override
@@ -37,6 +44,63 @@ class FakeLobbyService extends FakeRoomService {
 }
 
 void main() {
+  for (final fails in [false, true]) {
+    testWidgets(
+      'Pool loading indicator ends on ${fails ? 'failure' : 'success'}',
+      (tester) async {
+        final service = FakeLobbyService()..uid = 'host';
+        final seed = testRoom();
+        final room = GameRoom(
+          id: seed.id,
+          name: seed.name,
+          code: seed.code,
+          hostId: seed.hostId,
+          targetPlayerCount: 2,
+          gameMode: RoomGameMode.classic,
+          players: seed.players,
+          questionEngine: 'pool-v1',
+        );
+        service.room = room;
+        final router = createAppRouter();
+        router.go('/room/${room.id}', extra: room);
+        await tester.pumpWidget(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp.router(
+              theme: AppTheme.dark,
+              routerConfig: router,
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(find.text('Soru havuzu yükleniyor…'), findsOneWidget);
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        expect(find.byType(QuestionCapacityCard), findsNothing);
+        if (fails) {
+          service.capacity.completeError(
+            const RoomServiceException(
+              'unavailable',
+              'Havuz bilgisi alınamadı.',
+            ),
+          );
+        } else {
+          service.capacity.complete({'groups': [], 'upperBoundSets': 48});
+        }
+        await tester.pumpAndSettle();
+        expect(find.text('Soru havuzu yükleniyor…'), findsNothing);
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(
+          find.byType(QuestionCapacityCard),
+          fails ? findsNothing : findsOneWidget,
+        );
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        router.dispose();
+        await service.disposeStreams();
+      },
+    );
+  }
+
   testWidgets(
     'Create/join routes return home; missing room data redirects safely',
     (tester) async {

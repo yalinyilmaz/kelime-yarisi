@@ -30,6 +30,8 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   bool _isMarkingPlaying = false;
 
   Future<void> loadQuestionCapacity() async {
+    if (isClosed || state.isLoadingQuestionCapacity) return;
+    emit(state.copyWith(isLoadingQuestionCapacity: true));
     try {
       final report = await _roomService.prepareQuestionHistory(state.room.id);
       if (!isClosed) {
@@ -46,6 +48,10 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
                 : 'Soru havuzu bilgisi alınamadı.',
           ),
         );
+      }
+    } finally {
+      if (!isClosed) {
+        emit(state.copyWith(isLoadingQuestionCapacity: false));
       }
     }
   }
