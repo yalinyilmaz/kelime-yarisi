@@ -27,11 +27,28 @@ export function resolveQuestionSets(records, pool, options = {}) {
 
 function availableSets(sets, histories) {
   const completed = new Set(histories.flatMap(h => h.completedSetIds ?? []));
-  // Retain compatibility with previously prepared clients; new clients send completion IDs only.
-  const answers = new Set(histories.flatMap(h => h.seenAnswerIds ?? []));
-  const questions = new Set(histories.flatMap(h => h.seenQuestionIds ?? []));
-  return sets.filter(set => !completed.has(set.id) &&
-    !set.questions.some(q => answers.has(q.answerId) || questions.has(q.id)));
+  return sets.filter(set => !completed.has(set.id));
+}
+
+export function availableSetIds(ids, histories = []) {
+  const completed = new Set(histories.flatMap(h => h.completedSetIds ?? []));
+  return ids.filter(id => !completed.has(id));
+}
+
+export function setIdCapacityReport(ids, histories = []) {
+  const remaining = availableSetIds(ids, histories).length;
+  // Every published classic set has exactly two questions per length.
+  return {groups: LENGTHS.map(length => ({length, totalAnswers: ids.length * 2,
+    approvedAnswers: ids.length * 2, publishedAnswers: ids.length * 2,
+    remainingAnswers: remaining * 2, needed: 2})),
+    availableSets: remaining, upperBoundSets: remaining, upperBoundDays: remaining / 3,
+    blockedLengths: remaining ? [] : LENGTHS};
+}
+
+export function selectSetId(ids, histories, random = Math.random) {
+  const available = availableSetIds(ids, histories);
+  if (!available.length) throw new PoolError('sets-exhausted', setIdCapacityReport(ids, histories));
+  return available[Math.min(available.length - 1, Math.floor(random() * available.length))];
 }
 
 export function setCapacityReport(sets, histories = [], options = {}) {

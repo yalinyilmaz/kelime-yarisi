@@ -67,6 +67,7 @@ export class CloudQuestionGenerator {
       if(manifest.fingerprint!==entry.manifest.fingerprint)throw new Error('Invalid publication set.');
       for(const q of entry.questions)updates[`questionPool/published/${q.id}`]=JSON.stringify(compactQuestion(q));
       updates[`questionPool/sets/${id}`]=manifest;
+      updates[`questionPool/setIndex/${id}`]=true;
       updates[`questionGeneration/ledger/days/${entry.date}/publishedSetIds/${id}`]=true;
       updates[`questionGeneration/outbox/${id}`]=null;
     }

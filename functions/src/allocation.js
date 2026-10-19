@@ -27,6 +27,13 @@ export function activeAllocations(state, now) {
 // One bounded RTDB transaction covers all players. No per-user permanent history is stored here.
 export function allocate(state, {sessionId, roomId, mode, participantIds, histories, pool, sets, now, includeExamples = false}) {
   const sessions = activeAllocations(state, now);
+  const pending = sessions[sessionId];
+  // A previous process may have stopped after allocating but before starting.
+  // Recheck today's players/ID histories before reusing that pending set.
+  if (sets && pending && (JSON.stringify(pending.participantIds) !== JSON.stringify(participantIds) ||
+      histories.some(history => history.completedSetIds?.includes(pending.contentSetId)))) {
+    delete sessions[sessionId];
+  }
   if (sessions[sessionId]) {
     const session = {...sessions[sessionId]};
     sessions[sessionId] = session;
@@ -39,10 +46,14 @@ export function allocate(state, {sessionId, roomId, mode, participantIds, histor
     return {state: {sessions}, session};
   }
   if (Object.keys(sessions).length >= 300) throw new PoolError('allocation-capacity', null);
-  const reserved = Object.values(sessions).filter(s => s.participantIds.some(uid => participantIds.includes(uid)));
-  const blocked = reserved.map(s => ({reservedAnswerIds: s.questions.map(q => q.answerId), reservedQuestionIds: s.questions.map(q => q.id)}));
   // Only completed sets exclude future games. Leaving an unfinished room is replayable.
-  const selected = sets ? selectPublishedSet(sets,histories,{includeExamples}) : selectSet(pool, [...histories, ...blocked], {mode, includeExamples});
+  let selected;
+  if (sets) selected = selectPublishedSet(sets, histories, {includeExamples});
+  else {
+    const reserved = Object.values(sessions).filter(s => s.participantIds.some(uid => participantIds.includes(uid)));
+    const blocked = reserved.map(s => ({reservedAnswerIds: s.questions.map(q => q.answerId), reservedQuestionIds: s.questions.map(q => q.id)}));
+    selected = selectSet(pool, [...histories, ...blocked], {mode, includeExamples});
+  }
   const startsAtMs = now + 4000;
   const session = {sessionId, roomId, mode, participantIds, startsAtMs,
     expiresAtMs: startsAtMs + selected.questions.length * QUESTION_MS + 30000,

@@ -26,7 +26,6 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   StreamSubscription<GameRoom>? _roomSubscription;
   StreamSubscription<int>? _offsetSubscription;
   Timer? _countdownTimer;
-  bool _isStartingCountdown = false;
   bool _isMarkingPlaying = false;
 
   Future<void> loadQuestionCapacity() async {
@@ -74,7 +73,11 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         break;
       }
     }
-    if (currentPlayer == null || state.room.status != RoomStatus.lobby) return;
+    if (currentPlayer == null ||
+        state.room.status != RoomStatus.lobby ||
+        state.isStartingGame) {
+      return;
+    }
 
     try {
       await _roomService.setReady(
@@ -131,8 +134,8 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   }
 
   Future<void> _startCountdown() async {
-    if (_isStartingCountdown) return;
-    _isStartingCountdown = true;
+    if (isClosed || state.isStartingGame) return;
+    emit(state.copyWith(isStartingGame: true, clearError: true));
     try {
       await _roomService.startCountdown(
         state.room.id,
@@ -141,6 +144,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         questionEngine: state.room.questionEngine,
       );
     } catch (error) {
+      if (isClosed) return;
       emit(
         state.copyWith(
           errorMessage: error is RoomServiceException
@@ -154,7 +158,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         ),
       );
     } finally {
-      _isStartingCountdown = false;
+      if (!isClosed) emit(state.copyWith(isStartingGame: false));
     }
   }
 

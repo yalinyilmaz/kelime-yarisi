@@ -9,6 +9,7 @@ class RoomLobbyState extends Equatable {
     this.serverTimeOffsetMs = 0,
     this.nowMs = 0,
     this.isLeaving = false,
+    this.isStartingGame = false,
     this.errorMessage,
     this.questionCapacity,
     this.isLoadingQuestionCapacity = false,
@@ -19,6 +20,7 @@ class RoomLobbyState extends Equatable {
   final int serverTimeOffsetMs;
   final int nowMs;
   final bool isLeaving;
+  final bool isStartingGame;
   final String? errorMessage;
   final QuestionCapacity? questionCapacity;
   final bool isLoadingQuestionCapacity;
@@ -41,6 +43,7 @@ class RoomLobbyState extends Equatable {
     int? serverTimeOffsetMs,
     int? nowMs,
     bool? isLeaving,
+    bool? isStartingGame,
     String? errorMessage,
     bool clearError = false,
     QuestionCapacity? questionCapacity,
@@ -52,6 +55,7 @@ class RoomLobbyState extends Equatable {
       serverTimeOffsetMs: serverTimeOffsetMs ?? this.serverTimeOffsetMs,
       nowMs: nowMs ?? this.nowMs,
       isLeaving: isLeaving ?? this.isLeaving,
+      isStartingGame: isStartingGame ?? this.isStartingGame,
       errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
       questionCapacity: questionCapacity ?? this.questionCapacity,
       isLoadingQuestionCapacity:
@@ -66,6 +70,7 @@ class RoomLobbyState extends Equatable {
     serverTimeOffsetMs,
     nowMs,
     isLeaving,
+    isStartingGame,
     errorMessage,
     questionCapacity,
     isLoadingQuestionCapacity,

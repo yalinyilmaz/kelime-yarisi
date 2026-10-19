@@ -46,6 +46,7 @@ test('cloud daily target persists 42 approvals and 84 mock requests; duplicate d
   assert.deepEqual(Object.values(report.approvedToday),Array(7).fill(6));
   assert.equal((await loadPublishedPool(database,[])).length,42);assert.equal(report.setsPublishedToday,3);
   assert.equal((await loadPublishedSets(database,[])).length,3);
+  assert.equal(Object.keys(database.value('questionPool/setIndex')).length,3);
   assert.equal((await new CloudQuestionGenerator(options).run()).reason,'already-ran-today');assert.equal(calls(),84);
   assert(!JSON.stringify(database.data).includes('private-test-key'));
 });

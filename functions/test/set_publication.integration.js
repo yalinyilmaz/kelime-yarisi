@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {initializeApp,deleteApp} from 'firebase-admin/app';
 import {getDatabase} from 'firebase-admin/database';
 import {CloudQuestionGenerator} from '../src/cloud_generation.js';
-import {loadPublishedSets} from '../src/published_pool.js';
+import {loadPublishedSets,loadPublishedSetIds,loadPublishedSet} from '../src/published_pool.js';
 import {selectSet} from '../src/set_selector.js';
 import {GENERATION_LIMITS} from '../src/generation_policy.js';
 import {QuestionService} from '../src/question_service.js';
@@ -34,7 +34,8 @@ test('real RTDB serialization preserves ten drafts across days; only the complet
   gameMode:'classic',status:'lobby',createdAt:now,questionEngine:'pool-v1',
   players:{host:{displayName:'Tester',isHost:true,isReady:false,isOnline:true,lastSeenAt:now}}});
  await db.ref(`rooms/${roomId}`).set(room());
- const service=new QuestionService({database:db,pool:[],allowDebugSolo:true,loadSets:()=>loadPublishedSets(db,[])});
+ const service=new QuestionService({database:db,pool:[],allowDebugSolo:true,
+  loadSetIds:()=>loadPublishedSetIds(db),loadSet:id=>loadPublishedSet(db,id)});
  const empty={seenAnswerIds:[],seenQuestionIds:[],completedSetIds:[]};
  await service.prepare('host',{roomId,history:empty});
  await service.start('host',{roomId,debugSolo:true});

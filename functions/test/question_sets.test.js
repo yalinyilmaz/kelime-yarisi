@@ -35,3 +35,10 @@ test('new allocations keep a stable content identity, and an abandoned set remai
  assert.deepEqual(replay.session.questions,first.session.questions);
  assert.throws(()=>allocate(null,{...options,sessionId:'finished',histories:[{completedSetIds:[first.session.contentSetId]}]}),e=>e.code==='sets-exhausted');
 });
+
+test('a pending start from a stopped process cannot reuse a set now completed by a participant',()=>{
+ const options={roomId:'abc234',sessionId:'pending',mode:'classic',participantIds:['host','guest'],histories:[{},{}],sets:sets.slice(0,1),now:1000};
+ const first=allocate(null,options);
+ const resumed=allocate(first.state,{...options,sets:sets.slice(0,2),histories:[{},{completedSetIds:[first.session.contentSetId]}],now:2000});
+ assert.equal(resumed.session.contentSetId,sets[1].id);
+});

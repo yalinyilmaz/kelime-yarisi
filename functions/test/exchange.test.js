@@ -20,6 +20,8 @@ test('corrected batch produces 140 reviewed records and additive RTDB JSON strin
   assert.equal(prepared.summary.acceptedAlternatives, 17);
   assert.deepEqual(validatePool(prepared.questions), []);
   assert(prepared.questions.every(q => q.publication === 'unpublished'));
+  assert.equal(Object.keys(prepared.publicationUpdates).filter(k=>k.startsWith('questionPool/setIndex/')).length,10);
+  assert.equal(Object.keys(prepared.publicationUpdates).filter(k=>k.startsWith('questionPool/sets/')).length,10);
   for (const [id, json] of Object.entries(prepared.rtdb)) {
     const q = JSON.parse(json);
     assert.equal(q.id, id); assert(isPublished(q));

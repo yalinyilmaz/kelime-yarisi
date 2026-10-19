@@ -156,6 +156,7 @@ class RoomLobbyView extends StatelessWidget {
                             onPressed:
                                 currentPlayer == null ||
                                     room.status != RoomStatus.lobby ||
+                                    state.isStartingGame ||
                                     state.isLeaving
                                 ? null
                                 : context
@@ -169,7 +170,7 @@ class RoomLobbyView extends StatelessWidget {
                                   ? AppColors.textPrimary
                                   : AppColors.onReady,
                             ),
-                            icon: state.isLeaving
+                            icon: state.isLeaving || state.isStartingGame
                                 ? const SizedBox.square(
                                     dimension: 20,
                                     child: CircularProgressIndicator(
@@ -196,12 +197,20 @@ class RoomLobbyView extends StatelessWidget {
                             OutlinedButton.icon(
                               onPressed:
                                   room.status == RoomStatus.lobby &&
+                                      !state.isStartingGame &&
                                       !state.isLeaving
                                   ? context
                                         .read<RoomLobbyCubit>()
                                         .startDebugGame
                                   : null,
-                              icon: const Icon(Icons.play_arrow_rounded),
+                              icon: state.isStartingGame
+                                  ? const SizedBox.square(
+                                      dimension: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.5,
+                                      ),
+                                    )
+                                  : const Icon(Icons.play_arrow_rounded),
                               label: const Text('Oyunu Başlat · Debug'),
                             ),
                           ],

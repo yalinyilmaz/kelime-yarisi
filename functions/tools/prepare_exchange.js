@@ -5,6 +5,7 @@ import {answerId, approveQuestion, normalizeWord, reviewDigest, validatePool, RE
 import {mergePublishedPool} from '../src/published_pool.js';
 import {selectSet} from '../src/set_selector.js';
 import {compactQuestion} from '../src/question_storage.js';
+import {createQuestionSet} from '../src/question_sets.js';
 
 // Offline conversion only. No Firebase connection, credentials or paid API.
 export function prepareExchange(batch, existingPool = [], now = Date.now()) {
@@ -63,7 +64,14 @@ export function prepareExchange(batch, existingPool = [], now = Date.now()) {
   if (errors.length) throw new Error(JSON.stringify(errors, null, 2));
   const published = questions.map(q => ({...q, publication: 'published'}));
   const merged = mergePublishedPool(existingPool, published);
+  const publicationUpdates=Object.fromEntries(published.map(q=>[`questionPool/published/${q.id}`,JSON.stringify(q)]));
+  for(const set of sets) {
+    const manifest=createQuestionSet(set.id,published.filter(q=>set.questionIds.includes(q.id)),now);
+    publicationUpdates[`questionPool/sets/${set.id}`]=manifest;
+    publicationUpdates[`questionPool/setIndex/${set.id}`]=true;
+  }
   return {questions, rtdb: Object.fromEntries(published.map(q => [q.id, JSON.stringify(q)])),
+    publicationUpdates,
     summary: {batchId: batch.batchId, sets, questionCount: questions.length,
       acceptedAlternatives: questions.reduce((sum, q) => sum + q.acceptedAnswers.length, 0),
       combinedPoolQuestions: merged.length, localChecksPassed: true, deployed: false,
@@ -78,12 +86,12 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const input = flag('input'), output = flag('out');
     if (!input || !output) throw new Error('Required: --input EXCHANGE.json --out NEW_OUTPUT_PREFIX');
     const root = resolve(import.meta.dirname, '../..');
-    const paths = ['questions.json', 'rtdb.json', 'ready.json'].map(suffix => `${resolve(root, output)}.${suffix}`);
+    const paths = ['questions.json', 'rtdb.json', 'ready.json', 'publication.rtdb.json'].map(suffix => `${resolve(root, output)}.${suffix}`);
     if (paths.some(existsSync)) throw new Error('Output exists; select a new prefix. No files overwritten.');
     const batch = JSON.parse(readFileSync(resolve(root, input), 'utf8'));
     const pool = JSON.parse(readFileSync(resolve(root, flag('pool') ?? 'functions/content/published.json'), 'utf8'));
     const prepared = prepareExchange(batch, pool);
-    for (const [i, data] of [prepared.questions, prepared.rtdb, prepared.summary].entries()) {
+    for (const [i, data] of [prepared.questions, prepared.rtdb, prepared.summary, prepared.publicationUpdates].entries()) {
       writeFileSync(paths[i], `${JSON.stringify(data, null, 2)}\n`, {flag: 'wx'});
     }
     console.log(JSON.stringify({questionCount: prepared.questions.length, localChecksPassed: true, deployed: false}));

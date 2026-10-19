@@ -19,6 +19,7 @@ import 'game_cubit_test.dart' show FakeRoomService, testRoom;
 class FakeLobbyService extends FakeRoomService {
   int starts = 0;
   final capacity = Completer<Map<String, dynamic>>();
+  Completer<void>? startGate;
   @override
   Future<Map<String, dynamic>> prepareQuestionHistory(String roomId) =>
       capacity.future;
@@ -34,6 +35,7 @@ class FakeLobbyService extends FakeRoomService {
     required String questionEngine,
   }) async {
     starts++;
+    await startGate?.future;
     publish(
       room.copyWith(
         status: RoomStatus.countdown,
@@ -44,6 +46,72 @@ class FakeLobbyService extends FakeRoomService {
 }
 
 void main() {
+  for (final fails in [false, true]) {
+    testWidgets(
+      'Start button shows progress and prevents duplicate requests until ${fails ? 'failure' : 'countdown'}',
+      (tester) async {
+        final service = FakeLobbyService()..uid = 'host';
+        service.startGate = Completer<void>();
+        final seed = testRoom();
+        final room = seed.copyWith(
+          status: RoomStatus.lobby,
+          players: [seed.players.first],
+        );
+        service.room = room;
+        final router = createAppRouter();
+        router.go('/room/${room.id}', extra: room);
+        await tester.pumpWidget(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp.router(
+              theme: AppTheme.dark,
+              routerConfig: router,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final button = find.widgetWithText(
+          OutlinedButton,
+          'Oyunu Başlat · Debug',
+        );
+        await tester.scrollUntilVisible(button, 200);
+        await tester.tap(button);
+        await tester.pump();
+        expect(
+          find.descendant(
+            of: button,
+            matching: find.byType(CircularProgressIndicator),
+          ),
+          findsOneWidget,
+        );
+        expect(tester.widget<OutlinedButton>(button).onPressed, isNull);
+        expect(service.starts, 1);
+        if (fails) {
+          service.startGate!.completeError(
+            const RoomServiceException('unavailable', 'Tekrar deneyin.'),
+          );
+        } else {
+          service.startGate!.complete();
+        }
+        await tester.pump();
+        expect(
+          find.descendant(
+            of: button,
+            matching: find.byType(CircularProgressIndicator),
+          ),
+          findsNothing,
+        );
+        if (fails) {
+          expect(tester.widget<OutlinedButton>(button).onPressed, isNotNull);
+        }
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        router.dispose();
+        await service.disposeStreams();
+      },
+    );
+  }
+
   for (final fails in [false, true]) {
     testWidgets(
       'Pool loading indicator ends on ${fails ? 'failure' : 'success'}',

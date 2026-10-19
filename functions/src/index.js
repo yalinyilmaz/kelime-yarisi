@@ -6,7 +6,7 @@ import {onSchedule} from 'firebase-functions/v2/scheduler';
 import {defineSecret} from 'firebase-functions/params';
 import {QuestionService, ServiceError} from './question_service.js';
 import {CloudQuestionGenerator} from './cloud_generation.js';
-import {loadPublishedPool,loadPublishedSets} from './published_pool.js';
+import {loadPublishedSetIds,loadPublishedSet} from './published_pool.js';
 import {RaceService} from './race.js';
 
 const emulator = process.env.FUNCTIONS_EMULATOR === 'true';
@@ -18,8 +18,8 @@ const useExamples = emulator && process.env.QUESTION_POOL_EXAMPLES === 'true';
 const pool = JSON.parse(readFileSync(new URL(useExamples ? '../content/examples.json' : '../content/published.json', import.meta.url)));
 const service = new QuestionService({database: getDatabase(), pool, includeExamples: useExamples, allowSolo: emulator,
   allowDebugSolo:projectId==='kelime-yarisi-yalin',
-  loadSets:useExamples?undefined:()=>loadPublishedSets(getDatabase(),pool),
-  loadPool:useExamples?undefined:()=>loadPublishedPool(getDatabase(),pool)});
+  loadSetIds:useExamples?undefined:()=>loadPublishedSetIds(getDatabase()),
+  loadSet:useExamples?undefined:id=>loadPublishedSet(getDatabase(),id)});
 const options = {region: 'europe-west1', maxInstances: 3, enforceAppCheck: !emulator};
 const callable = action => onCall(options, async request => {
   try {return await action(request.auth?.uid, request.data ?? {});}
