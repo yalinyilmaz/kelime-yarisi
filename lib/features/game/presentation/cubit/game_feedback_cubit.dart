@@ -43,7 +43,6 @@ class GameFeedbackCubit extends Cubit<GameAnswerFeedback?> {
   @override
   Future<void> close() async {
     _timer?.cancel();
-    await _subscription.cancel();
-    return super.close();
+    await Future.wait([_subscription.cancel(), super.close()]);
   }
 }

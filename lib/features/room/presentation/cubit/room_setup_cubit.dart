@@ -53,10 +53,17 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
           roomCode: state.roomCode,
         ),
       };
+      if (isClosed) {
+        // The user left while create/join was pending; do not leave an orphan room/presence.
+        await _roomService.leaveRoom(room.id);
+        return;
+      }
       emit(state.copyWith(room: room, isSubmitting: false, clearError: true));
     } on RoomServiceException catch (error) {
+      if (isClosed) return;
       emit(state.copyWith(isSubmitting: false, errorMessage: error.message));
     } catch (_) {
+      if (isClosed) return;
       emit(
         state.copyWith(
           isSubmitting: false,

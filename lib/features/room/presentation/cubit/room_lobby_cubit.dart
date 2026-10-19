@@ -15,10 +15,17 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
     _roomSubscription = _roomService
         .watchRoom(room.id)
         .listen(_roomChanged, onError: _streamFailed);
-    _offsetSubscription = _roomService.watchServerTimeOffset().listen(
-      (offset) => emit(state.copyWith(serverTimeOffsetMs: offset)),
+    _offsetSubscription = _roomService.watchServerTimeOffset().listen((offset) {
+      if (!isClosed) emit(state.copyWith(serverTimeOffsetMs: offset));
+    }, onError: _streamFailed);
+    unawaited(
+      _roomService.beginPresence(room.id).catchError((
+        Object error,
+        StackTrace stack,
+      ) {
+        _streamFailed(error, stack);
+      }),
     );
-    unawaited(_roomService.beginPresence(room.id));
     if (room.questionEngine == 'pool-v1') unawaited(loadQuestionCapacity());
   }
 
@@ -85,6 +92,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
         isReady: !currentPlayer.isReady,
       );
     } catch (error) {
+      if (isClosed) return;
       emit(
         state.copyWith(
           errorMessage: error is RoomServiceException
@@ -101,6 +109,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
     try {
       await _roomService.leaveRoom(state.room.id);
     } catch (_) {
+      if (isClosed) return;
       emit(
         state.copyWith(
           isLeaving: false,
@@ -113,6 +122,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   void clearError() => emit(state.copyWith(clearError: true));
 
   void _roomChanged(GameRoom room) {
+    if (isClosed || state.isLeaving) return;
     emit(state.copyWith(room: room, clearError: true));
     if (room.status == RoomStatus.countdown) {
       _startLocalTicker();
@@ -207,8 +217,10 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   @override
   Future<void> close() async {
     _countdownTimer?.cancel();
-    await _roomSubscription?.cancel();
-    await _offsetSubscription?.cancel();
-    return super.close();
+    await Future.wait([
+      if (_roomSubscription != null) _roomSubscription!.cancel(),
+      if (_offsetSubscription != null) _offsetSubscription!.cancel(),
+      super.close(),
+    ]);
   }
 }

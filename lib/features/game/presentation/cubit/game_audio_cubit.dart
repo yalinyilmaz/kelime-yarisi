@@ -28,8 +28,10 @@ class GameAudioCubit extends Cubit<bool> {
 
   @override
   Future<void> close() async {
-    await _subscription.cancel();
-    await _sounds.dispose();
-    return super.close();
+    await Future.wait([
+      _subscription.cancel(),
+      super.close(),
+      _sounds.dispose(),
+    ]);
   }
 }

@@ -540,10 +540,13 @@ class GameCubit extends Cubit<GameState> {
   @override
   Future<void> close() async {
     _timer?.cancel();
-    await _completionWrite;
-    await _roomSubscription?.cancel();
-    await _clockSubscription?.cancel();
-    await _connectionSubscription?.cancel();
-    return super.close();
+    // Stop all listeners immediately, even if the local history write is pending.
+    await Future.wait([
+      if (_roomSubscription != null) _roomSubscription!.cancel(),
+      if (_clockSubscription != null) _clockSubscription!.cancel(),
+      if (_connectionSubscription != null) _connectionSubscription!.cancel(),
+      super.close(),
+      ?_completionWrite,
+    ]);
   }
 }

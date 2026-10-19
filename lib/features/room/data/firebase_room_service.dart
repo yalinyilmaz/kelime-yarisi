@@ -42,6 +42,9 @@ class FirebaseRoomService {
 
   StreamSubscription<DatabaseEvent>? _presenceSubscription;
   String? _presenceRoomId;
+  int _presenceGeneration = 0;
+  bool _disposed = false;
+  Future<void>? _disposal;
 
   String get currentUserId => _auth.currentUser?.uid ?? '';
 
@@ -262,22 +265,48 @@ class FirebaseRoomService {
   }
 
   Future<void> beginPresence(String roomId) async {
-    await _presenceSubscription?.cancel();
+    if (_disposed ||
+        (_presenceRoomId == roomId && _presenceSubscription != null)) {
+      return;
+    }
+    final generation = ++_presenceGeneration;
+    final previous = _presenceSubscription;
+    _presenceSubscription = null;
     _presenceRoomId = roomId;
+    await previous?.cancel();
+    // A newer room, leave or dispose may have arrived while cancellation waited.
+    if (_disposed || generation != _presenceGeneration) return;
     _presenceSubscription = _database.ref('.info/connected').onValue.listen((
       event,
     ) {
       if (event.snapshot.value == true) {
-        unawaited(_registerConnectedPresence(roomId));
+        unawaited(
+          _registerConnectedPresence(roomId, generation).catchError((
+            Object error,
+          ) async {
+            if (error is FirebaseException &&
+                error.code == 'permission-denied' &&
+                generation == _presenceGeneration) {
+              await _stopPresence();
+            }
+            debugPrint('Oda bağlantı durumu güncellenemedi.');
+          }),
+        );
       }
-    });
+    }, onError: (Object _) => debugPrint('Oda bağlantı durumu dinlenemedi.'));
+  }
+
+  Future<void> _stopPresence() {
+    _presenceGeneration++;
+    final subscription = _presenceSubscription;
+    _presenceSubscription = null;
+    _presenceRoomId = null;
+    return subscription?.cancel() ?? Future<void>.value();
   }
 
   Future<void> leaveRoom(String roomId) async {
     final uid = _requireUserId();
-    await _presenceSubscription?.cancel();
-    _presenceSubscription = null;
-    _presenceRoomId = null;
+    if (_presenceRoomId == roomId) await _stopPresence();
 
     DataSnapshot roomSnapshot;
     try {
@@ -301,15 +330,24 @@ class FirebaseRoomService {
     }
   }
 
-  Future<void> dispose() async {
-    await _presenceSubscription?.cancel();
+  Future<void> dispose() => _disposal ??= _disposeResources();
+
+  Future<void> _disposeResources() async {
+    _disposed = true;
     final roomId = _presenceRoomId;
+    final cancellation = _stopPresence();
     if (roomId != null && currentUserId.isNotEmpty) {
-      await _roomRef(roomId)
-          .child('players/$currentUserId')
-          .update({'isOnline': false, 'lastSeenAt': ServerValue.timestamp});
+      // Network acknowledgement may wait offline; it must not block local cleanup.
+      unawaited(
+        _roomRef(roomId)
+            .child('players/$currentUserId')
+            .update({'isOnline': false, 'lastSeenAt': ServerValue.timestamp})
+            .catchError(
+              (Object _) => debugPrint('Oda çevrimdışı durumu gönderilemedi.'),
+            ),
+      );
     }
-    await _questionHistory.close();
+    await Future.wait([cancellation, _questionHistory.close()]);
   }
 
   Future<void> recordCompletedSet(String setId) =>
@@ -381,13 +419,15 @@ class FirebaseRoomService {
     }
   }
 
-  Future<void> _registerConnectedPresence(String roomId) async {
+  Future<void> _registerConnectedPresence(String roomId, int generation) async {
+    if (_disposed || generation != _presenceGeneration) return;
     final uid = _requireUserId();
     final playerRef = _roomRef(roomId).child('players/$uid');
     await playerRef.onDisconnect().update({
       'isOnline': false,
       'lastSeenAt': ServerValue.timestamp,
     });
+    if (_disposed || generation != _presenceGeneration) return;
     await playerRef.update({
       'isOnline': true,
       'lastSeenAt': ServerValue.timestamp,

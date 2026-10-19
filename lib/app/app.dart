@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +30,11 @@ class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (_) => widget.roomService ?? FirebaseRoomService(),
+      dispose: (service) => unawaited(
+        service.dispose().catchError((Object _) {
+          debugPrint('Uygulama kaynakları kapatılamadı.');
+        }),
+      ),
       child: MaterialApp.router(
         title: 'Kelime Yarışı',
         debugShowCheckedModeBanner: false,
