@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,6 +40,7 @@ class _WordPinInputState extends State<WordPinInput>
   Animation<double>? _routeAnimation;
   int? _focusedQuestion;
   bool _focusScheduled = false;
+  Offset? _outsideTapPosition;
 
   @override
   void initState() {
@@ -231,8 +233,15 @@ class _WordPinInputState extends State<WordPinInput>
                 focusNode: _focus,
                 // Dismiss on release so keyboard resizing cannot move a button
                 // away from the finger before its tap completes.
-                onTapOutside: (_) {},
-                onTapUpOutside: (_) => _focus.unfocus(),
+                onTapOutside: (event) => _outsideTapPosition = event.position,
+                onTapUpOutside: (event) {
+                  final start = _outsideTapPosition;
+                  _outsideTapPosition = null;
+                  if (start == null ||
+                      (event.position - start).distance <= kTouchSlop) {
+                    _focus.unfocus();
+                  }
+                },
                 readOnly: !widget.enabled && !_focus.hasFocus,
                 showCursor: false,
                 enableInteractiveSelection: false,

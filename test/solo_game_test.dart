@@ -183,9 +183,64 @@ void main() {
       expect(game.state.phase, SoloGamePhase.expired);
       game.submitAnswer(game.state.question!.answer);
       expect(service.completed, isEmpty);
-      expect(best.state, isNull);
+      expect(best.state, 400);
     },
   );
+
+  soloTest(
+    'expiry at question six persists the earned score but leaves the set replayable',
+    (tester) async {
+      final storage = MemoryScoreStorage();
+      await game.close();
+      await best.close();
+      best = SoloBestScoreCubit(storage: storage);
+      sounds = SilentSoloSounds();
+      game = SoloGameCubit(service, best, sounds: sounds, nowMs: () => now);
+      // Expiry must not attempt the completed-set write, even if it would fail.
+      service.failSave = true;
+      await game.start();
+      for (var i = 0; i < 5; i++) {
+        game.submitAnswer(game.state.question!.answer);
+        await advance(tester);
+      }
+      expect(game.state.questionIndex, 5);
+      final earned = game.state.progress.score;
+      expect(earned, greaterThan(0));
+      now = 1000 + SoloGameState.duration.inMilliseconds;
+      game.refreshTime();
+      await game.saveCompletion();
+      expect(game.state.phase, SoloGamePhase.expired);
+      expect(game.state.remainingSeconds, 0);
+      expect(game.state.completionSaved, isTrue);
+      expect(game.state.progress.finished, isFalse);
+      expect(game.state.progress.score, earned);
+      expect(service.completed, isEmpty);
+      expect(best.state, earned);
+
+      // Later deadline checks and a new cubit must preserve the same result.
+      game.refreshTime();
+      await game.saveCompletion();
+      await best.close();
+      best = SoloBestScoreCubit(storage: storage);
+      expect(best.state, earned);
+      expect(service.completed, isEmpty);
+    },
+  );
+
+  soloTest('a timeout score never replaces a higher personal best', (
+    tester,
+  ) async {
+    best.recordCompletedScore(7200);
+    await game.start();
+    game.submitAnswer(game.state.question!.answer);
+    await advance(tester);
+    now = 1000 + SoloGameState.duration.inMilliseconds;
+    game.refreshTime();
+    await game.saveCompletion();
+    expect(game.state.completionSaved, isTrue);
+    expect(best.state, 7200);
+    expect(service.completed, isEmpty);
+  });
 
   soloTest(
     'letters open without voting, reduce question value and keep one letter hidden',

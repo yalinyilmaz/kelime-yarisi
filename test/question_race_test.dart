@@ -8,6 +8,8 @@ import 'package:kelime_yarisi/features/game/presentation/cubit/game_cubit.dart';
 import 'package:kelime_yarisi/features/game/presentation/pages/game_page.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cell.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.dart';
+import 'package:kelime_yarisi/features/game/presentation/widgets/game_question_card.dart';
+import 'package:kelime_yarisi/features/game/presentation/widgets/game_clue_hints.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_mapper.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
@@ -65,57 +67,114 @@ GameRoom winnerRoom(GameRoom room, int nextAt) => room.copyWith(
 );
 
 void main() {
-  testWidgets(
-    'clues reveal in the card, keep the keyboard and stop after two uses',
-    (tester) async {
-      final service = RaceRoomService()
-        ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000);
-      service.onPlay = () async {
-        if (service.actions.last.action != 'clueHint') return;
-        final used = service.room.clueHintUsage[service.uid]?[0] ?? 0;
-        service.publish(
-          service.room.copyWith(
-            clueHintUsage: {
-              service.uid: {0: used + 1},
-            },
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    testWidgets(
+      '$platform: the existing card scrolls its clue, hints and PIN above the keyboard',
+      (tester) async {
+        tester.view.physicalSize = const Size(360, 800);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        addTearDown(tester.view.resetViewInsets);
+        final service = RaceRoomService()
+          ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000);
+        service.onPlay = () async {
+          if (service.actions.last.action != 'clueHint') return;
+          final used = service.room.clueHintUsage[service.uid]?[0] ?? 0;
+          service.publish(
+            service.room.copyWith(
+              clueHintUsage: {
+                service.uid: {0: used + 1},
+              },
+            ),
+          );
+        };
+        await tester.pumpWidget(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp(
+              theme: AppTheme.dark.copyWith(platform: platform),
+              home: GamePage(room: service.room, sounds: FakeGameSounds()),
+            ),
           ),
         );
-      };
-      await tester.pumpWidget(
-        RepositoryProvider<FirebaseRoomService>.value(
-          value: service,
-          child: MaterialApp(
-            theme: AppTheme.dark,
-            home: GamePage(room: service.room, sounds: FakeGameSounds()),
+        service.offsets.add(0);
+        service.connections.add(true);
+        await tester.pump();
+        await tester.showKeyboard(find.byType(TextField));
+        final focus = tester
+            .widget<TextField>(find.byType(TextField))
+            .focusNode!;
+        final connection = tester.state<EditableTextState>(
+          find.byType(EditableText),
+        );
+        await tester.enterText(find.byType(TextField), 'ka');
+        tester.view.viewInsets = const FakeViewPadding(bottom: 260);
+        await tester.pumpAndSettle();
+        final actionsRect = tester.getRect(
+          find.byKey(const ValueKey('answer-action')),
+        );
+        final action = find.byKey(const ValueKey('clue-hint-action'));
+        expect(find.text('10/10'), findsOneWidget);
+        await tester.tap(action);
+        await tester.pumpAndSettle();
+        expect(find.text('9/10'), findsOneWidget);
+        expect(find.text('1. Koluna basıp içeri geçeriz.'), findsOneWidget);
+        expect(focus.hasFocus, isTrue);
+        await tester.tap(action);
+        await tester.pumpAndSettle();
+        expect(find.text('8/10'), findsOneWidget);
+        expect(tester.widget<TextButton>(action).onPressed, isNull);
+        expect(
+          service.actions.where((a) => a.action == 'clueHint'),
+          hasLength(2),
+        );
+        expect(focus.hasFocus, isTrue);
+        expect(tester.testTextInput.isVisible, isTrue);
+        expect(
+          tester.state<EditableTextState>(find.byType(EditableText)),
+          same(connection),
+        );
+        expect(
+          tester.widget<TextField>(find.byType(TextField)).controller!.text,
+          'KA',
+        );
+        expect(
+          find.ancestor(
+            of: find.byType(WordPinInput),
+            matching: find.byType(GameQuestionCard),
           ),
-        ),
-      );
-      service.offsets.add(0);
-      service.connections.add(true);
-      await tester.pump();
-      await tester.showKeyboard(find.byType(TextField));
-      final focus = tester.widget<TextField>(find.byType(TextField)).focusNode!;
-      final action = find.byKey(const ValueKey('clue-hint-action'));
-      expect(find.text('10/10'), findsOneWidget);
-      await tester.tap(action);
-      await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('9/10'), findsOneWidget);
-      expect(find.text('1. Koluna basıp içeri geçeriz.'), findsOneWidget);
-      expect(focus.hasFocus, isTrue);
-      await tester.tap(action);
-      await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('8/10'), findsOneWidget);
-      expect(tester.widget<TextButton>(action).onPressed, isNull);
-      expect(
-        service.actions.where((a) => a.action == 'clueHint'),
-        hasLength(2),
-      );
-      expect(focus.hasFocus, isTrue);
-      expect(tester.takeException(), isNull);
-      await tester.pumpWidget(const SizedBox());
-      await service.disposeStreams();
-    },
-  );
+          findsOneWidget,
+        );
+        final viewport = tester.getRect(find.byType(ListView));
+        final pinRect = tester.getRect(find.byType(WordPinInput));
+        final game = tester
+            .element(find.byType(WordPinInput))
+            .read<GameCubit>();
+        final clueRect = tester.getRect(find.text(game.state.question!.clue));
+        final hintRect = tester.getRect(find.byType(GameClueHints));
+        expect(clueRect.top, greaterThanOrEqualTo(viewport.top));
+        expect(hintRect.top, greaterThanOrEqualTo(clueRect.bottom));
+        expect(hintRect.bottom, lessThanOrEqualTo(pinRect.top));
+        expect(pinRect.bottom + 8, lessThanOrEqualTo(viewport.bottom));
+        expect(
+          tester.getRect(find.byKey(const ValueKey('answer-action'))),
+          actionsRect,
+        );
+        expect(actionsRect.bottom, lessThanOrEqualTo(540));
+        expect(
+          tester
+              .state<ScrollableState>(find.byType(Scrollable).first)
+              .position
+              .pixels,
+          greaterThan(0),
+        );
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        await service.disposeStreams();
+      },
+    );
+  }
 
   test('authoritative winner locks both clients, preserves loser score and advances before the old deadline', () async {
     final service = RaceRoomService()..room = raceRoom(1000);

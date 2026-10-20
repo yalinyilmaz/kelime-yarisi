@@ -54,13 +54,16 @@ class _SoloGameViewState extends State<SoloGameView>
     _leaving = true;
     try {
       final cubit = context.read<SoloGameCubit>();
-      if (cubit.state.progress.finished && !cubit.state.completionSaved) {
+      final ended =
+          cubit.state.progress.finished ||
+          cubit.state.phase == SoloGamePhase.expired;
+      if (ended && !cubit.state.completionSaved) {
         await cubit.saveCompletion();
         if (!mounted) return;
       }
       if ((cubit.state.phase == SoloGamePhase.playing &&
               !cubit.state.progress.finished) ||
-          (cubit.state.progress.finished && !cubit.state.completionSaved)) {
+          (ended && !cubit.state.completionSaved)) {
         final confirmed = await SoloGameDialogs.leave(context);
         if (!mounted || !confirmed) return;
       }

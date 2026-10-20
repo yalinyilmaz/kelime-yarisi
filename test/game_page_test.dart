@@ -225,7 +225,8 @@ void main() {
         expect(answerRect.right, lessThan(hintRect.left));
         await tester.drag(find.byType(ListView), const Offset(0, -120));
         await tester.pump();
-        expect(focus.hasFocus, isFalse);
+        expect(focus.hasFocus, isTrue);
+        expect(tester.testTextInput.isVisible, isTrue);
         expect(tester.getRect(answerAction), answerRect);
         expect(tester.getRect(hintAction), hintRect);
         await tester.showKeyboard(find.byType(TextField));

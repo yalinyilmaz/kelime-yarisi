@@ -43,14 +43,15 @@ class SoloResultCard extends StatelessWidget {
             const SizedBox(height: 16),
             if (!complete) ...[
               const Text(
-                '14 soru tamamlanmadığı için bu oyunun puanı ve set geçmişi kaydedilmedi.',
+                'Süre dolana kadar kazandığın puan kişisel rekorun için değerlendirilir. Set tamamlanmadığı için yeniden karşına çıkabilir.',
                 textAlign: TextAlign.center,
               ),
               if (state.feedback != null) ...[
                 const SizedBox(height: 16),
                 AnswerFeedbackBanner(result: state.feedback!),
               ],
-            ] else if (state.isSavingCompletion)
+            ],
+            if (state.isSavingCompletion)
               const Padding(
                 padding: EdgeInsets.all(12),
                 child: CircularProgressIndicator(),

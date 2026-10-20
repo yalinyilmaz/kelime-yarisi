@@ -72,7 +72,7 @@ class SoloGameBoard extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
+                        ScrollViewKeyboardDismissBehavior.manual,
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
                     children: [
                       Row(
@@ -114,11 +114,6 @@ class SoloGameBoard extends StatelessWidget {
                             color: AppColors.textSecondary,
                             fontSize: 12,
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        TextButton(
-                          onPressed: state.canAct ? onGiveUp : null,
-                          child: const Text('Bilemiyorum · Puan kaybet'),
                         ),
                       ] else
                         SoloResultCard(state: state, onLeave: onLeave),

@@ -95,6 +95,7 @@ class SoloGameCubit extends Cubit<SoloGameState> {
               ),
         ),
       );
+      unawaited(saveCompletion());
     } else if (seconds != state.remainingSeconds) {
       if (seconds <= 5) _sounds.playClockTick();
       emit(state.copyWith(remainingSeconds: seconds));
@@ -183,7 +184,9 @@ class SoloGameCubit extends Cubit<SoloGameState> {
   }
 
   Future<void> saveCompletion() {
-    if (isClosed || !state.progress.finished || state.completionSaved) {
+    if (isClosed ||
+        (!state.progress.finished && state.phase != SoloGamePhase.expired) ||
+        state.completionSaved) {
       return Future<void>.value();
     }
     return _completionWrite ??= _persistCompletion().whenComplete(() {
@@ -194,7 +197,9 @@ class SoloGameCubit extends Cubit<SoloGameState> {
   Future<void> _persistCompletion() async {
     emit(state.copyWith(isSavingCompletion: true, clearError: true));
     try {
-      await _service.recordCompletedSet(state.set!.id);
+      if (state.progress.finished) {
+        await _service.recordCompletedSet(state.set!.id);
+      }
       _best.recordCompletedScore(state.progress.score);
       if (!isClosed) {
         emit(state.copyWith(isSavingCompletion: false, completionSaved: true));

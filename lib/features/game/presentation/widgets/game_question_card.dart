@@ -10,6 +10,7 @@ import '../cubit/game_state.dart';
 import 'answer_feedback_banner.dart';
 import 'word_pin_input.dart';
 import 'game_clue_hints.dart';
+import 'game_question_content.dart';
 
 class GameQuestionCard extends StatelessWidget {
   const GameQuestionCard({
@@ -38,49 +39,44 @@ class GameQuestionCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: StudioSectionLabel(
-                        'SORU ${state.questionIndex + 1} / ${state.questions.length}',
-                      ),
-                    ),
-                    if (question.hints.length == 2)
-                      GameClueHintButton(
-                        remaining: state.remainingClueHints,
-                        used: state.currentClueHintCount,
-                        isLoading: state.isRequestingClueHint,
-                        onPressed: state.canRequestClueHint
-                            ? context.read<GameCubit>().requestClueHint
-                            : null,
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  question.clue,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              GameClueHints(hints: state.visibleClueHints),
-              const SizedBox(height: 24),
-              WordPinInput(
-                question: question,
+              GameQuestionContent(
                 questionIndex: state.questionIndex,
-                revealedMask: state.hints.revealedMask(
-                  state.room.id,
-                  state.questionIndex,
-                  question.letterCount,
+                header: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: StudioSectionLabel(
+                          'SORU ${state.questionIndex + 1} / ${state.questions.length}',
+                        ),
+                      ),
+                      if (question.hints.length == 2)
+                        GameClueHintButton(
+                          remaining: state.remainingClueHints,
+                          used: state.currentClueHintCount,
+                          isLoading: state.isRequestingClueHint,
+                          onPressed: state.canRequestClueHint
+                              ? context.read<GameCubit>().requestClueHint
+                              : null,
+                        ),
+                    ],
+                  ),
                 ),
-                enabled: state.canEditAnswer,
-                answerController: answerController,
-                onSubmitted: onSubmitted,
-                outcome: currentResult?.outcome,
+                clue: question.clue,
+                hints: state.visibleClueHints,
+                answer: WordPinInput(
+                  question: question,
+                  questionIndex: state.questionIndex,
+                  revealedMask: state.hints.revealedMask(
+                    state.room.id,
+                    state.questionIndex,
+                    question.letterCount,
+                  ),
+                  enabled: state.canEditAnswer,
+                  answerController: answerController,
+                  onSubmitted: onSubmitted,
+                  outcome: currentResult?.outcome,
+                ),
               ),
               const SizedBox(height: 16),
               Padding(

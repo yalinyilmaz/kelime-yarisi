@@ -39,7 +39,7 @@ class GameBoard extends StatelessWidget {
               Expanded(
                 child: ListView(
                   keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
+                      ScrollViewKeyboardDismissBehavior.manual,
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
                   children: [
                     Row(
@@ -93,11 +93,6 @@ class GameBoard extends StatelessWidget {
                           color: AppColors.textSecondary,
                           fontSize: 12,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextButton(
-                        onPressed: state.canAct ? onGiveUp : null,
-                        child: const Text('Bilemiyorum · Puan kaybet'),
                       ),
                       Text(
                         state.room.isRace
