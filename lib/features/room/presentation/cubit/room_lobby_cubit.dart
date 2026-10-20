@@ -3,7 +3,9 @@ import '../../../../core/monitoring/error_reporter.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../game/domain/question_capacity.dart';
 import '../../data/firebase_room_service.dart';
@@ -36,6 +38,39 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   StreamSubscription<int>? _offsetSubscription;
   Timer? _countdownTimer;
   bool _isMarkingPlaying = false;
+  bool _isSharingCode = false;
+
+  Future<void> copyAndShareCode(Rect origin) async {
+    if (isClosed || state.isLeaving || _isSharingCode) return;
+    _isSharingCode = true;
+    var copied = false;
+    try {
+      final code = state.room.code;
+      await Clipboard.setData(ClipboardData(text: code));
+      copied = true;
+      if (isClosed || state.isLeaving) return;
+      await SharePlus.instance.share(
+        ShareParams(text: code, sharePositionOrigin: origin),
+      );
+    } catch (error, stackTrace) {
+      ErrorReporter.report(
+        error,
+        stackTrace,
+        operation: 'lobby.copy_and_share_code',
+      );
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            errorMessage: copied
+                ? 'Oda kodu kopyalandı; paylaşım menüsü açılamadı.'
+                : 'Oda kodu kopyalanamadı. Tekrar dene.',
+          ),
+        );
+      }
+    } finally {
+      _isSharingCode = false;
+    }
+  }
 
   Future<void> loadQuestionCapacity() async {
     if (isClosed || state.isLoadingQuestionCapacity) return;

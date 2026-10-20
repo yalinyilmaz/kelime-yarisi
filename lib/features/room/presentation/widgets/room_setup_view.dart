@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
+import '../../../game/presentation/widgets/game_rules_info.dart';
 import '../../domain/entities/room_game_mode.dart';
 import '../cubit/room_setup_cubit.dart';
 import '../cubit/room_setup_state.dart';
 import '../widgets/room_game_summary.dart';
 import '../widgets/room_join_info.dart';
+import 'room_code_input.dart';
 
 class RoomSetupView extends StatelessWidget {
   const RoomSetupView({super.key});
@@ -101,30 +102,15 @@ class RoomSetupView extends StatelessWidget {
                           const SizedBox(height: 24),
                           const RoomGameSummary(mode: RoomGameMode.classic),
                         ] else ...[
-                          TextField(
-                            textCapitalization: TextCapitalization.characters,
-                            autocorrect: false,
-                            enableSuggestions: false,
-                            textInputAction: TextInputAction.done,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp('[A-Za-z0-9-]'),
-                              ),
-                              LengthLimitingTextInputFormatter(7),
-                            ],
+                          RoomCodeInput(
                             onChanged: context
                                 .read<RoomSetupCubit>()
                                 .roomCodeChanged,
-                            onSubmitted: (_) {
+                            onSubmitted: () {
                               if (state.canSubmit && !state.isSubmitting) {
                                 context.read<RoomSetupCubit>().submit();
                               }
                             },
-                            decoration: const InputDecoration(
-                              labelText: 'Oda kodu',
-                              hintText: 'ABC-234',
-                              prefixIcon: Icon(Icons.key_rounded),
-                            ),
                           ),
                           const SizedBox(height: 16),
                           const RoomJoinInfo(),
@@ -153,6 +139,14 @@ class RoomSetupView extends StatelessWidget {
                           ),
                         ],
                         const SizedBox(height: 24),
+                        if (isCreate) ...[
+                          GameRulesInfo(
+                            requiredHintVotes: state.targetPlayerCount <= 3
+                                ? 1
+                                : 2,
+                          ),
+                          const SizedBox(height: 16),
+                        ],
                         FilledButton.icon(
                           onPressed: !state.canSubmit || state.isSubmitting
                               ? null

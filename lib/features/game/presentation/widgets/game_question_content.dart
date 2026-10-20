@@ -13,6 +13,7 @@ class GameQuestionContent extends StatefulWidget {
     required this.clue,
     required this.hints,
     required this.answer,
+    this.feedback,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class GameQuestionContent extends StatefulWidget {
   final String clue;
   final List<String> hints;
   final Widget answer;
+  final Widget? feedback;
 
   @override
   State<GameQuestionContent> createState() => _GameQuestionContentState();
@@ -31,6 +33,7 @@ class _GameQuestionContentState extends State<GameQuestionContent>
   final _sectionKey = GlobalKey();
   final _clueKey = GlobalKey();
   final _answerKey = GlobalKey();
+  final _feedbackKey = GlobalKey();
   bool _hasFocus = false;
   bool _visibilityScheduled = false;
 
@@ -52,7 +55,10 @@ class _GameQuestionContentState extends State<GameQuestionContent>
   @override
   void didUpdateWidget(covariant GameQuestionContent oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.questionIndex != widget.questionIndex) _scheduleVisibility();
+    if (oldWidget.questionIndex != widget.questionIndex ||
+        (oldWidget.feedback == null) != (widget.feedback == null)) {
+      _scheduleVisibility();
+    }
   }
 
   void _scheduleVisibility() {
@@ -73,6 +79,7 @@ class _GameQuestionContentState extends State<GameQuestionContent>
     final answer = _answerKey.currentContext?.findRenderObject();
     final clue = _clueKey.currentContext?.findRenderObject();
     final section = _sectionKey.currentContext?.findRenderObject();
+    final feedback = _feedbackKey.currentContext?.findRenderObject();
     if (position == null ||
         !position.hasContentDimensions ||
         answer is! RenderBox ||
@@ -86,12 +93,16 @@ class _GameQuestionContentState extends State<GameQuestionContent>
     final viewport = RenderAbstractViewport.maybeOf(answer);
     if (viewport == null) return;
 
-    final bottom = viewport.getOffsetToReveal(answer, 1).offset + 12;
+    final bottom =
+        viewport.getOffsetToReveal(feedback ?? answer, 1).offset + 12;
     final sectionTop = viewport.getOffsetToReveal(section, 0).offset - 12;
     final clueTop = viewport.getOffsetToReveal(clue, 0).offset - 12;
-    // Include the header when it fits. Otherwise prioritize clue → hints → PIN.
-    // For exceptionally long text, keep the full PIN visible and allow scrolling.
-    final top = bottom <= sectionTop ? sectionTop : clueTop;
+    // Keep as much of the question visible as fits. Once the answer is revealed,
+    // prioritize the PIN and its result together over the clue and hints.
+    var top = bottom <= sectionTop ? sectionTop : clueTop;
+    if (feedback != null && bottom > top) {
+      top = viewport.getOffsetToReveal(answer, 0).offset - 12;
+    }
     final target = (bottom <= top ? position.pixels.clamp(bottom, top) : bottom)
         .clamp(position.minScrollExtent, position.maxScrollExtent)
         .toDouble();
@@ -148,6 +159,10 @@ class _GameQuestionContentState extends State<GameQuestionContent>
                 },
                 child: SizedBox(key: _answerKey, child: widget.answer),
               ),
+              if (widget.feedback != null) ...[
+                const SizedBox(height: 16),
+                SizedBox(key: _feedbackKey, child: widget.feedback),
+              ],
             ],
           ),
         ),

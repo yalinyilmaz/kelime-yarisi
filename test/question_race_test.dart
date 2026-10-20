@@ -10,6 +10,7 @@ import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cel
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/game_question_card.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/game_clue_hints.dart';
+import 'package:kelime_yarisi/features/game/presentation/widgets/answer_feedback_banner.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_mapper.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
@@ -230,80 +231,111 @@ void main() {
     }
   });
 
-  testWidgets(
-    'remote winner fills the controller and PIN, animates banner, keeps keyboard and resets the next answer',
-    (tester) async {
-      final at = DateTime.now().millisecondsSinceEpoch - 1000;
-      final service = RaceRoomService()..room = raceRoom(at);
-      await tester.pumpWidget(
-        RepositoryProvider<FirebaseRoomService>.value(
-          value: service,
-          child: MaterialApp(
-            theme: AppTheme.dark.copyWith(platform: TargetPlatform.iOS),
-            home: GamePage(room: service.room, sounds: FakeGameSounds()),
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    testWidgets(
+      '$platform: remote winner reveals and scrolls PIN plus feedback above keyboard, then resets the answer',
+      (tester) async {
+        tester.view.physicalSize = const Size(360, 740);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+        addTearDown(tester.view.resetViewInsets);
+        final at = DateTime.now().millisecondsSinceEpoch - 1000;
+        final service = RaceRoomService()
+          ..room = raceRoom(at).copyWith(
+            clueHintUsage: const {
+              'guest': {0: 2},
+            },
+          );
+        await tester.pumpWidget(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp(
+              theme: AppTheme.dark.copyWith(platform: platform),
+              home: GamePage(room: service.room, sounds: FakeGameSounds()),
+            ),
           ),
-        ),
-      );
-      service.offsets.add(0);
-      service.connections.add(true);
-      await tester.pump();
-      await tester.enterText(find.byType(TextField), 'sa');
-      final focus = tester.widget<TextField>(find.byType(TextField)).focusNode!;
-      service.publish(
-        winnerRoom(service.room, DateTime.now().millisecondsSinceEpoch + 2000),
-      );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 900));
-      expect(find.text('Arman bildi 😔'), findsOneWidget);
-      expect(
-        tester
-            .widget<WordPinInput>(find.byType(WordPinInput))
-            .answerController
-            .text,
-        'KAPI',
-      );
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).controller!.text,
-        'KAPI',
-      );
-      final cells = tester.widgetList<WordLetterCell>(
-        find.byType(WordLetterCell),
-      );
-      expect(cells.map((c) => c.character).join(), 'KAPI');
-      expect(cells.every((c) => c.outcome == AnswerOutcome.beaten), isTrue);
-      expect(focus.hasFocus, isTrue);
-      expect(tester.testTextInput.isVisible, isTrue);
-      service.publish(
-        service.room.copyWith(
-          race: QuestionRace(
-            questionIndex: 1,
-            startedAtMs: DateTime.now().millisecondsSinceEpoch - 1,
+        );
+        service.offsets.add(0);
+        service.connections.add(true);
+        await tester.pump();
+        await tester.enterText(find.byType(TextField), 'sa');
+        tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+        await tester.pumpAndSettle();
+        final focus = tester
+            .widget<TextField>(find.byType(TextField))
+            .focusNode!;
+        final position = tester
+            .state<ScrollableState>(find.byType(Scrollable).first)
+            .position;
+        final beforeAnswerOffset = position.pixels;
+        service.publish(
+          winnerRoom(
+            service.room,
+            DateTime.now().millisecondsSinceEpoch + 2000,
           ),
-        ),
-      );
-      await tester.pump();
-      await tester.pump();
-      expect(
-        tester.widget<WordPinInput>(find.byType(WordPinInput)).questionIndex,
-        1,
-      );
-      expect(
-        tester
-            .widget<WordPinInput>(find.byType(WordPinInput))
-            .answerController
-            .text,
-        isEmpty,
-      );
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).controller!.text,
-        isEmpty,
-      );
-      expect(focus.hasFocus, isTrue);
-      expect(tester.takeException(), isNull);
-      await tester.pumpWidget(const SizedBox());
-      await service.disposeStreams();
-    },
-  );
+        );
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 900));
+        await tester.pumpAndSettle();
+        expect(find.text('Arman bildi 😔'), findsOneWidget);
+        final viewport = tester.getRect(find.byType(ListView));
+        final pin = tester.getRect(find.byType(WordPinInput));
+        final feedback = tester.getRect(find.byType(AnswerFeedbackBanner));
+        expect(pin.top, greaterThanOrEqualTo(viewport.top));
+        expect(pin.bottom, lessThanOrEqualTo(feedback.top));
+        expect(feedback.bottom, lessThanOrEqualTo(viewport.bottom));
+        expect(position.pixels, greaterThan(beforeAnswerOffset));
+        expect(
+          tester
+              .widget<WordPinInput>(find.byType(WordPinInput))
+              .answerController
+              .text,
+          'KAPI',
+        );
+        expect(
+          tester.widget<TextField>(find.byType(TextField)).controller!.text,
+          'KAPI',
+        );
+        final cells = tester.widgetList<WordLetterCell>(
+          find.byType(WordLetterCell),
+        );
+        expect(cells.map((c) => c.character).join(), 'KAPI');
+        expect(cells.every((c) => c.outcome == AnswerOutcome.beaten), isTrue);
+        expect(focus.hasFocus, isTrue);
+        expect(tester.testTextInput.isVisible, isTrue);
+        service.publish(
+          service.room.copyWith(
+            race: QuestionRace(
+              questionIndex: 1,
+              startedAtMs: DateTime.now().millisecondsSinceEpoch - 1,
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.pump();
+        expect(
+          tester.widget<WordPinInput>(find.byType(WordPinInput)).questionIndex,
+          1,
+        );
+        expect(
+          tester
+              .widget<WordPinInput>(find.byType(WordPinInput))
+              .answerController
+              .text,
+          isEmpty,
+        );
+        expect(
+          tester.widget<TextField>(find.byType(TextField)).controller!.text,
+          isEmpty,
+        );
+        expect(focus.hasFocus, isTrue);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        await service.disposeStreams();
+      },
+    );
+  }
 
   test(
     'mapper retains race timing, winner and neutral progress from the server',

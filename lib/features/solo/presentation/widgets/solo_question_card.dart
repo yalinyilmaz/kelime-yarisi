@@ -60,20 +60,26 @@ class SoloQuestionCard extends StatelessWidget {
               onSubmitted: onSubmit,
               outcome: state.feedback?.outcome,
             ),
+            feedback: state.feedback == null
+                ? null
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: AnswerFeedbackBanner(result: state.feedback!),
+                  ),
           ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: state.feedback == null
-                ? Text(
-                    'Soru değeri: ${state.questionValue} puan',
-                    style: const TextStyle(
-                      color: AppColors.cyan,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  )
-                : AnswerFeedbackBanner(result: state.feedback!),
-          ),
+          if (state.feedback == null) ...[
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                'Soru değeri: ${state.questionValue} puan',
+                style: const TextStyle(
+                  color: AppColors.cyan,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     ),

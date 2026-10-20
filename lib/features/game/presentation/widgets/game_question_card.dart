@@ -77,20 +77,26 @@ class GameQuestionCard extends StatelessWidget {
                   onSubmitted: onSubmitted,
                   outcome: currentResult?.outcome,
                 ),
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: currentResult != null
-                    ? AnswerFeedbackBanner(result: currentResult)
-                    : Text(
-                        'Soru değeri: ${state.questionValue} puan',
-                        style: const TextStyle(
-                          color: AppColors.cyan,
-                          fontWeight: FontWeight.w700,
-                        ),
+                feedback: currentResult == null
+                    ? null
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: AnswerFeedbackBanner(result: currentResult),
                       ),
               ),
+              if (currentResult == null) ...[
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    'Soru değeri: ${state.questionValue} puan',
+                    style: const TextStyle(
+                      color: AppColors.cyan,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

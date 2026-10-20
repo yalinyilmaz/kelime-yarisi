@@ -12,6 +12,7 @@ import 'package:kelime_yarisi/features/game/presentation/cubit/game_cubit.dart';
 import 'package:kelime_yarisi/features/game/presentation/pages/game_page.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cell.dart';
+import 'package:kelime_yarisi/features/game/presentation/widgets/answer_feedback_banner.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
 
@@ -36,71 +37,91 @@ class FakeGameSounds extends Fake implements GameSoundController {
 }
 
 void main() {
-  for (final correct in [true, false]) {
-    testWidgets(
-      'Answer feedback colors every letter and preserves keyboard: correct=$correct',
-      (tester) async {
-        final service = FakeRoomService();
-        final room = testRoom().copyWith(
-          startsAtMs: DateTime.now().millisecondsSinceEpoch - 1000,
-        );
-        service.room = room;
-        await tester.pumpWidget(
-          RepositoryProvider<FirebaseRoomService>.value(
-            value: service,
-            child: MaterialApp(
-              theme: AppTheme.dark.copyWith(platform: TargetPlatform.iOS),
-              home: GamePage(room: room, sounds: FakeGameSounds()),
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    for (final correct in [true, false]) {
+      testWidgets(
+        '$platform: answer feedback and PIN scroll above the keyboard: correct=$correct',
+        (tester) async {
+          tester.view.physicalSize = const Size(360, 740);
+          tester.view.devicePixelRatio = 1;
+          addTearDown(tester.view.resetPhysicalSize);
+          addTearDown(tester.view.resetDevicePixelRatio);
+          addTearDown(tester.view.resetViewInsets);
+          final service = FakeRoomService();
+          final room = testRoom().copyWith(
+            startsAtMs: DateTime.now().millisecondsSinceEpoch - 1000,
+          );
+          service.room = room;
+          await tester.pumpWidget(
+            RepositoryProvider<FirebaseRoomService>.value(
+              value: service,
+              child: MaterialApp(
+                theme: AppTheme.dark.copyWith(platform: platform),
+                home: GamePage(room: room, sounds: FakeGameSounds()),
+              ),
             ),
-          ),
-        );
-        service.offsets.add(0);
-        service.connections.add(true);
-        await tester.pump();
-        await tester.enterText(
-          find.byType(TextField),
-          correct ? 'kapi' : 'aaaa',
-        );
-        await tester.pump();
-        final focus = tester
-            .widget<TextField>(find.byType(TextField))
-            .focusNode!;
-        await tester.tap(find.byKey(const ValueKey('answer-action')));
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 900));
-        expect(focus.hasFocus, isTrue);
-        expect(tester.testTextInput.isVisible, isTrue);
-        final cells = tester.widgetList<WordLetterCell>(
-          find.byType(WordLetterCell),
-        );
-        expect(cells.map((cell) => cell.character).join(), 'KAPI');
-        expect(
-          cells.every(
-            (cell) =>
-                cell.outcome ==
-                (correct ? AnswerOutcome.correct : AnswerOutcome.wrong),
-          ),
-          isTrue,
-        );
-        expect(service.saves.single.score, correct ? 400 : -400);
-        expect(
-          find.text(correct ? 'Doğru cevap!' : 'Yanlış cevap'),
-          findsOneWidget,
-        );
-        if (!correct) expect(find.text('Doğru cevap: KAPI'), findsOneWidget);
-        await tester.enterText(find.byType(TextField), 'zzzz');
-        expect(
-          tester.widget<TextField>(find.byType(TextField)).controller!.text,
-          'KAPI',
-        );
-        await tester.tap(find.byTooltip('Sesi kapat'));
-        await tester.pump();
-        expect(focus.hasFocus, isFalse);
-        expect(tester.takeException(), isNull);
-        await tester.pumpWidget(const SizedBox());
-        await service.disposeStreams();
-      },
-    );
+          );
+          service.offsets.add(0);
+          service.connections.add(true);
+          await tester.pump();
+          await tester.enterText(
+            find.byType(TextField),
+            correct ? 'kapi' : 'aaaa',
+          );
+          tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+          await tester.pumpAndSettle();
+          final focus = tester
+              .widget<TextField>(find.byType(TextField))
+              .focusNode!;
+          final position = tester
+              .state<ScrollableState>(find.byType(Scrollable).first)
+              .position;
+          final beforeAnswerOffset = position.pixels;
+          await tester.tap(find.byKey(const ValueKey('answer-action')));
+          await tester.pump();
+          await tester.pump(const Duration(milliseconds: 900));
+          await tester.pumpAndSettle();
+          expect(focus.hasFocus, isTrue);
+          expect(tester.testTextInput.isVisible, isTrue);
+          final viewport = tester.getRect(find.byType(ListView));
+          final pin = tester.getRect(find.byType(WordPinInput));
+          final feedback = tester.getRect(find.byType(AnswerFeedbackBanner));
+          expect(pin.top, greaterThanOrEqualTo(viewport.top));
+          expect(pin.bottom, lessThanOrEqualTo(feedback.top));
+          expect(feedback.bottom, lessThanOrEqualTo(viewport.bottom));
+          expect(position.pixels, greaterThan(beforeAnswerOffset));
+          final cells = tester.widgetList<WordLetterCell>(
+            find.byType(WordLetterCell),
+          );
+          expect(cells.map((cell) => cell.character).join(), 'KAPI');
+          expect(
+            cells.every(
+              (cell) =>
+                  cell.outcome ==
+                  (correct ? AnswerOutcome.correct : AnswerOutcome.wrong),
+            ),
+            isTrue,
+          );
+          expect(service.saves.single.score, correct ? 400 : -400);
+          expect(
+            find.text(correct ? 'Doğru cevap!' : 'Yanlış cevap'),
+            findsOneWidget,
+          );
+          if (!correct) expect(find.text('Doğru cevap: KAPI'), findsOneWidget);
+          await tester.enterText(find.byType(TextField), 'zzzz');
+          expect(
+            tester.widget<TextField>(find.byType(TextField)).controller!.text,
+            'KAPI',
+          );
+          await tester.tap(find.byTooltip('Sesi kapat'));
+          await tester.pump();
+          expect(focus.hasFocus, isFalse);
+          expect(tester.takeException(), isNull);
+          await tester.pumpWidget(const SizedBox());
+          await service.disposeStreams();
+        },
+      );
+    }
   }
 
   testWidgets(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/game_room.dart';
+import '../cubit/room_lobby_cubit.dart';
 
 class RoomCodeCard extends StatelessWidget {
   const RoomCodeCard({super.key, required this.room});
@@ -58,26 +59,25 @@ class RoomCodeCard extends StatelessWidget {
               ],
             ),
           ),
-          IconButton.filledTonal(
-            tooltip: 'Oda kodunu kopyala',
-            onPressed: () => _copyCode(context),
-            style: IconButton.styleFrom(
-              minimumSize: const Size.square(48),
-              backgroundColor: AppColors.paperMuted,
-              foregroundColor: AppColors.onPaper,
+          Builder(
+            builder: (buttonContext) => IconButton.filledTonal(
+              tooltip: 'Oda kodunu kopyala ve paylaş',
+              onPressed: () {
+                final box = buttonContext.findRenderObject()! as RenderBox;
+                buttonContext.read<RoomLobbyCubit>().copyAndShareCode(
+                  box.localToGlobal(Offset.zero) & box.size,
+                );
+              },
+              style: IconButton.styleFrom(
+                minimumSize: const Size.square(48),
+                backgroundColor: AppColors.paperMuted,
+                foregroundColor: AppColors.onPaper,
+              ),
+              icon: const Icon(Icons.ios_share_rounded),
             ),
-            icon: const Icon(Icons.copy_rounded),
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _copyCode(BuildContext context) async {
-    await Clipboard.setData(ClipboardData(text: room.code));
-    if (!context.mounted) return;
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(const SnackBar(content: Text('Oda kodu kopyalandı.')));
   }
 }

@@ -76,8 +76,8 @@ class GameBoard extends StatelessWidget {
                         answerController: answerController,
                         onSubmitted: onSubmit,
                       ),
-                      const SizedBox(height: 16),
-                      if (state.hasAnsweredCurrent)
+                      if (state.hasAnsweredCurrent) ...[
+                        const SizedBox(height: 16),
                         GameNotice(
                           state.room.isRace
                               ? state.room.race!.isResolved
@@ -85,26 +85,7 @@ class GameBoard extends StatelessWidget {
                                     : 'Cevabın kaydedildi. Diğer oyuncular yarışıyor.'
                               : 'Cevabın kaydedildi. Süre bitince herkes aynı anda sonraki soruya geçecek.',
                         ),
-                      Text(
-                        '${state.room.requiredHintVotes} farklı oyuncunun oyuyla aynı harf herkeste açılır. '
-                        'Her harf soru değerini 100 azaltır.',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        state.room.isRace
-                            ? 'İlk doğru cevap soruyu kapatır ve puanı kazanır. Diğer oyuncular bu yüzden puan kaybetmez. Yanlış cevap, bilemiyorum veya süre aşımı: −soru değeri.'
-                            : 'Doğru cevap: +soru değeri. Yanlış cevap veya bilemiyorum: −soru değeri. '
-                                  'Cevap sonrası sorunun bitmesi beklenir. Süre dolunca cevapsız soru bilememiş sayılır. Pas yok.',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
-                        ),
-                      ),
+                      ],
                     ] else if (state.questions.isNotEmpty &&
                         !state.isHistoryReady &&
                         !state.hasExpired &&
