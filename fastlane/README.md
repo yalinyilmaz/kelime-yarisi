@@ -58,6 +58,7 @@ Env dosyasına `ANDROID_KEYSTORE_PATH`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KE
 4. Developer hesabının **Membership details → Team ID** değerini `APPLE_TEAM_ID` alanına koy. Team ID ile Issuer ID farklıdır.
 5. Xcode **Settings → Accounts** içinde ücretli takıma giriş yap. **Manage Certificates → + → Apple Distribution** ile bu Mac'te sertifikayı özel anahtarıyla oluştur/kur. Varsa yeniden oluşturma.
 6. `ios/Runner.xcworkspace` aç; dev uygulamasının ücretli takımını, automatic signing ve **App Attest** yetkisini kontrol et. Script `dev` / `Release-dev` kullanır; env Team ID'sini yalnız build komutuna verir. Proje/prod takım ayarını değiştirmez.
+   IPA export işlemi Xcode'da giriş yapılmış ücretli hesap ve bu Mac'teki Apple Distribution sertifikasıyla yapılır. App Manager API anahtarı archive/provisioning çağrıları ve TestFlight upload için kullanılır; export'a verilmez. Böylece API anahtarının ek cloud signing yetkisi gerekmez. Xcode hesabının oturumu açık kalmalıdır.
 7. Apple sözleşmelerini kabul et. TestFlight iç test grubunu ve otomatik dağıtımını ayarla. Export compliance sorusu çıkarsa kullanılan şifreleme için Console'da doğru cevabı ver; script bunu varsaymaz.
 
 Kaynaklar: [Apple API key](https://developer.apple.com/help/app-store-connect/get-started/app-store-connect-api), [Fastlane TestFlight](https://docs.fastlane.tools/actions/upload_to_testflight/), [automatic provisioning](https://docs.fastlane.tools/codesigning/xcode-project/).

@@ -88,7 +88,9 @@ lane :dev_release do |options|
                 export_options: { method: 'app-store-connect', signingStyle: 'automatic', teamID: ENV.fetch('APPLE_TEAM_ID'),
                                   manageAppVersionAndBuildNumber: false },
                 xcargs: "#{auth} #{Shellwords.join(["DEVELOPMENT_TEAM=#{ENV.fetch('APPLE_TEAM_ID')}", 'CODE_SIGN_STYLE=Automatic'])}",
-                export_xcargs: auth
+                # App Manager API keys can upload, but cannot cloud-sign.
+                # Export uses the paid Xcode account and its local certificate.
+                export_xcargs: '-allowProvisioningUpdates'
               )
             end
             DevRelease.require_file(package)
