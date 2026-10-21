@@ -81,12 +81,28 @@ Sentry release adı platformun gerçek paket kimliğiyle `paket@X.Y.Z+N`, dist `
 ```
 
 - `--check`: yerel dosya/alan/komut kontrolü. Sürüm artırmaz, build/upload yapmaz. Uzak izinleri veya imzalamayı doğrulamaz.
-- Normal komut, ön kontrol ve `flutter pub get` sonrasında pubspec **build numarasını bir artırır**: `0.1.0+1 → 0.1.0+2`. Pazarlama sürümü yalnız `--version X.Y.Z` ile değişir; build yine artar. Geri sürüm engellenir. Güncellenen `pubspec.yaml` dosyasını commit et.
-- `all` iki platforma aynı sürümü verir. Ayrı komutlar ayrı build numarası üretir. Kilit aynı checkout'taki eşzamanlı işlemleri engeller; farklı makinelerden aynı anda release üretme. Daha önce Console'a yüksek build yüklediysen pubspec build numarasını önce onunla eşitle.
-- Hata sonrası sürüm geri alınmaz. Başarılı build için `--resume`, mevcut pubspec sürümünün kalan adımlarını tamamlar; tekrar derlemez. Önce pubspec'i değiştirme. `.local/releases/dev/X.Y.Z+N/<platform>/status.json` tamamlanan upload'ları atlar; paket SHA-256 ile doğrulanır. Sentry hatası mağaza upload'ını tekrar etmez.
+- Normal komut **build numarasını bir artırarak** derler: `0.1.0+5 → 0.1.0+6`. Başarılı paket üretildikten sonra sürüm Git dışında kalan `.local/releases/dev/version.json` dosyasına kaydedilir. **`pubspec.yaml` değiştirilmez.** Dosyadaki sürüm başlangıç alt sınırıdır; gerçek paket sürümü Flutter build parametreleriyle verilir. Pazarlama sürümünü `--version X.Y.Z` ile artırabilirsin; build yine artar. Geri sürüm engellenir.
+- `all` iki platforma aynı sürümü verir. Ayrı komutlar ayrı build numarası üretir. Kilit aynı checkout'taki eşzamanlı işlemleri engeller; farklı makinelerden aynı anda release üretme. `version.json` dosyasını silme: makine değiştirirken onu da taşı veya mağazalardaki en yüksek build numarasıyla eşitle. Örnek içerik: `{"name":"0.1.0","build":"5"}`. Sonraki normal komut build 6 üretir.
+- Android build öncesinde `flutter build apk --release --config-only` ile release eklenti kayıtları yenilenir; APK üretilmez. Ardından AAB `--no-pub` ile derlenir. Bu sıra, `integration_test` gibi dev eklentilerinin release Java kaydında kalıp derlemeyi bozmasını önler. Build sırasında aynı projede ayrıca `flutter pub get` çalıştırma.
+- Build başarısızsa yerel sayaç artmaz. Başarılı build sonrası upload hatasında kaydedilen sürüm geri alınmaz. `--resume`, yerel sayaçtaki sürümün kalan adımlarını tamamlar; tekrar derlemez. Yeniden denemeden önce sayaç veya pubspec sürümünü değiştirme. `.local/releases/dev/X.Y.Z+N/<platform>/status.json` tamamlanan upload'ları atlar; paket SHA-256 ile doğrulanır. Sentry hatası mağaza upload'ını tekrar etmez.
 - Build başarısızsa hatayı düzeltip normal komutla yeni build üret. `all` içinde yalnız bir platform başarısızsa onun hedefini kullanabilirsin. Sunucu kabul ettikten sonra bağlantı koparsa receipt yazılmamış olabilir; tekrar denemeden önce Console'da build numarasını kontrol et.
-- Tam başarı sonrası yalnız o release'in özel IPA/AAB/archive/DerivedData/sembol kopyaları temizlenir; `status.json` kalır. Android build dizinindeki aynı AAB da hash eşleşirse silinir. Başarısız / `--build-only` çıktıları yeniden deneme/ilk upload için tutulur. İşi biten ilgili `.local/releases/dev/X.Y.Z+N/` dizinini kaldırabilirsin. Global cache, normal iOS build çıktısı ve kimlik bilgileri silinmez.
+- Mağaza **ve** Sentry yüklemesi tamamlanınca o release'in IPA/AAB/archive/DerivedData/sembol kopyaları temizlenir; küçük `status.json` kaydı ve `version.json` sayacı kalır. Android build dizinindeki AAB hash'i eşleşirse ilgili `devRelease` ara çıktıları da silinir. Bu build sırasında oluştuğu kaydedilen Flutter release cache'leri temizlenir. Terminal `✅ [6/6]` ile silinen boyutu bildirir. Başarısız / `--build-only` çıktıları yeniden deneme/elle upload için tutulur. Global cache, normal iOS build çıktısı ve kimlik bilgileri silinmez.
 - Sentry sembol upload'ı gerçek crash testi değildir. Son doğrulama mağazadan kurulan release uygulamasında yapılır.
+
+## Git'te ne kalır?
+
+Release çalıştırmak için her build sonrası commit veya discard gerekmez. `pubspec.yaml`, `pubspec.lock`, Gradle/Xcode proje ayarları ve release script'leri kaynak dosyalardır; kasıtlı kod/bağımlılık değişiklikleri normal şekilde commit edilir. Yeni bir SDK bu dosyalarda değişiklik üretirse otomatik discard etmeden farkı incele.
+
+Her çalışmada değişebilen, Git tarafından zaten ignore edilen dosyalar:
+
+- `.local/releases/dev/version.json`: kalıcı sürüm sayacı; temizlenmez.
+- `.local/releases/dev/X.Y.Z+N/<platform>/status.json`: build/upload sonucu; temizlenmez.
+- Aynı release klasöründeki `dart-defines.json`, AAB/IPA, `symbols/`, `native/`, `mapping.txt`, iOS archive/DerivedData/logları: yalnız iki upload da başarılı olunca temizlenir.
+- `build/`, `.dart_tool/`, `.flutter-plugins-dependencies`: derleme/bağımlılık çıktıları. Temizlik tüm klasörleri topluca silmez.
+- `android/local.properties`, Android/iOS `GeneratedPluginRegistrant` dosyaları, `ios/Flutter/Generated.xcconfig`, `ios/Flutter/flutter_export_environment.sh`, `ios/Flutter/ephemeral/`: yerel SDK/build ayarları; Git'e eklenmez.
+- `fastlane/report.xml`, `.local/release.dev.lock`: yerel rapor/kilit dosyaları.
+
+`.local/credentials/` ve `.local/release.dev.env` gizli yapılandırmadır; ne Git'e eklenir ne release temizliğinde silinir. Script yalnız `android`, `ios`, `all` ve `dev` destekler; prod/web için henüz release akışı yoktur.
 
 ## Yerel doğrulama
 

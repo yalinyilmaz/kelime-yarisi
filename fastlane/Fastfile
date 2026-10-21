@@ -2,7 +2,7 @@ require 'dotenv'
 require_relative 'dev_release'
 ENV['FASTLANE_SKIP_DOCS'] = '1'
 
-desc 'Dev: pubspec sürümü, imzalı build, Play dahili test / TestFlight ve Sentry'
+desc 'Dev: yerel sürüm sayacı, imzalı build, Play dahili test / TestFlight ve Sentry'
 lane :dev_release do |options|
   begin
     DevRelease.progress(UI, '[1/6] Dev ayarları ve ön kontroller')
@@ -16,6 +16,7 @@ lane :dev_release do |options|
     UI.user_error!('Resume ile sürüm değiştirilemez.') if mode == 'resume' && !options[:version].to_s.empty?
     platforms = target == 'all' ? %w[android ios] : [target]
     config = File.join(root, '.local/release.dev.env')
+    version_path = File.join(root, '.local/releases/dev/version.json')
     DevRelease.require_file(config)
     Dotenv.parse(config).each { |key, value| ENV[key] = value if DevRelease::ENV_KEYS.include?(key) }
     ENV['SENTRY_LOG_LEVEL'] = 'warn'
@@ -27,19 +28,20 @@ lane :dev_release do |options|
       Dir.chdir(root) do
         DevRelease.preflight(root, platforms, mode)
         UI.success('✅ [1/6] Dev yerel ön kontrolleri tamamlandı.')
-        name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s)
+        name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s, state_path: version_path)
         if mode == 'check'
           UI.success("✅ Kontrol tamamlandı. Mevcut sürüm: #{name}+#{number}. Uzak hesap izinleri/build doğrulanmadı.")
           next
         end
         unless mode == 'resume'
-          DevRelease.progress(UI, '[2/6] Flutter bağımlılıkları ve pubspec sürümü')
+          DevRelease.progress(UI, '[2/6] Flutter bağımlılıkları ve yerel sürüm sayacı')
           sh('df', '-h', root)
           sh('flutter', 'pub', 'get')
-          name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s, bump: true)
+          name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s, bump: true, state_path: version_path)
         end
         version = "#{name}+#{number}"
-        UI.success("✅ [2/6] #{mode == 'resume' ? 'Devam edilen' : 'Yeni'} sürüm: #{version}")
+        version_saved = mode == 'resume'
+        UI.success("✅ [2/6] #{mode == 'resume' ? 'Devam edilen' : 'Derlenecek'} sürüm: #{version}")
         UI.header("Kelime Yarışı Dev — #{version} — #{platforms.join(' + ')}")
         platforms.each do |platform|
           directory = File.join(root, '.local/releases/dev', version, platform)
@@ -49,9 +51,7 @@ lane :dev_release do |options|
             state = JSON.parse(File.read(state_path))
             UI.user_error!('Resume için başarılı bir build bulunamadı; yeni release başlat.') unless state['built']
           else
-            UI.user_error!("Bu sürümün çıktısı zaten var: #{version}. --resume kullan.") if File.exist?(state_path)
-            state = { 'version' => version, 'platform' => platform, 'proguard_uuid' => SecureRandom.uuid }
-            DevRelease.write_json(state_path, state)
+            state = DevRelease.new_build_state(directory, version, platform)
           end
           release = "#{DevRelease::IDS.fetch(platform)}@#{version}"
           symbols = File.join(directory, 'symbols')
@@ -61,10 +61,14 @@ lane :dev_release do |options|
                     "--dart-define-from-file=#{defines_path}", "--split-debug-info=#{symbols}"]
           unless state['built']
             DevRelease.progress(UI, "[3/6] #{platform} #{version}: imzalı release derleniyor")
+            caches_before = DevRelease.release_caches(root, platform)
             DevRelease.write_json(defines_path, DevRelease.defines(File.join(root, '.local/sentry.dev.json'), release, number,
                                                                 platform == 'android' ? state['proguard_uuid'] : nil))
             if platform == 'android'
-              sh('flutter', 'build', 'appbundle', *common)
+              # Regenerate the release registrant without dev-only plugins.
+              # Keep pub from replacing it again during the actual bundle build.
+              sh('flutter', 'build', 'apk', '--config-only', *common)
+              sh('flutter', 'build', 'appbundle', '--no-pub', *common)
               FileUtils.cp(File.join(root, 'build/app/outputs/bundle/devRelease/app-dev-release.aab'), package)
               mapping = File.join(root, 'build/app/outputs/mapping/devRelease/mapping.txt')
               DevRelease.require_file(mapping)
@@ -90,11 +94,19 @@ lane :dev_release do |options|
             DevRelease.require_file(package)
             UI.user_error!('Dart sembolleri üretilmedi.') if Dir.glob(File.join(symbols, '*.symbols')).empty?
             state['sha256'] = Digest::SHA256.file(package).hexdigest
+            state['flutter_build_caches'] = DevRelease.release_caches(root, platform) - caches_before
             state['built'] = true
             DevRelease.write_json(state_path, state)
             UI.success("✅ [3/6] #{platform}: imzalı paket ve semboller hazır.")
           else
             UI.success("✅ [3/6] #{platform}: mevcut build kullanılıyor.")
+          end
+          unless version_saved
+            planned = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s, bump: true, state_path: version_path)
+            UI.user_error!('Build sırasında pubspec sürümü değişmiş. Paket yüklenmedi.') unless planned == [name, number]
+            DevRelease.save_version(version_path, name, number)
+            version_saved = true
+            UI.success("✅ Yerel sürüm sayacı kaydedildi: #{version}; pubspec.yaml değiştirilmedi.")
           end
           if mode == 'build-only'
             UI.success("✅ #{platform}: #{version} imzalı paket hazır: #{package}. Upload yapılmadı.")
@@ -134,16 +146,8 @@ lane :dev_release do |options|
           end
           UI.success("✅ [5/6] Sentry: #{release} sürümü, sembolleri ve dev dağıtım kaydı tamamlandı.")
           DevRelease.progress(UI, "[6/6] #{platform}: geçici release çıktıları temizleniyor")
-          # Only this release's own artifacts. Never delete Flutter's build/ios
-          # or generated Xcode settings and never clean shared SDK caches.
-          Dir.children(directory).each do |entry|
-            FileUtils.rm_rf(File.join(directory, entry)) unless entry == 'status.json'
-          end
-          if platform == 'android'
-            generated = File.join(root, 'build/app/outputs/bundle/devRelease/app-dev-release.aab')
-            FileUtils.rm_f(generated) if File.file?(generated) && Digest::SHA256.file(generated).hexdigest == state['sha256']
-          end
-          UI.success("✅ [6/6] #{platform}: #{version} tamamlandı. Geçici release çıktıları temizlendi.")
+          removed = DevRelease.cleanup_release(root, directory)
+          UI.success("✅ [6/6] #{platform}: AAB/IPA, semboller ve gereksiz release çıktıları başarıyla silindi (#{(removed / 1024.0 / 1024).round(1)} MiB). Sürüm kaydı korundu.")
         end
         UI.success("✅ Dev #{version}: #{mode == 'build-only' ? 'build tamamlandı; mağaza/Sentry upload yapılmadı' : 'mağaza ve Sentry adımları tamamlandı'}.")
       end
@@ -156,6 +160,6 @@ end
 error do |_lane, exception|
   UI.error("❌ #{DevRelease.current_step || 'Dev release'} başarısız: #{DevRelease.safe_error(exception.message)}")
   UI.error('❌ Dev release tamamlanmadı. Tamamlanan upload geri alınmadı; prod değiştirilmedi.')
-  UI.important('Sürüm pubspec.yaml içinde korunur. Başarılı build varsa aynı komutu --resume ile çalıştır; status.json tamamlanan upload adımlarını atlar.')
+  UI.important('Sürüm .local/releases/dev/version.json içinde korunur. Başarılı build varsa aynı komutu --resume ile çalıştır; status.json tamamlanan upload adımlarını atlar.')
   UI.important('Sunucu kabul ettikten sonra bağlantı kesildiyse yeniden denemeden önce mağazadaki build numarasını kontrol et.')
 end

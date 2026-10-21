@@ -18,25 +18,27 @@ module DevRelease
                 ANDROID_KEY_PASSWORD PLAY_JSON_KEY_PATH APPLE_TEAM_ID ASC_KEY_ID
                 ASC_ISSUER_ID ASC_KEY_PATH SENTRY_ORG SENTRY_PROJECT SENTRY_AUTH_TOKEN].freeze
 
-  def self.version(path, requested: '', bump: false)
-    source = File.read(path)
-    match = VERSION.match(source) or raise 'pubspec.yaml version alanı X.Y.Z+N olmalı.'
-    name = requested.empty? ? match[2] : requested
-    raise 'Sürüm X.Y.Z olmalı.' unless /\A(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\z/.match?(name)
-    raise 'Pazarlama sürümü geriye alınamaz.' if (name.split('.').map(&:to_i) <=> match[2].split('.').map(&:to_i)) == -1
-    build = match[3].to_i + (bump ? 1 : 0)
-    raise 'Build numarası 1..2100000000 aralığında olmalı.' unless (1..2_100_000_000).cover?(build)
-    value = "#{name}+#{build}"
-    if bump
-      temporary = "#{path}.release-tmp"
-      begin
-        File.write(temporary, source.sub(VERSION) { "#{Regexp.last_match(1)}#{value}#{Regexp.last_match(4)}" })
-        File.rename(temporary, path)
-      ensure
-        FileUtils.rm_f(temporary)
-      end
+  def self.version(path, requested: '', bump: false, state_path: nil)
+    match = VERSION.match(File.read(path)) or raise 'pubspec.yaml version alanı X.Y.Z+N olmalı.'
+    saved = state_path && File.file?(state_path) ? read_json(state_path) : { 'name' => match[2], 'build' => match[3] }
+    saved_name = saved.fetch('name')
+    saved_build = saved.fetch('build').to_s
+    raise 'Yerel build sayacı geçersiz.' unless saved_build.match?(/\A[1-9]\d*\z/)
+    names = [match[2], saved_name]
+    names << requested unless requested.empty?
+    unless names.all? { |name| name.is_a?(String) && /\A(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\z/.match?(name) }
+      raise 'Sürüm X.Y.Z olmalı.'
     end
+    floor_name = names.first(2).max_by { |name| name.split('.').map(&:to_i) }
+    name = requested.empty? ? floor_name : requested
+    raise 'Pazarlama sürümü geriye alınamaz.' if (name.split('.').map(&:to_i) <=> floor_name.split('.').map(&:to_i)) == -1
+    build = [match[3].to_i, saved_build.to_i].max + (bump ? 1 : 0)
+    raise 'Build numarası 1..2100000000 aralığında olmalı.' unless (1..2_100_000_000).cover?(build)
     [name, build.to_s]
+  end
+
+  def self.save_version(path, name, build)
+    write_json(path, 'name' => name, 'build' => build)
   end
 
   def self.defines(dsn_file, release, build, uuid = nil)
@@ -106,6 +108,80 @@ module DevRelease
   def self.verify_artifact(state, path)
     require_file(path)
     raise 'Paket değişmiş; aynı sürüm için farklı dosya yüklenemez.' unless Digest::SHA256.file(path).hexdigest == state.fetch('sha256')
+  end
+
+  def self.new_build_state(directory, version, platform)
+    state_path = File.join(directory, 'status.json')
+    if File.exist?(state_path)
+      previous = read_json(state_path)
+      completed = %w[built store_uploaded sentry_uploaded].any? { |key| previous[key] }
+      raise "Bu sürümün çıktısı zaten var: #{version}. --resume kullan." if completed
+      unless previous['version'] == version && previous['platform'] == platform
+        raise 'Önceki build kaydı hedef sürüm/platformla eşleşmiyor; çıktılar korunuyor.'
+      end
+      # A failed build has never reserved a store version. Clear only its
+      # partial output so the unchanged pubspec can be retried safely.
+      FileUtils.rm_rf(directory)
+    end
+    state = { 'version' => version, 'platform' => platform, 'proguard_uuid' => SecureRandom.uuid }
+    write_json(state_path, state)
+    state
+  end
+
+  def self.release_caches(root, platform)
+    marker = platform == 'android' ? 'android_aot_release_*.stamp' : 'release_ios_bundle_flutter_assets.stamp'
+    Dir.glob(File.join(root, '.dart_tool/flutter_build/*')).select do |directory|
+      File.directory?(directory) && !File.symlink?(directory) &&
+        File.basename(directory).match?(/\A[0-9a-f]{32}\z/) && !Dir.glob(File.join(directory, marker)).empty?
+    end.map { |directory| File.basename(directory) }
+  end
+
+  def self.remove_output(path)
+    return 0 unless File.exist?(path) || File.symlink?(path)
+    bytes = if File.symlink?(path)
+              0
+            elsif File.directory?(path)
+              Dir.glob(File.join(path, '**/*'), File::FNM_DOTMATCH).sum do |file|
+                File.file?(file) && !File.symlink?(file) ? File.size(file) : 0
+              end
+            else
+              File.size(path)
+            end
+    FileUtils.remove_entry(path)
+    bytes
+  end
+
+  def self.cleanup_release(root, directory)
+    state = read_json(File.join(directory, 'status.json'))
+    unless state['store_uploaded'] == true && state['sentry_uploaded'] == true
+      raise 'Mağaza ve Sentry yüklemesi tamamlanmadı; paket ve semboller korunuyor.'
+    end
+    platform = state.fetch('platform')
+    version = state.fetch('version')
+    raise 'Temizleme hedefi geçersiz.' unless IDS.key?(platform) && version.match?(/\A\d+\.\d+\.\d+\+\d+\z/)
+    expected = File.join(File.realpath(root), '.local/releases/dev', version, platform)
+    raise 'Temizleme yalnız bu dev release dizininde yapılabilir.' unless File.realpath(directory) == expected
+    bytes = 0
+    if platform == 'android'
+      generated = File.join(root, 'build/app/outputs/bundle/devRelease/app-dev-release.aab')
+      if File.file?(generated) && Digest::SHA256.file(generated).hexdigest == state['sha256']
+        Dir.glob(File.join(root, 'build/app/**/devRelease')).each do |path|
+          bytes += remove_output(path) if File.directory?(path) && !File.symlink?(path)
+        end
+      end
+    end
+    owned_caches = Array(state['flutter_build_caches']) & release_caches(root, platform)
+    owned_caches.each do |name|
+      bytes += remove_output(File.join(root, '.dart_tool/flutter_build', name))
+    end
+    Dir.children(directory).each do |entry|
+      bytes += remove_output(File.join(directory, entry)) unless entry == 'status.json'
+    end
+    state['cleaned'] = true
+    state['cleaned_bytes'] = bytes
+    state.delete('flutter_build_caches')
+    write_json(File.join(directory, 'status.json'), state)
+    bytes
   end
 
   def self.preflight(root, platforms, mode)

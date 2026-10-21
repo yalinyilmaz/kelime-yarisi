@@ -78,6 +78,11 @@ app.*.map.json
 /fastlane/report.xml
 /fastlane/README.html
 /fastlane/test_output/
+*.aab
+*.apk
+*.ipa
+*.xcarchive/
+*.dSYM/
 **/*.p8
 **/*.p12
 **/*.mobileprovision

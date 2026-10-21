@@ -10,7 +10,7 @@ Kullanım: ./scripts/release <android|ios|all> dev [seçenek]
   --resume            Mevcut sürümün kaldığı adımlarını tamamla; tekrar derleme yapma.
   --version X.Y.Z     Yeni pazarlama sürümü; build numarası yine bir artırılır.
 
-Varsayılan: pubspec.yaml build numarasını bir artır, derle ve dev'e yükle.
+Varsayılan: yerel build sayacını bir artır, derle ve dev'e yükle; pubspec.yaml değişmez.
 İki platform için aynı sürüm: ./scripts/release all dev
 Prod bu akışta desteklenmez. Kurulum: fastlane/README.md
 HELP
