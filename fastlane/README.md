@@ -5,10 +5,11 @@ Proje kökünden:
 ```sh
 ./scripts/release android dev
 ./scripts/release ios dev
+./scripts/release ios dev --app-distribution
 ./scripts/release all dev
 ```
 
-Hedefler: **Play Console → Dahili test**, **TestFlight**. `prod` engellenir. Firebase deploy veya App Store inceleme gönderimi yapılmaz. Apple'ın build işlemesi yüklemeden sonra sürebilir. TestFlight harici tester dağıtımı yapılmaz.
+Hedefler: **Play Console → Dahili test**, **TestFlight**; yalnız iOS'te `--app-distribution` seçilirse **Firebase App Distribution**. Seçeneksiz iOS komutu TestFlight'a yükler. `prod` engellenir. Functions/database deploy veya App Store inceleme gönderimi yapılmaz. Apple'ın build işlemesi yüklemeden sonra sürebilir. TestFlight harici tester dağıtımı yapılmaz.
 
 Terminalde altı adım görünür: `⏳ [1/6]` ön kontrol, `[2/6]` sürüm, `[3/6]` build, `[4/6]` mağaza upload, `[5/6]` Sentry, `[6/6]` temizlik. Her başarılı adım `✅`, başarısız adım nedeni ile `❌` yazar. Hata çıkış kodu sıfır değildir. `--build-only` mağaza/Sentry upload yapmadığını açıkça bildirir.
 
@@ -72,6 +73,29 @@ Kaynaklar: [Apple API key](https://developer.apple.com/help/app-store-connect/ge
 Sentry release adı platformun gerçek paket kimliğiyle `paket@X.Y.Z+N`, dist `N`, environment `dev` olur. Aynı değerler uygulamaya verilir. Android Dart/native ELF sembolleri ve R8 mapping; iOS Dart sembolleri ve archive dSYM'leri yüklenir. Android mapping UUID'si aynı build'in SDK ayarıyla eşleştirilir. Tam kaynak kodu yüklenmez. [Sentry semboller](https://docs.sentry.io/cli/dif/), [token yetkileri](https://docs.sentry.io/api/permissions/).
 
 ## Sürüm, kontrol ve yeniden deneme
+
+### iOS için Firebase App Distribution
+
+```sh
+./scripts/release ios dev --app-distribution --check
+./scripts/release ios dev --app-distribution
+# Aynı hedefin yarım kalan upload / Sentry adımlarını tamamla:
+./scripts/release ios dev --app-distribution --resume
+```
+
+1. Dev Firebase projesinde **App Distribution → Get started** seç. iOS uygulaması `com.yalinyilmaz.kelimeYarisi.dev` olmalı.
+2. Firebase CLI kurulu ve yetkili kullanıcıyla giriş yapılmış olmalı (`firebase login`). Yeni bir uzun ömürlü token veya servis hesabı anahtarı gerekmez. Script hedef projeyi ve Firebase iOS App ID'sini açıkça sabitler; prod'a yükleyemez.
+3. `.local/credentials/app-distribution-dev-testers.txt` dosyasına her satırda bir onaylı tester e-postası yaz. `.local/release.dev.env` içine `APP_DISTRIBUTION_TESTERS_FILE=.local/credentials/app-distribution-dev-testers.txt` ekle. Bu dosyalar Git ve deploy dışında kalır.
+4. Test cihazlarının UDID'leri Apple Developer hesabında kayıtlı olmalı. Script mevcut ASC anahtarı ve yerel dağıtım sertifikasıyla yalnız **Kelime Yarisi Dev Ad Hoc** profilini oluşturur/indirir; yeni sertifika veya özel anahtar oluşturmaz. Arşiv automatic signing ile, **Ad Hoc** IPA aktarımı ise bu profile açıkça bağlanarak yapılır; cloud signing gerekmez. IPA'daki profilin kayıtlı cihazları, dev kimliğini ve App Attest production yetkisini kontrol eder. TestFlight için üretilen IPA bu hedefte kullanılamaz.
+5. Tester ilk davette cihaz kaydı yaparsa UDID'yi Apple Developer **Devices** bölümüne ekle ve **Kelime Yarisi Dev Ad Hoc** profilini yeni cihazla güncelle; ardından yeniden build ve dağıtım yap. Script mevcut geçerli profili yeniden kullanır; kendiliğinden silip yenilemez. App Distribution tek başına UDID'yi Apple'a kaydetmez. Yeni cihaz kurulumu için önceki IPA'yı `--resume` ile tekrar yüklemek yeterli değildir.
+
+İki iOS hedefi **aynı yerel build sayacını** kullanır; her yeni başarılı build sayacı artırır, `pubspec.yaml` değişmez. `status.json` dağıtım hedefini kaydeder ve `--resume` ile hedef değişimini reddeder. Firebase dağıtımı ve Sentry tamamlandığında aynı temizlik uygulanır. İndirme için tester'ın daveti kabul etmesi ve cihazının profilde bulunması gerekir; upload başarısı cihazda kurulum testi değildir.
+
+iOS build/export sırasında Xcode ve Gym geçici dosyaları release klasörünün `tmp/` dizinine yönlendirilir; başarılı dağıtımdan sonraki temizlik bu kopyaları da kapsar. Hata olursa yeniden deneme için tutulur.
+
+Kaynaklar: [Firebase CLI ile iOS dağıtımı](https://firebase.google.com/docs/app-distribution/ios/distribute-cli), [iOS cihaz kaydı](https://firebase.google.com/docs/app-distribution/register-additional-devices).
+
+### Ortak sürüm davranışı
 
 ```sh
 ./scripts/release all dev --check

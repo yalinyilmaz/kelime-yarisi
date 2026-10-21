@@ -136,6 +136,77 @@ class DevReleaseTest < Minitest::Test
     assert system(wrapper, 'android', 'prod', out: File::NULL, err: File::NULL) == false
   end
 
+  def test_app_distribution_cannot_be_selected_for_android_or_all
+    wrapper = File.expand_path('../scripts/release', __dir__)
+    %w[android all].each do |target|
+      refute system(wrapper, target, 'dev', '--app-distribution', out: File::NULL, err: File::NULL)
+    end
+    assert_equal 'testflight', DevRelease.destination('ios')
+    assert_equal 'play-internal', DevRelease.destination('android')
+    assert_equal 'app-distribution', DevRelease.destination('ios', app_distribution: true)
+  end
+
+  def test_resume_never_switches_distribution_or_reuses_legacy_testflight_ipa
+    legacy = { 'platform' => 'ios', 'built' => true, 'store_uploaded' => true }
+    DevRelease.verify_destination(legacy, 'testflight')
+    assert_raises(RuntimeError) { DevRelease.verify_destination(legacy, 'app-distribution') }
+    ad_hoc = legacy.merge('destination' => 'app-distribution', 'app_distribution_uploaded' => true)
+    DevRelease.verify_destination(ad_hoc, 'app-distribution')
+    assert_raises(RuntimeError) { DevRelease.verify_destination(ad_hoc, 'testflight') }
+  end
+
+  def test_ad_hoc_cleanup_requires_firebase_upload_even_if_store_flag_is_set
+    directory, state = release_fixture('ios')
+    state['destination'] = 'app-distribution'
+    DevRelease.write_json(File.join(directory, 'status.json'), state)
+    assert_raises(RuntimeError) { DevRelease.cleanup_release(@directory, directory) }
+    assert File.exist?(File.join(directory, 'KelimeYarisiDev.ipa'))
+    state['app_distribution_uploaded'] = true
+    DevRelease.write_json(File.join(directory, 'status.json'), state)
+    assert_operator DevRelease.cleanup_release(@directory, directory), :>, 0
+    assert_equal ['status.json'], Dir.children(directory)
+  end
+
+  def test_xcode_temporary_exports_stay_in_release_and_restore_tmpdir_on_failure
+    previous = ENV['TMPDIR']
+    assert_raises(RuntimeError) do
+      DevRelease.with_release_tmpdir(@directory) do
+        assert_equal File.join(@directory, 'tmp'), ENV['TMPDIR']
+        assert Dir.exist?(ENV['TMPDIR'])
+        raise 'export failed'
+      end
+    end
+    assert_equal previous, ENV['TMPDIR']
+  end
+
+  def test_app_distribution_upload_is_pinned_to_dev_and_passes_testers_by_file
+    arguments = DevRelease.app_distribution_arguments('/private/build.ipa', '/private/testers.txt', '0.1.0+42')
+    assert_equal 'kelime-yarisi-yalin', arguments[arguments.index('--project') + 1]
+    assert_equal '1:173227658652:ios:c6e3ba382101755e004c59', arguments[arguments.index('--app') + 1]
+    assert_includes arguments, '--testers-file'
+    refute_includes arguments, '--token'
+    refute_includes arguments, '--testers'
+  end
+
+  def test_ad_hoc_profile_rejects_app_store_debug_wrong_bundle_and_wrong_team
+    profile = {
+      'ProvisionedDevices' => ['registered-test-device'],
+      'Entitlements' => {
+        'application-identifier' => 'TEAM123.com.yalinyilmaz.kelimeYarisi.dev',
+        'get-task-allow' => false,
+        'com.apple.developer.devicecheck.appattest-environment' => %w[development production]
+      }
+    }
+    assert_equal 1, DevRelease.verify_ad_hoc_profile(profile, 'TEAM123')
+    assert_raises(RuntimeError) { DevRelease.verify_ad_hoc_profile(profile.reject { |k, _| k == 'ProvisionedDevices' }, 'TEAM123') }
+    assert_raises(RuntimeError) { DevRelease.verify_ad_hoc_profile(profile.merge('ProvisionsAllDevices' => true), 'TEAM123') }
+    assert_raises(RuntimeError) { DevRelease.verify_ad_hoc_profile(profile, 'OTHERTEAM') }
+    %w[get-task-allow application-identifier com.apple.developer.devicecheck.appattest-environment].each do |key|
+      invalid = profile.merge('Entitlements' => profile['Entitlements'].merge(key => 'invalid'))
+      assert_raises(RuntimeError) { DevRelease.verify_ad_hoc_profile(invalid, 'TEAM123') }
+    end
+  end
+
   def test_error_response_retains_reason_but_redacts_credentials
     previous = ENV['SENTRY_AUTH_TOKEN']
     ENV['SENTRY_AUTH_TOKEN'] = 'private-test-token'
@@ -144,6 +215,9 @@ class DevReleaseTest < Minitest::Test
     assert_includes response, 'permission denied'
     refute_includes response, 'private-test-token'
     refute_includes response, 'eyToken.value'
+    google_response = DevRelease.safe_error('Firebase failed: ya29.example-access-token 1//example-refresh-token')
+    refute_includes google_response, 'ya29.example-access-token'
+    refute_includes google_response, '1//example-refresh-token'
   ensure
     ENV['SENTRY_AUTH_TOKEN'] = previous
   end

@@ -3,6 +3,7 @@ require 'fileutils'
 require 'securerandom'
 require 'shellwords'
 require 'digest'
+require 'open3'
 
 module DevRelease
   class << self
@@ -13,10 +14,74 @@ module DevRelease
     'android' => 'com.yalinyilmaz.kelime_yarisi.dev',
     'ios' => 'com.yalinyilmaz.kelimeYarisi.dev'
   }.freeze
+  FIREBASE_PROJECT = 'kelime-yarisi-yalin'
+  FIREBASE_IOS_APP_ID = '1:173227658652:ios:c6e3ba382101755e004c59'
   VERSION = /^(version:\s*)(\d+\.\d+\.\d+)\+(\d+)(\s*(?:#.*)?)$/
   ENV_KEYS = %w[ANDROID_KEYSTORE_PATH ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS
                 ANDROID_KEY_PASSWORD PLAY_JSON_KEY_PATH APPLE_TEAM_ID ASC_KEY_ID
-                ASC_ISSUER_ID ASC_KEY_PATH SENTRY_ORG SENTRY_PROJECT SENTRY_AUTH_TOKEN].freeze
+                ASC_ISSUER_ID ASC_KEY_PATH SENTRY_ORG SENTRY_PROJECT SENTRY_AUTH_TOKEN
+                APP_DISTRIBUTION_TESTERS_FILE].freeze
+
+  def self.destination(platform, app_distribution: false)
+    raise '--app-distribution yalnız ios hedefinde kullanılabilir.' if app_distribution && platform != 'ios'
+    return 'app-distribution' if app_distribution
+    platform == 'ios' ? 'testflight' : 'play-internal'
+  end
+
+  def self.verify_destination(state, destination)
+    previous = state.fetch('destination') { self.destination(state.fetch('platform')) }
+    raise 'Bu paket farklı dağıtım hedefi için üretildi. Hedef değiştirerek --resume kullanılamaz; yeni release başlat.' unless previous == destination
+  end
+
+  def self.upload_key(state)
+    state['destination'] == 'app-distribution' ? 'app_distribution_uploaded' : 'store_uploaded'
+  end
+
+  def self.app_distribution_arguments(package, testers_file, version)
+    ['firebase', 'appdistribution:distribute', package, '--project', FIREBASE_PROJECT,
+     '--app', FIREBASE_IOS_APP_ID, '--testers-file', testers_file,
+     '--release-notes', "Kelime Yarışı Dev #{version}", '--non-interactive']
+  end
+
+  def self.verify_ad_hoc_profile(profile, team_id)
+    devices = profile['ProvisionedDevices']
+    entitlements = profile.fetch('Entitlements', {})
+    unless devices.is_a?(Array) && !devices.empty? && profile['ProvisionsAllDevices'] != true &&
+           entitlements['get-task-allow'] == false &&
+           entitlements['application-identifier'] == "#{team_id}.#{IDS.fetch('ios')}" &&
+           Array(entitlements['com.apple.developer.devicecheck.appattest-environment']).include?('production')
+      raise 'IPA dev uygulamasına ait, App Attest production yetkili bir Ad Hoc profili içermeli; paket yüklenmedi.'
+    end
+    devices.length
+  end
+
+  def self.verify_ad_hoc_package(package, team_id)
+    require 'plist'
+    raw, _error, status = Open3.capture3('unzip', '-p', package, 'Payload/Runner.app/embedded.mobileprovision')
+    raise 'IPA provisioning profili okunamadı.' unless status.success? && !raw.empty?
+    xml, _error, status = Open3.capture3('security', 'cms', '-D', stdin_data: raw)
+    raise 'IPA provisioning profili çözümlenemedi.' unless status.success?
+    verify_ad_hoc_profile(Plist.parse_xml(xml) || {}, team_id)
+  end
+
+  def self.upload_app_distribution(package, testers_file, version)
+    # Capture CLI output: its download URL can contain a signed access token.
+    output, error, status = Open3.capture3(*app_distribution_arguments(package, testers_file, version))
+    return if status.success?
+    details = (output + error).lines.last(15).join
+    details.gsub!(%r{https?://\S+}, '[URL]')
+    raise "Firebase App Distribution yüklemesi başarısız (#{status.exitstatus}): #{safe_error(details)}"
+  end
+
+  def self.with_release_tmpdir(directory)
+    previous = ENV['TMPDIR']
+    temporary = File.join(directory, 'tmp')
+    FileUtils.mkdir_p(temporary, mode: 0o700)
+    ENV['TMPDIR'] = temporary
+    yield
+  ensure
+    ENV['TMPDIR'] = previous
+  end
 
   def self.version(path, requested: '', bump: false, state_path: nil)
     match = VERSION.match(File.read(path)) or raise 'pubspec.yaml version alanı X.Y.Z+N olmalı.'
@@ -57,12 +122,13 @@ module DevRelease
 
   def self.safe_error(message)
     result = message.to_s.dup
-    %w[ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_PASSWORD SENTRY_AUTH_TOKEN].each do |key|
+    %w[ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_PASSWORD SENTRY_AUTH_TOKEN FIREBASE_TOKEN GOOGLE_OAUTH_ACCESS_TOKEN].each do |key|
       secret = ENV[key].to_s
       result.gsub!(secret, '[REDACTED]') unless secret.empty?
     end
     result.gsub!(/-----BEGIN[^\n]*PRIVATE KEY-----.*?-----END[^\n]*PRIVATE KEY-----/m, '[REDACTED PRIVATE KEY]')
     result.gsub!(/(Bearer\s+)[A-Za-z0-9._\-]+/i, '\\1[REDACTED]')
+    result.gsub!(/(?:ya29\.|1\/\/)[A-Za-z0-9._~\-]+/, '[REDACTED GOOGLE TOKEN]')
     result
   end
 
@@ -110,11 +176,11 @@ module DevRelease
     raise 'Paket değişmiş; aynı sürüm için farklı dosya yüklenemez.' unless Digest::SHA256.file(path).hexdigest == state.fetch('sha256')
   end
 
-  def self.new_build_state(directory, version, platform)
+  def self.new_build_state(directory, version, platform, destination: self.destination(platform))
     state_path = File.join(directory, 'status.json')
     if File.exist?(state_path)
       previous = read_json(state_path)
-      completed = %w[built store_uploaded sentry_uploaded].any? { |key| previous[key] }
+      completed = %w[built store_uploaded app_distribution_uploaded sentry_uploaded].any? { |key| previous[key] }
       raise "Bu sürümün çıktısı zaten var: #{version}. --resume kullan." if completed
       unless previous['version'] == version && previous['platform'] == platform
         raise 'Önceki build kaydı hedef sürüm/platformla eşleşmiyor; çıktılar korunuyor.'
@@ -123,7 +189,7 @@ module DevRelease
       # partial output so the unchanged pubspec can be retried safely.
       FileUtils.rm_rf(directory)
     end
-    state = { 'version' => version, 'platform' => platform, 'proguard_uuid' => SecureRandom.uuid }
+    state = { 'version' => version, 'platform' => platform, 'destination' => destination, 'proguard_uuid' => SecureRandom.uuid }
     write_json(state_path, state)
     state
   end
@@ -153,8 +219,8 @@ module DevRelease
 
   def self.cleanup_release(root, directory)
     state = read_json(File.join(directory, 'status.json'))
-    unless state['store_uploaded'] == true && state['sentry_uploaded'] == true
-      raise 'Mağaza ve Sentry yüklemesi tamamlanmadı; paket ve semboller korunuyor.'
+    unless state[upload_key(state)] == true && state['sentry_uploaded'] == true
+      raise 'Dağıtım ve Sentry yüklemesi tamamlanmadı; paket ve semboller korunuyor.'
     end
     platform = state.fetch('platform')
     version = state.fetch('version')
@@ -184,7 +250,18 @@ module DevRelease
     bytes
   end
 
-  def self.preflight(root, platforms, mode)
+  def self.preflight(root, platforms, mode, app_distribution: false)
+    if app_distribution
+      destination(platforms.join, app_distribution: true)
+      raise 'Firebase CLI eksik; firebase-tools kurulmalı.' unless executable('firebase')
+      unless mode == 'build-only'
+        require_env('APP_DISTRIBUTION_TESTERS_FILE')
+        ENV['APP_DISTRIBUTION_TESTERS_FILE'] = path(root, ENV.fetch('APP_DISTRIBUTION_TESTERS_FILE'))
+        require_file(ENV['APP_DISTRIBUTION_TESTERS_FILE'])
+        testers = File.read(ENV['APP_DISTRIBUTION_TESTERS_FILE']).split(/[\s,]+/).reject(&:empty?)
+        raise 'App Distribution tester dosyası geçerli e-posta adresleri içermeli.' if testers.empty? || testers.any? { |email| !email.match?(/\A[^\s@,]+@[^\s@,]+\.[^\s@,]+\z/) }
+      end
+    end
     require_env('SENTRY_ORG', 'SENTRY_PROJECT', 'SENTRY_AUTH_TOKEN') unless mode == 'build-only'
     %w[flutter dart].each { |name| raise "Komut yok: #{name}" unless executable(name) }
     raise 'sentry-cli eksik. fastlane/README.md dosyasındaki kurulumu tamamla.' if mode != 'build-only' && !executable('sentry-cli')

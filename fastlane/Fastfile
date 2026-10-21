@@ -2,7 +2,7 @@ require 'dotenv'
 require_relative 'dev_release'
 ENV['FASTLANE_SKIP_DOCS'] = '1'
 
-desc 'Dev: yerel sürüm sayacı, imzalı build, Play dahili test / TestFlight ve Sentry'
+desc 'Dev: yerel sürüm sayacı, imzalı build, Play / TestFlight / iOS App Distribution ve Sentry'
 lane :dev_release do |options|
   begin
     DevRelease.progress(UI, '[1/6] Dev ayarları ve ön kontroller')
@@ -12,6 +12,9 @@ lane :dev_release do |options|
     mode = 'publish' if mode.empty?
     UI.user_error!('Yalnız dev ortamı destekleniyor.') unless options[:environment] == 'dev'
     UI.user_error!('Hedef android, ios veya all olmalı.') unless %w[android ios all].include?(target)
+    UI.user_error!('Geçersiz app_distribution seçeneği.') unless ['', 'true', 'false'].include?(options[:app_distribution].to_s)
+    app_distribution = options[:app_distribution].to_s == 'true'
+    UI.user_error!('--app-distribution yalnız ios hedefinde kullanılabilir.') if app_distribution && target != 'ios'
     UI.user_error!('Geçersiz çalışma modu.') unless %w[publish check build-only resume].include?(mode)
     UI.user_error!('Resume ile sürüm değiştirilemez.') if mode == 'resume' && !options[:version].to_s.empty?
     platforms = target == 'all' ? %w[android ios] : [target]
@@ -26,7 +29,7 @@ lane :dev_release do |options|
     File.open(File.join(root, '.local/release.dev.lock'), File::RDWR | File::CREAT, 0o600) do |lock|
       UI.user_error!('Başka bir dev release işlemi çalışıyor.') unless lock.flock(File::LOCK_EX | File::LOCK_NB)
       Dir.chdir(root) do
-        DevRelease.preflight(root, platforms, mode)
+        DevRelease.preflight(root, platforms, mode, app_distribution: app_distribution)
         UI.success('✅ [1/6] Dev yerel ön kontrolleri tamamlandı.')
         name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s, state_path: version_path)
         if mode == 'check'
@@ -44,14 +47,17 @@ lane :dev_release do |options|
         UI.success("✅ [2/6] #{mode == 'resume' ? 'Devam edilen' : 'Derlenecek'} sürüm: #{version}")
         UI.header("Kelime Yarışı Dev — #{version} — #{platforms.join(' + ')}")
         platforms.each do |platform|
+          destination = DevRelease.destination(platform, app_distribution: app_distribution)
+          destination_label = { 'app-distribution' => 'Firebase App Distribution', 'testflight' => 'TestFlight', 'play-internal' => 'Play dahili test' }.fetch(destination)
           directory = File.join(root, '.local/releases/dev', version, platform)
           state_path = File.join(directory, 'status.json')
           if mode == 'resume'
             DevRelease.require_file(state_path)
             state = JSON.parse(File.read(state_path))
+            DevRelease.verify_destination(state, destination)
             UI.user_error!('Resume için başarılı bir build bulunamadı; yeni release başlat.') unless state['built']
           else
-            state = DevRelease.new_build_state(directory, version, platform)
+            state = DevRelease.new_build_state(directory, version, platform, destination: destination)
           end
           release = "#{DevRelease::IDS.fetch(platform)}@#{version}"
           symbols = File.join(directory, 'symbols')
@@ -77,23 +83,44 @@ lane :dev_release do |options|
               UI.user_error!('Android native sembol dizini bulunamadı.') unless Dir.exist?(native)
               FileUtils.cp_r(native, File.join(directory, 'native'))
             else
+              ios_export_options = { method: 'app-store-connect', signingStyle: 'automatic', teamID: ENV.fetch('APPLE_TEAM_ID'),
+                                     manageAppVersionAndBuildNumber: false }
+              if app_distribution
+                # Create/download only our Ad Hoc profile with an existing local
+                # certificate. Explicit mapping avoids Apple's cloud-signing path.
+                get_provisioning_profile(
+                  app_identifier: DevRelease::IDS.fetch('ios'), team_id: ENV.fetch('APPLE_TEAM_ID'), adhoc: true,
+                  provisioning_name: 'Kelime Yarisi Dev Ad Hoc', ignore_profiles_with_different_name: true,
+                  fail_on_name_taken: true, output_path: File.join(root, '.local/credentials'),
+                  filename: 'KelimeYarisiDevAdHoc.mobileprovision',
+                  api_key: { key_id: ENV.fetch('ASC_KEY_ID'), issuer_id: ENV.fetch('ASC_ISSUER_ID'),
+                             filepath: ENV.fetch('ASC_KEY_PATH'), in_house: false }
+                )
+                ios_export_options.merge!(method: 'release-testing', signingStyle: 'manual', signingCertificate: 'Apple Distribution',
+                                          provisioningProfiles: { DevRelease::IDS.fetch('ios') => 'Kelime Yarisi Dev Ad Hoc' })
+              end
               sh('flutter', 'build', 'ios', '--config-only', *common)
               auth = Shellwords.join(['-allowProvisioningUpdates', '-authenticationKeyPath', ENV.fetch('ASC_KEY_PATH'),
                                      '-authenticationKeyID', ENV.fetch('ASC_KEY_ID'), '-authenticationKeyIssuerID', ENV.fetch('ASC_ISSUER_ID')])
-              build_app(
+              DevRelease.with_release_tmpdir(directory) do
+                build_app(
                 workspace: File.join(root, 'ios/Runner.xcworkspace'), scheme: 'dev', configuration: 'Release-dev',
                 archive_path: File.join(directory, 'Runner.xcarchive'), derived_data_path: File.join(directory, 'DerivedData'),
                 output_directory: directory, output_name: File.basename(package), buildlog_path: File.join(directory, 'logs'),
-                export_method: 'app-store', export_team_id: ENV.fetch('APPLE_TEAM_ID'), skip_profile_detection: true,
-                export_options: { method: 'app-store-connect', signingStyle: 'automatic', teamID: ENV.fetch('APPLE_TEAM_ID'),
-                                  manageAppVersionAndBuildNumber: false },
+                export_method: app_distribution ? 'ad-hoc' : 'app-store', export_team_id: ENV.fetch('APPLE_TEAM_ID'), skip_profile_detection: true,
+                export_options: ios_export_options,
                 xcargs: "#{auth} #{Shellwords.join(["DEVELOPMENT_TEAM=#{ENV.fetch('APPLE_TEAM_ID')}", 'CODE_SIGN_STYLE=Automatic'])}",
                 # App Manager API keys can upload, but cannot cloud-sign.
                 # Export uses the paid Xcode account and its local certificate.
-                export_xcargs: '-allowProvisioningUpdates'
-              )
+                export_xcargs: app_distribution ? '' : '-allowProvisioningUpdates'
+                )
+              end
             end
             DevRelease.require_file(package)
+            if app_distribution
+              device_count = DevRelease.verify_ad_hoc_package(package, ENV.fetch('APPLE_TEAM_ID'))
+              UI.success("✅ Ad Hoc profili doğrulandı: #{device_count} kayıtlı cihaz; dev bundle ve App Attest production yetkisi eşleşiyor.")
+            end
             UI.user_error!('Dart sembolleri üretilmedi.') if Dir.glob(File.join(symbols, '*.symbols')).empty?
             state['sha256'] = Digest::SHA256.file(package).hexdigest
             state['flutter_build_caches'] = DevRelease.release_caches(root, platform) - caches_before
@@ -114,8 +141,8 @@ lane :dev_release do |options|
             UI.success("✅ #{platform}: #{version} imzalı paket hazır: #{package}. Upload yapılmadı.")
             next
           end
-          DevRelease.progress(UI, "[4/6] #{platform}: #{platform == 'android' ? 'Play dahili test' : 'TestFlight'} yüklemesi")
-          uploaded = DevRelease.step(state, state_path, 'store_uploaded') do
+          DevRelease.progress(UI, "[4/6] #{platform}: #{destination_label} yüklemesi")
+          uploaded = DevRelease.step(state, state_path, DevRelease.upload_key(state)) do
             DevRelease.verify_artifact(state, package)
             if platform == 'android'
               upload_to_play_store(package_name: DevRelease::IDS.fetch(platform), json_key: ENV.fetch('PLAY_JSON_KEY_PATH'),
@@ -123,6 +150,11 @@ lane :dev_release do |options|
                                    skip_upload_metadata: true, skip_upload_images: true, skip_upload_screenshots: true,
                                    skip_upload_changelogs: true)
               UI.success("✅ [4/6] Android #{version}: Play Console dahili test sürümü yüklendi.")
+            elsif app_distribution
+              DevRelease.verify_ad_hoc_package(package, ENV.fetch('APPLE_TEAM_ID'))
+              DevRelease.upload_app_distribution(package, ENV.fetch('APP_DISTRIBUTION_TESTERS_FILE'), version)
+              UI.success("✅ [4/6] iOS #{version}: Firebase App Distribution yüklemesi ve tester dağıtımı tamamlandı.")
+              UI.important("Dağıtım paneli: https://console.firebase.google.com/project/#{DevRelease::FIREBASE_PROJECT}/appdistribution/app/ios:#{DevRelease::IDS.fetch('ios')}/releases")
             else
               upload_to_testflight(app_identifier: DevRelease::IDS.fetch(platform), ipa: package,
                                    api_key: { key_id: ENV.fetch('ASC_KEY_ID'), issuer_id: ENV.fetch('ASC_ISSUER_ID'),
@@ -131,7 +163,7 @@ lane :dev_release do |options|
               UI.success("✅ [4/6] iOS #{version}: TestFlight yüklemesi kabul edildi; Apple'ın işlemesi devam edebilir.")
             end
           end
-          UI.success("✅ [4/6] #{platform}: önceki mağaza yüklemesi tamamlanmış; atlandı.") unless uploaded
+          UI.success("✅ [4/6] #{platform}: önceki #{destination_label} yüklemesi tamamlanmış; atlandı.") unless uploaded
           DevRelease.progress(UI, "[5/6] #{platform}: Sentry sürümü ve sembolleri yükleniyor")
           DevRelease.step(state, state_path, 'sentry_uploaded') do
             ENV['SENTRY_RELEASE'] = release
@@ -151,7 +183,7 @@ lane :dev_release do |options|
           removed = DevRelease.cleanup_release(root, directory)
           UI.success("✅ [6/6] #{platform}: AAB/IPA, semboller ve gereksiz release çıktıları başarıyla silindi (#{(removed / 1024.0 / 1024).round(1)} MiB). Sürüm kaydı korundu.")
         end
-        UI.success("✅ Dev #{version}: #{mode == 'build-only' ? 'build tamamlandı; mağaza/Sentry upload yapılmadı' : 'mağaza ve Sentry adımları tamamlandı'}.")
+        UI.success("✅ Dev #{version}: #{mode == 'build-only' ? 'build tamamlandı; dağıtım/Sentry upload yapılmadı' : 'dağıtım ve Sentry adımları tamamlandı'}.")
       end
     end
   rescue StandardError => exception

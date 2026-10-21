@@ -6,9 +6,10 @@ usage() {
 Kullanım: ./scripts/release <android|ios|all> dev [seçenek]
 
   --check             Yapılandırmayı kontrol et; sürüm, build ve upload değişmez.
-  --build-only        İmzalı paketi üret; mağazaya veya Sentry'ye yükleme.
+  --build-only        İmzalı paketi üret; dağıtım hedefine veya Sentry'ye yükleme.
   --resume            Mevcut sürümün kaldığı adımlarını tamamla; tekrar derleme yapma.
   --version X.Y.Z     Yeni pazarlama sürümü; build numarası yine bir artırılır.
+  --app-distribution  Yalnız ios: TestFlight yerine Firebase App Distribution (Ad Hoc).
 
 Varsayılan: yerel build sayacını bir artır, derle ve dev'e yükle; pubspec.yaml değişmez.
 İki platform için aynı sürüm: ./scripts/release all dev
@@ -25,6 +26,7 @@ case "$target" in android|ios|all) ;; *) usage >&2; exit 2 ;; esac
 if [[ "$environment" != dev ]]; then echo '❌ Yalnız dev ortamı destekleniyor.' >&2; exit 2; fi
 mode=publish
 version=''
+app_distribution=false
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --check|--build-only|--resume)
@@ -35,11 +37,14 @@ while [[ $# -gt 0 ]]; do
         echo '❌ --version X.Y.Z biçiminde olmalı.' >&2; exit 2
       fi
       version="$2"; shift 2 ;;
+    --app-distribution)
+      app_distribution=true; shift ;;
     *) usage >&2; exit 2 ;;
   esac
 done
+if [[ "$app_distribution" == true && "$target" != ios ]]; then echo '❌ --app-distribution yalnız ios hedefinde kullanılabilir.' >&2; exit 2; fi
 if [[ "$mode" == resume && -n "$version" ]]; then echo '❌ --resume sürümü değiştiremez.' >&2; exit 2; fi
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 export FASTLANE_SKIP_UPDATE_CHECK=1 FASTLANE_OPT_OUT_USAGE=1 FASTLANE_HIDE_CHANGELOG=1 FASTLANE_SKIP_DOCS=1
 if ! bundle check >/dev/null 2>&1; then echo '❌ Bağımlılıklar eksik. Önce proje kökünde bundle install çalıştır.' >&2; exit 1; fi
-exec bundle exec fastlane dev_release target:"$target" environment:"$environment" mode:"$mode" version:"$version"
+exec bundle exec fastlane dev_release target:"$target" environment:"$environment" mode:"$mode" version:"$version" app_distribution:"$app_distribution"
