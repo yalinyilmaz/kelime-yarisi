@@ -43,12 +43,25 @@ android {
         }
     }
 
+    signingConfigs {
+        val uploadStore = providers.environmentVariable("ANDROID_KEYSTORE_PATH").orNull
+        if (!uploadStore.isNullOrBlank()) {
+            create("devUpload") {
+                storeFile = file(uploadStore)
+                storePassword = providers.environmentVariable("ANDROID_KEYSTORE_PASSWORD").orNull
+                keyAlias = providers.environmentVariable("ANDROID_KEY_ALIAS").orNull
+                keyPassword = providers.environmentVariable("ANDROID_KEY_PASSWORD").orNull
+            }
+        }
+    }
+
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             resValue("string", "app_name", "Kelime Yarışı Dev")
+            signingConfig = signingConfigs.findByName("devUpload")
         }
         create("prod") {
             dimension = "environment"

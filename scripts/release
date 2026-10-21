@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'HELP'
+Kullanım: ./scripts/release <android|ios|all> dev [seçenek]
+
+  --check             Yapılandırmayı kontrol et; sürüm, build ve upload değişmez.
+  --build-only        İmzalı paketi üret; mağazaya veya Sentry'ye yükleme.
+  --resume            Mevcut sürümün kaldığı adımlarını tamamla; tekrar derleme yapma.
+  --version X.Y.Z     Yeni pazarlama sürümü; build numarası yine bir artırılır.
+
+Varsayılan: pubspec.yaml build numarasını bir artır, derle ve dev'e yükle.
+İki platform için aynı sürüm: ./scripts/release all dev
+Prod bu akışta desteklenmez. Kurulum: fastlane/README.md
+HELP
+}
+
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then usage; exit 0; fi
+if [[ $# -lt 2 ]]; then usage >&2; exit 2; fi
+target="$1"
+environment="$2"
+shift 2
+case "$target" in android|ios|all) ;; *) usage >&2; exit 2 ;; esac
+if [[ "$environment" != dev ]]; then echo '❌ Yalnız dev ortamı destekleniyor.' >&2; exit 2; fi
+mode=publish
+version=''
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --check|--build-only|--resume)
+      if [[ "$mode" != publish ]]; then echo '❌ Tek bir çalışma modu seç.' >&2; exit 2; fi
+      mode="${1#--}"; shift ;;
+    --version)
+      if [[ $# -lt 2 || -n "$version" || ! "$2" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo '❌ --version X.Y.Z biçiminde olmalı.' >&2; exit 2
+      fi
+      version="$2"; shift 2 ;;
+    *) usage >&2; exit 2 ;;
+  esac
+done
+if [[ "$mode" == resume && -n "$version" ]]; then echo '❌ --resume sürümü değiştiremez.' >&2; exit 2; fi
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+export FASTLANE_SKIP_UPDATE_CHECK=1 FASTLANE_OPT_OUT_USAGE=1 FASTLANE_HIDE_CHANGELOG=1 FASTLANE_SKIP_DOCS=1
+if ! bundle check >/dev/null 2>&1; then echo '❌ Bağımlılıklar eksik. Önce proje kökünde bundle install çalıştır.' >&2; exit 1; fi
+exec bundle exec fastlane dev_release target:"$target" environment:"$environment" mode:"$mode" version:"$version"

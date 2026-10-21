@@ -71,3 +71,13 @@ app.*.map.json
 /.sentryclirc
 **/sentry.properties
 **/.sentryclirc
+
+# Fastlane credentials and generated release reports.
+/.bundle/
+/vendor/bundle/
+/fastlane/report.xml
+/fastlane/README.html
+/fastlane/test_output/
+**/*.p8
+**/*.p12
+**/*.mobileprovision

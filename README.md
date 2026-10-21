@@ -1,5 +1,7 @@
 # Kelime Yarışı
 
+Dev mağaza release otomasyonu: [Fastlane kurulumu ve komutlar](fastlane/README.md).
+
 Flutter ile geliştirilen, 2–6 kişinin aynı odada eş zamanlı olarak aynı soru setini oynadığı mobil kelime yarışması.
 
 ## Ürün akışı

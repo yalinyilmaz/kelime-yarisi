@@ -1,0 +1,161 @@
+require 'dotenv'
+require_relative 'dev_release'
+ENV['FASTLANE_SKIP_DOCS'] = '1'
+
+desc 'Dev: pubspec sürümü, imzalı build, Play dahili test / TestFlight ve Sentry'
+lane :dev_release do |options|
+  begin
+    DevRelease.progress(UI, '[1/6] Dev ayarları ve ön kontroller')
+    root = File.expand_path('..', __dir__)
+    target = options[:target].to_s
+    mode = options[:mode].to_s
+    mode = 'publish' if mode.empty?
+    UI.user_error!('Yalnız dev ortamı destekleniyor.') unless options[:environment] == 'dev'
+    UI.user_error!('Hedef android, ios veya all olmalı.') unless %w[android ios all].include?(target)
+    UI.user_error!('Geçersiz çalışma modu.') unless %w[publish check build-only resume].include?(mode)
+    UI.user_error!('Resume ile sürüm değiştirilemez.') if mode == 'resume' && !options[:version].to_s.empty?
+    platforms = target == 'all' ? %w[android ios] : [target]
+    config = File.join(root, '.local/release.dev.env')
+    DevRelease.require_file(config)
+    Dotenv.parse(config).each { |key, value| ENV[key] = value if DevRelease::ENV_KEYS.include?(key) }
+    ENV['SENTRY_LOG_LEVEL'] = 'warn'
+    ENV['SENTRY_DISABLE_UPDATE_CHECK'] = '1'
+    FileUtils.mkdir_p(File.join(root, '.local'), mode: 0o700)
+
+    File.open(File.join(root, '.local/release.dev.lock'), File::RDWR | File::CREAT, 0o600) do |lock|
+      UI.user_error!('Başka bir dev release işlemi çalışıyor.') unless lock.flock(File::LOCK_EX | File::LOCK_NB)
+      Dir.chdir(root) do
+        DevRelease.preflight(root, platforms, mode)
+        UI.success('✅ [1/6] Dev yerel ön kontrolleri tamamlandı.')
+        name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s)
+        if mode == 'check'
+          UI.success("✅ Kontrol tamamlandı. Mevcut sürüm: #{name}+#{number}. Uzak hesap izinleri/build doğrulanmadı.")
+          next
+        end
+        unless mode == 'resume'
+          DevRelease.progress(UI, '[2/6] Flutter bağımlılıkları ve pubspec sürümü')
+          sh('df', '-h', root)
+          sh('flutter', 'pub', 'get')
+          name, number = DevRelease.version(File.join(root, 'pubspec.yaml'), requested: options[:version].to_s, bump: true)
+        end
+        version = "#{name}+#{number}"
+        UI.success("✅ [2/6] #{mode == 'resume' ? 'Devam edilen' : 'Yeni'} sürüm: #{version}")
+        UI.header("Kelime Yarışı Dev — #{version} — #{platforms.join(' + ')}")
+        platforms.each do |platform|
+          directory = File.join(root, '.local/releases/dev', version, platform)
+          state_path = File.join(directory, 'status.json')
+          if mode == 'resume'
+            DevRelease.require_file(state_path)
+            state = JSON.parse(File.read(state_path))
+            UI.user_error!('Resume için başarılı bir build bulunamadı; yeni release başlat.') unless state['built']
+          else
+            UI.user_error!("Bu sürümün çıktısı zaten var: #{version}. --resume kullan.") if File.exist?(state_path)
+            state = { 'version' => version, 'platform' => platform, 'proguard_uuid' => SecureRandom.uuid }
+            DevRelease.write_json(state_path, state)
+          end
+          release = "#{DevRelease::IDS.fetch(platform)}@#{version}"
+          symbols = File.join(directory, 'symbols')
+          package = File.join(directory, platform == 'android' ? 'app-dev-release.aab' : 'KelimeYarisiDev.ipa')
+          defines_path = File.join(directory, 'dart-defines.json')
+          common = ['--release', '--flavor=dev', "--build-name=#{name}", "--build-number=#{number}",
+                    "--dart-define-from-file=#{defines_path}", "--split-debug-info=#{symbols}"]
+          unless state['built']
+            DevRelease.progress(UI, "[3/6] #{platform} #{version}: imzalı release derleniyor")
+            DevRelease.write_json(defines_path, DevRelease.defines(File.join(root, '.local/sentry.dev.json'), release, number,
+                                                                platform == 'android' ? state['proguard_uuid'] : nil))
+            if platform == 'android'
+              sh('flutter', 'build', 'appbundle', *common)
+              FileUtils.cp(File.join(root, 'build/app/outputs/bundle/devRelease/app-dev-release.aab'), package)
+              mapping = File.join(root, 'build/app/outputs/mapping/devRelease/mapping.txt')
+              DevRelease.require_file(mapping)
+              FileUtils.cp(mapping, File.join(directory, 'mapping.txt'))
+              native = File.join(root, 'build/app/intermediates/merged_native_libs/devRelease/mergeDevReleaseNativeLibs/out/lib')
+              UI.user_error!('Android native sembol dizini bulunamadı.') unless Dir.exist?(native)
+              FileUtils.cp_r(native, File.join(directory, 'native'))
+            else
+              sh('flutter', 'build', 'ios', '--config-only', *common)
+              auth = Shellwords.join(['-allowProvisioningUpdates', '-authenticationKeyPath', ENV.fetch('ASC_KEY_PATH'),
+                                     '-authenticationKeyID', ENV.fetch('ASC_KEY_ID'), '-authenticationKeyIssuerID', ENV.fetch('ASC_ISSUER_ID')])
+              build_app(
+                workspace: File.join(root, 'ios/Runner.xcworkspace'), scheme: 'dev', configuration: 'Release-dev',
+                archive_path: File.join(directory, 'Runner.xcarchive'), derived_data_path: File.join(directory, 'DerivedData'),
+                output_directory: directory, output_name: File.basename(package), buildlog_path: File.join(directory, 'logs'),
+                export_method: 'app-store', export_team_id: ENV.fetch('APPLE_TEAM_ID'), skip_profile_detection: true,
+                export_options: { method: 'app-store-connect', signingStyle: 'automatic', teamID: ENV.fetch('APPLE_TEAM_ID'),
+                                  manageAppVersionAndBuildNumber: false },
+                xcargs: "#{auth} #{Shellwords.join(["DEVELOPMENT_TEAM=#{ENV.fetch('APPLE_TEAM_ID')}", 'CODE_SIGN_STYLE=Automatic'])}",
+                export_xcargs: auth
+              )
+            end
+            DevRelease.require_file(package)
+            UI.user_error!('Dart sembolleri üretilmedi.') if Dir.glob(File.join(symbols, '*.symbols')).empty?
+            state['sha256'] = Digest::SHA256.file(package).hexdigest
+            state['built'] = true
+            DevRelease.write_json(state_path, state)
+            UI.success("✅ [3/6] #{platform}: imzalı paket ve semboller hazır.")
+          else
+            UI.success("✅ [3/6] #{platform}: mevcut build kullanılıyor.")
+          end
+          if mode == 'build-only'
+            UI.success("✅ #{platform}: #{version} imzalı paket hazır: #{package}. Upload yapılmadı.")
+            next
+          end
+          DevRelease.progress(UI, "[4/6] #{platform}: #{platform == 'android' ? 'Play dahili test' : 'TestFlight'} yüklemesi")
+          uploaded = DevRelease.step(state, state_path, 'store_uploaded') do
+            DevRelease.verify_artifact(state, package)
+            if platform == 'android'
+              upload_to_play_store(package_name: DevRelease::IDS.fetch(platform), json_key: ENV.fetch('PLAY_JSON_KEY_PATH'),
+                                   aab: package, track: 'internal', release_status: 'completed', version_name: version,
+                                   skip_upload_metadata: true, skip_upload_images: true, skip_upload_screenshots: true,
+                                   skip_upload_changelogs: true)
+              UI.success("✅ [4/6] Android #{version}: Play Console dahili test sürümü yüklendi.")
+            else
+              upload_to_testflight(app_identifier: DevRelease::IDS.fetch(platform), ipa: package,
+                                   api_key: { key_id: ENV.fetch('ASC_KEY_ID'), issuer_id: ENV.fetch('ASC_ISSUER_ID'),
+                                              key: File.read(ENV.fetch('ASC_KEY_PATH')), in_house: false },
+                                   skip_waiting_for_build_processing: true, distribute_external: false)
+              UI.success("✅ [4/6] iOS #{version}: TestFlight yüklemesi kabul edildi; Apple'ın işlemesi devam edebilir.")
+            end
+          end
+          UI.success("✅ [4/6] #{platform}: önceki mağaza yüklemesi tamamlanmış; atlandı.") unless uploaded
+          DevRelease.progress(UI, "[5/6] #{platform}: Sentry sürümü ve sembolleri yükleniyor")
+          DevRelease.step(state, state_path, 'sentry_uploaded') do
+            ENV['SENTRY_RELEASE'] = release
+            ENV['SENTRY_DIST'] = number
+            sh('sentry-cli', 'releases', 'new', release)
+            native = platform == 'android' ? File.join(directory, 'native') : File.join(directory, 'Runner.xcarchive/dSYMs')
+            UI.user_error!('Sentry için native semboller bulunamadı.') unless Dir.exist?(native)
+            sh('sentry-cli', 'debug-files', 'upload', '--wait', '--no-sources', symbols, native)
+            if platform == 'android'
+              sh('sentry-cli', 'upload-proguard', '--require-one', '--uuid', state.fetch('proguard_uuid'), File.join(directory, 'mapping.txt'))
+            end
+            sh('sentry-cli', 'releases', 'finalize', release)
+            sh('sentry-cli', 'releases', 'deploys', release, 'new', '--env', 'dev', '--name', "#{platform}-#{version}")
+          end
+          UI.success("✅ [5/6] Sentry: #{release} sürümü, sembolleri ve dev dağıtım kaydı tamamlandı.")
+          DevRelease.progress(UI, "[6/6] #{platform}: geçici release çıktıları temizleniyor")
+          # Only this release's own artifacts. Never delete Flutter's build/ios
+          # or generated Xcode settings and never clean shared SDK caches.
+          Dir.children(directory).each do |entry|
+            FileUtils.rm_rf(File.join(directory, entry)) unless entry == 'status.json'
+          end
+          if platform == 'android'
+            generated = File.join(root, 'build/app/outputs/bundle/devRelease/app-dev-release.aab')
+            FileUtils.rm_f(generated) if File.file?(generated) && Digest::SHA256.file(generated).hexdigest == state['sha256']
+          end
+          UI.success("✅ [6/6] #{platform}: #{version} tamamlandı. Geçici release çıktıları temizlendi.")
+        end
+        UI.success("✅ Dev #{version}: #{mode == 'build-only' ? 'build tamamlandı; mağaza/Sentry upload yapılmadı' : 'mağaza ve Sentry adımları tamamlandı'}.")
+      end
+    end
+  rescue StandardError => exception
+    UI.user_error!(DevRelease.safe_error(exception.message))
+  end
+end
+
+error do |_lane, exception|
+  UI.error("❌ #{DevRelease.current_step || 'Dev release'} başarısız: #{DevRelease.safe_error(exception.message)}")
+  UI.error('❌ Dev release tamamlanmadı. Tamamlanan upload geri alınmadı; prod değiştirilmedi.')
+  UI.important('Sürüm pubspec.yaml içinde korunur. Başarılı build varsa aynı komutu --resume ile çalıştır; status.json tamamlanan upload adımlarını atlar.')
+  UI.important('Sunucu kabul ettikten sonra bağlantı kesildiyse yeniden denemeden önce mağazadaki build numarasını kontrol et.')
+end

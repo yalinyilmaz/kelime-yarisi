@@ -186,6 +186,15 @@ Future<void> initializeErrorReporting(AppRunner appRunner) async {
       ..beforeSend = sanitizeSentryEvent;
     options.replay.sessionSampleRate = 0;
     options.replay.onErrorSampleRate = 0;
+    const release = String.fromEnvironment('SENTRY_RELEASE');
+    const dist = String.fromEnvironment('SENTRY_DIST');
+    const proguardUuid = String.fromEnvironment('SENTRY_PROGUARD_UUID');
+    if (release.isNotEmpty) options.release = release;
+    if (dist.isNotEmpty) options.dist = dist;
+    if (defaultTargetPlatform == TargetPlatform.android &&
+        proguardUuid.isNotEmpty) {
+      options.proguardUuid = proguardUuid;
+    }
     options.beforeSend = (event, hint) {
       event.tags = {
         ...?event.tags,
