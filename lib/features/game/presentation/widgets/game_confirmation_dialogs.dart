@@ -11,7 +11,7 @@ abstract final class GameConfirmationDialogs {
           title: const Text('Odadan çıkılsın mı?'),
           content: Text(
             isHost
-                ? 'Oda sahibi çıkarsa oda herkes için kapanır.'
+                ? 'Yarışmadan ayrılacaksın. Başka oyuncu varsa oda sahipliği devredilir; son oyuncuysan oda kapanır.'
                 : 'Bu yarışmadan ayrılacaksın.',
           ),
           actions: [

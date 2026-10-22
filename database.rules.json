@@ -6,9 +6,10 @@
     "questionPool": {".read": false,".write": false},
     "questionSources": {".read": false,".write": false},
     "rooms": {
+      ".indexOn": ["offlineSinceAt"],
       "$roomId": {
         ".read": "auth != null && data.child('players').child(auth.uid).exists()",
-        ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('hostId').val() === auth.uid && newData.child('playerCount').val() === 1 && newData.child('players').child(auth.uid).child('isHost').val() === true) || (data.exists() && !newData.exists() && data.child('hostId').val() === auth.uid))",
+        ".write": "auth != null && !data.exists() && newData.exists() && newData.child('hostId').val() === auth.uid && newData.child('playerCount').val() === 1 && newData.child('players').child(auth.uid).child('isHost').val() === true",
         ".validate": "!newData.exists() || newData.hasChildren(['name', 'code', 'hostId', 'targetPlayerCount', 'playerCount', 'gameMode', 'status', 'players', 'createdAt'])",
         "name": {
           ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 40"
@@ -39,6 +40,9 @@
         },
         "createdAt": {
           ".validate": "newData.isNumber() && ((!data.exists() && newData.val() >= now - 10000 && newData.val() <= now + 1000) || newData.val() === data.val())"
+        },
+        "offlineSinceAt": {
+          ".validate": "data.exists() && newData.val() === data.val()"
         },
         "players": {
           ".validate": "!newData.exists() || newData.child(newData.parent().child('hostId').val()).child('isHost').val() === true",

@@ -10,7 +10,7 @@ import {QuestionService, ServiceError} from './question_service.js';
 import {CloudQuestionGenerator} from './cloud_generation.js';
 import {loadPublishedSetIds,loadPublishedSet} from './published_pool.js';
 import {RaceService} from './race.js';
-import {cleanupEmptyRoom} from './room_cleanup.js';
+import {cleanupEmptyRoom, cleanupOfflineRooms, leaveRoom} from './room_cleanup.js';
 
 const emulator = process.env.FUNCTIONS_EMULATOR === 'true';
 const projectId=process.env.GCLOUD_PROJECT??JSON.parse(process.env.FIREBASE_CONFIG??'{}').projectId;
@@ -41,17 +41,18 @@ const raceService = new RaceService({database: getDatabase(),
   allowDebugSolo: emulator || projectId === 'kelime-yarisi-yalin'});
 export const startDemoRaceGame = callable('startDemoRaceGame', (uid, data) => raceService.startDemo(uid, data));
 export const playRace = callable('playRace', (uid, data) => raceService.play(uid, data));
+export const leaveQuestionRoom = callable('leaveQuestionRoom', (uid, data) => leaveRoom(getDatabase(), uid, data));
 export const cleanupEmptyRooms = onValueWritten({
   ref: '/rooms/{roomId}/players/{uid}/isOnline',
   instance: `${projectId}-default-rtdb`,
   region: 'europe-west1', maxInstances: 3, retry: true,
 }, async event => {
-  if (event.data.before.val() !== true || event.data.after.val() === true) return;
+  if (event.data.before.val() === event.data.after.val()) return;
   try {return await cleanupEmptyRoom(getDatabase().ref(`rooms/${event.params.roomId}`));}
   catch (error) {await reportFailure(error, 'cleanupEmptyRooms');throw error;}
 });
 export const cleanupQuestionReservations = onSchedule({schedule: 'every 10 minutes', region: 'europe-west1', maxInstances: 1}, async () => {
-  try {return await service.cleanup();}
+  try {await Promise.all([service.cleanup(), cleanupOfflineRooms(getDatabase())]);}
   catch(error){await reportFailure(error,'cleanupQuestionReservations');throw error;}
 });
 

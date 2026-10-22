@@ -20,6 +20,7 @@ async function main() {
   const db = (uid) => env.authenticatedContext(uid).database();
   const host = db('host'), guest = db('guest'), outsider = db('outsider');
   const adminUpdate = (roomPath, values) => env.withSecurityRulesDisabled((context) => update(ref(context.database(), roomPath), values));
+  const adminRemove = (roomPath) => env.withSecurityRulesDisabled((context) => set(ref(context.database(), roomPath), null));
   try {
     await env.clearDatabase();
     for (let count = 2; count <= 6; count++) {
@@ -29,6 +30,11 @@ async function main() {
         playerCount: 1, gameMode: 'quick', status: 'lobby', createdAt: Date.now(), players: {host: player('Host', true)}}));
       await fails(get(ref(outsider, roomPath)));
       await succeeds(update(ref(guest, roomPath), {'players/guest': player('Guest'), playerCount: increment(1)}));
+      await fails(set(ref(host, `${roomPath}/offlineSinceAt`), Date.now() - 3600000));
+      await adminUpdate(roomPath, {offlineSinceAt: Date.now()});
+      await fails(set(ref(guest, `${roomPath}/offlineSinceAt`), null));
+      await succeeds(update(ref(guest, `${roomPath}/players/guest`), {lastSeenAt: Date.now()}));
+      await adminUpdate(roomPath, {offlineSinceAt: null});
       for (let i = 2; i < count; i++) {
         await succeeds(update(ref(db(`p${i}`), roomPath), {[`players/p${i}`]: player(`Oyuncu ${i}`), playerCount: increment(1)}));
       }
@@ -100,7 +106,10 @@ async function main() {
       }
       await fails(set(p, progress({questionIndex: 7, score: 0, correctCount: 2, wrongCount: 5, lastOutcome: 'timeout', finished: true})));
       await fails(set(p, null));
-      await succeeds(set(ref(host, roomPath), null));
+      await fails(set(ref(host, roomPath), null)); // A host cannot close other players' room.
+      await adminUpdate(roomPath, {players: {host: player('Host', true)}, playerCount: 1});
+      await fails(set(ref(host, roomPath), null)); // Only the leave callable may delete rooms.
+      await adminRemove(roomPath);
     }
 
     // Wrong speech cannot gain or subtract points, or write another player's progress.
@@ -161,7 +170,10 @@ async function main() {
     await fails(set(ref(outsider, `${roomPath}/status`), 'results'));
     await succeeds(update(ref(guest, roomPath), {'players/guest': null, playerCount: increment(-1)}));
     await fails(get(ref(guest, roomPath)));
-    await succeeds(set(ref(host, roomPath), null));
+    await fails(set(ref(host, roomPath), null));
+    await adminUpdate(roomPath, {players: {host: player('Host', true)}, playerCount: 1});
+    await fails(set(ref(host, roomPath), null));
+    await adminRemove(roomPath);
     console.log(`${checks} synchronized game security checks passed.`);
   } finally {await env.cleanup();}
 }

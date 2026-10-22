@@ -143,10 +143,7 @@ class FirebaseRoomService {
   Stream<GameRoom> watchRoom(String roomId) {
     return _roomRef(roomId).onValue.map((event) {
       if (!event.snapshot.exists) {
-        throw const RoomServiceException(
-          'room-closed',
-          'Oda sahibi odayı kapattı.',
-        );
+        throw const RoomServiceException('room-closed', 'Oda kapatıldı.');
       }
       return FirebaseRoomMapper.fromMap(roomId, event.snapshot.value);
     });
@@ -316,28 +313,23 @@ class FirebaseRoomService {
 
   Future<void> leaveRoom(String roomId) async {
     final uid = _requireUserId();
+    await _callQuestionFunction('leaveQuestionRoom', {'roomId': roomId});
     if (_presenceRoomId == roomId) await _stopPresence();
-
-    DataSnapshot roomSnapshot;
-    try {
-      roomSnapshot = await _roomRef(roomId).get();
-    } on FirebaseException catch (error) {
-      // A deleted room revokes read access before its listener can deliver null.
-      if (error.code == 'permission-denied') return;
-      rethrow;
-    }
-    if (!roomSnapshot.exists) return;
-    final room = FirebaseRoomMapper.fromMap(roomId, roomSnapshot.value);
-    final playerRef = _roomRef(roomId).child('players/$uid');
-    await playerRef.onDisconnect().cancel();
-    if (room.hostId == uid) {
-      await _roomRef(roomId).remove();
-    } else {
-      await _roomRef(roomId).update({
-        'players/$uid': null,
-        'playerCount': ServerValue.increment(-1),
-      });
-    }
+    // Membership is already removed. A late/offline cancellation must not
+    // prevent navigation or keep the local presence stream alive.
+    unawaited(
+      _roomRef(roomId)
+          .child('players/$uid')
+          .onDisconnect()
+          .cancel()
+          .catchError(
+            (Object error, StackTrace stack) => ErrorReporter.report(
+              error,
+              stack,
+              operation: 'presence.cancel_disconnect',
+            ),
+          ),
+    );
   }
 
   Future<void> dispose() => _disposal ??= _disposeResources();

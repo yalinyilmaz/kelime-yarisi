@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_yarisi/features/game/data/question_history_store.dart';
@@ -16,6 +17,7 @@ void main() {
     service = FirebaseRoomService(
       auth: _Auth(),
       database: database,
+      functions: _Functions(database),
       questionHistory: history,
     );
   });
@@ -121,6 +123,70 @@ void main() {
     expect(history.closes, 1);
     gate.complete();
   });
+
+  test(
+    'explicit leave calls the server once and stops presence after success',
+    () async {
+      await service.beginPresence('abc234');
+      await service.leaveRoom('abc234');
+      expect(database.leaveRequests, [
+        {'roomId': 'abc234'},
+      ]);
+      expect(database.streams.single.hasListener, isFalse);
+      expect(database.disconnectCancels, 1);
+    },
+  );
+
+  test('failed leave keeps presence alive so the player can retry', () async {
+    await service.beginPresence('abc234');
+    database.leaveFailure = true;
+    await expectLater(
+      service.leaveRoom('abc234'),
+      throwsA(isA<RoomServiceException>()),
+    );
+    expect(database.streams.single.hasListener, isTrue);
+    expect(database.disconnectCancels, 0);
+  });
+
+  test(
+    'a pending disconnect cancellation never blocks successful exit cleanup',
+    () async {
+      final gate = Completer<void>();
+      database.disconnectCancelGate = gate.future;
+      await service.beginPresence('abc234');
+      await service.leaveRoom('abc234');
+      expect(database.streams.single.hasListener, isFalse);
+      gate.complete();
+    },
+  );
+}
+
+class _Functions extends Fake implements FirebaseFunctions {
+  _Functions(this.database);
+  final _Database database;
+  @override
+  HttpsCallable httpsCallable(String name, {HttpsCallableOptions? options}) {
+    expect(name, 'leaveQuestionRoom');
+    return _Callable(database);
+  }
+}
+
+class _Callable extends Fake implements HttpsCallable {
+  _Callable(this.database);
+  final _Database database;
+  @override
+  Future<HttpsCallableResult<T>> call<T>([dynamic parameters]) async {
+    database.leaveRequests.add(parameters);
+    if (database.leaveFailure) {
+      throw FirebaseFunctionsException(code: 'unavailable', message: 'offline');
+    }
+    return _Result<T>();
+  }
+}
+
+class _Result<T> extends Fake implements HttpsCallableResult<T> {
+  @override
+  T get data => {'committed': true} as T;
 }
 
 class _Auth extends Fake implements FirebaseAuth {
@@ -146,6 +212,10 @@ class _Database extends Fake implements FirebaseDatabase {
   Future<void>? cancelGate;
   Future<void>? disconnectGate;
   Future<void>? writeGate;
+  Future<void>? disconnectCancelGate;
+  bool leaveFailure = false;
+  final leaveRequests = <Object?>[];
+  int disconnectCancels = 0;
   int onlineWrites = 0;
   @override
   DatabaseReference ref([String? path]) => _Reference(this, path ?? '');
@@ -186,6 +256,11 @@ class _Disconnect extends Fake implements OnDisconnect {
   @override
   Future<void> update(Map<String, Object?> value) async =>
       await database.disconnectGate;
+  @override
+  Future<void> cancel() async {
+    database.disconnectCancels++;
+    await database.disconnectCancelGate;
+  }
 }
 
 class _Event extends Fake implements DatabaseEvent {
