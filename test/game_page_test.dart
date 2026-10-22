@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'support/fake_native_speech.dart';
 
-import 'dart:async';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -40,82 +40,82 @@ void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
     for (final correct in [true, false]) {
       testWidgets(
-        '$platform: answer feedback and PIN scroll above the keyboard: correct=$correct',
+        '$platform: final voice answer scores once and reveals feedback; correct=$correct',
         (tester) async {
           tester.view.physicalSize = const Size(360, 740);
           tester.view.devicePixelRatio = 1;
           addTearDown(tester.view.resetPhysicalSize);
           addTearDown(tester.view.resetDevicePixelRatio);
-          addTearDown(tester.view.resetViewInsets);
           final service = FakeRoomService();
+          final native = FakeNativeSpeech();
           final room = testRoom().copyWith(
             startsAtMs: DateTime.now().millisecondsSinceEpoch - 1000,
           );
           service.room = room;
           await tester.pumpWidget(
-            RepositoryProvider<FirebaseRoomService>.value(
-              value: service,
-              child: MaterialApp(
-                theme: AppTheme.dark.copyWith(platform: platform),
-                home: GamePage(room: room, sounds: FakeGameSounds()),
+            withSpeech(
+              RepositoryProvider<FirebaseRoomService>.value(
+                value: service,
+                child: MaterialApp(
+                  theme: AppTheme.dark.copyWith(platform: platform),
+                  home: GamePage(room: room, sounds: FakeGameSounds()),
+                ),
               ),
+              recognizer: native,
             ),
           );
           service.offsets.add(0);
           service.connections.add(true);
           await tester.pump();
-          await tester.enterText(
-            find.byType(TextField),
-            correct ? 'kapi' : 'aaaa',
+          expect(find.byType(TextField), findsNothing);
+          expect(tester.testTextInput.isVisible, isFalse);
+          final hold = await tester.startGesture(
+            tester.getCenter(find.byKey(const ValueKey('answer-action'))),
           );
-          tester.view.viewInsets = const FakeViewPadding(bottom: 300);
-          await tester.pumpAndSettle();
-          final focus = tester
-              .widget<TextField>(find.byType(TextField))
-              .focusNode!;
-          final position = tester
-              .state<ScrollableState>(find.byType(Scrollable).first)
-              .position;
-          final beforeAnswerOffset = position.pixels;
-          await tester.tap(find.byKey(const ValueKey('answer-action')));
+          await tester.pump();
+          final question = tester
+              .element(find.byType(WordPinInput))
+              .read<GameCubit>()
+              .state
+              .question!;
+          expect(native.lastOptions!.contextualPhrases, [
+            question.answer,
+            ...question.acceptedAnswers,
+          ]);
+          native.say('ka', finalResult: false);
+          await tester.pump();
+          expect(
+            tester
+                .widgetList<WordLetterCell>(find.byType(WordLetterCell))
+                .every((c) => c.character == null),
+            isTrue,
+          );
+          expect(service.saves, isEmpty);
+          await hold.up();
+          await tester.pump();
+          native.say(correct ? 'bir düşüneyim cevabım kapıdır' : 'bilmiyorum');
           await tester.pump();
           await tester.pump(const Duration(milliseconds: 900));
           await tester.pumpAndSettle();
-          expect(focus.hasFocus, isTrue);
-          expect(tester.testTextInput.isVisible, isTrue);
-          final viewport = tester.getRect(find.byType(ListView));
-          final pin = tester.getRect(find.byType(WordPinInput));
-          final feedback = tester.getRect(find.byType(AnswerFeedbackBanner));
-          expect(pin.top, greaterThanOrEqualTo(viewport.top));
-          expect(pin.bottom, lessThanOrEqualTo(feedback.top));
-          expect(feedback.bottom, lessThanOrEqualTo(viewport.bottom));
-          expect(position.pixels, greaterThan(beforeAnswerOffset));
-          final cells = tester.widgetList<WordLetterCell>(
-            find.byType(WordLetterCell),
-          );
-          expect(cells.map((cell) => cell.character).join(), 'KAPI');
-          expect(
-            cells.every(
-              (cell) =>
-                  cell.outcome ==
-                  (correct ? AnswerOutcome.correct : AnswerOutcome.wrong),
-            ),
-            isTrue,
-          );
           expect(service.saves.single.score, correct ? 400 : -400);
           expect(
             find.text(correct ? 'Doğru cevap!' : 'Yanlış cevap'),
             findsOneWidget,
           );
-          if (!correct) expect(find.text('Doğru cevap: KAPI'), findsOneWidget);
-          await tester.enterText(find.byType(TextField), 'zzzz');
-          expect(
-            tester.widget<TextField>(find.byType(TextField)).controller!.text,
-            'KAPI',
+          final cells = tester.widgetList<WordLetterCell>(
+            find.byType(WordLetterCell),
           );
-          await tester.tap(find.byTooltip('Sesi kapat'));
-          await tester.pump();
-          expect(focus.hasFocus, isFalse);
+          expect(cells.map((c) => c.character).join(), 'KAPI');
+          expect(
+            cells.every(
+              (c) =>
+                  c.outcome ==
+                  (correct ? AnswerOutcome.correct : AnswerOutcome.wrong),
+            ),
+            isTrue,
+          );
+          expect(find.byType(AnswerFeedbackBanner), findsOneWidget);
+          expect(find.byType(TextField), findsNothing);
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox());
           await service.disposeStreams();
@@ -125,188 +125,50 @@ void main() {
   }
 
   testWidgets(
-    'iOS voting keeps the same editable connection; clock-only ticks do not rebuild the input',
+    'letter voting keeps the PIN in place without opening a keyboard',
     (tester) async {
       final service = FakeRoomService();
-      final pending = Completer<void>();
-      service.onHint = () => pending.future;
       final room = testRoom().copyWith(
         startsAtMs: DateTime.now().millisecondsSinceEpoch - 1000,
       );
       service.room = room;
       await tester.pumpWidget(
-        RepositoryProvider<FirebaseRoomService>.value(
-          value: service,
-          child: MaterialApp(
-            theme: AppTheme.dark.copyWith(platform: TargetPlatform.iOS),
-            home: GamePage(room: room, sounds: FakeGameSounds()),
+        withSpeech(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp(
+              theme: AppTheme.dark,
+              home: GamePage(room: room, sounds: FakeGameSounds()),
+            ),
           ),
         ),
       );
       service.offsets.add(0);
       service.connections.add(true);
       await tester.pump();
-      final field = tester.widget<TextField>(find.byType(TextField));
-      final focus = field.focusNode!;
-      expect(focus.hasFocus, isTrue);
-      final inputWidget = tester.widget<WordPinInput>(
-        find.byType(WordPinInput),
-      );
-      await tester.pump(const Duration(seconds: 1));
-      expect(
-        tester.widget<WordPinInput>(find.byType(WordPinInput)),
-        same(inputWidget),
-      );
       final cubit = tester.element(find.byType(WordPinInput)).read<GameCubit>();
       await tester.tap(find.byKey(const ValueKey('hint-action')));
       await tester.pump();
-      expect(cubit.state.isVoting, isTrue);
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).readOnly,
-        isFalse,
-      );
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).focusNode,
-        same(focus),
-      );
-      expect(focus.hasFocus, isTrue);
-      pending.complete();
-      await tester.pump();
       expect(cubit.state.hints.revealedCount, 1);
-      expect(focus.hasFocus, isTrue);
-      expect(tester.testTextInput.isVisible, isTrue);
+      expect(
+        tester
+            .widgetList<WordLetterCell>(find.byType(WordLetterCell))
+            .where((c) => c.revealed),
+        hasLength(1),
+      );
+      expect(find.byType(TextField), findsNothing);
+      expect(tester.testTextInput.isVisible, isFalse);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       await service.disposeStreams();
     },
   );
 
-  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
-    testWidgets(
-      '$platform: outside tap dismisses keyboard; fixed actions fit above keyboard and submit answers',
-      (tester) async {
-        tester.view.physicalSize = const Size(320, 640);
-        tester.view.devicePixelRatio = 1;
-        addTearDown(tester.view.resetPhysicalSize);
-        addTearDown(tester.view.resetDevicePixelRatio);
-        addTearDown(tester.view.resetViewInsets);
-        final service = FakeRoomService();
-        final room = testRoom().copyWith(
-          startsAtMs: DateTime.now().millisecondsSinceEpoch - 1000,
-        );
-        await tester.pumpWidget(
-          RepositoryProvider<FirebaseRoomService>.value(
-            value: service,
-            child: MaterialApp(
-              theme: AppTheme.dark.copyWith(platform: platform),
-              home: GamePage(room: room, sounds: FakeGameSounds()),
-            ),
-          ),
-        );
-        service.offsets.add(0);
-        service.connections.add(true);
-        await tester.pump();
-        await tester.pump();
-        expect(find.text('SORU 1 / 7'), findsOneWidget);
-        final focus = tester
-            .widget<TextField>(find.byType(TextField))
-            .focusNode!;
-        expect(focus.hasFocus, isTrue);
-        await tester.tap(find.byTooltip('Sesi kapat'));
-        await tester.pump();
-        expect(focus.hasFocus, isFalse);
-        expect(tester.testTextInput.isVisible, isFalse);
-        expect(find.byTooltip('Sesi aç'), findsOneWidget);
-        await tester.tap(find.byTooltip('Sesi aç'));
-        await tester.pump();
-        expect(find.byType(TextField), findsOneWidget);
-        expect(
-          tester.widget<TextField>(find.byType(TextField)).focusNode!.hasFocus,
-          isFalse,
-        );
-        await tester.enterText(find.byType(TextField), 'ka');
-        await tester.testTextInput.receiveAction(TextInputAction.done);
-        await tester.pump();
-        expect(service.saves, isEmpty);
-        expect(find.text('Tüm boş harfleri doldur.'), findsOneWidget);
-        expect(
-          tester.widget<TextField>(find.byType(TextField)).focusNode!.hasFocus,
-          isTrue,
-        );
-        await tester.enterText(find.byType(TextField), 'kapi');
-        tester.view.viewInsets = const FakeViewPadding(bottom: 260);
-        await tester.pump();
-        expect(tester.takeException(), isNull);
-        final answerAction = find.byKey(const ValueKey('answer-action'));
-        final hintAction = find.byKey(const ValueKey('hint-action'));
-        final answerRect = tester.getRect(answerAction);
-        final hintRect = tester.getRect(hintAction);
-        expect(answerRect.bottom, lessThanOrEqualTo(640 - 260));
-        expect(answerRect.top, hintRect.top);
-        expect(answerRect.right, lessThan(hintRect.left));
-        await tester.drag(find.byType(ListView), const Offset(0, -120));
-        await tester.pump();
-        expect(focus.hasFocus, isTrue);
-        expect(tester.testTextInput.isVisible, isTrue);
-        expect(tester.getRect(answerAction), answerRect);
-        expect(tester.getRect(hintAction), hintRect);
-        await tester.showKeyboard(find.byType(TextField));
-        await tester.pump();
-        final tap = await tester.startGesture(tester.getCenter(answerAction));
-        await tester.pump();
-        expect(focus.hasFocus, isTrue);
-        expect(tester.getRect(answerAction), answerRect);
-        await tap.up();
-        await tester.pump();
-        expect(service.saves.single.score, 400);
-        expect(focus.hasFocus, isTrue);
-        await tester.scrollUntilVisible(
-          find.text('SORU 1 / 7'),
-          -200,
-          scrollable: find.byType(Scrollable).first,
-        );
-        expect(find.text('SORU 1 / 7'), findsOneWidget);
-        expect(
-          tester.widget<TextField>(find.byType(TextField)).controller!.text,
-          'KAPI',
-        );
-        expect(
-          tester.widget<TextField>(find.byType(TextField)).readOnly,
-          isFalse,
-        );
-        tester.view.resetViewInsets();
-        await tester.pump();
-        service.rooms.add(
-          room.copyWith(
-            progress: {
-              'guest': service.saves.last,
-              'host': const GameProgress(
-                questionIndex: 1,
-                wrongCount: 1,
-                score: -400,
-              ),
-            },
-          ),
-        );
-        await tester.pump();
-        await tester.scrollUntilVisible(
-          find.text('-400'),
-          300,
-          scrollable: find.byType(Scrollable).first,
-        );
-        expect(find.text('-400'), findsOneWidget);
-        expect(tester.takeException(), isNull);
-        await tester.pumpWidget(const SizedBox());
-        await service.disposeStreams();
-      },
-    );
-  }
-
   testWidgets(
     'Equal results share a rank and final state removes answer controls',
     (tester) async {
       final service = FakeRoomService();
-      final progress = const GameProgress(
+      const progress = GameProgress(
         questionIndex: 7,
         correctCount: 7,
         score: 4900,
@@ -318,18 +180,20 @@ void main() {
             status: RoomStatus.results,
           );
       await tester.pumpWidget(
-        RepositoryProvider<FirebaseRoomService>.value(
-          value: service,
-          child: MaterialApp(
-            theme: AppTheme.dark,
-            home: GamePage(room: room, sounds: FakeGameSounds()),
+        withSpeech(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp(
+              theme: AppTheme.dark,
+              home: GamePage(room: room, sounds: FakeGameSounds()),
+            ),
           ),
         ),
       );
       service.offsets.add(0);
       service.connections.add(true);
       await tester.pump();
-      expect(find.byType(TextField), findsNothing);
+      expect(find.byKey(const ValueKey('answer-action')), findsNothing);
       expect(find.text('Yarışma tamamlandı'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('SONUÇLAR'), 200);
       expect(find.text('1'), findsNWidgets(2));

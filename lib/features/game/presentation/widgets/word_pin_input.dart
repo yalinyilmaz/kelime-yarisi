@@ -18,10 +18,12 @@ class WordPinInput extends StatefulWidget {
     required this.answerController,
     required this.onSubmitted,
     this.outcome,
+    this.voiceOnly = false,
     super.key,
   });
 
   final AnswerOutcome? outcome;
+  final bool voiceOnly;
   final GameQuestion question;
   final int questionIndex;
   final int revealedMask;
@@ -72,7 +74,8 @@ class _WordPinInputState extends State<WordPinInput>
   }
 
   void _scheduleFocus() {
-    if (!widget.enabled ||
+    if (widget.voiceOnly ||
+        !widget.enabled ||
         _focusScheduled ||
         _focusedQuestion == widget.questionIndex) {
       return;
@@ -119,6 +122,7 @@ class _WordPinInputState extends State<WordPinInput>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.questionIndex != widget.questionIndex) {
       _setText('');
+      if (widget.voiceOnly) widget.answerController.clear();
       _publishAnswer();
     } else if (oldWidget.revealedMask != widget.revealedMask) {
       final previousPositions = _hiddenPositions(oldWidget.revealedMask);
@@ -150,6 +154,7 @@ class _WordPinInputState extends State<WordPinInput>
   }
 
   void _publishAnswer() {
+    if (widget.voiceOnly) return;
     if (widget.outcome != null) {
       widget.answerController.text = widget.question.answer;
       return;
@@ -182,6 +187,49 @@ class _WordPinInputState extends State<WordPinInput>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    if (widget.voiceOnly) {
+      return ValueListenableBuilder<TextEditingValue>(
+        valueListenable: widget.answerController,
+        builder: (context, value, _) => LayoutBuilder(
+          builder: (context, constraints) {
+            final count = widget.question.letterCount;
+            final spacing =
+                ((constraints.maxWidth - count * 32) / math.max(1, count - 1))
+                    .clamp(3.0, 6.0)
+                    .toDouble();
+            final width = math.min(
+              32.0,
+              (constraints.maxWidth - spacing * (count - 1)) / count,
+            );
+            final letters = GameQuestion.normalizeAnswer(value.text);
+            return Semantics(
+              label: 'Cevap harfleri',
+              child: Row(
+                spacing: spacing,
+                children: [
+                  for (var i = 0; i < count; i++)
+                    WordLetterCell(
+                      key: ValueKey('${widget.questionIndex}-$i'),
+                      width: width,
+                      index: i,
+                      outcome: widget.outcome,
+                      character:
+                          widget.outcome != null ||
+                              (widget.revealedMask & (1 << i)) != 0
+                          ? widget.question.letters[i]
+                          : i < letters.length
+                          ? letters[i]
+                          : null,
+                      revealed: (widget.revealedMask & (1 << i)) != 0,
+                      focused: false,
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }
     final hiddenPositions = _hiddenPositions(widget.revealedMask);
     final focusedIndex = _text.text.length < hiddenPositions.length
         ? _text.text.length

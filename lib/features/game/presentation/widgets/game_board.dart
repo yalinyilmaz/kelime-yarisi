@@ -142,7 +142,11 @@ class GameBoard extends StatelessWidget {
               if (question != null && !state.hasExpired && !isResults)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-                  child: GameActions(state: state, onSubmit: onSubmit),
+                  child: GameActions(
+                    state: state,
+                    onSubmit: onSubmit,
+                    answerController: answerController,
+                  ),
                 ),
             ],
           ),

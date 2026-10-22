@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'support/fake_native_speech.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kelime_yarisi/app/app.dart';
 import 'package:kelime_yarisi/core/theme/app_theme.dart';
-import 'package:kelime_yarisi/features/game/domain/game_question.dart';
-import 'package:kelime_yarisi/features/game/domain/game_question_set.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cell.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.dart';
-import 'package:kelime_yarisi/features/game/presentation/widgets/game_clue_hints.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/answer_feedback_banner.dart';
 import 'package:kelime_yarisi/features/solo/presentation/widgets/solo_question_card.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
@@ -23,42 +20,21 @@ import 'package:kelime_yarisi/features/solo/presentation/widgets/solo_game_view.
 import 'package:kelime_yarisi/features/solo/presentation/widgets/solo_result_card.dart';
 
 import 'solo_game_test.dart'
-    show MemoryScoreStorage, SilentSoloSounds, SoloTestService, testSoloSet;
+    show MemoryScoreStorage, SilentSoloSounds, SoloTestService;
 
 void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
     for (final compact in [false, true]) {
       testWidgets(
-        '$platform: question and hints scroll without moving the PIN out of its card; compact=$compact',
+        '$platform: hints and letter cells stay in the card without a keyboard; compact=$compact',
         (tester) async {
           tester.view.devicePixelRatio = 1;
           tester.view.physicalSize = compact
               ? const Size(320, 640)
               : const Size(360, 800);
-          addTearDown(tester.view.resetDevicePixelRatio);
           addTearDown(tester.view.resetPhysicalSize);
-          addTearDown(tester.view.resetViewInsets);
-          final original = testSoloSet();
-          final service = SoloTestService()
-            ..loadGate = (Completer<GameQuestionSet>()
-              ..complete(
-                GameQuestionSet(
-                  id: original.id,
-                  questions: [
-                    for (final q in original.questions)
-                      GameQuestion(
-                        id: q.id,
-                        answerId: q.answerId,
-                        answer: q.answer,
-                        clue: 'Bardağı dudağa götürüp sıvıyı ağızdan almak.',
-                        hints: const [
-                          'İlaç için de bu fiil kullanılır.',
-                          'Suyun mideye ilerlemesini düşün, mastar biçiminde.',
-                        ],
-                      ),
-                  ],
-                ),
-              ));
+          addTearDown(tester.view.resetDevicePixelRatio);
+          final service = SoloTestService();
           final best = SoloBestScoreCubit(storage: MemoryScoreStorage());
           final router = _router();
           await _mount(
@@ -70,92 +46,35 @@ void main() {
             textScaler: TextScaler.linear(compact ? 1.6 : 1),
           );
           await tester.pumpAndSettle();
-          final field = find.byType(TextField);
-          await tester.enterText(field, 'ka');
-          final connection = tester.state<EditableTextState>(
-            find.byType(EditableText),
-          );
-          final focus = tester.widget<TextField>(field).focusNode!;
-          tester.view.viewInsets = const FakeViewPadding(bottom: 300);
-          await tester.pumpAndSettle();
+          final game = tester
+              .element(find.byType(SoloGameView))
+              .read<SoloGameCubit>();
           for (var i = 0; i < 2; i++) {
             final hint = find.byKey(const ValueKey('clue-hint-action'));
             await tester.ensureVisible(hint);
             await tester.pumpAndSettle();
             await tester.tap(hint);
             await tester.pumpAndSettle();
-            expect(
-              tester.state<EditableTextState>(find.byType(EditableText)),
-              same(connection),
-            );
-            expect(focus.hasFocus, isTrue);
-            expect(tester.testTextInput.isVisible, isTrue);
-            expect(tester.widget<TextField>(field).controller!.text, 'KA');
           }
-          final game = tester
-              .element(find.byType(SoloGameView))
-              .read<SoloGameCubit>();
-          expect(game.state.currentHintCount, 2);
-          final pinRect = tester.getRect(find.byType(WordPinInput));
-          final viewport = tester.getRect(find.byType(ListView));
-          final clueRect = tester.getRect(find.text(game.state.question!.clue));
-          final hintRect = tester.getRect(find.byType(GameClueHints));
-          final actions = tester.getRect(
-            find.byKey(const ValueKey('answer-action')),
-          );
+          expect(game.state.remainingHints, 8);
+          final pin = find.byType(WordPinInput);
+          await tester.ensureVisible(pin);
+          await tester.pumpAndSettle();
           expect(
-            find.ancestor(
-              of: find.byType(WordPinInput),
-              matching: find.byType(SoloQuestionCard),
-            ),
+            find.ancestor(of: pin, matching: find.byType(SoloQuestionCard)),
             findsOneWidget,
           );
-          if (!compact) {
-            expect(clueRect.top, greaterThanOrEqualTo(viewport.top));
-            expect(hintRect.top, greaterThanOrEqualTo(clueRect.bottom));
-            expect(hintRect.bottom, lessThanOrEqualTo(pinRect.top));
-          }
-          expect(pinRect.bottom + 8, lessThanOrEqualTo(viewport.bottom));
-          expect(pinRect.bottom, lessThan(actions.top));
-          expect(actions.bottom, lessThanOrEqualTo(compact ? 340 : 500));
-          expect(
-            tester
-                .state<ScrollableState>(find.byType(Scrollable).first)
-                .position
-                .pixels,
-            greaterThan(0),
-          );
-          for (final cell in find.byType(WordLetterCell).evaluate()) {
-            final rect = tester.getRect(find.byWidget(cell.widget));
-            expect(rect.top, greaterThanOrEqualTo(pinRect.top));
-            expect(rect.bottom, lessThanOrEqualTo(pinRect.bottom));
-          }
-          if (compact) {
-            // Oversized text cannot all fit at once. Reading it must not close the keyboard.
-            final position = tester
-                .state<ScrollableState>(find.byType(Scrollable).first)
-                .position;
-            final previousOffset = position.pixels;
-            await tester.drag(find.byType(ListView), const Offset(0, 160));
-            await tester.pumpAndSettle();
-            expect(position.pixels, lessThan(previousOffset));
-            expect(focus.hasFocus, isTrue);
-            expect(tester.testTextInput.isVisible, isTrue);
-            expect(
-              tester.getRect(find.byKey(const ValueKey('answer-action'))),
-              actions,
-            );
-            tester.view.viewInsets = const FakeViewPadding(bottom: 320);
-            await tester.pumpAndSettle();
-            expect(
-              tester.getRect(find.byType(WordPinInput)).bottom,
-              lessThanOrEqualTo(tester.getRect(find.byType(ListView)).bottom),
-            );
-          }
+          expect(find.byType(TextField), findsNothing);
+          expect(tester.testTextInput.isVisible, isFalse);
           await tester.tap(find.byKey(const ValueKey('hint-action')));
           await tester.pumpAndSettle();
           expect(game.state.revealedCount, 1);
-          expect(focus.hasFocus, isTrue);
+          expect(
+            tester
+                .widgetList<WordLetterCell>(find.byType(WordLetterCell))
+                .where((c) => c.revealed),
+            hasLength(1),
+          );
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox());
           router.dispose();
@@ -246,7 +165,11 @@ void main() {
       final storage = MemoryScoreStorage();
       final service = SoloTestService();
       await tester.pumpWidget(
-        KelimeYarisiApp(roomService: service, soloScoreStorage: storage),
+        KelimeYarisiApp(
+          roomService: service,
+          soloScoreStorage: storage,
+          speechRecognizer: FakeNativeSpeech(),
+        ),
       );
       expect(find.text('Tek Oyunculu'), findsOneWidget);
       expect(find.text('Çok Oyunculu'), findsOneWidget);
@@ -269,50 +192,45 @@ void main() {
   );
 
   testWidgets(
-    'solo letter and answer actions preserve keyboard above the action row on a narrow device',
+    'solo voice answer after revealing a letter earns the reduced value',
     (tester) async {
-      tester.view.devicePixelRatio = 1;
-      tester.view.physicalSize = const Size(360, 740);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetViewInsets);
       final service = SoloTestService();
+      final native = FakeNativeSpeech();
       final best = SoloBestScoreCubit(storage: MemoryScoreStorage());
       final router = _router();
-      await _mount(tester, service, best, router);
+      await _mount(tester, service, best, router, recognizer: native);
       await tester.pumpAndSettle();
       final game = tester
           .element(find.byType(SoloGameView))
           .read<SoloGameCubit>();
-      expect(find.text('4:20'), findsOneWidget);
-      expect(tester.testTextInput.isVisible, isTrue);
-      tester.view.viewInsets = const FakeViewPadding(bottom: 250);
-      await tester.pump();
-      final letter = find.byKey(const ValueKey('hint-action'));
-      expect(tester.getBottomLeft(letter).dy, lessThanOrEqualTo(490));
-      await tester.tap(letter);
+      await tester.tap(find.byKey(const ValueKey('hint-action')));
       await tester.pump();
       expect(game.state.revealedCount, 1);
-      expect(tester.testTextInput.isVisible, isTrue);
-      final question = game.state.question!;
-      final mask = game.state.revealedMask;
-      final input = [
-        for (var i = 0; i < question.letterCount; i++)
-          if ((mask & (1 << i)) == 0) question.letters[i],
-      ].join();
-      await tester.enterText(find.byType(TextField), input);
-      await tester.tap(find.byKey(const ValueKey('answer-action')));
+      final hold = await tester.startGesture(
+        tester.getCenter(find.byKey(const ValueKey('answer-action'))),
+      );
+      await tester.pump();
+      expect(native.lastOptions!.contextualPhrases, [
+        game.state.question!.answer,
+        ...game.state.question!.acceptedAnswers,
+      ]);
+      native.say('ka', finalResult: false);
+      await tester.pump();
+      expect(
+        tester
+            .widget<WordPinInput>(find.byType(WordPinInput))
+            .answerController
+            .text,
+        isEmpty,
+      );
+      await hold.up();
+      await tester.pump();
+      native.say('cevap kapıdır');
       await tester.pump();
       expect(game.state.progress.score, 300);
-      await tester.pump(const Duration(milliseconds: 600));
-      await tester.pump(const Duration(milliseconds: 200));
-      final viewport = tester.getRect(find.byType(ListView));
-      final pin = tester.getRect(find.byType(WordPinInput));
-      final feedback = tester.getRect(find.byType(AnswerFeedbackBanner));
-      expect(pin.top, greaterThanOrEqualTo(viewport.top));
-      expect(pin.bottom, lessThanOrEqualTo(feedback.top));
-      expect(feedback.bottom, lessThanOrEqualTo(viewport.bottom));
-      expect(tester.testTextInput.isVisible, isTrue);
+      await tester.pump(const Duration(milliseconds: 800));
+      expect(find.byType(AnswerFeedbackBanner), findsOneWidget);
+      expect(tester.testTextInput.isVisible, isFalse);
       expect(service.completed, isEmpty);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
@@ -369,20 +287,24 @@ Future<void> _mount(
   SoloBestScoreCubit best,
   GoRouter router, {
   TargetPlatform? platform,
+  FakeNativeSpeech? recognizer,
   TextScaler textScaler = TextScaler.noScaling,
 }) => tester.pumpWidget(
-  RepositoryProvider<FirebaseRoomService>.value(
-    value: service,
-    child: BlocProvider<SoloBestScoreCubit>.value(
-      value: best,
-      child: MaterialApp.router(
-        theme: AppTheme.dark.copyWith(platform: platform),
-        routerConfig: router,
-        builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: textScaler),
-          child: child!,
+  withSpeech(
+    RepositoryProvider<FirebaseRoomService>.value(
+      value: service,
+      child: BlocProvider<SoloBestScoreCubit>.value(
+        value: best,
+        child: MaterialApp.router(
+          theme: AppTheme.dark.copyWith(platform: platform),
+          routerConfig: router,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: textScaler),
+            child: child!,
+          ),
         ),
       ),
     ),
+    recognizer: recognizer,
   ),
 );

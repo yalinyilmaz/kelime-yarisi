@@ -1,3 +1,5 @@
+import 'support/fake_native_speech.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -61,11 +63,13 @@ void main() {
         final router = createAppRouter();
         router.go('/room/${room.id}', extra: room);
         await tester.pumpWidget(
-          RepositoryProvider<FirebaseRoomService>.value(
-            value: service,
-            child: MaterialApp.router(
-              theme: AppTheme.dark,
-              routerConfig: router,
+          withSpeech(
+            RepositoryProvider<FirebaseRoomService>.value(
+              value: service,
+              child: MaterialApp.router(
+                theme: AppTheme.dark,
+                routerConfig: router,
+              ),
             ),
           ),
         );
@@ -132,11 +136,13 @@ void main() {
         final router = createAppRouter();
         router.go('/room/${room.id}', extra: room);
         await tester.pumpWidget(
-          RepositoryProvider<FirebaseRoomService>.value(
-            value: service,
-            child: MaterialApp.router(
-              theme: AppTheme.dark,
-              routerConfig: router,
+          withSpeech(
+            RepositoryProvider<FirebaseRoomService>.value(
+              value: service,
+              child: MaterialApp.router(
+                theme: AppTheme.dark,
+                routerConfig: router,
+              ),
             ),
           ),
         );
@@ -175,9 +181,14 @@ void main() {
       final service = FakeLobbyService();
       final router = createAppRouter();
       await tester.pumpWidget(
-        RepositoryProvider<FirebaseRoomService>.value(
-          value: service,
-          child: MaterialApp.router(theme: AppTheme.dark, routerConfig: router),
+        withSpeech(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp.router(
+              theme: AppTheme.dark,
+              routerConfig: router,
+            ),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -220,9 +231,14 @@ void main() {
       final router = createAppRouter();
       router.go('/room/${room.id}', extra: room);
       await tester.pumpWidget(
-        RepositoryProvider<FirebaseRoomService>.value(
-          value: service,
-          child: MaterialApp.router(theme: AppTheme.dark, routerConfig: router),
+        withSpeech(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp.router(
+              theme: AppTheme.dark,
+              routerConfig: router,
+            ),
+          ),
         ),
       );
       await tester.pumpAndSettle();

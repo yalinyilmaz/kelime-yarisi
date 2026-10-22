@@ -17,14 +17,23 @@ class GameAudioCubit extends Cubit<bool> {
 
   final GameSoundController _sounds;
   late final StreamSubscription<GameState> _subscription;
+  bool _foreground = true;
+  bool _speechListening = false;
 
   void toggle() {
     emit(!state);
     unawaited(_sounds.setEnabled(state));
   }
 
-  void setForeground(bool foreground) =>
-      unawaited(_sounds.setForeground(foreground));
+  void setForeground(bool foreground) {
+    _foreground = foreground;
+    unawaited(_sounds.setForeground(_foreground && !_speechListening));
+  }
+
+  Future<void> setSpeechListening(bool listening) {
+    _speechListening = listening;
+    return _sounds.setForeground(_foreground && !listening);
+  }
 
   @override
   Future<void> close() async {

@@ -1,3 +1,5 @@
+import 'support/fake_native_speech.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -140,7 +142,12 @@ void main() {
     'app owner disposes its room service when the widget tree is removed',
     (tester) async {
       final service = _PendingService();
-      await tester.pumpWidget(KelimeYarisiApp(roomService: service));
+      await tester.pumpWidget(
+        KelimeYarisiApp(
+          roomService: service,
+          speechRecognizer: FakeNativeSpeech(),
+        ),
+      );
       await tester.tap(find.text('Çok Oyunculu'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Oda Oluştur'));

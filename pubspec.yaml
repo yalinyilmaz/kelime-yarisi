@@ -23,6 +23,7 @@ dependencies:
   path_provider: ^2.1.6
   sentry_flutter: ^9.30.1
   share_plus: ^13.3.1
+  speech_to_text: 7.6.0-beta.4
   sqflite: ^2.4.4+2
 dev_dependencies:
   flutter_test:

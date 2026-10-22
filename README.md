@@ -2,6 +2,14 @@
 
 Dev mağaza release otomasyonu: [Fastlane kurulumu ve komutlar](fastlane/README.md).
 
+## Türkçe sesli yanıt
+
+Tekli ve çoklu oyunda cevaplar `speech_to_text` ile Android/iOS'in yerleşik konuşma tanıma hizmetinden alınır. Oyun modu seçilirken mikrofon/konuşma tanıma izni ve Türkçe desteği kontrol edilir; tanıma dili telefonun klavye dilinden bağımsız seçilir. Yerleşik hizmet cihaz/dil desteğine göre internet kullanabilir; ayrı bir ücretli STT API'si veya API anahtarı kullanılmaz.
+
+Türkçe tanımada `bilek` yerine `black` gibi sonuçların olasılığını azaltmak için her sorunun cevabı ve kabul edilen eş anlamlıları `contextualPhrases` olarak iletilir. iOS bunu Apple `contextualStrings` alanına aktarır; Android 13 ve üzerinde kelime önceliklendirme desteği vardır. Bu bir tanıma ipucudur; dili kesin bir kelime listesine kısıtlamaz. Gelen sonuç mevcut cevap karşılaştırmasından geçer, yabancı bir sonuç otomatik doğru cevaba çevrilmez. Native desteği içeren resmî `speech_to_text: 7.6.0-beta.4` sürümü sabitlenmiştir; 7.5'in iOS uygulaması bu alanı işlemez. [Apple bağlam rehberi](https://developer.apple.com/documentation/speech/sfspeechrecognitionrequest/contextualstrings), [paket değişiklikleri](https://pub.dev/packages/speech_to_text/versions/7.6.0-beta.4/changelog).
+
+`Cevapla` basılı tutulurken en fazla 3 saniye dinlenir ve butonun üstündeki çubuk dolar. Parmağın kaldırılmasından sonra son heceleri almak için 450 ms daha dinlenir; toplam 3 saniye sınırı aşılmaz. Native kesin sonuç geldiğinde veya mikrofon kapandıktan sonra son metin 350 ms sabit kaldığında değerlendirilir; sonuç bekleme üst sınırı 2 saniyedir. Kısmi sonuçlar kutulara yazılmaz. Son metin/alternatiflerde büyük-küçük harf, Türkçe/ASCII toleransı ve boşlukları kaldırma uygulanır; cevap veya kabul edilen eş anlamlılarından biri `contains` ile geçiyorsa asıl cevap kutulara yazılıp mevcut puanlama servisine gönderilir. Örneğin `cevap göndermektir`, `GÖNDERMEK` cevabını kabul eder. Eşleşmeyen cevap/sessizlik mevcut yanlış cevap akışını kullanır; mikrofon ve tanıma hizmeti hataları bu cezayı uygulamaz. Soru değişimi, uygulamanın arka plana geçmesi ve ekrandan çıkış dinlemeyi iptal eder. Uygulama ses dosyası kaydetmez; hata raporlarına konuşma metni eklenmez. Yalnız debug sürümünde son duyulan alternatiflerin tamamı butonun üstünde gösterilir.
+
 Flutter ile geliştirilen, 2–6 kişinin aynı odada eş zamanlı olarak aynı soru setini oynadığı mobil kelime yarışması.
 
 ## Ürün akışı
@@ -89,11 +97,11 @@ npx -y firebase-tools@latest deploy --only database,auth --project dev
 npx -y firebase-tools@latest deploy --only database,auth --project prod
 ```
 
-Android, debug dahil tüm derlemelerde Play Integrity kullanır; Android debug token kaydı kullanılmaz. iOS debug derlemeleri debug provider, diğer derlemeler App Attest kullanır. iOS debug token'ını ilgili Firebase uygulamasının App Check → Manage debug tokens bölümüne kaydet; token'lar repoya eklenmez. Android Play Integrity için kullanılan imzalama sertifikasının SHA-256 parmak izi ilgili Firebase uygulamasına kaydedilmelidir. Play üzerinden dağıtımda Play App Signing sertifikası kullanılır. Callable fonksiyonlar App Check doğrulamasını zorunlu tutar.
+Android, debug dahil tüm derlemelerde Play Integrity kullanır. iOS debug ve release derlemeleri App Attest kullanır; debug token kaydı gerekmez. Android Play Integrity için kullanılan imzalama sertifikasının SHA-256 parmak izi ilgili Firebase uygulamasına kaydedilmelidir. Play üzerinden dağıtımda Play App Signing sertifikası kullanılır. Callable fonksiyonlar App Check doğrulamasını zorunlu tutar.
 
 Android dev uygulaması `flutter run` ile Google Play dışından yüklenir. Firebase Console → App Check → dev Android uygulaması → Play Integrity gelişmiş ayarlarında bu dağıtım için `PLAY_RECOGNIZED` ve `LICENSED` zorunlu olmamalı, minimum cihaz bütünlüğü `Device integrity` olmalıdır. Play Integrity API'nin bağlı Cloud projesi `kelime-yarisi-yalin` olmalıdır. Bu ayarlar prod'a otomatik uygulanmaz. [Firebase Play Integrity kurulum rehberi](https://firebase.google.com/docs/app-check/android/play-integrity-provider).
 
-iOS `Debug`, `Debug-dev` ve `Debug-prod` yapılandırmalarında App Attest entitlement'ı yoktur; Personal Team ile fiziksel cihazda debug çalıştırılabilir. `Profile` ve `Release` yapılandırmalarında App Attest entitlement'ı production ortamını kullanır. Bunları fiziksel cihaz için imzalamak, App Attest destekleyen ücretli Apple Developer Program takımı ve bu yetkiyi içeren provisioning profile gerektirir. Firebase ortamı ile debug/release derleme modu birbirinden bağımsızdır; `Prod — Run` da Personal Team ile debug çalıştırılabilir.
+iOS dev uygulamasının `Debug`, `Debug-dev`, `Profile-dev` ve `Release-dev` yapılandırmaları `Runner/Runner.entitlements` içindeki App Attest `production` ortamını kullanır. Buradaki `production`, Apple doğrulama ortamıdır; Firebase hedefi yine `kelime-yarisi-yalin` kalır. Ücretli Apple Developer takımı ve App Attest yetkisini içeren provisioning profile gerekir. Firebase Console → App Check → dev iOS uygulaması → App Attest kaydı ve iOS uygulama ayarlarında Team ID `SMM9SXSRF9` bir kez tanımlanır. Uygulama yeniden kurulsa da elle token eklenmez; SDK yeni doğrulama anahtarını ve süreli tokenları yönetir. Gerçek, App Attest destekleyen cihaz gerekir; simülatör bu akışı desteklemez. Prod projesi ve `Debug-prod` imza ayarı bu dev değişikliğine dahil değildir. [Firebase App Attest kurulum rehberi](https://firebase.google.com/docs/app-check/ios/app-attest-provider).
 
 Oyun/ekran testleri `flutter test` ile çalışır. İzole güvenlik testleri teknik olarak gerekiyorsa gerekçesi açıklanır ve proje `AGENTS.md` kurallarına uyulur; bu testler yalnızca `demo-kelime-yarisi` projesini kullanır. Bu özel doğrulama için Realtime Database emulator 127.0.0.1:9000 üzerinde çalışırken:
 
@@ -128,9 +136,9 @@ Uygulama flavor’ın yerel Firebase yapılandırmasıyla açılır. `main.dart`
 flutter run --flavor dev -d DEVICE_ID --dart-define=QUESTION_POOL_ENABLED=true
 ```
 
-Android Play Integrity için dev imzasının SHA-256 parmak izi Firebase'de kayıtlı olmalı. Android API anahtarının uygulama izin listesinde ayrıca **dev paket adı ve cihazda kullanılan debug imzasının SHA-1’i** bulunmalı. iOS debug App Check tokenı ilgili dev Firebase uygulamasında kayıtlı olmalı. Prod için ayrı anahtar/uygulama ayarları korunur. API servis izin listesinde `firebaseappcheck.googleapis.com`, `identitytoolkit.googleapis.com` ve `securetoken.googleapis.com` tutulur. Token değerlerini repoya veya test loglarına yazma.
+Android Play Integrity için dev imzasının SHA-256 parmak izi Firebase'de kayıtlı olmalı. Android API anahtarının uygulama izin listesinde ayrıca **dev paket adı ve cihazda kullanılan debug imzasının SHA-1’i** bulunmalı. iOS dev uygulamasının App Attest ve Team ID kaydı tamamlanmış olmalı. Prod için ayrı anahtar/uygulama ayarları korunur. API servis izin listesinde `firebaseappcheck.googleapis.com`, `identitytoolkit.googleapis.com` ve `securetoken.googleapis.com` tutulur. Token değerlerini repoya veya test loglarına yazma.
 
-iOS debug tokenı cihazdaki uygulama kurulumuna aittir. Uygulama silinirse veya verileri temizlenirse token değişebilir; yeni token aynı dev uygulamasında yeniden kaydedilmelidir. Normal `flutter run` için uygulama verilerini temizleme. App Check ayarları tamamlandıktan sonra `Too many attempts` sürerse uygulamayı kapatıp yeniden aç; sürekli token yenileme/istek döngüsü ekleme.
+App Check ayarları tamamlandıktan sonra `Too many attempts` sürerse uygulamayı kapatıp yeniden aç; sürekli token yenileme/istek döngüsü ekleme.
 
 Gerçek cihaz kabul testi gerçek callable doğrulamasıyla 14 soruluk seti bitirir, SQLite kaydını ve sonraki oyunda farklı set seçildiğini doğrular; yarıda bırakılan oyunun tüketilmediğini kontrol eder. Test kendine ait geçici SQLite dosyası kullanır ve kullanıcının geçmişine dokunmaz; oluşturduğu odaları kapatır. Testin oluşturduğu geçici `questionPreparations` kaydı da yalnız testteki kullanıcı/oda kimliği eşleşiyorsa iş sonunda yönetici erişimiyle temizlenmelidir:
 
@@ -181,13 +189,13 @@ npm test --prefix functions
 ```
 
 
-Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Android dev Play Integrity ayarları ve iOS dev App Check debug token kayıtları tamamlanmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Dev profilleri ve terminalde dev flavor gerçek havuzu kullanır; prod etkinleştirmesi bu değişikliğe dahil değildir. Yarış puan/cevap doğrulaması sunucudadır; mevcut oda snapshot’ında cevaplar üyelere gönderilmeye devam eder.
+Dev bulut havuzu cihaz kabul testi için **Dev — Cloud Question Pool** profilinden açılır. Android dev Play Integrity ayarları ve iOS dev App Attest kaydı tamamlanmalıdır. Prod’a geçiş ayrı adımdır: dev’de test edilen yayımlanmış sorular kimlikleri korunarak taşınır; prod secret, sayaçlar, üretici hesabı ve zamanlama ayrı kurulur. Dev profilleri ve terminalde dev flavor gerçek havuzu kullanır; prod etkinleştirmesi bu değişikliğe dahil değildir. Yarış puan/cevap doğrulaması sunucudadır; mevcut oda snapshot’ında cevaplar üyelere gönderilmeye devam eder.
 
 ## Güvenlik ve canlıya çıkış
 
 - Firebase istemci yapılandırmaları yalnızca yerelde tutulur ve Git tarafından izlenmez.
 - Realtime Database kuralları üretime gönderilmeden önce kapsamına uygun kontrollerle doğrulanmalıdır. İzole emulator doğrulaması gerekiyorsa gerekçesi açıklanır ve kullanım sonrası süreç/çıktılar temizlenir. Kurallar `firebase deploy --only database` komutu çalıştırılana kadar canlı projeyi değiştirmez.
-- App Check kod tarafında etkindir. Android tüm derlemelerde Play Integrity kullanır. iOS debug derlemelerinde debug provider, diğer derlemelerde App Attest kullanılır. Yalnız iOS debug token'ları ilgili ortamın Firebase Console'una elle kaydedilir; token'lar repoya eklenmez.
+- App Check kod tarafında etkindir. Android tüm derlemelerde Play Integrity, iOS tüm derlemelerde App Attest kullanır. Dev iOS debug/release imzaları App Attest production yetkisini taşır; elle debug token kaydı gerekmez.
 - Kısıtlı Android/iOS Firebase API anahtarlarının izin listesinde `firebaseappcheck.googleapis.com` bulunmalıdır; aksi durumda debug token değişimi `403 API_KEY_SERVICE_BLOCKED` ile reddedilir.
 - App Check enforcement, geçerli istek metrikleri kontrol edildikten sonra Firebase Console'dan açılmalıdır.
 - Store build alınmadan önce Android release/upload keystore yapılandırılmalıdır. Release sürümü bilerek debug anahtarıyla imzalanmaz.

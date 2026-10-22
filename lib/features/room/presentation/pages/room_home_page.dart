@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/speech/voice_answer_button.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 
-class RoomHomePage extends StatelessWidget {
+class RoomHomePage extends StatefulWidget {
   const RoomHomePage({super.key});
+
+  @override
+  State<RoomHomePage> createState() => _RoomHomePageState();
+}
+
+class _RoomHomePageState extends State<RoomHomePage> {
+  bool _preparingSpeech = false;
+
+  Future<void> _openMode(String route) async {
+    if (_preparingSpeech) return;
+    setState(() => _preparingSpeech = true);
+    try {
+      if (await prepareSpeechInput(context) && mounted) context.go(route);
+    } finally {
+      if (mounted) setState(() => _preparingSpeech = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +72,13 @@ class RoomHomePage extends StatelessWidget {
                           ),
                           const Spacer(),
                           FilledButton.icon(
-                            onPressed: () => context.go('/solo'),
+                            onPressed: _preparingSpeech ? null : () => _openMode('/solo'),
                             icon: const Icon(Icons.person_rounded),
                             label: const Text('Tek Oyunculu'),
                           ),
                           const SizedBox(height: 12),
                           OutlinedButton.icon(
-                            onPressed: () => context.go('/multiplayer'),
+                            onPressed: _preparingSpeech ? null : () => _openMode('/multiplayer'),
                             icon: const Icon(Icons.group_rounded),
                             label: const Text('Çok Oyunculu'),
                           ),

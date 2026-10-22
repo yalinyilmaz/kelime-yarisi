@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path/path.dart' as path;
@@ -27,9 +26,7 @@ Future<void> _bootstrap() async {
   );
   await FirebaseAppCheck.instanceFor(app: app).activate(
     providerAndroid: const AndroidPlayIntegrityProvider(),
-    providerApple: kDebugMode
-        ? const AppleDebugProvider()
-        : const AppleAppAttestProvider(),
+    providerApple: const AppleAppAttestProvider(),
   );
   database.setPersistenceEnabled(true);
   final scoreStorage = await HydratedStorage.build(

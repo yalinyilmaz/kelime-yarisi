@@ -52,6 +52,7 @@ class SoloQuestionCard extends StatelessWidget {
             clue: state.question!.clue,
             hints: state.visibleHints,
             answer: WordPinInput(
+              voiceOnly: true,
               question: state.question!,
               questionIndex: state.questionIndex,
               revealedMask: state.revealedMask,

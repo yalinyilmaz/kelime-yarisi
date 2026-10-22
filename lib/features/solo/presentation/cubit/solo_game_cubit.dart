@@ -27,6 +27,8 @@ class SoloGameCubit extends Cubit<SoloGameState> {
   final FirebaseRoomService _service;
   final SoloBestScoreCubit _best;
   final GameSoundController _sounds;
+  bool _foreground = true;
+  bool _speechListening = false;
   final int Function() _nowMs;
   Timer? _timer;
   Timer? _feedbackTimer;
@@ -229,8 +231,14 @@ class SoloGameCubit extends Cubit<SoloGameState> {
   }
 
   void setForeground(bool foreground) {
-    unawaited(_sounds.setForeground(foreground));
+    _foreground = foreground;
+    unawaited(_sounds.setForeground(_foreground && !_speechListening));
     if (foreground) refreshTime();
+  }
+
+  Future<void> setSpeechListening(bool listening) {
+    _speechListening = listening;
+    return _sounds.setForeground(_foreground && !listening);
   }
 
   void leave() {

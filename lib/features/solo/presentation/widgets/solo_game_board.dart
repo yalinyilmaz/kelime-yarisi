@@ -123,7 +123,11 @@ class SoloGameBoard extends StatelessWidget {
                 if (playing && state.question != null)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-                    child: SoloGameActions(state: state, onSubmit: onSubmit),
+                    child: SoloGameActions(
+                      state: state,
+                      onSubmit: onSubmit,
+                      answerController: answerController,
+                    ),
                   ),
               ],
             ),

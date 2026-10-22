@@ -65,6 +65,7 @@ class GameQuestionCard extends StatelessWidget {
                 clue: question.clue,
                 hints: state.visibleClueHints,
                 answer: WordPinInput(
+                  voiceOnly: true,
                   question: question,
                   questionIndex: state.questionIndex,
                   revealedMask: state.hints.revealedMask(

@@ -44,6 +44,18 @@ class GameQuestion extends Equatable {
     ...acceptedAnswers,
   ].any((candidate) => _comparisonKey(input) == _comparisonKey(candidate));
 
+  /// Voice answers may contain filler words or suffixes. Match the normalized
+  /// answer anywhere in the final transcript, with all whitespace removed.
+  String? answerInSpeech(String transcript) {
+    final spoken = _comparisonKey(transcript);
+    return [answer, ...acceptedAnswers].any((candidate) {
+          final expected = _comparisonKey(candidate);
+          return expected.isNotEmpty && spoken.contains(expected);
+        })
+        ? answer
+        : null;
+  }
+
   // Resolve ambiguous ASCII letters using their position in this word.
   // Different letters stay different; only Turkish/ASCII equivalents are converted.
   String normalizeLetter(String input, int index) {
