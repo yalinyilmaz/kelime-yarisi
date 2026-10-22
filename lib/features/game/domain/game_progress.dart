@@ -30,6 +30,7 @@ class GameProgress extends Equatable {
     List<GameQuestion> questions, {
     required AnswerOutcome outcome,
     required int revealedCount,
+    bool penalizeIncorrect = true,
   }) {
     if (finished || questionIndex >= questions.length) return this;
     final value =
@@ -43,7 +44,7 @@ class GameProgress extends Equatable {
           score +
           (correct
               ? value
-              : outcome == AnswerOutcome.beaten
+              : outcome == AnswerOutcome.beaten || !penalizeIncorrect
               ? 0
               : -value),
       correctCount: correctCount + (correct ? 1 : 0),

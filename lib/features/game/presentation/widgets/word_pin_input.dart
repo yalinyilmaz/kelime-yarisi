@@ -18,11 +18,13 @@ class WordPinInput extends StatefulWidget {
     required this.answerController,
     required this.onSubmitted,
     this.outcome,
+    this.revealAnswer = true,
     this.voiceOnly = false,
     super.key,
   });
 
   final AnswerOutcome? outcome;
+  final bool revealAnswer;
   final bool voiceOnly;
   final GameQuestion question;
   final int questionIndex;
@@ -49,7 +51,7 @@ class _WordPinInputState extends State<WordPinInput>
     super.initState();
     _text.addListener(_inputChanged);
     _focus.addListener(_focusChanged);
-    if (widget.outcome != null) _fillAnswer();
+    if (_showAnswer) _fillAnswer();
   }
 
   @override
@@ -112,6 +114,8 @@ class _WordPinInputState extends State<WordPinInput>
   @override
   bool get wantKeepAlive => true;
 
+  bool get _showAnswer => widget.outcome != null && widget.revealAnswer;
+
   List<int> _hiddenPositions(int mask) => [
     for (var i = 0; i < widget.question.letterCount; i++)
       if ((mask & (1 << i)) == 0) i,
@@ -136,9 +140,10 @@ class _WordPinInputState extends State<WordPinInput>
       );
       _publishAnswer();
     }
-    if (widget.outcome != null &&
+    if (_showAnswer &&
         (oldWidget.outcome != widget.outcome ||
-            oldWidget.questionIndex != widget.questionIndex)) {
+            oldWidget.questionIndex != widget.questionIndex ||
+            oldWidget.revealAnswer != widget.revealAnswer)) {
       _fillAnswer();
     }
     _scheduleFocus();
@@ -155,7 +160,7 @@ class _WordPinInputState extends State<WordPinInput>
 
   void _publishAnswer() {
     if (widget.voiceOnly) return;
-    if (widget.outcome != null) {
+    if (_showAnswer) {
       widget.answerController.text = widget.question.answer;
       return;
     }
@@ -214,8 +219,7 @@ class _WordPinInputState extends State<WordPinInput>
                       index: i,
                       outcome: widget.outcome,
                       character:
-                          widget.outcome != null ||
-                              (widget.revealedMask & (1 << i)) != 0
+                          _showAnswer || (widget.revealedMask & (1 << i)) != 0
                           ? widget.question.letters[i]
                           : i < letters.length
                           ? letters[i]
@@ -258,8 +262,7 @@ class _WordPinInputState extends State<WordPinInput>
                       index: i,
                       outcome: widget.outcome,
                       character:
-                          widget.outcome != null ||
-                              (widget.revealedMask & (1 << i)) != 0
+                          _showAnswer || (widget.revealedMask & (1 << i)) != 0
                           ? widget.question.letters[i]
                           : hiddenPositions.indexOf(i) < _text.text.length
                           ? _text.text[hiddenPositions.indexOf(i)]

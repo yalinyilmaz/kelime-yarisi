@@ -78,6 +78,7 @@ void main() {
               .read<GameCubit>()
               .state
               .question!;
+          expect(find.byKey(const ValueKey('hint-action')), findsNothing);
           expect(native.lastOptions!.contextualPhrases, [
             question.answer,
             ...question.acceptedAnswers,
@@ -91,13 +92,24 @@ void main() {
             isTrue,
           );
           expect(service.saves, isEmpty);
-          await hold.up();
-          await tester.pump();
-          native.say(correct ? 'bir düşüneyim cevabım kapıdır' : 'bilmiyorum');
+          if (!correct) {
+            await hold.up();
+            await tester.pump();
+          }
+          native.say(
+            correct ? 'bir düşüneyim cevabım kapıdır' : 'bilmiyorum',
+            finalResult: !correct,
+          );
           await tester.pump();
           await tester.pump(const Duration(milliseconds: 900));
           await tester.pumpAndSettle();
-          expect(service.saves.single.score, correct ? 400 : -400);
+          expect(service.saves.single.score, correct ? 400 : 0);
+          if (correct) {
+            await hold.up();
+            native.say('kapı');
+            await tester.pump();
+            expect(service.saves, hasLength(1));
+          }
           expect(
             find.text(correct ? 'Doğru cevap!' : 'Yanlış cevap'),
             findsOneWidget,
@@ -105,7 +117,12 @@ void main() {
           final cells = tester.widgetList<WordLetterCell>(
             find.byType(WordLetterCell),
           );
-          expect(cells.map((c) => c.character).join(), 'KAPI');
+          if (correct) {
+            expect(cells.map((c) => c.character).join(), 'KAPI');
+          } else {
+            expect(cells.every((c) => c.character == null), isTrue);
+            expect(find.text('Doğru cevap: KAPI'), findsNothing);
+          }
           expect(
             cells.every(
               (c) =>

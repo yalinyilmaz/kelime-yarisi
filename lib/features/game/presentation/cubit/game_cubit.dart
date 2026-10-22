@@ -176,43 +176,28 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  Future<void> submitAnswer(String input) async {
+  Future<void> submitAnswer(String input, {int? questionIndex}) async {
     _tick();
+    if (questionIndex != null && questionIndex != state.questionIndex) return;
     if (!state.canAct) return;
-    if (input.trim().isEmpty) {
-      emit(
-        state.copyWith(
-          errorMessage: 'Cevabını yaz veya Bilemiyorum seçeneğini kullan.',
-        ),
-      );
-      return;
-    }
-    if (GameQuestion.normalizeAnswer(input).length !=
-        state.question!.letterCount) {
+    if (input.isNotEmpty &&
+        GameQuestion.normalizeAnswer(input).length !=
+            state.question!.letterCount) {
       emit(state.copyWith(errorMessage: 'Tüm boş harfleri doldur.'));
       return;
     }
+    // Consume the attempt before the request; a delayed stream or a failed
+    // upload must not open another microphone window for the same question.
+    emit(state.copyWith(submittedQuestionIndex: state.questionIndex));
     if (state.room.isRace) {
       await _raceAction('answer', input: input);
       return;
     }
     await _resolve(
-      state.question!.accepts(input)
+      input.isNotEmpty && state.question!.accepts(input)
           ? AnswerOutcome.correct
           : AnswerOutcome.wrong,
     );
-  }
-
-  Future<void> giveUp({int? questionIndex}) async {
-    _tick();
-    if (questionIndex != null && questionIndex != state.questionIndex) return;
-    if (state.canAct) {
-      if (state.room.isRace) {
-        await _raceAction('giveUp');
-      } else {
-        await _resolve(AnswerOutcome.wrong);
-      }
-    }
   }
 
   Future<void> _raceAction(String action, {String? input}) async {
@@ -255,19 +240,20 @@ class GameCubit extends Cubit<GameState> {
     final correct = outcome == AnswerOutcome.correct;
     final feedback = correct
         ? 'Doğru! +$value puan.'
-        : '${outcome == AnswerOutcome.timeout ? 'Süre doldu' : 'Bilemedin'}. −$value puan.';
+        : '${outcome == AnswerOutcome.timeout ? 'Süre doldu' : 'Bilemedin'}. Puanın değişmedi.';
     return _save(
       state.progress.resolve(
         state.questions,
         outcome: outcome,
         revealedCount: revealedCount,
+        penalizeIncorrect: false,
       ),
       feedback: feedback,
       answerFeedback: GameAnswerFeedback(
         questionIndex: index,
         question: question,
         outcome: outcome,
-        scoreDelta: correct ? value : -value,
+        scoreDelta: correct ? value : 0,
       ),
     );
   }
@@ -338,11 +324,7 @@ class GameCubit extends Cubit<GameState> {
             questionIndex: index,
             question: state.questions[index],
             outcome: outcome,
-            scoreDelta: outcome == AnswerOutcome.beaten
-                ? 0
-                : outcome == AnswerOutcome.correct
-                ? value
-                : progress.lastScoreDelta ?? -value,
+            scoreDelta: outcome == AnswerOutcome.correct ? value : 0,
             winnerName: race.winnerName,
           );
         }

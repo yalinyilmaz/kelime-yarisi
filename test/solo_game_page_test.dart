@@ -214,6 +214,7 @@ void main() {
         game.state.question!.answer,
         ...game.state.question!.acceptedAnswers,
       ]);
+      expect(find.byKey(const ValueKey('hint-action')), findsNothing);
       native.say('ka', finalResult: false);
       await tester.pump();
       expect(
@@ -223,9 +224,11 @@ void main() {
             .text,
         isEmpty,
       );
-      await hold.up();
+      native.say('cevap kapıdır', finalResult: false);
       await tester.pump();
-      native.say('cevap kapıdır');
+      expect(game.state.progress.score, 300);
+      await hold.up();
+      native.say('kapı');
       await tester.pump();
       expect(game.state.progress.score, 300);
       await tester.pump(const Duration(milliseconds: 800));

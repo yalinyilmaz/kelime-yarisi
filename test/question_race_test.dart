@@ -3,9 +3,11 @@ import 'support/fake_native_speech.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:kelime_yarisi/core/theme/app_theme.dart';
 import 'package:kelime_yarisi/features/game/domain/game_progress.dart';
 import 'package:kelime_yarisi/features/game/domain/question_race.dart';
+import 'package:kelime_yarisi/features/game/domain/shared_hints.dart';
 import 'package:kelime_yarisi/features/game/presentation/cubit/game_cubit.dart';
 import 'package:kelime_yarisi/features/game/presentation/pages/game_page.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cell.dart';
@@ -69,6 +71,184 @@ GameRoom winnerRoom(GameRoom room, int nextAt) => room.copyWith(
 
 void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    for (final ending in ['timeout', 'winner']) {
+      testWidgets(
+        '$platform: wrong answer stays red and hidden until $ending resolves the shared round',
+        (tester) async {
+          final service = RaceRoomService()
+            ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000)
+                .copyWith(hints: const {0: SharedHints(revealedCount: 1)});
+          final native = FakeNativeSpeech();
+          service.onPlay = () async {
+            if (service.actions.last.action != 'answer') return;
+            service.publish(
+              service.room.copyWith(
+                progress: const {
+                  'guest': GameProgress(
+                    questionIndex: 1,
+                    wrongCount: 1,
+                    lastOutcome: AnswerOutcome.wrong,
+                  ),
+                },
+              ),
+            );
+          };
+          await tester.pumpWidget(
+            withSpeech(
+              RepositoryProvider<FirebaseRoomService>.value(
+                value: service,
+                child: MaterialApp(
+                  theme: AppTheme.dark.copyWith(platform: platform),
+                  home: GamePage(room: service.room, sounds: FakeGameSounds()),
+                ),
+              ),
+              recognizer: native,
+            ),
+          );
+          service.offsets.add(0);
+          service.connections.add(true);
+          await tester.pump();
+          final button = find.byKey(const ValueKey('answer-action'));
+          final hold = await tester.startGesture(tester.getCenter(button));
+          await tester.pump();
+          native.say('yanlış kelime');
+          await tester.pump();
+          await hold.up();
+          await tester.pumpAndSettle();
+          expect(find.text('Yanlış cevap'), findsOneWidget);
+          expect(find.text('Doğru cevap: KAPI'), findsNothing);
+          var cells = tester.widgetList<WordLetterCell>(
+            find.byType(WordLetterCell),
+          );
+          expect(cells.every((c) => c.outcome == AnswerOutcome.wrong), isTrue);
+          expect(cells.where((c) => c.revealed), hasLength(1));
+          expect(
+            cells.where((c) => !c.revealed).every((c) => c.character == null),
+            isTrue,
+          );
+          expect(tester.widget<FilledButton>(button).onPressed, isNull);
+          final now = DateTime.now().millisecondsSinceEpoch;
+          service.publish(
+            service.room.copyWith(
+              race: QuestionRace(
+                questionIndex: 0,
+                startedAtMs: service.room.race!.startedAtMs,
+                nextAtMs: now + 2000,
+                winnerId: ending == 'winner' ? 'host' : null,
+                winnerName: ending == 'winner' ? 'Arman' : null,
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          cells = tester.widgetList<WordLetterCell>(
+            find.byType(WordLetterCell),
+          );
+          expect(cells.map((c) => c.character).join(), 'KAPI');
+          expect(find.text('Doğru cevap: KAPI'), findsOneWidget);
+          expect(
+            find.text(ending == 'winner' ? 'Arman bildi 😔' : 'Süre doldu'),
+            findsOneWidget,
+          );
+          expect(tester.widget<FilledButton>(button).onPressed, isNull);
+          await tester.pumpWidget(const SizedBox());
+          await service.disposeStreams();
+        },
+      );
+    }
+  }
+
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    for (final outcome in ['unmatched', 'silence', 'native failure']) {
+      testWidgets(
+        '$platform: $outcome consumes the voice attempt until the next question even when upload fails',
+        (tester) async {
+          final service = RaceRoomService()
+            ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000);
+          final native = FakeNativeSpeech();
+          service.onPlay = () async {
+            if (service.actions.last.action == 'answer') {
+              throw const RoomServiceException(
+                'unavailable',
+                'Cevap kaydedilemedi.',
+              );
+            }
+          };
+          await tester.pumpWidget(
+            withSpeech(
+              RepositoryProvider<FirebaseRoomService>.value(
+                value: service,
+                child: MaterialApp(
+                  theme: AppTheme.dark.copyWith(platform: platform),
+                  home: GamePage(room: service.room, sounds: FakeGameSounds()),
+                ),
+              ),
+              recognizer: native,
+            ),
+          );
+          service.offsets.add(0);
+          service.connections.add(true);
+          await tester.pump();
+          final button = find.byKey(const ValueKey('answer-action'));
+          final game = tester.element(button).read<GameCubit>();
+          final hold = await tester.startGesture(tester.getCenter(button));
+          await tester.pump();
+          expect(native.starts, 1);
+          if (outcome == 'unmatched') {
+            native.say('yanlış kelime', finalResult: false);
+            await tester.pump();
+          }
+          await tester.pump(const Duration(seconds: 3));
+          if (outcome == 'native failure') {
+            native.error!(SpeechRecognitionError('error_network', true));
+          }
+          await tester.pump(const Duration(seconds: 2));
+          await hold.up();
+          await tester.pump();
+          expect(
+            service.actions.where((a) => a.action == 'answer'),
+            hasLength(1),
+          );
+          expect(service.actions.last.input, '');
+          expect(game.state.errorMessage, isNotNull);
+          expect(game.state.canAct, isFalse);
+          expect(tester.widget<FilledButton>(button).onPressed, isNull);
+          final retry = await tester.startGesture(tester.getCenter(button));
+          await tester.pump();
+          await retry.up();
+          await game.submitAnswer('kapi');
+          await game.revealLetter();
+          expect(native.starts, 1);
+          expect(
+            service.actions.where((a) => a.action == 'answer'),
+            hasLength(1),
+          );
+          service.publish(
+            service.room.copyWith(
+              race: QuestionRace(
+                questionIndex: 1,
+                startedAtMs: DateTime.now().millisecondsSinceEpoch - 1,
+              ),
+            ),
+          );
+          // A real server advances every player's progress at the round end.
+          service.publish(
+            service.room.copyWith(
+              progress: const {
+                'guest': GameProgress(questionIndex: 1, wrongCount: 1),
+              },
+            ),
+          );
+          await tester.pump();
+          expect(game.state.canAct, isTrue);
+          expect(tester.widget<FilledButton>(button).onPressed, isNotNull);
+          await tester.pumpWidget(const SizedBox());
+          await service.disposeStreams();
+        },
+      );
+    }
+  }
+
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
     testWidgets(
       '$platform: hints stay in their card and speech submits the matched answer',
       (tester) async {
@@ -127,12 +307,17 @@ void main() {
         native.say('ka', finalResult: false);
         await tester.pump();
         expect(service.actions.where((a) => a.action == 'answer'), isEmpty);
-        await hold.up();
-        await tester.pump();
-        native.say('cevap kapıdır');
+        native.say('cevap kapıdır', finalResult: false);
         await tester.pump();
         expect(service.actions.last.action, 'answer');
         expect(service.actions.last.input, 'KAPI');
+        await hold.up();
+        native.say('kapı');
+        await tester.pump();
+        expect(
+          service.actions.where((a) => a.action == 'answer'),
+          hasLength(1),
+        );
         expect(service.saves, isEmpty);
         expect(find.byType(TextField), findsNothing);
         expect(tester.testTextInput.isVisible, isFalse);
@@ -262,12 +447,7 @@ void main() {
         native.say('kapıdır');
         await hold.up();
         await tester.pump();
-        expect(
-          service.actions.where(
-            (a) => a.action == 'answer' || a.action == 'giveUp',
-          ),
-          isEmpty,
-        );
+        expect(service.actions.where((a) => a.action == 'answer'), isEmpty);
         expect(
           tester
               .widget<WordPinInput>(find.byType(WordPinInput))

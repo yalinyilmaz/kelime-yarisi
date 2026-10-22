@@ -18,6 +18,7 @@ class FakeNativeSpeech extends Fake implements SpeechToText {
   SpeechResultListener? result;
   SpeechListenOptions? lastOptions;
   Completer<bool>? permissionGate;
+  Completer<void>? cancelGate;
   int starts = 0;
   int stops = 0;
   int cancels = 0;
@@ -79,6 +80,7 @@ class FakeNativeSpeech extends Fake implements SpeechToText {
   @override
   Future<void> cancel() async {
     cancels++;
+    await cancelGate?.future;
   }
 }
 

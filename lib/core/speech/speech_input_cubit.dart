@@ -67,6 +67,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
   Timer? _settleTimer;
   Timer? _releaseTimer;
   List<String> _latestAlternatives = const [];
+  bool Function(String)? _matchesAnswer;
   Future<bool>? _preparation;
   Future<dynamic>? _starting;
   Future<void> _cleanup = Future.value();
@@ -142,7 +143,10 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
     }
   }
 
-  Future<void> start({List<String> contextualPhrases = const []}) async {
+  Future<void> start({
+    List<String> contextualPhrases = const [],
+    bool Function(String)? matchesAnswer,
+  }) async {
     if (isClosed || state.busy) return;
     final session = ++_session;
     await _cleanup;
@@ -151,6 +155,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
     _completing = false;
     _clock.reset();
     _latestAlternatives = const [];
+    _matchesAnswer = matchesAnswer;
     _publish(
       SpeechInputPhase.starting,
       transcript: '',
@@ -250,7 +255,21 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
                 .toList()
           : const [],
     );
-    if (result.finalResult) {
+    final matchesAnswer = _matchesAnswer;
+    if (matchesAnswer != null && _latestAlternatives.any(matchesAnswer)) {
+      _completing = true;
+      _matchesAnswer = null;
+      _stopTimers();
+      // Submit the known match now; native teardown must not delay the race.
+      // The next attempt still waits for this cleanup in start().
+      _cleanup = _cancelNative();
+      _publish(
+        SpeechInputPhase.completed,
+        transcript: text,
+        progress: 0,
+        finalTranscripts: _latestAlternatives,
+      );
+    } else if (result.finalResult) {
       unawaited(_complete(text, alternatives: _latestAlternatives));
     } else if (state.phase == SpeechInputPhase.finalizing) {
       _settleSnapshot();
@@ -315,6 +334,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
     if (_completing || isClosed) return;
     final session = _session;
     _completing = true;
+    _matchesAnswer = null;
     _stopTimers();
     _publish(SpeechInputPhase.finalizing, transcript: transcript);
     try {
@@ -357,6 +377,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
 
   void _fail(String code, String message) {
     ++_session;
+    _matchesAnswer = null;
     _stopTimers();
     ErrorReporter.report(
       _SpeechFailure(code),
@@ -377,6 +398,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
   Future<void> cancel() async {
     if (isClosed || state.phase == SpeechInputPhase.cancelling) return;
     ++_session;
+    _matchesAnswer = null;
     _stopTimers();
     _publish(SpeechInputPhase.cancelling, transcript: '', progress: 0);
     try {

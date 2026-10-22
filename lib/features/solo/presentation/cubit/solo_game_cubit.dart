@@ -104,26 +104,21 @@ class SoloGameCubit extends Cubit<SoloGameState> {
     }
   }
 
-  void submitAnswer(String input) {
+  void submitAnswer(String input, {int? questionIndex}) {
     refreshTime();
+    if (questionIndex != null && questionIndex != state.questionIndex) return;
     if (!state.canAct) return;
-    if (GameQuestion.normalizeAnswer(input).length !=
-        state.question!.letterCount) {
+    if (input.isNotEmpty &&
+        GameQuestion.normalizeAnswer(input).length !=
+            state.question!.letterCount) {
       emit(state.copyWith(errorMessage: 'Tüm boş harfleri doldur.'));
       return;
     }
     _resolve(
-      state.question!.accepts(input)
+      input.isNotEmpty && state.question!.accepts(input)
           ? AnswerOutcome.correct
           : AnswerOutcome.wrong,
     );
-  }
-
-  void giveUp(int questionIndex) {
-    refreshTime();
-    if (state.canAct && state.questionIndex == questionIndex) {
-      _resolve(AnswerOutcome.wrong);
-    }
   }
 
   void _resolve(AnswerOutcome outcome) {

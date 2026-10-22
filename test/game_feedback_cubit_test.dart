@@ -21,7 +21,7 @@ void main() {
       await tester.pump();
       expect(game.state.questionIndex, 1);
       expect(game.state.canAct, isTrue);
-      expect(game.state.progress.score, -400);
+      expect(game.state.progress.score, 0);
       expect(feedback.state!.questionIndex, 0);
       expect(feedback.state!.question.answer, 'KAPI');
       expect(feedback.state!.outcome, AnswerOutcome.timeout);
@@ -37,7 +37,7 @@ void main() {
   );
 
   testWidgets(
-    'Failed writes show no success feedback; incomplete input and stale give-up lose no points',
+    'Failed writes show no success feedback; incomplete and stale speech results lose no points',
     (tester) async {
       final service = FakeRoomService()..room = testRoom();
       var now = 1000;
@@ -56,7 +56,7 @@ void main() {
       expect(game.state.progress.score, 0);
       service.onSave = null;
       now = 26000;
-      await game.giveUp(questionIndex: 0);
+      await game.submitAnswer('', questionIndex: 0);
       await tester.pump();
       expect(game.state.questionIndex, 1);
       expect(

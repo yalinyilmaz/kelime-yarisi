@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../../domain/game_answer_feedback.dart';
+import '../../domain/game_progress.dart';
 import '../cubit/game_feedback_cubit.dart';
 import '../cubit/game_cubit.dart';
 import '../cubit/game_state.dart';
@@ -33,6 +34,9 @@ class GameQuestionCard extends StatelessWidget {
           ? result
           : null;
       final question = state.question!;
+      final revealAnswer = state.room.isRace
+          ? state.room.race!.isResolved
+          : currentResult?.outcome != AnswerOutcome.wrong;
       return Card(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -77,12 +81,16 @@ class GameQuestionCard extends StatelessWidget {
                   answerController: answerController,
                   onSubmitted: onSubmitted,
                   outcome: currentResult?.outcome,
+                  revealAnswer: revealAnswer,
                 ),
                 feedback: currentResult == null
                     ? null
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: AnswerFeedbackBanner(result: currentResult),
+                        child: AnswerFeedbackBanner(
+                          result: currentResult,
+                          revealAnswer: revealAnswer,
+                        ),
                       ),
               ),
               if (currentResult == null) ...[

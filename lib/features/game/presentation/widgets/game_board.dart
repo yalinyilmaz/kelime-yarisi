@@ -17,13 +17,11 @@ class GameBoard extends StatelessWidget {
     required this.state,
     required this.answerController,
     required this.onSubmit,
-    required this.onGiveUp,
     super.key,
   });
   final GameState state;
   final TextEditingController answerController;
   final VoidCallback onSubmit;
-  final VoidCallback onGiveUp;
 
   @override
   Widget build(BuildContext context) {

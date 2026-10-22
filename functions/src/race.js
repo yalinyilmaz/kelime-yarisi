@@ -17,7 +17,7 @@ function score(room, uid, outcome, at) {
   const index = room.race.questionIndex;
   const previous = room.progress?.[uid] ?? {};
   if ((previous.questionIndex ?? 0) > index) return; // Exactly one attempt per player/question.
-  const delta = outcome === 'correct' ? valueOf(room, index) : outcome === 'beaten' ? 0 : -valueOf(room, index);
+  const delta = outcome === 'correct' ? valueOf(room, index) : 0;
   room.progress ??= {};
   room.progress[uid] = {
     questionIndex: index + 1,
@@ -81,12 +81,11 @@ export function reduceRace(current, uid, {action = 'sync', questionIndex, input,
       : {...old, firstVoterId: uid};
     room.hints ??= {};
     room.hints[index] = next;
-  } else if (action === 'giveUp') {
-    score(room, uid, 'wrong', now);
   } else if (action === 'answer') {
     const question = room.questions[index];
-    if (letters(input).length !== letters(question.answer).length) throw new ServiceError('invalid-argument', 'Tüm boş harfleri doldur.');
-    if ([question.answer, ...(question.acceptedAnswers ?? [])].some(a => comparison(a) === comparison(input))) {
+    // Empty input represents a completed speech attempt with no matching answer.
+    if (input !== '' && letters(input).length !== letters(question.answer).length) throw new ServiceError('invalid-argument', 'Tüm boş harfleri doldur.');
+    if (input !== '' && [question.answer, ...(question.acceptedAnswers ?? [])].some(a => comparison(a) === comparison(input))) {
       resolve(room, uid, now);
     } else score(room, uid, 'wrong', now);
   }
@@ -135,7 +134,7 @@ export class RaceService {
   }
 
   async play(uid, data) {
-    if (!['sync', 'answer', 'hint', 'clueHint', 'giveUp'].includes(data.action) ||
+    if (!['sync', 'answer', 'hint', 'clueHint'].includes(data.action) ||
         (data.action !== 'sync' && (!Number.isInteger(data.questionIndex) || data.questionIndex < 0 || data.questionIndex > 13)) ||
         (data.action === 'hint' && (!Number.isInteger(data.expectedRevealedCount) || data.expectedRevealedCount < 0 || data.expectedRevealedCount > 9)) ||
         (data.action === 'clueHint' && (!Number.isInteger(data.expectedHintCount) || data.expectedHintCount < 0 || data.expectedHintCount > 1)) ||

@@ -25,6 +25,7 @@ class GameState extends Equatable {
     this.errorMessage,
     this.answerFeedback,
     this.recordedQuestionIndices = const {},
+    this.submittedQuestionIndex,
   });
 
   final GameRoom room;
@@ -42,6 +43,7 @@ class GameState extends Equatable {
   final String? errorMessage;
   final GameAnswerFeedback? answerFeedback;
   final Set<int> recordedQuestionIndices;
+  final int? submittedQuestionIndex;
   bool get isHistoryReady =>
       !room.usesQuestionPool || recordedQuestionIndices.contains(questionIndex);
 
@@ -111,6 +113,7 @@ class GameState extends Equatable {
 
   // Voting must not detach the keyboard's input connection.
   bool get canEditAnswer =>
+      submittedQuestionIndex != questionIndex &&
       clockReady &&
       isConnected &&
       !isSaving &&
@@ -173,6 +176,7 @@ class GameState extends Equatable {
     String? errorMessage,
     GameAnswerFeedback? answerFeedback,
     Set<int>? recordedQuestionIndices,
+    int? submittedQuestionIndex,
     bool clearError = false,
     bool clearFeedback = false,
   }) => GameState(
@@ -192,6 +196,8 @@ class GameState extends Equatable {
     answerFeedback: answerFeedback ?? this.answerFeedback,
     recordedQuestionIndices:
         recordedQuestionIndices ?? this.recordedQuestionIndices,
+    submittedQuestionIndex:
+        submittedQuestionIndex ?? this.submittedQuestionIndex,
   );
 
   @override
@@ -211,5 +217,6 @@ class GameState extends Equatable {
     errorMessage,
     answerFeedback,
     recordedQuestionIndices,
+    submittedQuestionIndex,
   ];
 }

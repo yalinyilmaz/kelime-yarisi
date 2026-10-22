@@ -35,8 +35,8 @@ class GameRulesInfo extends StatelessWidget {
               ),
               Text(
                 isRace
-                    ? 'İlk doğru cevap soruyu kapatır ve puanı kazanır. Diğer oyuncular bu yüzden puan kaybetmez. Yanlış cevap, bilemiyorum veya süre aşımı: −soru değeri.'
-                    : 'Doğru cevap: +soru değeri. Yanlış cevap veya bilemiyorum: −soru değeri. '
+                    ? 'İlk doğru cevap soruyu kapatır ve puanı kazanır. Yanlış cevap, süre aşımı veya başka oyuncunun bilmesi puan kaybettirmez. Yanlış cevap veren oyuncu sonraki soruyu bekler.'
+                    : 'Doğru cevap: +soru değeri. Yanlış cevap veya süre aşımı puan kaybettirmez. '
                           'Cevap sonrası sorunun bitmesi beklenir. Süre dolunca cevapsız soru bilememiş sayılır. Pas yok.',
               ),
             ],

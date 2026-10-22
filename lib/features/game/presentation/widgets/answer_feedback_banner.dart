@@ -8,11 +8,13 @@ class AnswerFeedbackBanner extends StatelessWidget {
   const AnswerFeedbackBanner({
     required this.result,
     this.previousQuestion = false,
+    this.revealAnswer = true,
     super.key,
   });
 
   final GameAnswerFeedback result;
   final bool previousQuestion;
+  final bool revealAnswer;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class AnswerFeedbackBanner extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    if (!result.isCorrect) ...[
+                    if (!result.isCorrect && revealAnswer) ...[
                       const SizedBox(height: 4),
                       Text(
                         'Doğru cevap: ${result.question.answer}',

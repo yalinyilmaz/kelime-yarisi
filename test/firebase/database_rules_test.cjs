@@ -86,15 +86,15 @@ async function main() {
       await adminUpdate(roomPath, {startsAtMs: Date.now() - 26000});
       await fails(set(h, hint(3, 'host')));
       await fails(set(ref(host, `${roomPath}/progress/host`), progress({score: 100})));
-      await succeeds(set(ref(host, `${roomPath}/progress/host`), progress({score: -100, correctCount: 0, wrongCount: 1, lastOutcome: 'timeout'})));
+      await fails(set(ref(host, `${roomPath}/progress/host`), progress({score: -100, correctCount: 0, wrongCount: 1, lastOutcome: 'timeout'})));
+      await succeeds(set(ref(host, `${roomPath}/progress/host`), progress({score: 0, correctCount: 0, wrongCount: 1, lastOutcome: 'timeout'})));
       await succeeds(set(p, progress({questionIndex: 2, score: 800, correctCount: 2})));
       await fails(set(p, progress({questionIndex: 3, score: 1400, correctCount: 3})));
       await adminUpdate(roomPath, {startsAtMs: Date.now() - 176000});
       await succeeds(set(ref(guest, `${roomPath}/status`), 'results'));
       await fails(set(ref(host, `${roomPath}/hints/1`), hint(1, null, 1)));
-      let score = 800;
+      const score = 800;
       for (let i = 2; i < 7; i++) {
-        score -= (i + 4) * 100;
         await succeeds(set(p, progress({questionIndex: i + 1, score, correctCount: 2, wrongCount: i - 1,
           lastOutcome: 'timeout', finished: i === 6})));
       }
@@ -102,6 +102,20 @@ async function main() {
       await fails(set(p, null));
       await succeeds(set(ref(host, roomPath), null));
     }
+
+    // Wrong speech cannot gain or subtract points, or write another player's progress.
+    const wrongPath = 'rooms/err234';
+    await env.withSecurityRulesDisabled(context => set(ref(context.database(), wrongPath), {
+      name:'Wrong Test', code:'ERR-234', hostId:'host', targetPlayerCount:2, playerCount:2,
+      gameMode:'classic', status:'playing', questionSetId:'classic-v1', gameplayVersion:'sync-v1',
+      startsAtMs:Date.now()-1000, createdAt:Date.now(), players:{host:player('Host',true),guest:player('Guest')},
+    }));
+    const wrong = score => progress({score, correctCount:0, wrongCount:1, lastOutcome:'wrong'});
+    await fails(set(ref(guest, `${wrongPath}/progress/guest`), wrong(-400)));
+    await fails(set(ref(guest, `${wrongPath}/progress/guest`), wrong(400)));
+    await fails(set(ref(host, `${wrongPath}/progress/guest`), wrong(0)));
+    await succeeds(set(ref(guest, `${wrongPath}/progress/guest`), wrong(0)));
+    await fails(set(ref(guest, `${wrongPath}/progress/guest`), wrong(400)));
 
     // Concurrent requests complete a pair once; a retry cannot open the next letter.
     const roomPath = 'rooms/xyz678';

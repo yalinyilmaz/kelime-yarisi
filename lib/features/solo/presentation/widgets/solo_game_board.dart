@@ -14,13 +14,11 @@ class SoloGameBoard extends StatelessWidget {
   const SoloGameBoard({
     required this.answerController,
     required this.onSubmit,
-    required this.onGiveUp,
     required this.onLeave,
     super.key,
   });
   final TextEditingController answerController;
   final VoidCallback onSubmit;
-  final VoidCallback onGiveUp;
   final VoidCallback onLeave;
 
   @override

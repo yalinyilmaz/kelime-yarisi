@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {reduceRace, initialRace, QUESTION_MS, REVEAL_MS} from '../src/race.js';
+import {reduceRace, RaceService, initialRace, QUESTION_MS, REVEAL_MS} from '../src/race.js';
 
 const demo = JSON.parse(readFileSync(new URL('../content/demo.json', import.meta.url)));
 const room = () => ({status:'playing', gameplayVersion:'race-v1', targetPlayerCount:2,
@@ -29,16 +29,16 @@ test('first correct wins once; stale answers/hints cannot score or change the re
   assert.equal(next.progress.arman.correctCount, 1);
 });
 
-test('wrong answer keeps its original penalty and cannot claim a winner later', () => {
+test('wrong answer costs no points and cannot claim a winner later', () => {
   let r = reduceRace(room(), 'yalin', answer(0, 'saat'), 1100);
   r = reduceRace(r, 'arman', {action:'hint',questionIndex:0,expectedRevealedCount:0}, 1200);
   assert.equal(r.hints[0].revealedCount, 1);
-  assert.equal(r.progress.yalin.lastScoreDelta, -400);
+  assert.equal(r.progress.yalin.lastScoreDelta, 0);
   r = reduceRace(r, 'yalin', answer(0, 'kapi'), 1250);
   assert.equal(r.race.winnerId, undefined);
   r = reduceRace(r, 'arman', answer(0, 'kapi'), 1300);
   assert.equal(r.progress.arman.score, 300);
-  assert.equal(r.progress.yalin.score, -400);
+  assert.equal(r.progress.yalin.score, 0);
   assert.equal(r.progress.yalin.wrongCount, 1);
   assert.equal(r.progress.yalin.skippedCount, 0);
 });
@@ -47,8 +47,8 @@ test('server deadline rejects late answers, reveals for two seconds and catches 
   const expired = reduceRace(room(), 'arman', answer(0, 'kapi'), 26000);
   assert.equal(expired.race.reason, 'timeout');
   assert.equal(expired.race.winnerId, undefined);
-  assert.equal(expired.progress.arman.score, -400);
-  assert.equal(expired.progress.yalin.score, -400);
+  assert.equal(expired.progress.arman.score, 0);
+  assert.equal(expired.progress.yalin.score, 0);
   assert.equal(expired.race.questionIndex, 0);
   assert.equal(reduceRace(expired, 'yalin', {action:'sync'}, 27999).race.questionIndex, 0);
   const next = reduceRace(expired, 'yalin', {action:'sync'}, 28000);
@@ -56,9 +56,38 @@ test('server deadline rejects late answers, reveals for two seconds and catches 
   assert.equal(next.race.startedAtMs, 28000);
   const finished = reduceRace(next, 'yalin', {action:'sync'}, 1000 + 7 * (QUESTION_MS + REVEAL_MS));
   assert.equal(finished.status, 'results');
-  assert.equal(finished.progress.arman.score, -4900);
+  assert.equal(finished.progress.arman.score, 0);
   assert.equal(finished.progress.yalin.wrongCount, 7);
   assert(finished.progress.yalin.finished);
+});
+
+test('three players keep earned points after incorrect speech and timeouts; only the winner gains', () => {
+  let r = room();
+  r.targetPlayerCount = 3;
+  r.players.ayse = {displayName: 'Ayşe'};
+  r = reduceRace(r, 'yalin', answer(0, ''), 1100);
+  assert.equal(r.progress.yalin.lastOutcome, 'wrong');
+  assert.equal(r.progress.yalin.lastScoreDelta, 0);
+  assert.equal(r.race.winnerId, undefined);
+  r = reduceRace(r, 'arman', answer(0, 'kapi'), 1200);
+  assert.deepEqual(Object.values(r.progress).map(p => p.score).sort((a,b) => a-b), [0,0,400]);
+  r = reduceRace(r, 'arman', {action:'sync'}, 3200);
+  r = reduceRace(r, 'yalin', answer(1, r.questions[1].answer), 3300);
+  assert.equal(r.progress.yalin.score, 500);
+  assert.equal(r.progress.arman.score, 400);
+  r = reduceRace(r, 'ayse', {action:'sync'}, 5300 + QUESTION_MS);
+  assert.equal(r.progress.arman.score, 400);
+  assert.equal(r.progress.yalin.score, 500);
+  assert.equal(r.progress.ayse.score, 0);
+  for (const progress of Object.values(r.progress)) assert.equal(progress.lastScoreDelta, 0);
+});
+
+test('removed give-up action is rejected', async () => {
+  const service = new RaceService({database: {}});
+  await assert.rejects(
+    service.play('yalin', {roomId:'abc234', action:'giveUp', questionIndex:0}),
+    error => error.code === 'invalid-argument',
+  );
 });
 
 test('final winner immediately closes scoring; results follow the reveal, independent of the old total clock', () => {

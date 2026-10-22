@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/widgets/studio_components.dart';
-import '../../../game/presentation/widgets/game_confirmation_dialogs.dart';
 import '../cubit/solo_game_cubit.dart';
 import '../cubit/solo_game_state.dart';
 import 'solo_game_board.dart';
@@ -37,17 +36,6 @@ class _SoloGameViewState extends State<SoloGameView>
       .setForeground(state == AppLifecycleState.resumed);
 
   void _submit() => context.read<SoloGameCubit>().submitAnswer(_answer.text);
-
-  Future<void> _giveUp() async {
-    final cubit = context.read<SoloGameCubit>();
-    final index = cubit.state.questionIndex;
-    final confirmed = await GameConfirmationDialogs.giveUp(
-      context,
-      points: cubit.state.questionValue,
-      advanceImmediately: true,
-    );
-    if (mounted && confirmed) cubit.giveUp(index);
-  }
 
   Future<void> _leave() async {
     if (_leaving) return;
@@ -114,7 +102,6 @@ class _SoloGameViewState extends State<SoloGameView>
             body: SoloGameBoard(
               answerController: _answer,
               onSubmit: _submit,
-              onGiveUp: _giveUp,
               onLeave: _leave,
             ),
           ),

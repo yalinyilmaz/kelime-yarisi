@@ -65,18 +65,6 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
     if (mounted && cubit.state.isLeaving) context.go('/');
   }
 
-  Future<void> _giveUp() async {
-    final cubit = context.read<GameCubit>();
-    final index = cubit.state.questionIndex;
-    final confirmed = await GameConfirmationDialogs.giveUp(
-      context,
-      points: cubit.state.questionValue,
-    );
-    if (confirmed == true && mounted) {
-      await cubit.giveUp(questionIndex: index);
-    }
-  }
-
   @override
   Widget build(BuildContext context) =>
       BlocSelector<GameCubit, GameState, _ViewSelection>(
@@ -119,7 +107,6 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
                 state: state,
                 answerController: _answer,
                 onSubmit: _submit,
-                onGiveUp: _giveUp,
               ),
             ),
           );

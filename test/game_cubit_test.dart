@@ -197,24 +197,27 @@ void main() {
     expect(cubit.state.isSaving, isFalse);
   });
 
-  test('A question timeout advances everyone but penalizes only unanswered players', () async {
-    cubit = GameCubit(service, testRoom(), nowMs: () => now);
-    connect();
-    now = 26000;
-    service.offsets.add(0);
-    await flush();
-    expect(cubit.state.progress.score, -400);
-    expect(cubit.state.progress.lastOutcome, AnswerOutcome.timeout);
-    expect(cubit.state.questionIndex, 1);
-    expect(cubit.state.canAct, isTrue);
-    await cubit.submitAnswer('kitap');
-    now = 51000;
-    service.offsets.add(0);
-    await flush();
-    expect(cubit.state.questionIndex, 2);
-    expect(service.saves.length, 2);
-    expect(cubit.state.progress.score, 100);
-  });
+  test(
+    'A question timeout advances everyone without subtracting points',
+    () async {
+      cubit = GameCubit(service, testRoom(), nowMs: () => now);
+      connect();
+      now = 26000;
+      service.offsets.add(0);
+      await flush();
+      expect(cubit.state.progress.score, 0);
+      expect(cubit.state.progress.lastOutcome, AnswerOutcome.timeout);
+      expect(cubit.state.questionIndex, 1);
+      expect(cubit.state.canAct, isTrue);
+      await cubit.submitAnswer('kitap');
+      now = 51000;
+      service.offsets.add(0);
+      await flush();
+      expect(cubit.state.questionIndex, 2);
+      expect(service.saves.length, 2);
+      expect(cubit.state.progress.score, 500);
+    },
+  );
 
   test(
     'Two-player hint is shared and reduces both players question value',
@@ -269,13 +272,13 @@ void main() {
     service.connections.add(true);
     await flush();
     expect(cubit.state.progress.questionIndex, 3);
-    expect(cubit.state.progress.score, -1500);
+    expect(cubit.state.progress.score, 0);
     expect(cubit.state.canAct, isTrue);
     now = 176000;
     service.offsets.add(0);
     await flush();
     expect(cubit.state.progress.finished, isTrue);
-    expect(cubit.state.progress.score, -4900);
+    expect(cubit.state.progress.score, 0);
     expect(service.resultWrites, 1);
     service.publish(service.room.copyWith(status: RoomStatus.results));
     await cubit.submitAnswer('kapı');
@@ -322,7 +325,7 @@ void main() {
     now += 3001;
     service.offsets.add(0);
     await flush();
-    expect(cubit.state.progress.score, -400);
+    expect(cubit.state.progress.score, 0);
     expect(cubit.state.progress.correctCount, 0);
     expect(cubit.state.feedback, isNot(contains('KAPI')));
   });

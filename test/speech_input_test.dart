@@ -32,6 +32,71 @@ void main() {
   });
 
   testWidgets(
+    'matching interim alternative completes before slow native cancellation',
+    (tester) async {
+      final gate = Completer<void>();
+      final native = FakeNativeSpeech()..cancelGate = gate;
+      final speech = SpeechInputCubit(recognizer: native);
+      const question = GameQuestion(clue: '', answer: 'GÖNDERMEK');
+      await speech.start(
+        matchesAnswer: (text) => question.answerInSpeech(text) != null,
+      );
+      await tester.pump(const Duration(milliseconds: 300));
+      native.say('gönder', finalResult: false);
+      expect(speech.state.phase, SpeechInputPhase.listening);
+      expect(speech.state.finalTranscripts, isEmpty);
+      native.say(
+        'yanlış duyulan',
+        finalResult: false,
+        alternatives: ['cevap göndermektir'],
+      );
+      expect(speech.state.phase, SpeechInputPhase.completed);
+      expect(speech.state.progress, 0);
+      expect(speech.state.finalTranscripts, [
+        'yanlış duyulan',
+        'cevap göndermektir',
+      ]);
+      await tester.pump();
+      expect(native.cancels, 1);
+      expect(gate.isCompleted, isFalse);
+      native.say('geç sonuç');
+      native.error!(SpeechRecognitionError('error_no_match', true));
+      speech.release();
+      await tester.pump(const Duration(seconds: 3));
+      expect(speech.state.phase, SpeechInputPhase.completed);
+      expect(speech.state.finalTranscripts.last, 'cevap göndermektir');
+      final next = speech.start();
+      await tester.pump();
+      expect(native.starts, 1);
+      gate.complete();
+      await next;
+      expect(native.starts, 2);
+      await speech.close();
+    },
+  );
+
+  testWidgets('unmatched interim speech keeps the existing timeout flow', (
+    tester,
+  ) async {
+    final native = FakeNativeSpeech();
+    final speech = SpeechInputCubit(recognizer: native);
+    const question = GameQuestion(clue: '', answer: 'BİLEK');
+    await speech.start(
+      matchesAnswer: (text) => question.answerInSpeech(text) != null,
+    );
+    native.say('bilmiyorum', finalResult: false);
+    await tester.pump(const Duration(milliseconds: 2999));
+    expect(speech.state.phase, SpeechInputPhase.listening);
+    expect(native.cancels, 0);
+    await tester.pump(const Duration(milliseconds: 1));
+    expect(speech.state.phase, SpeechInputPhase.finalizing);
+    await tester.pump(const Duration(milliseconds: 350));
+    expect(speech.state.phase, SpeechInputPhase.completed);
+    expect(speech.state.finalTranscripts, ['bilmiyorum']);
+    await speech.close();
+  });
+
+  testWidgets(
     'Turkish answer vocabulary biases recognition without replacing native text',
     (tester) async {
       final native = FakeNativeSpeech();
@@ -220,22 +285,112 @@ void main() {
   );
 
   testWidgets(
-    'hold has no partial PIN updates; release submits once; background cancels',
+    'answer area expands on press and keeps letters hidden until a new question',
+    (tester) async {
+      final native = FakeNativeSpeech();
+      final speech = SpeechInputCubit(recognizer: native);
+      final answer = TextEditingController();
+      Future<void> mount(int question, {bool submissionFailed = false}) =>
+          tester.pumpWidget(
+            BlocProvider.value(
+              value: speech,
+              child: MaterialApp(
+                home: Scaffold(
+                  body: SizedBox(
+                    width: 360,
+                    child: VoiceAnswerButton(
+                      enabled: true,
+                      questionKey: question,
+                      submissionFailed: submissionFailed,
+                      answerController: answer,
+                      onAnswer: (_) {},
+                      onMicrophoneChanged: (_) async {},
+                      letterAction: OutlinedButton(
+                        key: const ValueKey('hint-action'),
+                        onPressed: () {},
+                        child: const Text('Harf Al'),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+      final button = find.byKey(const ValueKey('answer-action'));
+      final letters = find.byKey(const ValueKey('hint-action'));
+      final progress = find.byKey(const ValueKey('voice-answer-progress'));
+      await mount(0);
+      expect(letters, findsOneWidget);
+      expect(progress, findsNothing);
+      expect(find.text('Basılı tut'), findsOneWidget);
+      expect(
+        tester.getCenter(find.text('Basılı tut')).dx,
+        tester.getCenter(find.text('Cevapla')).dx,
+      );
+      expect(tester.getSize(button).width, 174);
+      final hold = await tester.startGesture(tester.getCenter(button));
+      await tester.pump();
+      expect(speech.state.phase, SpeechInputPhase.listening);
+      expect(letters, findsNothing);
+      expect(tester.getSize(button).width, 360);
+      expect(tester.getSize(progress).width, 360);
+      expect(find.byKey(const ValueKey('voice-answer-time')), findsOneWidget);
+      await hold.up();
+      await tester.pump();
+      expect(progress, findsNothing);
+      expect(speech.state.phase, SpeechInputPhase.listening);
+      native.error!(SpeechRecognitionError('error_network', true));
+      await tester.pump();
+      expect(letters, findsNothing);
+      final retry = await tester.startGesture(tester.getCenter(button));
+      await tester.pump();
+      native.say('cevap');
+      await tester.pump();
+      await retry.up();
+      await tester.pump();
+      expect(speech.state.phase, SpeechInputPhase.completed);
+      expect(letters, findsNothing);
+      expect(progress, findsNothing);
+      expect(find.text('Basılı tut'), findsNothing);
+      expect(tester.widget<FilledButton>(button).onPressed, isNull);
+      await mount(0, submissionFailed: true);
+      expect(tester.widget<FilledButton>(button).onPressed, isNotNull);
+      expect(letters, findsNothing);
+      expect(progress, findsNothing);
+      await mount(1);
+      expect(letters, findsOneWidget);
+      expect(progress, findsNothing);
+      expect(find.text('Basılı tut'), findsOneWidget);
+      expect(tester.getSize(button).width, 174);
+      await tester.pumpWidget(const SizedBox());
+      await speech.close();
+      answer.dispose();
+    },
+  );
+
+  testWidgets(
+    'matching speech submits and resets progress during hold; background cancels',
     (tester) async {
       final native = FakeNativeSpeech();
       final speech = SpeechInputCubit(recognizer: native);
       final answer = TextEditingController();
       final submitted = <List<String>>[];
       final microphone = <bool>[];
-      await tester.pumpWidget(
+      Future<void> mount(int question) => tester.pumpWidget(
         BlocProvider.value(
           value: speech,
           child: MaterialApp(
             home: Scaffold(
               body: VoiceAnswerButton(
                 enabled: true,
-                questionKey: 0,
+                questionKey: question,
                 answerController: answer,
+                matchesAnswer: (text) =>
+                    const GameQuestion(
+                      clue: '',
+                      answer: 'GÖNDERMEK',
+                    ).answerInSpeech(text) !=
+                    null,
                 onAnswer: submitted.add,
                 onMicrophoneChanged: (active) async => microphone.add(active),
               ),
@@ -243,6 +398,7 @@ void main() {
           ),
         ),
       );
+      await mount(0);
       final gesture = await tester.startGesture(
         tester.getCenter(find.byKey(const ValueKey('answer-action'))),
       );
@@ -251,18 +407,29 @@ void main() {
       await tester.pump();
       expect(answer.text, isEmpty);
       expect(submitted, isEmpty);
-      await gesture.up();
-      await tester.pump();
-      native.say('cevap göndermektir');
+      native.say('cevap göndermektir', finalResult: false);
       await tester.pump();
       expect(submitted, [
         ['cevap göndermektir'],
       ]);
       expect(microphone, [true, false]);
+      expect(find.byKey(const ValueKey('voice-answer-progress')), findsNothing);
+      expect(
+        tester
+            .widget<FilledButton>(find.byKey(const ValueKey('answer-action')))
+            .onPressed,
+        isNull,
+      );
+      await gesture.up();
+      native.say('göndermek');
+      await tester.pump();
+      expect(submitted, hasLength(1));
+      await mount(1);
       final next = await tester.startGesture(
         tester.getCenter(find.byKey(const ValueKey('answer-action'))),
       );
       await tester.pump();
+      expect(native.starts, 2);
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
       await tester.pump();
       native.say('geç cevap');

@@ -27,32 +27,4 @@ abstract final class GameConfirmationDialogs {
         ),
       ) ??
       false;
-
-  static Future<bool> giveUp(
-    BuildContext context, {
-    required int points,
-    bool advanceImmediately = false,
-  }) async =>
-      await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Bilemiyorum'),
-          content: Text(
-            advanceImmediately
-                ? '$points puan kaybedip sonraki soruya geçeceksin.'
-                : '$points puan kaybedip bu sorunun bitmesini bekleyeceksin.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Devam et'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('Bilemiyorum'),
-            ),
-          ],
-        ),
-      ) ??
-      false;
 }
