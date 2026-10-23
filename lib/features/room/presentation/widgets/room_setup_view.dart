@@ -37,152 +37,146 @@ class RoomSetupView extends StatelessWidget {
                 return Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 480),
-                    child: ListView(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
-                      padding: EdgeInsets.fromLTRB(gutter, 8, gutter, 32),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          isCreate
-                              ? 'Diğer oyuncularla canlı yarışacağın odayı hazırla.'
-                              : 'Arkadaşının paylaştığı oda koduyla stüdyoya gir.',
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: AppColors.textSecondary),
-                        ),
-                        const SizedBox(height: 24),
-                        if (isCreate) ...[
-                          TextFormField(
-                            initialValue: state.roomName,
-                            maxLength: 40,
-                            textCapitalization: TextCapitalization.sentences,
-                            textInputAction: TextInputAction.done,
-                            onChanged: context
-                                .read<RoomSetupCubit>()
-                                .roomNameChanged,
-                            decoration: const InputDecoration(
-                              labelText: 'Oda adı',
-                              hintText: 'Örn. Cuma Akşamı',
-                              prefixIcon: Icon(Icons.edit_outlined),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          const StudioSectionLabel('Oda erişimi'),
-                          const SizedBox(height: 12),
-                          SegmentedButton<RoomVisibility>(
-                            segments: const [
-                              ButtonSegment(
-                                value: RoomVisibility.public,
-                                icon: Icon(Icons.public_rounded),
-                                label: Text('Açık'),
-                              ),
-                              ButtonSegment(
-                                value: RoomVisibility.private,
-                                icon: Icon(Icons.lock_outline_rounded),
-                                label: Text('Özel'),
-                              ),
-                            ],
-                            selected: {state.visibility},
-                            showSelectedIcon: false,
-                            style: _segmentStyle(),
-                            onSelectionChanged: state.isSubmitting
-                                ? null
-                                : (values) => context
-                                      .read<RoomSetupCubit>()
-                                      .visibilityChanged(values.first),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            state.visibility == RoomVisibility.public
-                                ? 'Odan listede görünür. Oyuncular kod girmeden katılabilir.'
-                                : 'Odan listede kilitli görünür. Katılmak için oda kodu veya davet bağlantısı gerekir.',
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          const StudioSectionLabel('Maksimum oyuncu sayısı'),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            child: SegmentedButton<int>(
-                              segments: const [
-                                ButtonSegment(value: 2, label: Text('2')),
-                                ButtonSegment(value: 3, label: Text('3')),
-                                ButtonSegment(value: 4, label: Text('4')),
-                                ButtonSegment(value: 5, label: Text('5')),
-                                ButtonSegment(value: 6, label: Text('6')),
-                              ],
-                              selected: {state.targetPlayerCount},
-                              showSelectedIcon: false,
-                              style: _segmentStyle(),
-                              onSelectionChanged: (selection) => context
-                                  .read<RoomSetupCubit>()
-                                  .playerCountChanged(selection.first),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          const RoomGameSummary(mode: RoomGameMode.classic),
-                        ] else ...[
-                          RoomCodeInput(
-                            initialCode: state.roomCode,
-                            onChanged: context
-                                .read<RoomSetupCubit>()
-                                .roomCodeChanged,
-                            onSubmitted: () {
-                              if (state.canSubmit && !state.isSubmitting) {
-                                context.read<RoomSetupCubit>().submit();
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 16),
-                          const RoomJoinInfo(),
-                        ],
-                        if (state.errorMessage != null) ...[
-                          const SizedBox(height: 16),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Expanded(
+                          child: ListView(
+                            keyboardDismissBehavior:
+                                ScrollViewKeyboardDismissBehavior.onDrag,
+                            padding: EdgeInsets.fromLTRB(gutter, 8, gutter, 32),
                             children: [
-                              const Icon(
-                                Icons.error_outline_rounded,
-                                color: AppColors.danger,
-                                size: 20,
+                              Text(
+                                isCreate
+                                    ? 'Diğer oyuncularla canlı yarışacağın odayı hazırla.'
+                                    : 'Arkadaşının paylaştığı oda koduyla stüdyoya gir.',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(color: AppColors.textSecondary),
                               ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  state.errorMessage!,
-                                  style: const TextStyle(
-                                    color: AppColors.danger,
-                                    fontWeight: FontWeight.w600,
+                              const SizedBox(height: 24),
+                              if (isCreate) ...[
+                                TextFormField(
+                                  initialValue: state.roomName,
+                                  maxLength: 40,
+                                  textCapitalization: TextCapitalization.sentences,
+                                  textInputAction: TextInputAction.done,
+                                  onChanged: context
+                                      .read<RoomSetupCubit>()
+                                      .roomNameChanged,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Oda adı',
+                                    hintText: 'Örn. Cuma Akşamı',
+                                    prefixIcon: Icon(Icons.edit_outlined),
                                   ),
                                 ),
-                              ),
+                                const SizedBox(height: 24),
+                                const StudioSectionLabel('Oda erişimi'),
+                                const SizedBox(height: 12),
+                                SegmentedButton<RoomVisibility>(
+                                  segments: const [
+                                    ButtonSegment(
+                                      value: RoomVisibility.public,
+                                      icon: Icon(Icons.public_rounded),
+                                      label: Text('Açık'),
+                                    ),
+                                    ButtonSegment(
+                                      value: RoomVisibility.private,
+                                      icon: Icon(Icons.lock_outline_rounded),
+                                      label: Text('Özel'),
+                                    ),
+                                  ],
+                                  selected: {state.visibility},
+                                  showSelectedIcon: false,
+                                  style: _segmentStyle(),
+                                  onSelectionChanged: state.isSubmitting
+                                      ? null
+                                      : (values) => context
+                                            .read<RoomSetupCubit>()
+                                            .visibilityChanged(values.first),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  state.visibility == RoomVisibility.public
+                                      ? 'Odan listede görünür. Oyuncular kod girmeden katılabilir.'
+                                      : 'Odan listede kilitli görünür. Katılmak için oda kodu veya davet bağlantısı gerekir.',
+                                  style: const TextStyle(color: AppColors.textSecondary),
+                                ),
+                                const SizedBox(height: 24),
+                                const StudioSectionLabel('Maksimum oyuncu sayısı'),
+                                const SizedBox(height: 12),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: SegmentedButton<int>(
+                                    segments: const [
+                                      ButtonSegment(value: 2, label: Text('2')),
+                                      ButtonSegment(value: 3, label: Text('3')),
+                                      ButtonSegment(value: 4, label: Text('4')),
+                                      ButtonSegment(value: 5, label: Text('5')),
+                                      ButtonSegment(value: 6, label: Text('6')),
+                                    ],
+                                    selected: {state.targetPlayerCount},
+                                    showSelectedIcon: false,
+                                    style: _segmentStyle(),
+                                    onSelectionChanged: (selection) => context
+                                        .read<RoomSetupCubit>()
+                                        .playerCountChanged(selection.first),
+                                  ),
+                                ),
+                                const SizedBox(height: 24),
+                                const RoomGameSummary(mode: RoomGameMode.classic),
+                              ] else ...[
+                                RoomCodeInput(
+                                  initialCode: state.roomCode,
+                                  onChanged: context
+                                      .read<RoomSetupCubit>()
+                                      .roomCodeChanged,
+                                  onSubmitted: () {
+                                    if (state.canSubmit && !state.isSubmitting) {
+                                      context.read<RoomSetupCubit>().submit();
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                const RoomJoinInfo(),
+                              ],
+                              if (state.errorMessage != null) ...[
+                                const SizedBox(height: 16),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(
+                                      Icons.error_outline_rounded,
+                                      color: AppColors.danger,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        state.errorMessage!,
+                                        style: const TextStyle(
+                                          color: AppColors.danger,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                              const SizedBox(height: 24),
+                              if (isCreate) ...[
+                                const GameRulesInfo(),
+                                const SizedBox(height: 16),
+                              ],
+                              if (!isCreate) _submitButton(context, state),
                             ],
                           ),
-                        ],
-                        const SizedBox(height: 24),
-                        if (isCreate) ...[
-                          const GameRulesInfo(),
-                          const SizedBox(height: 16),
-                        ],
-                        FilledButton.icon(
-                          onPressed: !state.canSubmit || state.isSubmitting
-                              ? null
-                              : context.read<RoomSetupCubit>().submit,
-                          icon: state.isSubmitting
-                              ? const SizedBox.square(
-                                  dimension: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.5,
-                                  ),
-                                )
-                              : Icon(
-                                  isCreate
-                                      ? Icons.group_add_rounded
-                                      : Icons.login_rounded,
-                                ),
-                          label: Text(isCreate ? 'Odayı Kur' : 'Odaya Gir'),
                         ),
+                        if (isCreate)
+                          Container(
+                            padding: EdgeInsets.fromLTRB(gutter, 12, gutter, 16),
+                            decoration: const BoxDecoration(color: AppColors.background),
+                            child: _submitButton(context, state),
+                          ),
                       ],
                     ),
                   ),
@@ -194,6 +188,23 @@ class RoomSetupView extends StatelessWidget {
       },
     );
   }
+
+  Widget _submitButton(BuildContext context, RoomSetupState state) => FilledButton.icon(
+    onPressed: !state.canSubmit || state.isSubmitting
+        ? null
+        : context.read<RoomSetupCubit>().submit,
+    icon: state.isSubmitting
+        ? const SizedBox.square(
+            dimension: 20,
+            child: CircularProgressIndicator(strokeWidth: 2.5),
+          )
+        : Icon(
+            state.flow == RoomSetupFlow.create
+                ? Icons.group_add_rounded
+                : Icons.login_rounded,
+          ),
+    label: Text(state.flow == RoomSetupFlow.create ? 'Odayı Kur' : 'Odaya Gir'),
+  );
 
   ButtonStyle _segmentStyle() {
     return ButtonStyle(
@@ -209,9 +220,7 @@ class RoomSetupView extends StatelessWidget {
             : AppColors.surfaceElevated,
       ),
       side: const WidgetStatePropertyAll(BorderSide(color: AppColors.outline)),
-      textStyle: const WidgetStatePropertyAll(
-        TextStyle(fontWeight: FontWeight.w700),
-      ),
+      textStyle: const WidgetStatePropertyAll(TextStyle(fontWeight: FontWeight.w700)),
     );
   }
 }

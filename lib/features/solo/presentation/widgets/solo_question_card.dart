@@ -30,22 +30,30 @@ class SoloQuestionCard extends StatelessWidget {
         children: [
           GameQuestionContent(
             questionIndex: state.questionIndex,
-            header: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+            header: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(left: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 12,
                 children: [
-                  Expanded(
+                  Flexible(
+                    flex: 2,
                     child: StudioSectionLabel(
                       'SORU ${state.questionIndex + 1} / 14',
                     ),
                   ),
-                  GameClueHintButton(
-                    remaining: state.remainingHints,
-                    used: state.currentHintCount,
-                    onPressed: state.canRequestHint
-                        ? context.read<SoloGameCubit>().requestHint
-                        : null,
-                  ),
+                  if (state.remainingHints > 0)
+                    Flexible(
+                      flex: 3,
+                      child: GameClueHintButton(
+                        remaining: state.remainingHints,
+                        used: state.currentHintCount,
+                        onPressed: state.canRequestHint
+                            ? context.read<SoloGameCubit>().requestHint
+                            : null,
+                      ),
+                    ),
                 ],
               ),
             ),

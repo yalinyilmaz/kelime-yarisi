@@ -58,6 +58,12 @@ void main() {
             await tester.pumpAndSettle();
           }
           expect(game.state.remainingHints, 8);
+          final clueButton = find.byKey(const ValueKey('clue-hint-action'));
+          expect(
+            find.descendant(of: clueButton, matching: find.text('İpucu al  8')),
+            findsOneWidget,
+          );
+          expect(find.text('8/10'), findsNothing);
           final pin = find.byType(WordPinInput);
           await tester.ensureVisible(pin);
           await tester.pumpAndSettle();
@@ -85,6 +91,51 @@ void main() {
       );
     }
   }
+
+  testWidgets('hint count decreases to zero and hides only the hint button', (
+    tester,
+  ) async {
+    final service = SoloTestService();
+    final best = SoloBestScoreCubit(storage: MemoryScoreStorage());
+    final router = _router();
+    await _mount(tester, service, best, router);
+    await tester.pumpAndSettle();
+    final game = tester
+        .element(find.byType(SoloGameView))
+        .read<SoloGameCubit>();
+    var remaining = 10;
+    for (var question = 0; question < 5; question++) {
+      for (var hint = 0; hint < 2; hint++) {
+        final button = find.byKey(const ValueKey('clue-hint-action'));
+        expect(
+          find.descendant(
+            of: button,
+            matching: find.text('İpucu al  $remaining'),
+          ),
+          findsOneWidget,
+        );
+        await tester.ensureVisible(button);
+        await tester.pumpAndSettle();
+        await tester.tap(button);
+        await tester.pumpAndSettle();
+        expect(game.state.remainingHints, --remaining);
+      }
+      if (question < 4) {
+        game.submitAnswer(game.state.question!.answer);
+        await tester.pump(const Duration(milliseconds: 1200));
+        await tester.pumpAndSettle();
+      }
+    }
+    expect(find.byKey(const ValueKey('clue-hint-action')), findsNothing);
+    expect(find.textContaining('İpucu al'), findsNothing);
+    expect(find.byType(WordPinInput), findsOneWidget);
+    expect(game.state.visibleHints, hasLength(2));
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+    router.dispose();
+    await best.close();
+    await service.disposeStreams();
+  });
 
   testWidgets(
     'timeout result shows the saved best score and allows returning',

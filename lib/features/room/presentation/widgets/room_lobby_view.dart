@@ -83,140 +83,177 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                   return Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 480),
-                      child: ListView(
-                        padding: EdgeInsets.fromLTRB(gutter, 8, gutter, 32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          RoomCodeCard(room: room),
-                          if (kDebugMode &&
-                              (state.isLoadingQuestionCapacity ||
-                                  state.questionCapacity != null)) ...[
-                            const SizedBox(height: 16),
-                            if (state.isLoadingQuestionCapacity)
-                              const Card(
-                                child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: Row(
-                                    children: [
-                                      SizedBox.square(
-                                        dimension: 20,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2.5,
+                          Expanded(
+                            child: ListView(
+                              padding: EdgeInsets.fromLTRB(
+                                gutter,
+                                8,
+                                gutter,
+                                32,
+                              ),
+                              children: [
+                                RoomCodeCard(room: room),
+                                if (kDebugMode &&
+                                    (state.isLoadingQuestionCapacity ||
+                                        state.questionCapacity != null)) ...[
+                                  const SizedBox(height: 16),
+                                  if (state.isLoadingQuestionCapacity)
+                                    const Card(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(16),
+                                        child: Row(
+                                          children: [
+                                            SizedBox.square(
+                                              dimension: 20,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2.5,
+                                              ),
+                                            ),
+                                            SizedBox(width: 12),
+                                            Expanded(
+                                              child: Text(
+                                                'Soru havuzu yükleniyor…',
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(width: 12),
-                                      Expanded(
-                                        child: Text('Soru havuzu yükleniyor…'),
+                                    )
+                                  else
+                                    QuestionCapacityCard(
+                                      capacity: state.questionCapacity!,
+                                      collective: state.collectiveCapacity,
+                                    ),
+                                ],
+                                if (room.status == RoomStatus.countdown) ...[
+                                  const SizedBox(height: 16),
+                                  RoomCountdownCard(
+                                    seconds: state.countdownSeconds ?? 0,
+                                  ),
+                                ],
+                                const SizedBox(height: 24),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Oyuncular ${room.players.length}/${room.targetPlayerCount}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
                                       ),
-                                    ],
+                                    ),
+                                    const Icon(
+                                      Icons.check_circle_rounded,
+                                      color: AppColors.ready,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      '$readyCount hazır',
+                                      style: const TextStyle(
+                                        color: AppColors.textSecondary,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                ...room.players.map(
+                                  (player) => RoomPlayerTile(
+                                    player: player,
+                                    isCurrent: player.id == currentUserId,
                                   ),
                                 ),
-                              )
-                            else
-                              QuestionCapacityCard(
-                                capacity: state.questionCapacity!,
-                                collective: state.collectiveCapacity,
-                              ),
-                          ],
-                          if (room.status == RoomStatus.countdown) ...[
-                            const SizedBox(height: 16),
-                            RoomCountdownCard(
-                              seconds: state.countdownSeconds ?? 0,
-                            ),
-                          ],
-                          const SizedBox(height: 24),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Oyuncular ${room.players.length}/${room.targetPlayerCount}',
-                                  style: Theme.of(context).textTheme.titleLarge,
+                                ...List.generate(
+                                  (room.targetPlayerCount - room.players.length)
+                                      .clamp(0, 6),
+                                  (_) => const RoomEmptyPlayerTile(),
                                 ),
-                              ),
-                              const Icon(
-                                Icons.check_circle_rounded,
-                                color: AppColors.ready,
-                                size: 18,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                '$readyCount hazır',
-                                style: const TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontWeight: FontWeight.w700,
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(
+                              gutter,
+                              12,
+                              gutter,
+                              16,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: AppColors.background,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                FilledButton.icon(
+                                  onPressed:
+                                      currentPlayer == null ||
+                                          room.status != RoomStatus.lobby ||
+                                          state.isStartingGame ||
+                                          state.isLeaving
+                                      ? null
+                                      : context
+                                            .read<RoomLobbyCubit>()
+                                            .toggleCurrentPlayerReady,
+                                  style: FilledButton.styleFrom(
+                                    backgroundColor:
+                                        currentPlayer?.isReady == true
+                                        ? AppColors.surfaceMuted
+                                        : AppColors.ready,
+                                    foregroundColor:
+                                        currentPlayer?.isReady == true
+                                        ? AppColors.textPrimary
+                                        : AppColors.onReady,
+                                  ),
+                                  icon: Icon(
+                                    currentPlayer?.isReady == true
+                                        ? Icons.undo_rounded
+                                        : Icons.check_rounded,
+                                  ),
+                                  label: Text(switch (room.status) {
+                                    RoomStatus.lobby =>
+                                      currentPlayer?.isReady == true
+                                          ? 'Hazır Değilim'
+                                          : 'Hazırım',
+                                    RoomStatus.countdown => 'Oyun başlıyor',
+                                    RoomStatus.playing => 'Oyun başladı',
+                                    RoomStatus.results => 'Oyun tamamlandı',
+                                  }),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          ...room.players.map(
-                            (player) => RoomPlayerTile(
-                              player: player,
-                              isCurrent: player.id == currentUserId,
-                            ),
-                          ),
-                          ...List.generate(
-                            (room.targetPlayerCount - room.players.length)
-                                .clamp(0, 6),
-                            (_) => const RoomEmptyPlayerTile(),
-                          ),
-                          const SizedBox(height: 20),
-                          FilledButton.icon(
-                            onPressed:
-                                currentPlayer == null ||
-                                    room.status != RoomStatus.lobby ||
-                                    state.isStartingGame ||
-                                    state.isLeaving
-                                ? null
-                                : context
-                                      .read<RoomLobbyCubit>()
-                                      .toggleCurrentPlayerReady,
-                            style: FilledButton.styleFrom(
-                              backgroundColor: currentPlayer?.isReady == true
-                                  ? AppColors.surfaceMuted
-                                  : AppColors.ready,
-                              foregroundColor: currentPlayer?.isReady == true
-                                  ? AppColors.textPrimary
-                                  : AppColors.onReady,
-                            ),
-                            icon: Icon(
-                              currentPlayer?.isReady == true
-                                  ? Icons.undo_rounded
-                                  : Icons.check_rounded,
-                            ),
-                            label: Text(switch (room.status) {
-                              RoomStatus.lobby =>
-                                currentPlayer?.isReady == true
-                                    ? 'Hazır Değilim'
-                                    : 'Hazırım',
-                              RoomStatus.countdown => 'Oyun başlıyor',
-                              RoomStatus.playing => 'Oyun başladı',
-                              RoomStatus.results => 'Oyun tamamlandı',
-                            }),
-                          ),
-                          if (room.hostId == currentUserId) ...[
-                            const SizedBox(height: 12),
-                            OutlinedButton.icon(
-                              onPressed:
-                                  context.read<RoomLobbyCubit>().canStartGame
-                                  ? context.read<RoomLobbyCubit>().startGame
-                                  : null,
-                              icon: state.isStartingGame
-                                  ? const SizedBox.square(
-                                      dimension: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2.5,
-                                      ),
-                                    )
-                                  : const Icon(Icons.play_arrow_rounded),
-                              label: const Text('Oyunu Başlat'),
-                            ),
-                          ],
-                          const SizedBox(height: 12),
-                          Text(
-                            _statusText(room),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
+                                if (room.hostId == currentUserId) ...[
+                                  const SizedBox(height: 12),
+                                  OutlinedButton.icon(
+                                    onPressed:
+                                        context
+                                            .read<RoomLobbyCubit>()
+                                            .canStartGame
+                                        ? context
+                                              .read<RoomLobbyCubit>()
+                                              .startGame
+                                        : null,
+                                    icon: state.isStartingGame
+                                        ? const SizedBox.square(
+                                            dimension: 20,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2.5,
+                                            ),
+                                          )
+                                        : const Icon(Icons.play_arrow_rounded),
+                                    label: const Text('Oyunu Başlat'),
+                                  ),
+                                ],
+                                const SizedBox(height: 12),
+                                Text(
+                                  _statusText(room),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

@@ -45,23 +45,31 @@ class GameQuestionCard extends StatelessWidget {
             children: [
               GameQuestionContent(
                 questionIndex: state.questionIndex,
-                header: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                header: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(left: 8),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    spacing: 12,
                     children: [
-                      Expanded(
+                      Flexible(
+                        flex: 2,
                         child: StudioSectionLabel(
                           'SORU ${state.questionIndex + 1} / ${state.questions.length}',
                         ),
                       ),
-                      if (question.hints.length == 2)
-                        GameClueHintButton(
-                          remaining: state.remainingClueHints,
-                          used: state.currentClueHintCount,
-                          isLoading: state.isRequestingClueHint,
-                          onPressed: state.canRequestClueHint
-                              ? context.read<GameCubit>().requestClueHint
-                              : null,
+                      if (question.hints.length == 2 &&
+                          state.remainingClueHints > 0)
+                        Flexible(
+                          flex: 3,
+                          child: GameClueHintButton(
+                            remaining: state.remainingClueHints,
+                            used: state.currentClueHintCount,
+                            isLoading: state.isRequestingClueHint,
+                            onPressed: state.canRequestClueHint
+                                ? context.read<GameCubit>().requestClueHint
+                                : null,
+                          ),
                         ),
                     ],
                   ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class GameClueHintButton extends StatelessWidget {
   const GameClueHintButton({
     required this.remaining,
@@ -15,30 +17,49 @@ class GameClueHintButton extends StatelessWidget {
   final bool isLoading;
 
   @override
-  Widget build(BuildContext context) => TextFieldTapRegion(
-    child: TextButton.icon(
-      key: const ValueKey('clue-hint-action'),
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        foregroundColor: Colors.amber.shade300,
-        minimumSize: const Size(48, 48),
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-      ),
-      icon: isLoading
-          ? const SizedBox.square(
-              dimension: 18,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.amber,
-              ),
-            )
-          : const Icon(Icons.lightbulb_rounded, size: 22),
-      label: Tooltip(
+  Widget build(BuildContext context) {
+    if (remaining <= 0) return const SizedBox.shrink();
+    final enabled = onPressed != null && !isLoading;
+    return TextFieldTapRegion(
+      child: Tooltip(
         message: 'İpucu · Bu soruda $used/2 kullanıldı',
-        child: Text('$remaining/10'),
+        child: FilledButton.icon(
+          key: const ValueKey('clue-hint-action'),
+          onPressed: enabled ? onPressed : null,
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.warning.withValues(alpha: 0.16),
+            foregroundColor: AppColors.warning,
+            disabledBackgroundColor: AppColors.surfaceMuted,
+            disabledForegroundColor: AppColors.textSecondary,
+            minimumSize: const Size(36, 36),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+            ),
+            side: BorderSide(
+              color: enabled
+                  ? AppColors.warning.withValues(alpha: 0.45)
+                  : AppColors.outline,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          icon: isLoading
+              ? const SizedBox.square(
+                  dimension: 14,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.warning,
+                  ),
+                )
+              : const Icon(Icons.lightbulb_rounded, size: 16),
+          label: Text('İpucu al  $remaining'),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class GameClueHints extends StatelessWidget {
