@@ -103,6 +103,7 @@ Dev projesi `kelime-yarisi-yalin`; prod `kelime-yarisi-prod` bu adımda değişt
 
 Kalıcı özel yollar:
 
+- `questionPool/generationIndex`: üretim için hafif cevap indeksi. `uniqueResponses` normalize cevapları kimlikleriyle, `acceptedResponses` bilinen kabul edilebilir karşılıkları tutar. `questions` altında yalnız benzerlik kontrolü için kelime kümeleri ve onay özeti bulunur. Üretici geçmiş soru/kaynak kayıtlarını okumaz; API çağrısından önce bu indekste bulunan hedefleri eler. Tam yasak kelime listesi modele gönderilmez; model sunucunun seçtiği sabit cevap için soru üretir. Bilinmeyen eş anlamlıları yalnız bu indeksle tespit etmek mümkün değildir; editör ve set kontrolleri sürer.
 - `questionGeneration/control`: `{enabled: true, projectId: "kelime-yarisi-yalin"}`. Alanlardan biri uyuşmazsa iş API çağrısı yapmaz. `enabled: false` sonraki API isteği öncesinde üretimi durdurur.
 - `questionGeneration/ledger`: günlük/aylık sayaçlar ve daha önce denenmiş cevaplar. Yerel CLI sayacından ayrıdır; iki üreticiyi aynı anahtarla paralel çalıştırırsan hesap genelindeki harcama toplamını ayrıca takip et.
 - `questionGeneration/lease`: RTDB transaction ile alınan süreli kilit. Tekrar teslim edilen aynı günün işi ikinci bir üretim turu açmaz. Kesinti sonrası bilinmeyen ücret rezervasyonları korunur.
@@ -111,6 +112,8 @@ Kalıcı özel yollar:
 - `questionGeneration/rejections`: reddedilen metinler ve editör gerekçesi. Oyun havuzuna katılmaz.
 - `questionGeneration/lastRun`: durma nedeni, çağrı/maliyet ve eksik uzunluklar. Durum ayrıca Cloud Logging'e anahtarsız yazılır.
 - `questionPool/published`: yalnızca doğrulanmış onaylı ek sorular. `questionSources`: stok eklemek için opsiyonel özel kaynak kuyruğu. Bu üç kök mobil istemcilerin okuma/yazmasına kapalıdır.
+
+Cevap indeksi eksik veya bozuksa üretim ücretli çağrı yapmadan durur. İlk aktarımı kontrol etmek için `node functions/tools/index_responses.js --project=kelime-yarisi-yalin`, yazmak için aynı komuta `--apply` ekle. Araç yalnız dev üzerinde çalışır; mevcut havuzu bir kez doğrular, üretim kilidini alır ve eşzamanlı değişiklik varsa yazmayı iptal eder. Soru içeriğini değiştirmez. Sonraki yayınlarda cevaplar transaction ile rezerve edilir; soru, set ve indeks kayıtları aynı atomik yayın güncellemesine girer. Kesinti olursa kalıcı outbox aynı rezervasyonları yeni API çağrısı yapmadan tamamlar. Çevrimdışı yayın yamaları da indeks kayıtlarını içermelidir; eski bir yama uygulandıysa üretimden önce indeksi yeniden aktar.
 
 Kaynak/soru kayıtları RTDB'de JSON metni olarak korunur. RTDB'nin boş dizileri kaldırması editör hash'ini değiştirebildiği için bu biçim kullanılır. Oyun servisi JSON'u çözüp onay hash'ini, yayın koşullarını ve havuz benzerliğini yeniden doğrular; istemciye yalnızca o oyunun sorularını gönderir. 336 soruluk paket havuzu ve özel ek havuz kimlikle birleştirilir; iki yerde bulunan aynı kayıt iki kez sayılmaz.
 

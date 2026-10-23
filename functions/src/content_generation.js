@@ -62,14 +62,14 @@ export async function callStructured({model, apiKey, schema, name, instructions,
   return {value, responseId:result.id, model:result.model ?? model, usage:result.usage};
 }
 
-export function replenishmentPlan(sources, pool, {targetPerLength = 40, limit = 20} = {}) {
+export function replenishmentPlan(sources, pool, {targetPerLength = 40, limit = 20, responseIndex} = {}) {
   if (!Number.isInteger(targetPerLength) || targetPerLength < 2 || targetPerLength > 2000 ||
       !Number.isInteger(limit) || limit < 1 || limit > 100) throw new Error('Target must be 2–2000; batch limit 1–100.');
-  const published = pool.filter(q => q.origin === 'production' && q.review?.status === 'approved' && validateQuestion(q).length === 0);
+  const published = responseIndex ? [] : pool.filter(q => q.origin === 'production' && q.review?.status === 'approved' && validateQuestion(q).length === 0);
   const known = new Set(pool.map(q => q.answerId));
-  const candidates = sources.filter(q => q.origin === 'production' && !known.has(q.answerId));
+  const candidates = sources.filter(q => q.origin === 'production' && !known.has(q.answerId) && !responseIndex?.excludes(q));
   const groups = LENGTHS.map(length => {
-    const approved = new Set(published.filter(q => q.letterCount === length).map(q => q.answerId)).size;
+    const approved = responseIndex ? responseIndex.count(length) : new Set(published.filter(q => q.letterCount === length).map(q => q.answerId)).size;
     return {length, approved, missing:Math.max(0,targetPerLength-approved)};
   });
   const selected = [];
@@ -92,7 +92,9 @@ export function replenishmentPlan(sources, pool, {targetPerLength = 40, limit = 
     missing:Math.max(0,targetPerLength-g.approved), availableSources:new Set(candidates.filter(q=>q.letterCount===g.length).map(q=>q.answerId)).size + selected.filter(q=>q.letterCount===g.length).length}))};
 }
 
-export async function generateQuestion(source, pool, {model, apiKey, aiReview = false, fetchImpl = fetch, now = Date.now(),maxOutputTokens=6000,onResponse} = {}) {
+export async function generateQuestion(source, pool, {model, apiKey, aiReview = false, fetchImpl = fetch, now = Date.now(),maxOutputTokens=6000,onResponse,responseIndex} = {}) {
+  if (responseIndex?.excludes(source)) throw new Error('Target answer is already indexed; no API request.');
+  const passesChecks = q => validatePool([...pool, q]).length === 0 && (!responseIndex || responseIndex.candidateErrors(q).length === 0);
   candidatePrompt(source); // Validate full local source/rights before selecting public evidence.
   const sourceErrors=validateQuestion({...source,review:{status:'draft'},publication:'unpublished',clue:'Kaynak biçimi için geçici açıklama.'})
     .filter(code=>!['answer-leak','root-leak'].includes(code));
@@ -108,7 +110,7 @@ export async function generateQuestion(source, pool, {model, apiKey, aiReview = 
     meaning:generated.value.meaning.trim(), publication:'unpublished', review:{status:'in-review'}, generation:{method:'openai-responses',
     model:generated.model, responseId:generated.responseId, tokenUsage:tokenUsage(generated),createdAtMs:now, promptVersion:'tr-clue-v6-two-hints', handoffDigest}};
   const valid = candidates.map((c,index) => ({index, question:{...base, clue:c.clue.trim(),hints:c.hints.map(h=>h.trim()),source:{...base.source,hintEvidence:c.hintEvidence.trim(),hintReference:evidence.reference}}}))
-    .filter(c => validatePool([...pool,c.question]).length === 0);
+    .filter(c => passesChecks(c.question));
   if (!valid.length) throw new Error('All generated candidates failed automated checks.');
   let question = valid[0].question;
   if (!aiReview) return question;
@@ -129,7 +131,7 @@ export async function generateQuestion(source, pool, {model, apiKey, aiReview = 
       checks:review?.checks,sourceSupport:review?.sourceSupport,alternativesRejected:review?.alternativesRejected}};
   }
   question = {...chosen.question, acceptedAnswers:(review.acceptedAnswers ?? []).map(normalizeWord)};
-  if (validatePool([...pool,question]).length || question.acceptedAnswers.some(answer=>
+  if (!passesChecks(question) || question.acceptedAnswers.some(answer=>
       hasAnswerLeak(question.clue,answer)||question.hints.some(h=>hasAnswerLeak(h,answer)))) {
     return {...chosen.question, review:{status:'rejected',kind:'ai-self-review',model:checked.model,
       responseId:checked.responseId,tokenUsage:tokenUsage(checked),reviewedAtMs:now,

@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {ResponseIndex} from '../src/response_index.js';
 import {CloudQuestionGenerator} from '../src/cloud_generation.js';
 import {approveQuestion,reviewDigest,REVIEW_CHECKS,candidatePrompt,validateQuestion} from '../src/content.js';
 import {callStructured,generateQuestion} from '../src/content_generation.js';
@@ -10,12 +11,12 @@ import {GENERATION_LIMITS} from '../src/generation_policy.js';
 
 // Unit adapter; real RTDB serialization/transactions are covered in emulator.integration.js.
 class MemoryDatabase {
-  constructor(){this.data={questionGeneration:{version:1,control:{enabled:true,projectId:'demo-kelime-yarisi'}}};}
+  constructor(){this.reads=[];this.data={questionPool:{generationIndex:ResponseIndex.fromQuestions([]).data},questionGeneration:{version:1,control:{enabled:true,projectId:'demo-kelime-yarisi'}}};}
   value(path){return path.split('/').filter(Boolean).reduce((o,k)=>o?.[k],this.data)??null;}
   put(path,value){const parts=path.split('/').filter(Boolean),last=parts.pop();let obj=this.data;for(const p of parts)obj=obj[p]??={};if(value===null)delete obj[last];else obj[last]=structuredClone(value);}
   ref(path='') {
     const db=this;
-    return {get:async()=>({val:()=>structuredClone(db.value(path))}),on:(_,callback)=>callback(),off:()=>{},
+    return {get:async()=>{db.reads.push(path);return {val:()=>structuredClone(db.value(path))};},on:(_,callback)=>{db.reads.push(path);callback();},off:()=>{},
       transaction:async update=>{const next=update(structuredClone(db.value(path)));if(next===undefined)return {committed:false};db.put(path,next);return {committed:true,snapshot:{val:()=>structuredClone(next)}};},
       update:async updates=>{for(const [key,value] of Object.entries(updates))db.put(`${path}/${key}`,value);}};
   }
@@ -95,9 +96,12 @@ test('publication crash leaves an outbox; duplicate invocation repairs publicati
   assert.equal((await job.run()).reason,'generation-error');assert.equal(calls(),28);
   assert.equal(Object.keys(database.value('questionGeneration/outbox')).length,1);
   assert.equal((await loadPublishedPool(database,[])).length,0);
+  const reserved = new ResponseIndex(database.value('questionPool/generationIndex'));
+  assert.equal(Object.keys(reserved.data.uniqueResponses).length,14);
   assert.equal((await new CloudQuestionGenerator(options).run()).reason,'already-ran-today');assert.equal(calls(),28);
   assert.equal((await loadPublishedPool(database,[])).length,14);
   assert.equal((await loadPublishedSets(database,[])).length,1);
+  assert.deepEqual(new ResponseIndex(database.value('questionPool/generationIndex')).data,reserved.data);
 });
 test('expired process lease retains unknown charges and never retries its attempted word',async()=>{
   const {job,database,options,calls}=setup({sources:sources.slice(0,1)});
@@ -173,4 +177,44 @@ test('a rejected question is replaced while only complete sets reach publication
  const published=await loadPublishedPool(database,[]);assert.equal(published.length,42);
  const rejected=Object.values(database.value('questionGeneration/rejections')).map(JSON.parse);
  assert.equal(rejected.length,1);assert(!published.some(q=>q.id===rejected[0].id));
+});
+
+
+test('daily generation reads only the compact response index, never the published corpus', async () => {
+  const {job, database, calls} = setup();
+  await job.run();
+  assert.equal(calls(), 84);
+  assert(!database.reads.includes('questionPool'));
+  assert(!database.reads.some(path => path.startsWith('questionPool/published')));
+  const index = new ResponseIndex(database.value('questionPool/generationIndex'));
+  assert.equal(Object.keys(index.data.uniqueResponses).length, 42);
+  assert.equal(Object.keys(index.data.questions).length, 42);
+});
+
+test('missing or corrupt indexes stop before any paid request, without resetting spend history', async () => {
+  for (const value of [null, {version: 999}, {version: 1, uniqueResponses: {invalid: 'KAPI'}}]) {
+    const {job, database, calls} = setup();
+    database.put('questionPool/generationIndex', value);
+    await assert.rejects(job.run(), /Daily question job failed/);
+    assert.equal(calls(), 0);
+    assert.equal(database.value('questionGeneration/ledger/days/2026-10-15/calls'), 0);
+  }
+});
+
+test('published answers are excluded before requesting candidates without loading historical records', async () => {
+  const {database, options, calls} = setup();
+  const existing = approved(sources[0]);
+  const index = ResponseIndex.fromQuestions([existing]);
+  database.put('questionPool/generationIndex', index.data);
+  const generate = options.generate;
+  const selected = [];
+  options.generate = async (source, pool, opts) => {
+    assert(!opts.responseIndex.excludes(source));
+    assert(!pool.some(q => q.id === existing.id));
+    selected.push(source.answerId);
+    return generate(source, pool, opts);
+  };
+  await new CloudQuestionGenerator(options).run();
+  assert(!selected.includes(existing.answerId));
+  assert(calls() > 0);
 });

@@ -1,10 +1,11 @@
 import {randomUUID} from 'node:crypto';
-import {LENGTHS,candidatePrompt,isPublished,validateQuestion,validatePool} from './content.js';
+import {LENGTHS,candidatePrompt,isPublished,validateQuestion} from './content.js';
 import {generateQuestion,replenishmentPlan} from './content_generation.js';
 import {createQuestionSet,fitsDraft} from './question_sets.js';
 import {transaction} from './database_transaction.js';
-import {loadPublishedPool,decodeStoredQuestion} from './published_pool.js';
+import {decodeStoredQuestion} from './published_pool.js';
 import {compactQuestion} from './question_storage.js';
+import {loadResponseIndex,reserveResponses,responseIndexUpdates} from './response_index.js';
 import {GENERATION_LIMITS,generationDay,blankGenerationDay,validateGenerationLedger,approvedCounts,
   monthlyCharge,generationStopReason,reserveRequest,settleUsage} from './generation_policy.js';
 
@@ -57,11 +58,16 @@ export class CloudQuestionGenerator {
       return this.flushOutbox(state);
     }
     // Approved records and removal of their outbox entries commit atomically.
-    const current=await loadPublishedPool(this.database,this.bundledPool);
-    const combined=new Map(current.map(q=>[q.id,q]));
-    for(const [,entry] of entries)for(const q of entry.questions){if(!isPublished(q))throw new Error('Invalid publication outbox.');combined.set(q.id,q);}
-    if(validatePool([...combined.values()]).length)throw new Error('Publication quality checks failed.');
-    const updates={};
+    const publishing=entries.flatMap(([,entry])=>entry.questions);
+    for(const [id,entry] of entries) {
+      const manifest=createQuestionSet(id,entry.questions,entry.manifest.publishedAtMs);
+      if(manifest.fingerprint!==entry.manifest.fingerprint)throw new Error('Invalid publication set.');
+    }
+    if(publishing.some(q=>!isPublished(q)))throw new Error('Invalid publication outbox.');
+    // Reserve against the latest compact index in a transaction. If the atomic
+    // publication fails, the durable outbox repairs these same claims on retry.
+    this.responseIndex=await reserveResponses(this.database,publishing);
+    const updates=responseIndexUpdates(publishing);
     for(const [id,entry] of entries){
       const manifest=createQuestionSet(id,entry.questions,entry.manifest.publishedAtMs);
       if(manifest.fingerprint!==entry.manifest.fingerprint)throw new Error('Invalid publication set.');
@@ -103,9 +109,9 @@ export class CloudQuestionGenerator {
         const day=s.ledger.days[this.date]??=blankGenerationDay();
         if(!day.runId){day.runId=this.owner;day.runStartedAtMs=this.startedAt;}
       },{acquire:true});acquired=true;
+      this.responseIndex=await loadResponseIndex(this.database,this.bundledPool);
       state=await this.flushOutbox(state);
       if(state.ledger.days[this.date].runId!==this.owner){reason='already-ran-today';return cloudGenerationReport(state,this.date,reason,this.limits);}
-      let pool=await loadPublishedPool(this.database,this.bundledPool);
       const queued=Object.values((await this.database.ref('questionSources').get()).val()??{}).map(decodeStoredQuestion);
       const sources=[...new Map([...this.sources,...queued].map(s=>[s.answerId,s])).values()];
       while(true) {
@@ -122,10 +128,10 @@ export class CloudQuestionGenerator {
           });
           continue;
         }
-        const known=new Set([...pool.map(q=>q.answerId),...draft.map(q=>q.answerId),...backlog.map(q=>q.answerId),...Object.values(state.ledger.days).flatMap(d=>d.attempts.map(a=>a.answerId))]);
-        const eligible=sources.filter(q=>!known.has(q.answerId)&&fitsDraft(q,draft));
-        const target=Math.min(2000,Math.max(...LENGTHS.map(l=>pool.filter(q=>q.letterCount===l).length))+this.limits.approvedPerLength);
-        const source=replenishmentPlan(eligible,pool,{targetPerLength:target,limit:1}).selected[0];
+        const known=new Set([...draft.map(q=>q.answerId),...backlog.map(q=>q.answerId),...Object.values(state.ledger.days).flatMap(d=>d.attempts.map(a=>a.answerId))]);
+        const eligible=sources.filter(q=>!known.has(q.answerId)&&!this.responseIndex.excludes(q)&&fitsDraft(q,draft));
+        const target=Math.min(2000,Math.max(...LENGTHS.map(l=>this.responseIndex.count(l)))+this.limits.approvedPerLength);
+        const source=replenishmentPlan(eligible,[],{targetPerLength:target,limit:1,responseIndex:this.responseIndex}).selected[0];
         if(!source){reason='source-stock-exhausted';break;}
         candidatePrompt(source); // Reject unclear sources before charging any tokens.
         const key=typeof this.apiKey==='function'?this.apiKey():this.apiKey;
@@ -136,8 +142,8 @@ export class CloudQuestionGenerator {
           s.ledger.days[this.date].attempts.push({answerId:source.answerId,length:source.letterCount,status:'started',dailyCredit:true});
         });
         try {
-          const knownQuestions=[...new Map([...pool,...draft,...backlog].map(q=>[q.id,q])).values()];
-          const q=await this.generate(source,knownQuestions,{model:this.model,apiKey:key,aiReview:true,now:this.now(),maxOutputTokens:6000,
+          const knownQuestions=[...new Map([...draft,...backlog].map(q=>[q.id,q])).values()];
+          const q=await this.generate(source,knownQuestions,{model:this.model,apiKey:key,aiReview:true,now:this.now(),maxOutputTokens:6000,responseIndex:this.responseIndex,
             fetchImpl:async(url,request)=>{
               state=await this.change(s=>{
                 if(s.control?.enabled!==true||s.control.projectId!==this.projectId)throw new Error('Generation disabled.');
@@ -166,7 +172,7 @@ export class CloudQuestionGenerator {
             else s.rejections={...(s.rejections??{}),[q.id]:JSON.stringify(storedQuestion)};
           });
           state=await this.publishDraft(state);
-          if(q.review.status==='approved')pool.push(q);
+          if(q.review.status==='approved')this.responseIndex.reserve(storedQuestion);
         }catch(error) {
           this.failure=error; // In-memory diagnostics only; never persisted or logged.
           state=await this.change(s=>{

@@ -1,4 +1,5 @@
 import {readFileSync} from 'node:fs';
+import {ResponseIndex,RESPONSE_INDEX_PATH,responseIndexUpdates} from '../src/response_index.js';
 import {execFileSync} from 'node:child_process';
 import {partitionExistingQuestions,resolveQuestionSets} from '../src/question_sets.js';
 import {mergePublishedPool,decodeStoredQuestion} from '../src/published_pool.js';
@@ -36,7 +37,8 @@ async function main() {
  if(control.value?.projectId!=='kelime-yarisi-yalin')throw new Error('Dev generation control mismatch.');
  await request('questionGeneration/control','PUT',{...control.value,enabled:false},{'if-match':control.etag});
  try {
-  const updates={'questionPool/sets':plan.sets,'questionGeneration/setMigrationVersion':1};
+  const updates={'questionPool/sets':plan.sets,'questionGeneration/setMigrationVersion':1,
+   ...(pool?.generationIndex?.version===1?responseIndexUpdates(questions):{[RESPONSE_INDEX_PATH]:ResponseIndex.fromQuestions(questions).data})};
   for(const q of questions) {
    if(ids.has(q.id))updates[`questionPool/published/${q.id}`]=JSON.stringify(q);
    else {updates[`questionPool/published/${q.id}`]=null;updates[`questionGeneration/backlog/${q.id}`]=plan.backlog[q.id];}

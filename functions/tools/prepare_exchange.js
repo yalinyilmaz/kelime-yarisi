@@ -6,6 +6,7 @@ import {mergePublishedPool} from '../src/published_pool.js';
 import {selectSet} from '../src/set_selector.js';
 import {compactQuestion} from '../src/question_storage.js';
 import {createQuestionSet} from '../src/question_sets.js';
+import {responseIndexUpdates} from '../src/response_index.js';
 
 // Offline conversion only. No Firebase connection, credentials or paid API.
 export function prepareExchange(batch, existingPool = [], now = Date.now()) {
@@ -64,7 +65,7 @@ export function prepareExchange(batch, existingPool = [], now = Date.now()) {
   if (errors.length) throw new Error(JSON.stringify(errors, null, 2));
   const published = questions.map(q => ({...q, publication: 'published'}));
   const merged = mergePublishedPool(existingPool, published);
-  const publicationUpdates=Object.fromEntries(published.map(q=>[`questionPool/published/${q.id}`,JSON.stringify(q)]));
+  const publicationUpdates={...Object.fromEntries(published.map(q=>[`questionPool/published/${q.id}`,JSON.stringify(q)])), ...responseIndexUpdates(published)};
   for(const set of sets) {
     const manifest=createQuestionSet(set.id,published.filter(q=>set.questionIds.includes(q.id)),now);
     publicationUpdates[`questionPool/sets/${set.id}`]=manifest;
