@@ -6,19 +6,27 @@ class RoomCodeInput extends StatefulWidget {
   const RoomCodeInput({
     required this.onChanged,
     required this.onSubmitted,
+    this.initialCode = '',
     super.key,
   });
 
   final ValueChanged<String> onChanged;
   final VoidCallback onSubmitted;
+  final String initialCode;
 
   @override
   State<RoomCodeInput> createState() => _RoomCodeInputState();
 }
 
 class _RoomCodeInputState extends State<RoomCodeInput> {
-  final _controller = TextEditingController.fromValue(
-    RoomCodeFormatter.emptyValue,
+  late final _controller = TextEditingController.fromValue(
+    const RoomCodeFormatter().formatEditUpdate(
+      RoomCodeFormatter.emptyValue,
+      TextEditingValue(
+        text: widget.initialCode,
+        selection: TextSelection.collapsed(offset: widget.initialCode.length),
+      ),
+    ),
   );
   final _focusNode = FocusNode();
 

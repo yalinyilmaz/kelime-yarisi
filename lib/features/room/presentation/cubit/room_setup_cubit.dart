@@ -11,10 +11,12 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
     this._roomService, {
     required RoomSetupFlow flow,
     required String displayName,
+    String initialRoomCode = '',
   }) : super(
          RoomSetupState(
            flow: flow,
            displayName: displayName,
+           roomCode: initialRoomCode,
            roomName: flow == RoomSetupFlow.create ? "$displayName's Room" : '',
          ),
        );
@@ -39,7 +41,8 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
   }
 
   Future<void> submit() async {
-    if (!state.canSubmit || state.isSubmitting) {
+    if (isClosed || state.isSubmitting || state.room != null) return;
+    if (!state.canSubmit) {
       emit(
         state.copyWith(errorMessage: 'Alanları kontrol edip tekrar deneyin.'),
       );
@@ -73,7 +76,13 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
         operation: 'room_setup_cubit.submit',
       );
       if (isClosed) return;
-      emit(state.copyWith(isSubmitting: false, errorMessage: error.message));
+      emit(
+        state.copyWith(
+          isSubmitting: false,
+          errorMessage: error.message,
+          errorCode: error.code,
+        ),
+      );
     } catch (error, stackTrace) {
       ErrorReporter.report(
         error,
@@ -85,6 +94,7 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
         state.copyWith(
           isSubmitting: false,
           errorMessage: 'Bağlantı kurulamadı. İnternetinizi kontrol edin.',
+          errorCode: 'connection-failed',
         ),
       );
     }

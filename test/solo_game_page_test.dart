@@ -174,6 +174,7 @@ void main() {
           speechRecognizer: FakeNativeSpeech(),
         ),
       );
+      await tester.pumpAndSettle();
       expect(find.text('Tek Oyunculu'), findsOneWidget);
       expect(find.text('Çok Oyunculu'), findsOneWidget);
       await tester.tap(find.text('Tek Oyunculu'));

@@ -1,4 +1,5 @@
 import '../../../../core/monitoring/error_reporter.dart';
+import '../../../../core/config/room_invitation.dart';
 
 import 'dart:async';
 
@@ -50,7 +51,10 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       copied = true;
       if (isClosed || state.isLeaving) return;
       await SharePlus.instance.share(
-        ShareParams(text: code, sharePositionOrigin: origin),
+        ShareParams(
+          text: RoomInvitation.shareText(code),
+          sharePositionOrigin: origin,
+        ),
       );
     } catch (error, stackTrace) {
       ErrorReporter.report(

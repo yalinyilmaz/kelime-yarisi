@@ -83,6 +83,7 @@ void main() {
             speechRecognizer: FakeNativeSpeech(),
           ),
         );
+        await tester.pumpAndSettle();
         expect(find.text('Tek Oyunculu'), findsNothing);
         final router = GoRouter.of(tester.element(find.byType(RoomHomePage)));
         router.go('/join');
@@ -197,6 +198,7 @@ void main() {
           speechRecognizer: FakeNativeSpeech(),
         ),
       );
+      await tester.pumpAndSettle();
       final input = find.byKey(const ValueKey('player-name-input'));
       expect(input, findsNothing);
       expect(find.text('Merhaba, Yalın'), findsOneWidget);
@@ -230,6 +232,7 @@ void main() {
           speechRecognizer: FakeNativeSpeech(),
         ),
       );
+      await tester.pumpAndSettle();
       expect(input, findsNothing);
       expect(find.text('Merhaba, Ece'), findsOneWidget);
       expect(find.text('Tek Oyunculu'), findsOneWidget);
@@ -265,6 +268,7 @@ void main() {
           speechRecognizer: FakeNativeSpeech(),
         ),
       );
+      await tester.pumpAndSettle();
       final input = find.byKey(const ValueKey('player-name-input'));
       await tester.ensureVisible(input);
       await tester.enterText(input, 'Yalın');

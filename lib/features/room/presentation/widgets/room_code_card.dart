@@ -61,7 +61,7 @@ class RoomCodeCard extends StatelessWidget {
           ),
           Builder(
             builder: (buttonContext) => IconButton.filledTonal(
-              tooltip: 'Oda kodunu kopyala ve paylaş',
+              tooltip: 'Oda kodunu kopyala ve davet paylaş',
               onPressed: () {
                 final box = buttonContext.findRenderObject()! as RenderBox;
                 buttonContext.read<RoomLobbyCubit>().copyAndShareCode(

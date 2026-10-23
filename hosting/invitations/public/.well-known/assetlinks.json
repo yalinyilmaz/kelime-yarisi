@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.yalinyilmaz.kelime_yarisi.dev",
+      "sha256_cert_fingerprints": [
+        "91:E1:84:52:DF:F1:75:2B:0F:60:D7:37:8D:D3:A4:DA:4D:48:E7:76:C5:5A:D2:1F:FB:4E:DF:CC:FB:FB:28:43",
+        "DB:CA:E0:B5:B8:D8:9C:11:C0:39:6D:B1:82:E5:1C:3D:FE:B4:B6:A1:32:8B:26:FC:6A:C1:4A:97:DF:6A:B6:FD"
+      ]
+    }
+  }
+]

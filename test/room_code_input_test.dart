@@ -108,11 +108,7 @@ void main() {
           lessThan(bounds.left + 80),
         );
         expect(
-          tester
-              .getTopLeft(
-                find.text('Kodu yaz veya yapıştır; tire yazmana gerek yok.'),
-              )
-              .dx,
+          tester.getTopLeft(find.text('Kodu yaz veya yapıştır')).dx,
           closeTo(bounds.left + 20, 1),
         );
         final field = find.byKey(const ValueKey('room-code-input'));

@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["SMM9SXSRF9.com.yalinyilmaz.kelimeYarisi.dev"],
+        "components": [{ "/": "/invite/*" }]
+      }
+    ]
+  }
+}

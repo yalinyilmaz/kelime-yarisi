@@ -14,6 +14,7 @@ class RoomSetupState extends Equatable {
     this.targetPlayerCount = 5,
     this.gameMode = RoomGameMode.classic,
     this.errorMessage,
+    this.errorCode,
     this.room,
     this.isSubmitting = false,
   });
@@ -25,6 +26,7 @@ class RoomSetupState extends Equatable {
   final int targetPlayerCount;
   final RoomGameMode gameMode;
   final String? errorMessage;
+  final String? errorCode;
   final GameRoom? room;
   final bool isSubmitting;
 
@@ -47,6 +49,7 @@ class RoomSetupState extends Equatable {
     int? targetPlayerCount,
     RoomGameMode? gameMode,
     String? errorMessage,
+    String? errorCode,
     bool clearError = false,
     GameRoom? room,
     bool? isSubmitting,
@@ -59,6 +62,7 @@ class RoomSetupState extends Equatable {
       targetPlayerCount: targetPlayerCount ?? this.targetPlayerCount,
       gameMode: gameMode ?? this.gameMode,
       errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
+      errorCode: clearError ? null : errorCode ?? this.errorCode,
       room: room ?? this.room,
       isSubmitting: isSubmitting ?? this.isSubmitting,
     );
@@ -73,6 +77,7 @@ class RoomSetupState extends Equatable {
     targetPlayerCount,
     gameMode,
     errorMessage,
+    errorCode,
     room,
     isSubmitting,
   ];

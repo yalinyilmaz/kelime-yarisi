@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/speech/voice_answer_button.dart';
+import '../../../../core/config/room_invitation.dart';
 import '../../../../core/profile/player_name_cubit.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../widgets/player_name_form.dart';
 
 class RoomHomePage extends StatefulWidget {
-  const RoomHomePage({super.key});
+  const RoomHomePage({this.invitationCode, super.key});
+
+  final String? invitationCode;
 
   @override
   State<RoomHomePage> createState() => _RoomHomePageState();
@@ -81,11 +84,19 @@ class _RoomHomePageState extends State<RoomHomePage> {
                             const Spacer(),
                             if (needsName)
                               PlayerNameForm(
-                                onSaved: () => setState(() => _editingName = false),
-                                onCancel:
-                                    name == null
+                                onSaved: () {
+                                  if (widget.invitationCode case final code?) {
+                                    context.go(
+                                      RoomInvitation.joinLocation(code),
+                                    );
+                                  } else {
+                                    setState(() => _editingName = false);
+                                  }
+                                },
+                                onCancel: name == null
                                     ? null
-                                    : () => setState(() => _editingName = false),
+                                    : () =>
+                                          setState(() => _editingName = false),
                               )
                             else ...[
                               Row(

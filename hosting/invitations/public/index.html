@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#11102c">
+  <title>Kelime Yarışı · Oda daveti</title>
+  <link rel="stylesheet" href="/invite.css">
+  <script src="/config.js" defer></script>
+  <script src="/invite.js" defer></script>
+</head>
+<body>
+  <main>
+    <span class="brand">KELİME YARIŞI · DEV</span>
+    <h1 id="title">Oyuna davetlisin</h1>
+    <p id="message">Uygulama kuruluysa davet bağlantısına dokunarak odaya katılabilirsin. Kurulu değilse aşağıdan indirebilirsin.</p>
+    <section id="invitation" hidden>
+      <span class="label">ODA KODU</span>
+      <strong id="code"></strong>
+      <button id="copy" type="button">Oda kodunu kopyala</button>
+      <p id="copied" role="status" aria-live="polite"></p>
+    </section>
+    <nav aria-label="Uygulamayı indir">
+      <a id="android" hidden>Google Play test sürümü</a>
+      <a id="ios" hidden>App Store’u aç</a>
+    </nav>
+    <p class="note">Dev test sürümü. Android’de davetin gönderildiği Google hesabı test kullanıcıları arasında olmalı. iOS mağaza bağlantısı şimdilik App Store ana sayfasını açar.</p>
+    <p class="note">Kurulumdan sonra bu davet bağlantısına tekrar dokun veya uygulamada oda kodunu gir.</p>
+    <noscript>Oda kodu davet mesajında da bulunur. Uygulamayı açıp “Odaya Katıl” alanına yazabilirsin.</noscript>
+  </main>
+</body>
+</html>

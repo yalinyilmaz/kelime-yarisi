@@ -9,9 +9,14 @@ import '../cubit/room_setup_state.dart';
 import '../widgets/room_setup_view.dart';
 
 class RoomSetupPage extends StatelessWidget {
-  const RoomSetupPage({required this.flow, super.key});
+  const RoomSetupPage({
+    required this.flow,
+    this.initialRoomCode = '',
+    super.key,
+  });
 
   final RoomSetupFlow flow;
+  final String initialRoomCode;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,7 @@ class RoomSetupPage extends StatelessWidget {
         context.read<FirebaseRoomService>(),
         flow: flow,
         displayName: context.read<PlayerNameCubit>().state!,
+        initialRoomCode: initialRoomCode,
       ),
       child: const RoomSetupView(),
     );

@@ -14,7 +14,7 @@ import 'game_cubit_test.dart' show testRoom;
 
 void main() {
   testWidgets(
-    'copy then share uses only the code, anchors to the button and ignores duplicate taps',
+    'copy code then share invitation, anchor to the button and ignore duplicate taps',
     (tester) async {
       const channel = MethodChannel('dev.fluttercommunity.plus/share');
       final messenger = tester.binding.defaultBinaryMessenger;
@@ -59,13 +59,16 @@ void main() {
           ),
         ),
       );
-      final button = find.byTooltip('Oda kodunu kopyala ve paylaş');
+      final button = find.byTooltip('Oda kodunu kopyala ve davet paylaş');
       final rect = tester.getRect(button);
       await tester.tap(button);
       await tester.pump();
       expect(calls, ['copy', 'share']);
       expect(clipboard, room.code);
-      expect(params!['text'], room.code);
+      expect(
+        params!['text'],
+        'Kelime Yarışı odama katıl!\nhttps://kelime-yarisi-yalin.web.app/invite/${room.code}\nOda kodu: ${room.code}',
+      );
       expect(params!['originX'], rect.left);
       expect(params!['originY'], rect.top);
       expect(params!['originWidth'], rect.width);

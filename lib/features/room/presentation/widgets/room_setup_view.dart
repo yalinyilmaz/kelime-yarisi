@@ -89,6 +89,7 @@ class RoomSetupView extends StatelessWidget {
                           const RoomGameSummary(mode: RoomGameMode.classic),
                         ] else ...[
                           RoomCodeInput(
+                            initialCode: state.roomCode,
                             onChanged: context
                                 .read<RoomSetupCubit>()
                                 .roomCodeChanged,

@@ -153,6 +153,7 @@ void main() {
           speechRecognizer: FakeNativeSpeech(),
         ),
       );
+      await tester.pumpAndSettle();
       await tester.enterText(
         find.byKey(const ValueKey('player-name-input')),
         'Yalın',
