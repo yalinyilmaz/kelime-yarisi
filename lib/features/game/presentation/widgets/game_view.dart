@@ -21,6 +21,7 @@ class GameView extends StatefulWidget {
 
 class _GameViewState extends State<GameView> with WidgetsBindingObserver {
   final _answer = TextEditingController();
+  bool _confirmingLeave = false;
 
   @override
   void initState() {
@@ -56,13 +57,23 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
 
   Future<void> _leave() async {
     final cubit = context.read<GameCubit>();
-    final confirmed = await GameConfirmationDialogs.leave(
-      context,
-      isHost: cubit.state.isHost,
-    );
-    if (confirmed != true || !mounted) return;
-    await cubit.leaveRoom();
-    if (mounted && cubit.state.isLeaving) context.go('/');
+    if (_confirmingLeave || cubit.isClosed || cubit.state.isLeaving) return;
+    _confirmingLeave = true;
+    try {
+      final confirmed = await GameConfirmationDialogs.leave(
+        context,
+        isHost: cubit.state.isHost,
+        onLeave: () async {
+          await cubit.leaveRoom();
+          return !cubit.isClosed && cubit.state.isLeaving
+              ? null
+              : cubit.state.errorMessage ?? 'Odadan çıkılamadı. Tekrar dene.';
+        },
+      );
+      if (confirmed && mounted) context.go('/');
+    } finally {
+      _confirmingLeave = false;
+    }
   }
 
   @override

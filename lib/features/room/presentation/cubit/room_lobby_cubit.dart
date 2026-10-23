@@ -119,6 +119,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   }
 
   Future<void> toggleCurrentPlayerReady() async {
+    if (isClosed || state.isLeaving) return;
     RoomPlayer? currentPlayer;
     for (final player in state.room.players) {
       if (player.id == _roomService.currentUserId) {
@@ -155,7 +156,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   }
 
   Future<void> leaveRoom() async {
-    if (state.isLeaving) return;
+    if (isClosed || state.isLeaving) return;
     emit(state.copyWith(isLeaving: true, clearError: true));
     try {
       await _roomService.leaveRoom(state.room.id);
@@ -200,7 +201,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   }
 
   Future<void> _startCountdown() async {
-    if (isClosed || state.isStartingGame) return;
+    if (isClosed || state.isStartingGame || state.isLeaving) return;
     emit(state.copyWith(isStartingGame: true, clearError: true));
     try {
       await _roomService.startCountdown(

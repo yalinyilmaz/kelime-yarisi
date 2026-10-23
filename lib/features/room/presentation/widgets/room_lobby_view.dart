@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
+import '../../../game/presentation/widgets/game_confirmation_dialogs.dart';
 import '../../data/firebase_room_service.dart';
 import '../../domain/entities/game_room.dart';
 import '../../domain/entities/room_player.dart';
@@ -16,8 +17,15 @@ import '../widgets/room_empty_player_tile.dart';
 import '../widgets/room_player_tile.dart';
 import 'question_capacity_card.dart';
 
-class RoomLobbyView extends StatelessWidget {
+class RoomLobbyView extends StatefulWidget {
   const RoomLobbyView({super.key});
+
+  @override
+  State<RoomLobbyView> createState() => _RoomLobbyViewState();
+}
+
+class _RoomLobbyViewState extends State<RoomLobbyView> {
+  bool _confirmingLeave = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +61,7 @@ class RoomLobbyView extends StatelessWidget {
             .length;
 
         return PopScope(
-          canPop: state.isLeaving,
+          canPop: false,
           onPopInvokedWithResult: (didPop, _) {
             if (!didPop) _leaveAndPop(context);
           },
@@ -170,7 +178,7 @@ class RoomLobbyView extends StatelessWidget {
                                   ? AppColors.textPrimary
                                   : AppColors.onReady,
                             ),
-                            icon: state.isLeaving || state.isStartingGame
+                            icon: state.isStartingGame
                                 ? const SizedBox.square(
                                     dimension: 20,
                                     child: CircularProgressIndicator(
@@ -237,9 +245,24 @@ class RoomLobbyView extends StatelessWidget {
 
   Future<void> _leaveAndPop(BuildContext context) async {
     final cubit = context.read<RoomLobbyCubit>();
-    await cubit.leaveRoom();
-    if (context.mounted && cubit.state.isLeaving) {
-      context.go('/');
+    if (_confirmingLeave || cubit.isClosed || cubit.state.isLeaving) return;
+    _confirmingLeave = true;
+    try {
+      final confirmed = await GameConfirmationDialogs.leave(
+        context,
+        isHost:
+            cubit.state.room.hostId ==
+            context.read<FirebaseRoomService>().currentUserId,
+        onLeave: () async {
+          await cubit.leaveRoom();
+          return !cubit.isClosed && cubit.state.isLeaving
+              ? null
+              : cubit.state.errorMessage ?? 'Odadan çıkılamadı. Tekrar dene.';
+        },
+      );
+      if (confirmed && context.mounted) context.go('/');
+    } finally {
+      _confirmingLeave = false;
     }
   }
 

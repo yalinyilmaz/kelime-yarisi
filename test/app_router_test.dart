@@ -277,7 +277,7 @@ void main() {
       expect(find.byType(GamePage), findsOneWidget);
       await tester.tap(find.byTooltip('Odadan çık'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Çık'));
+      await tester.tap(find.text('Odadan Çık'));
       await tester.pumpAndSettle();
       expect(router.routeInformationProvider.value.uri.path, '/');
       expect(find.byType(RoomHomePage), findsOneWidget);
