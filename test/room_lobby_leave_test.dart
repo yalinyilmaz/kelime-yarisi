@@ -7,7 +7,8 @@ import 'package:kelime_yarisi/app/app_router.dart';
 import 'package:kelime_yarisi/core/theme/app_theme.dart';
 import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
-import 'package:kelime_yarisi/features/room/presentation/pages/room_home_page.dart';
+import 'package:kelime_yarisi/features/room/presentation/pages/room_directory_page.dart';
+import 'package:kelime_yarisi/features/room/presentation/pages/multiplayer_home_page.dart';
 import 'package:kelime_yarisi/features/room/presentation/pages/room_lobby_page.dart';
 
 import 'app_router_test.dart' show FakeLobbyService, withNamedPlayer;
@@ -100,10 +101,21 @@ void main() {
         service.gate!.complete();
         await tester.pumpAndSettle();
         expect(find.byType(AlertDialog), findsNothing);
-        expect(find.byType(RoomHomePage), findsOneWidget);
-        expect(router.routeInformationProvider.value.uri.path, '/');
+        expect(find.byType(RoomDirectoryPage), findsOneWidget);
+        expect(
+          router.routeInformationProvider.value.uri.path,
+          '/multiplayer/rooms',
+        );
         expect(service.rooms.hasListener, isFalse);
         expect(service.offsets.hasListener, isFalse);
+        if (systemBack) {
+          await tester.binding.handlePopRoute();
+        } else {
+          await tester.tap(find.byType(BackButton));
+        }
+        await tester.pumpAndSettle();
+        expect(find.byType(MultiplayerHomePage), findsOneWidget);
+        expect(router.routeInformationProvider.value.uri.path, '/multiplayer');
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox());
       },
@@ -174,7 +186,7 @@ void main() {
     expect(service.leaves, 2);
     service.gate!.complete();
     await tester.pumpAndSettle();
-    expect(find.byType(RoomHomePage), findsOneWidget);
+    expect(find.byType(RoomDirectoryPage), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
   });

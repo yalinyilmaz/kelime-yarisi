@@ -12,6 +12,7 @@ class RoomSetupState extends Equatable {
     this.roomName = '',
     this.roomCode = '',
     this.targetPlayerCount = 5,
+    this.visibility = RoomVisibility.private,
     this.gameMode = RoomGameMode.classic,
     this.errorMessage,
     this.errorCode,
@@ -24,6 +25,7 @@ class RoomSetupState extends Equatable {
   final String roomName;
   final String roomCode;
   final int targetPlayerCount;
+  final RoomVisibility visibility;
   final RoomGameMode gameMode;
   final String? errorMessage;
   final String? errorCode;
@@ -47,6 +49,7 @@ class RoomSetupState extends Equatable {
     String? roomName,
     String? roomCode,
     int? targetPlayerCount,
+    RoomVisibility? visibility,
     RoomGameMode? gameMode,
     String? errorMessage,
     String? errorCode,
@@ -60,6 +63,7 @@ class RoomSetupState extends Equatable {
       roomName: roomName ?? this.roomName,
       roomCode: roomCode ?? this.roomCode,
       targetPlayerCount: targetPlayerCount ?? this.targetPlayerCount,
+      visibility: visibility ?? this.visibility,
       gameMode: gameMode ?? this.gameMode,
       errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
       errorCode: clearError ? null : errorCode ?? this.errorCode,
@@ -75,6 +79,7 @@ class RoomSetupState extends Equatable {
     roomName,
     roomCode,
     targetPlayerCount,
+    visibility,
     gameMode,
     errorMessage,
     errorCode,

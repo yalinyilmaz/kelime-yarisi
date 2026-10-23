@@ -14,6 +14,7 @@ import '../../game/domain/game_progress.dart';
 import '../../game/domain/game_question_set.dart';
 import '../../game/domain/shared_hints.dart';
 import '../domain/entities/game_room.dart';
+import '../domain/entities/room_listing.dart';
 import '../domain/entities/room_game_mode.dart';
 import '../domain/entities/room_player.dart';
 import 'firebase_room_mapper.dart';
@@ -60,6 +61,7 @@ class FirebaseRoomService {
     required String roomName,
     required int targetPlayerCount,
     required RoomGameMode gameMode,
+    RoomVisibility visibility = RoomVisibility.private,
   }) async {
     if (gameMode != RoomGameMode.classic) {
       throw const RoomServiceException(
@@ -81,6 +83,7 @@ class FirebaseRoomService {
       final room = GameRoom(
         id: roomId,
         name: roomName.trim(),
+        visibility: visibility,
         code: code,
         hostId: uid,
         targetPlayerCount: targetPlayerCount,
@@ -138,6 +141,33 @@ class FirebaseRoomService {
       }
       rethrow;
     }
+  }
+
+  Future<List<RoomListing>> listRooms() async {
+    await ensureSignedIn();
+    final result = await _callQuestionFunction('listQuestionRooms', {});
+    final rooms = (result as Map)['rooms'] as List? ?? const [];
+    return rooms.map((room) => RoomListing.fromMap(room as Map)).toList();
+  }
+
+  Future<GameRoom> joinListedRoom({
+    required String directoryId,
+    required String displayName,
+    String? roomCode,
+  }) async {
+    await ensureSignedIn();
+    final result = await _callQuestionFunction('joinQuestionRoom', {
+      'directoryId': directoryId,
+      'displayName': displayName,
+      'roomCode': ?roomCode,
+    });
+    final roomId = (result as Map)['roomId'] as String;
+    final snapshot = await _roomRef(roomId).get();
+    if (!snapshot.exists) {
+      throw const RoomServiceException('room-closed', 'Oda kapatıldı.');
+    }
+    await beginPresence(roomId);
+    return FirebaseRoomMapper.fromMap(roomId, snapshot.value);
   }
 
   Stream<GameRoom> watchRoom(String roomId) {

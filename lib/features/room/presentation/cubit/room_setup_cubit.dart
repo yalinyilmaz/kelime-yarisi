@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/firebase_room_service.dart';
 import '../../domain/entities/room_game_mode.dart';
+import '../../domain/entities/game_room.dart';
 import 'room_setup_state.dart';
 
 class RoomSetupCubit extends Cubit<RoomSetupState> {
@@ -36,6 +37,10 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
     );
   }
 
+  void visibilityChanged(RoomVisibility value) {
+    emit(state.copyWith(visibility: value, clearError: true));
+  }
+
   void playerCountChanged(int value) {
     emit(state.copyWith(targetPlayerCount: value, clearError: true));
   }
@@ -55,6 +60,7 @@ class RoomSetupCubit extends Cubit<RoomSetupState> {
         RoomSetupFlow.create => await _roomService.createRoom(
           displayName: state.displayName,
           roomName: state.roomName,
+          visibility: state.visibility,
           targetPlayerCount: state.targetPlayerCount,
           gameMode: RoomGameMode.classic,
         ),

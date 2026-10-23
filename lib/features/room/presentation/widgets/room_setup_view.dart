@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../../../game/presentation/widgets/game_rules_info.dart';
 import '../../domain/entities/room_game_mode.dart';
+import '../../domain/entities/game_room.dart';
 import '../cubit/room_setup_cubit.dart';
 import '../cubit/room_setup_state.dart';
 import '../widgets/room_game_summary.dart';
@@ -43,7 +44,7 @@ class RoomSetupView extends StatelessWidget {
                       children: [
                         Text(
                           isCreate
-                              ? 'Arkadaşlarınla canlı yarışacağın odayı hazırla.'
+                              ? 'Diğer oyuncularla canlı yarışacağın odayı hazırla.'
                               : 'Arkadaşının paylaştığı oda koduyla stüdyoya gir.',
                           style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(color: AppColors.textSecondary),
@@ -62,6 +63,40 @@ class RoomSetupView extends StatelessWidget {
                               labelText: 'Oda adı',
                               hintText: 'Örn. Cuma Akşamı',
                               prefixIcon: Icon(Icons.edit_outlined),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          const StudioSectionLabel('Oda erişimi'),
+                          const SizedBox(height: 12),
+                          SegmentedButton<RoomVisibility>(
+                            segments: const [
+                              ButtonSegment(
+                                value: RoomVisibility.public,
+                                icon: Icon(Icons.public_rounded),
+                                label: Text('Açık'),
+                              ),
+                              ButtonSegment(
+                                value: RoomVisibility.private,
+                                icon: Icon(Icons.lock_outline_rounded),
+                                label: Text('Özel'),
+                              ),
+                            ],
+                            selected: {state.visibility},
+                            showSelectedIcon: false,
+                            style: _segmentStyle(),
+                            onSelectionChanged: state.isSubmitting
+                                ? null
+                                : (values) => context
+                                      .read<RoomSetupCubit>()
+                                      .visibilityChanged(values.first),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            state.visibility == RoomVisibility.public
+                                ? 'Odan listede görünür. Oyuncular kod girmeden katılabilir.'
+                                : 'Odan listede kilitli görünür. Katılmak için oda kodu veya davet bağlantısı gerekir.',
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
                             ),
                           ),
                           const SizedBox(height: 24),

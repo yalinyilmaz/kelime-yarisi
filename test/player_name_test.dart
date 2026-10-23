@@ -117,7 +117,10 @@ void main() {
         expect(find.text('Merhaba, Yalın Yılmaz'), findsOneWidget);
         await tester.tap(find.text('Çok Oyunculu'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Oda Oluştur'));
+        await tester.ensureVisible(find.text('Devam'));
+        await tester.tap(find.text('Devam'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byTooltip('Oda oluştur'));
         await tester.pumpAndSettle();
         expect(find.text('Oyuncu adın'), findsNothing);
         expect(find.text("Yalın Yılmaz's Room"), findsOneWidget);
@@ -149,7 +152,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.text('Çok Oyunculu'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Odaya Katıl'));
+        router.go('/join');
         await tester.pumpAndSettle();
         expect(find.text('Oyuncu adın'), findsNothing);
         expect(find.byType(TextField), findsOneWidget);
@@ -298,6 +301,7 @@ class _SetupService extends FakeLobbyService {
     required String roomName,
     required int targetPlayerCount,
     required RoomGameMode gameMode,
+    RoomVisibility visibility = RoomVisibility.private,
   }) async {
     createdName = displayName;
     createdRoomName = roomName;

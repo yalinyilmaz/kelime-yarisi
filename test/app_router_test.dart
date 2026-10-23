@@ -15,6 +15,7 @@ import 'package:kelime_yarisi/features/room/data/firebase_room_service.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/room_game_mode.dart';
 import 'package:kelime_yarisi/features/room/presentation/pages/room_home_page.dart';
+import 'package:kelime_yarisi/features/room/presentation/pages/room_directory_page.dart';
 import 'package:kelime_yarisi/features/room/presentation/pages/room_lobby_page.dart';
 import 'package:kelime_yarisi/features/room/presentation/pages/room_setup_page.dart';
 import 'package:kelime_yarisi/features/room/presentation/widgets/question_capacity_card.dart';
@@ -182,7 +183,7 @@ void main() {
   }
 
   testWidgets(
-    'Create/join routes return home; missing room data redirects safely',
+    'Directory creation returns to the list; legacy join and missing room redirects remain safe',
     (tester) async {
       final service = FakeLobbyService();
       final router = createAppRouter();
@@ -200,15 +201,16 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Çok Oyunculu'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Oda Oluştur'));
+      await tester.ensureVisible(find.text('Devam'));
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Oda oluştur'));
       await tester.pumpAndSettle();
       expect(find.byType(RoomSetupPage), findsOneWidget);
       router.pop();
       await tester.pumpAndSettle();
-      expect(find.byType(RoomHomePage), findsOneWidget);
-      await tester.tap(find.text('Çok Oyunculu'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Odaya Katıl'));
+      expect(find.byType(RoomDirectoryPage), findsOneWidget);
+      router.go('/join');
       await tester.pumpAndSettle();
       expect(find.byType(RoomSetupPage), findsOneWidget);
       router.go('/room/missing');
@@ -225,7 +227,7 @@ void main() {
   );
 
   testWidgets(
-    'Solo debug host starts countdown; playing replaces lobby; confirmed exit returns home',
+    'Solo debug host starts countdown; playing replaces lobby; confirmed exit returns to room directory',
     (tester) async {
       final service = FakeLobbyService()..uid = 'host';
       final seed = testRoom();
@@ -277,8 +279,8 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Odadan Çık'));
       await tester.pumpAndSettle();
-      expect(router.routeInformationProvider.value.uri.path, '/');
-      expect(find.byType(RoomHomePage), findsOneWidget);
+      expect(router.routeInformationProvider.value.uri.path, '/multiplayer/rooms');
+      expect(find.byType(RoomDirectoryPage), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       router.dispose();

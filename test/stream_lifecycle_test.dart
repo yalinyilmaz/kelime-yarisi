@@ -163,7 +163,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Çok Oyunculu'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Oda Oluştur'));
+      await tester.ensureVisible(find.text('Devam'));
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Oda oluştur'));
       await tester.pumpAndSettle();
       await tester.pumpWidget(const SizedBox());
       expect(service.disposals, 1);
@@ -196,6 +199,7 @@ class _PendingService extends FakeRoomService {
     required String roomName,
     required int targetPlayerCount,
     required RoomGameMode gameMode,
+    RoomVisibility visibility = RoomVisibility.private,
   }) => roomGate.future;
   @override
   Future<GameRoom> joinRoom({

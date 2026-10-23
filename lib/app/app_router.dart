@@ -12,6 +12,7 @@ import '../features/room/presentation/pages/room_invitation_page.dart';
 import '../features/room/presentation/pages/room_lobby_page.dart';
 import '../features/room/presentation/pages/room_setup_page.dart';
 import '../features/room/presentation/pages/multiplayer_home_page.dart';
+import '../features/room/presentation/pages/room_directory_page.dart';
 import '../features/solo/presentation/pages/solo_home_page.dart';
 import '../features/solo/presentation/pages/solo_game_page.dart';
 
@@ -86,7 +87,14 @@ GoRouter createAppRouter({PlayerNameCubit? playerName}) => GoRouter(
         GoRoute(
           path: 'multiplayer',
           builder: (_, _) => const MultiplayerHomePage(),
+          routes: [
+            GoRoute(
+              path: 'rooms',
+              builder: (_, _) => const RoomDirectoryPage(),
+            ),
+          ],
         ),
+        GoRoute(path: 'rooms', redirect: (_, _) => '/multiplayer/rooms'),
         GoRoute(
           path: 'solo',
           builder: (_, _) => const SoloHomePage(),

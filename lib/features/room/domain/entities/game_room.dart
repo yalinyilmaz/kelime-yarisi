@@ -7,6 +7,8 @@ import '../../../game/domain/question_race.dart';
 import 'room_game_mode.dart';
 import 'room_player.dart';
 
+enum RoomVisibility { public, private }
+
 enum RoomStatus { lobby, countdown, playing, results }
 
 class GameRoom extends Equatable {
@@ -18,6 +20,7 @@ class GameRoom extends Equatable {
     required this.targetPlayerCount,
     required this.gameMode,
     required this.players,
+    this.visibility = RoomVisibility.private,
     this.status = RoomStatus.lobby,
     this.startsAtMs,
     this.questionSetId,
@@ -39,6 +42,7 @@ class GameRoom extends Equatable {
   final int targetPlayerCount;
   final RoomGameMode gameMode;
   final List<RoomPlayer> players;
+  final RoomVisibility visibility;
   final RoomStatus status;
   final int? startsAtMs;
   final String? questionSetId;
@@ -91,6 +95,7 @@ class GameRoom extends Equatable {
       targetPlayerCount: targetPlayerCount,
       gameMode: gameMode,
       players: players ?? this.players,
+      visibility: visibility,
       status: status ?? this.status,
       startsAtMs: startsAtMs ?? this.startsAtMs,
       questionSetId: questionSetId ?? this.questionSetId,
@@ -115,6 +120,7 @@ class GameRoom extends Equatable {
     targetPlayerCount,
     gameMode,
     players,
+    visibility,
     status,
     startsAtMs,
     questionSetId,

@@ -9,6 +9,7 @@ import 'package:kelime_yarisi/features/room/data/firebase_room_mapper.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/game_room.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/room_game_mode.dart';
 import 'package:kelime_yarisi/features/room/domain/entities/room_player.dart';
+import 'package:kelime_yarisi/features/room/domain/entities/room_listing.dart';
 
 GameRoom testRoom({
   RoomGameMode mode = RoomGameMode.quick,
@@ -47,6 +48,9 @@ class FakeRoomService extends Fake implements FirebaseRoomService {
   String uid = 'guest';
   GameRoom room = testRoom();
   int resultWrites = 0;
+  @override
+  Future<List<RoomListing>> listRooms() async => [];
+
   @override
   String get currentUserId => uid;
   @override

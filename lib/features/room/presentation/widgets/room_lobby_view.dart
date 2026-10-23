@@ -249,7 +249,7 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
               : cubit.state.errorMessage ?? 'Odadan çıkılamadı. Tekrar dene.';
         },
       );
-      if (confirmed && context.mounted) context.go('/');
+      if (confirmed && context.mounted) context.go('/multiplayer/rooms');
     } finally {
       _confirmingLeave = false;
     }

@@ -6,7 +6,7 @@
     "questionPool": {".read": false,".write": false},
     "questionSources": {".read": false,".write": false},
     "rooms": {
-      ".indexOn": ["offlineSinceAt"],
+      ".indexOn": ["offlineSinceAt", "status", "directoryId"],
       "$roomId": {
         ".read": "auth != null && data.child('players').child(auth.uid).exists()",
         ".write": "auth != null && !data.exists() && newData.exists() && newData.child('hostId').val() === auth.uid && newData.child('playerCount').val() === 1 && newData.child('players').child(auth.uid).child('isHost').val() === true",
@@ -16,6 +16,12 @@
         },
         "code": {
           ".validate": "newData.isString() && newData.val().matches(/^[A-HJ-NP-Z]{3}-[2-9]{3}$/)"
+        },
+        "visibility": {
+          ".validate": "(newData.val() === 'public' || newData.val() === 'private') && (!data.exists() || newData.val() === data.val())"
+        },
+        "directoryId": {
+          ".validate": "data.exists() && newData.val() === data.val()"
         },
         "hostId": {
           ".validate": "newData.isString() && ((!data.exists() && newData.val() === auth.uid) || newData.val() === data.val())"

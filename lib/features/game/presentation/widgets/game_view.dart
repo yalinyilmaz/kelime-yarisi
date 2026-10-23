@@ -70,7 +70,7 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
               : cubit.state.errorMessage ?? 'Odadan çıkılamadı. Tekrar dene.';
         },
       );
-      if (confirmed && mounted) context.go('/');
+      if (confirmed && mounted) context.go('/multiplayer/rooms');
     } finally {
       _confirmingLeave = false;
     }

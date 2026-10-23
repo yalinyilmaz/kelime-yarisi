@@ -1,3 +1,4 @@
+import {listRooms, joinListedRoom} from './room_directory.js';
 import {reportFailure} from './monitoring.js';
 import {readFileSync} from 'node:fs';
 import {initializeApp} from 'firebase-admin/app';
@@ -41,6 +42,8 @@ const raceService = new RaceService({database: getDatabase(),
   allowDebugSolo: emulator || projectId === 'kelime-yarisi-yalin'});
 export const startDemoRaceGame = callable('startDemoRaceGame', (uid, data) => raceService.startDemo(uid, data));
 export const playRace = callable('playRace', (uid, data) => raceService.play(uid, data));
+export const listQuestionRooms = callable('listQuestionRooms', uid => listRooms(getDatabase(), uid));
+export const joinQuestionRoom = callable('joinQuestionRoom', (uid, data) => joinListedRoom(getDatabase(), uid, data));
 export const leaveQuestionRoom = callable('leaveQuestionRoom', (uid, data) => leaveRoom(getDatabase(), uid, data));
 export const cleanupEmptyRooms = onValueWritten({
   ref: '/rooms/{roomId}/players/{uid}/isOnline',

@@ -10,6 +10,7 @@ abstract final class FirebaseRoomMapper {
   static Map<String, Object?> toMap(GameRoom room) {
     return {
       'name': room.name,
+      'visibility': room.visibility.name,
       'code': room.code,
       'hostId': room.hostId,
       'targetPlayerCount': room.targetPlayerCount,
@@ -61,6 +62,9 @@ abstract final class FirebaseRoomMapper {
       gameMode: RoomGameMode.values.byName(
         map['gameMode'] as String? ?? RoomGameMode.classic.name,
       ),
+      visibility: map['visibility'] == 'public'
+          ? RoomVisibility.public
+          : RoomVisibility.private,
       players: players,
       status: RoomStatus.values.byName(
         map['status'] as String? ?? RoomStatus.lobby.name,
