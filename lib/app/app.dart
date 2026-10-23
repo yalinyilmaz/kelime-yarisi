@@ -9,6 +9,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 import '../core/theme/app_theme.dart';
+import '../core/profile/player_name_cubit.dart';
 import '../core/speech/speech_input_cubit.dart';
 import '../features/room/data/firebase_room_service.dart';
 import '../features/solo/presentation/cubit/solo_best_score_cubit.dart';
@@ -23,6 +24,7 @@ class KelimeYarisiApp extends StatefulWidget {
   });
 
   final FirebaseRoomService? roomService;
+  /// Shared Hydrated storage for the player name and solo best score.
   final Storage? soloScoreStorage;
   final SpeechToText? speechRecognizer;
 
@@ -31,7 +33,10 @@ class KelimeYarisiApp extends StatefulWidget {
 }
 
 class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
-  late final GoRouter _router = createAppRouter();
+  late final PlayerNameCubit _playerName = PlayerNameCubit(
+    storage: widget.soloScoreStorage,
+  );
+  late final GoRouter _router = createAppRouter(playerName: _playerName);
 
   @override
   void dispose() {
@@ -41,7 +46,7 @@ class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
       unawaited(
         storage.close().catchError((Object error, StackTrace stackTrace) {
           ErrorReporter.report(error, stackTrace, operation: 'app.dispose');
-          debugPrint('Skor depolaması kapatılamadı.');
+          debugPrint('Yerel depolama kapatılamadı.');
         }),
       );
     }
@@ -60,6 +65,7 @@ class _KelimeYarisiAppState extends State<KelimeYarisiApp> {
       ),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (_) => _playerName, lazy: false),
           BlocProvider(
             create: (_) => SoloBestScoreCubit(storage: widget.soloScoreStorage),
           ),

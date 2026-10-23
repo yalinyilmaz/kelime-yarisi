@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/profile/player_name_cubit.dart';
+
 import '../../data/firebase_room_service.dart';
 import '../cubit/room_setup_cubit.dart';
 import '../cubit/room_setup_state.dart';
@@ -14,8 +16,11 @@ class RoomSetupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          RoomSetupCubit(context.read<FirebaseRoomService>(), flow: flow),
+      create: (_) => RoomSetupCubit(
+        context.read<FirebaseRoomService>(),
+        flow: flow,
+        displayName: context.read<PlayerNameCubit>().state!,
+      ),
       child: const RoomSetupView(),
     );
   }

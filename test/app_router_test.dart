@@ -1,4 +1,7 @@
 import 'support/fake_native_speech.dart';
+import 'solo_game_test.dart' show MemoryScoreStorage;
+
+import 'package:kelime_yarisi/core/profile/player_name_cubit.dart';
 
 import 'dart:async';
 
@@ -47,6 +50,12 @@ class FakeLobbyService extends FakeRoomService {
   }
 }
 
+Widget withNamedPlayer(Widget child) => BlocProvider(
+  create: (_) =>
+      PlayerNameCubit(storage: MemoryScoreStorage())..saveName('Yalın'),
+  child: withSpeech(child),
+);
+
 void main() {
   for (final fails in [false, true]) {
     testWidgets(
@@ -63,7 +72,7 @@ void main() {
         final router = createAppRouter();
         router.go('/room/${room.id}', extra: room);
         await tester.pumpWidget(
-          withSpeech(
+          withNamedPlayer(
             RepositoryProvider<FirebaseRoomService>.value(
               value: service,
               child: MaterialApp.router(
@@ -136,7 +145,7 @@ void main() {
         final router = createAppRouter();
         router.go('/room/${room.id}', extra: room);
         await tester.pumpWidget(
-          withSpeech(
+          withNamedPlayer(
             RepositoryProvider<FirebaseRoomService>.value(
               value: service,
               child: MaterialApp.router(
@@ -181,7 +190,7 @@ void main() {
       final service = FakeLobbyService();
       final router = createAppRouter();
       await tester.pumpWidget(
-        withSpeech(
+        withNamedPlayer(
           RepositoryProvider<FirebaseRoomService>.value(
             value: service,
             child: MaterialApp.router(
@@ -231,7 +240,7 @@ void main() {
       final router = createAppRouter();
       router.go('/room/${room.id}', extra: room);
       await tester.pumpWidget(
-        withSpeech(
+        withNamedPlayer(
           RepositoryProvider<FirebaseRoomService>.value(
             value: service,
             child: MaterialApp.router(

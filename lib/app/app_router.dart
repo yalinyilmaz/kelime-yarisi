@@ -1,5 +1,7 @@
 import 'package:go_router/go_router.dart';
 
+import '../core/profile/player_name_cubit.dart';
+
 import '../features/game/presentation/pages/game_page.dart';
 import '../features/room/domain/entities/game_room.dart';
 import '../features/room/presentation/cubit/room_setup_state.dart';
@@ -10,7 +12,13 @@ import '../features/room/presentation/pages/multiplayer_home_page.dart';
 import '../features/solo/presentation/pages/solo_home_page.dart';
 import '../features/solo/presentation/pages/solo_game_page.dart';
 
-GoRouter createAppRouter() => GoRouter(
+GoRouter createAppRouter({PlayerNameCubit? playerName}) => GoRouter(
+  redirect: (_, state) =>
+      playerName != null &&
+          playerName.state == null &&
+          state.uri.path != '/'
+      ? '/'
+      : null,
   routes: [
     GoRoute(
       path: '/',

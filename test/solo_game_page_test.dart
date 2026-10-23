@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kelime_yarisi/app/app.dart';
+import 'package:kelime_yarisi/core/profile/player_name_cubit.dart';
 import 'package:kelime_yarisi/core/theme/app_theme.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_letter_cell.dart';
 import 'package:kelime_yarisi/features/game/presentation/widgets/word_pin_input.dart';
@@ -163,6 +164,8 @@ void main() {
     'home offers both modes; solo shows hydrated best score and only Start',
     (tester) async {
       final storage = MemoryScoreStorage();
+      final name = PlayerNameCubit(storage: storage)..saveName('Yalın');
+      await name.close();
       final service = SoloTestService();
       await tester.pumpWidget(
         KelimeYarisiApp(

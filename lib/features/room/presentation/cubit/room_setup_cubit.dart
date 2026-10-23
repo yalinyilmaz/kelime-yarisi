@@ -7,14 +7,19 @@ import '../../domain/entities/room_game_mode.dart';
 import 'room_setup_state.dart';
 
 class RoomSetupCubit extends Cubit<RoomSetupState> {
-  RoomSetupCubit(this._roomService, {required RoomSetupFlow flow})
-    : super(RoomSetupState(flow: flow));
+  RoomSetupCubit(
+    this._roomService, {
+    required RoomSetupFlow flow,
+    required String displayName,
+  }) : super(
+         RoomSetupState(
+           flow: flow,
+           displayName: displayName,
+           roomName: flow == RoomSetupFlow.create ? "$displayName's Room" : '',
+         ),
+       );
 
   final FirebaseRoomService _roomService;
-
-  void displayNameChanged(String value) {
-    emit(state.copyWith(displayName: value, clearError: true));
-  }
 
   void roomNameChanged(String value) {
     emit(state.copyWith(roomName: value, clearError: true));

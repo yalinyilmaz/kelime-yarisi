@@ -1,4 +1,5 @@
 import 'support/fake_native_speech.dart';
+import 'solo_game_test.dart' show MemoryScoreStorage;
 
 import 'dart:async';
 
@@ -106,8 +107,11 @@ void main() {
       'leaving $flow before create/join completes cleans the late room',
       () async {
         final service = _PendingService();
-        final setup = RoomSetupCubit(service, flow: flow);
-        setup.displayNameChanged('Oyuncu');
+        final setup = RoomSetupCubit(
+          service,
+          flow: flow,
+          displayName: 'Oyuncu',
+        );
         setup.roomNameChanged('Test');
         setup.roomCodeChanged('ABC234');
         final submitting = setup.submit();
@@ -145,9 +149,17 @@ void main() {
       await tester.pumpWidget(
         KelimeYarisiApp(
           roomService: service,
+          soloScoreStorage: MemoryScoreStorage(),
           speechRecognizer: FakeNativeSpeech(),
         ),
       );
+      await tester.enterText(
+        find.byKey(const ValueKey('player-name-input')),
+        'Yalın',
+      );
+      await tester.ensureVisible(find.text('Devam'));
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Çok Oyunculu'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Oda Oluştur'));

@@ -49,24 +49,10 @@ class RoomSetupView extends StatelessWidget {
                               ?.copyWith(color: AppColors.textSecondary),
                         ),
                         const SizedBox(height: 24),
-                        TextField(
-                          textCapitalization: TextCapitalization.words,
-                          autofillHints: const [AutofillHints.nickname],
-                          textInputAction: isCreate
-                              ? TextInputAction.next
-                              : TextInputAction.next,
-                          onChanged: context
-                              .read<RoomSetupCubit>()
-                              .displayNameChanged,
-                          decoration: const InputDecoration(
-                            labelText: 'Oyuncu adın',
-                            hintText: 'Örn. Erdem',
-                            prefixIcon: Icon(Icons.person_outline_rounded),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
                         if (isCreate) ...[
-                          TextField(
+                          TextFormField(
+                            initialValue: state.roomName,
+                            maxLength: 40,
                             textCapitalization: TextCapitalization.sentences,
                             textInputAction: TextInputAction.done,
                             onChanged: context
