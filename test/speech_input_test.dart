@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_yarisi/core/speech/speech_input_cubit.dart';
@@ -12,6 +13,291 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'support/fake_native_speech.dart';
 
 void main() {
+  testWidgets(
+    'new question waits for old cancellation without retaining its microphone',
+    (tester) async {
+      final native = FakeNativeSpeech()
+        ..bufferSupported = true
+        ..bufferGate = Completer<bool>();
+      final speech = SpeechInputCubit(recognizer: native);
+      await speech.prepare();
+      final first = Object(), next = Object();
+      final oldWarm = speech.prepareAudioBuffer(first);
+      await tester.pump();
+      final cancel = speech.cancel(audioOwner: first);
+      final newWarm = speech.prepareAudioBuffer(next);
+      native.bufferGate!.complete(true);
+      expect(await oldWarm, isFalse);
+      await cancel;
+      expect(await newWarm, isTrue);
+      await speech.releaseAudioBuffer(first);
+      expect(native.bufferActive, isTrue);
+      await speech.close();
+      expect(native.bufferActive, isFalse);
+    },
+  );
+
+  testWidgets(
+    'buffer ownership rejects stale preparation and stale screen cleanup',
+    (tester) async {
+      final native = FakeNativeSpeech()..bufferSupported = true;
+      final speech = SpeechInputCubit(recognizer: native);
+      final first = Object(), second = Object();
+      await speech.prepare();
+      native.bufferGate = Completer<bool>();
+      final preparing = speech.prepareAudioBuffer(first);
+      await tester.pump();
+      expect(native.bufferPreparations, 1);
+      final stopping = speech.releaseAudioBuffer(first);
+      native.bufferGate!.complete(true);
+      expect(await preparing, isFalse);
+      await stopping;
+      expect(native.bufferActive, isFalse);
+      native.bufferGate = null;
+      expect(await speech.prepareAudioBuffer(second), isTrue);
+      final stops = native.bufferStops;
+      await speech.releaseAudioBuffer(first);
+      expect(native.bufferStops, stops);
+      expect(native.bufferActive, isTrue);
+      await speech.close();
+      expect(native.bufferActive, isFalse);
+    },
+  );
+
+  testWidgets(
+    'buffered capture has one three-second window even before recognizer readiness',
+    (tester) async {
+      final native = FakeNativeSpeech()
+        ..bufferSupported = true
+        ..autoReady = false;
+      final speech = SpeechInputCubit(recognizer: native);
+      final owner = Object();
+      await speech.prepareAudioBuffer(owner);
+      await speech.start(bufferedAudio: speech.beginAudioBuffer(owner));
+      expect(speech.state.phase, SpeechInputPhase.listening);
+      expect(native.lastOptions!.listenFor, isNull);
+      expect(native.lastOptions!.pauseFor, isNull);
+      await tester.pump(const Duration(seconds: 3));
+      expect(speech.state.phase, SpeechInputPhase.finalizing);
+      expect(native.stops, 1);
+      native.status!(SpeechToText.listeningStatus);
+      await tester.pump();
+      expect(speech.state.phase, SpeechInputPhase.finalizing);
+      native.say('bilek');
+      await tester.pump();
+      expect(speech.state.finalTranscripts, ['bilek']);
+      await speech.close();
+    },
+  );
+
+  testWidgets(
+    'tap arms buffered audio before waiting for game sound shutdown',
+    (tester) async {
+      final native = FakeNativeSpeech()
+        ..bufferSupported = true
+        ..autoReady = false;
+      final speech = SpeechInputCubit(recognizer: native);
+      final answer = TextEditingController();
+      final silence = Completer<void>();
+      await tester.pumpWidget(
+        BlocProvider.value(
+          value: speech,
+          child: MaterialApp(
+            home: Scaffold(
+              body: VoiceAnswerButton(
+                enabled: true,
+                questionKey: 0,
+                answerController: answer,
+                onAnswer: (_) {},
+                onMicrophoneChanged: (active) async {
+                  if (active) await silence.future;
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(native.bufferActive, isTrue);
+      await tester.tap(find.byKey(const ValueKey('answer-action')));
+      await tester.pump();
+      expect(native.bufferArmed, isTrue);
+      expect(native.starts, 0);
+      silence.complete();
+      await tester.pump();
+      expect(native.starts, 1);
+      expect(find.text('Konuş…'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+      await speech.close();
+      expect(native.bufferActive, isFalse);
+      answer.dispose();
+    },
+  );
+
+  testWidgets(
+    'idle pre-roll closes in background and resets at question boundaries',
+    (tester) async {
+      final native = FakeNativeSpeech()..bufferSupported = true;
+      final speech = SpeechInputCubit(recognizer: native);
+      final answer = TextEditingController();
+      Future<void> mount(int key, {bool enabled = true}) => tester.pumpWidget(
+        BlocProvider.value(
+          value: speech,
+          child: MaterialApp(
+            home: Scaffold(
+              body: VoiceAnswerButton(
+                enabled: enabled,
+                questionKey: key,
+                answerController: answer,
+                onAnswer: (_) {},
+                onMicrophoneChanged: (_) async {},
+              ),
+            ),
+          ),
+        ),
+      );
+      await mount(0);
+      await tester.pumpAndSettle();
+      expect(native.bufferActive, isTrue);
+      await mount(1);
+      await tester.pumpAndSettle();
+      expect(native.bufferPreparations, 2);
+      expect(native.bufferArmed, isFalse);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      await tester.pump();
+      expect(native.bufferActive, isFalse);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+      expect(native.bufferActive, isTrue);
+      await mount(1, enabled: false);
+      await tester.pumpAndSettle();
+      expect(native.bufferActive, isFalse);
+      await tester.pumpWidget(const SizedBox());
+      await speech.close();
+      answer.dispose();
+    },
+  );
+
+  test(
+    'plugin listen timer begins at native readiness, not request acceptance',
+    () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      const channel = MethodChannel('plugin.csdcorp.com/speech_to_text');
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      var stops = 0;
+      messenger.setMockMethodCallHandler(channel, (call) async {
+        if (call.method == 'stop') stops++;
+        return true;
+      });
+      final recognizer = SpeechToText.withMethodChannel();
+      try {
+        expect(await recognizer.initialize(), isTrue);
+        await recognizer.listen(
+          listenOptions: SpeechListenOptions(
+            listenFor: const Duration(milliseconds: 40),
+          ),
+        );
+        await Future<void>.delayed(const Duration(milliseconds: 80));
+        expect(stops, 0);
+        final ready = Completer<void>();
+        ServicesBinding.instance.channelBuffers.push(
+          channel.name,
+          const StandardMethodCodec().encodeMethodCall(
+            const MethodCall('notifyStatus', 'listening'),
+          ),
+          (_) => ready.complete(),
+        );
+        await ready.future;
+        expect(recognizer.isListening, isTrue);
+        await Future<void>.delayed(const Duration(milliseconds: 80));
+        expect(stops, 1);
+      } finally {
+        await recognizer.cancel();
+        messenger.setMockMethodCallHandler(channel, null);
+      }
+    },
+  );
+
+  testWidgets('preparation is cached and does not open the microphone', (
+    tester,
+  ) async {
+    final native = FakeNativeSpeech();
+    final speech = SpeechInputCubit(recognizer: native);
+    expect(await speech.prepare(), isTrue);
+    expect(await speech.prepare(), isTrue);
+    expect(native.initializations, 1);
+    expect(native.starts, 0);
+    await speech.start();
+    expect(native.initializations, 1);
+    expect(native.lastOptions!.localeId, 'tr_TR');
+    expect(native.lastOptions!.enableHapticFeedback, isTrue);
+    await speech.close();
+  });
+
+  testWidgets(
+    'talk cue, vibration and three-second clock wait for native readiness',
+    (tester) async {
+      final native = FakeNativeSpeech()..autoReady = false;
+      final speech = SpeechInputCubit(recognizer: native);
+      final answer = TextEditingController();
+      final haptics = <Object?>[];
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (call) async {
+          if (call.method == 'HapticFeedback.vibrate') {
+            haptics.add(call.arguments);
+          }
+          return null;
+        },
+      );
+      addTearDown(
+        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+          SystemChannels.platform,
+          null,
+        ),
+      );
+      await speech.prepare();
+      await tester.pumpWidget(
+        BlocProvider.value(
+          value: speech,
+          child: MaterialApp(
+            home: Scaffold(
+              body: VoiceAnswerButton(
+                enabled: true,
+                questionKey: 0,
+                answerController: answer,
+                onAnswer: (_) {},
+                onMicrophoneChanged: (_) async {},
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('answer-action')));
+      await tester.pump(const Duration(seconds: 2));
+      expect(speech.state.phase, SpeechInputPhase.starting);
+      expect(find.text('Konuş…'), findsNothing);
+      expect(haptics, isEmpty);
+      expect(native.stops, 0);
+      native.status!(SpeechToText.listeningStatus);
+      await tester.pump();
+      expect(find.text('Konuş…'), findsOneWidget);
+      expect(haptics, ['HapticFeedbackType.lightImpact']);
+      native.status!(SpeechToText.listeningStatus);
+      await tester.pump(const Duration(milliseconds: 2999));
+      expect(haptics, hasLength(1));
+      expect(native.stops, 0);
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(speech.state.phase, SpeechInputPhase.finalizing);
+      expect(native.stops, 1);
+      await tester.pumpWidget(const SizedBox());
+      await speech.close();
+      answer.dispose();
+    },
+  );
+
   test('voice contains ignores spaces, Turkish case, filler and suffixes', () {
     const question = GameQuestion(clue: '', answer: 'GÖNDERMEK');
     expect(
@@ -285,7 +571,7 @@ void main() {
   );
 
   testWidgets(
-    'answer area expands on press and keeps letters hidden until a new question',
+    'one tap keeps listening and expands the answer area until completion',
     (tester) async {
       final native = FakeNativeSpeech();
       final speech = SpeechInputCubit(recognizer: native);
@@ -320,33 +606,30 @@ void main() {
       final letters = find.byKey(const ValueKey('hint-action'));
       final progress = find.byKey(const ValueKey('voice-answer-progress'));
       await mount(0);
+      await tester.pumpAndSettle();
       expect(letters, findsOneWidget);
       expect(progress, findsNothing);
-      expect(find.text('Basılı tut'), findsOneWidget);
-      expect(
-        tester.getCenter(find.text('Basılı tut')).dx,
-        tester.getCenter(find.text('Cevapla')).dx,
-      );
+      expect(find.text('Basılı tut'), findsNothing);
       expect(tester.getSize(button).width, 174);
-      final hold = await tester.startGesture(tester.getCenter(button));
+      await tester.tap(button);
       await tester.pump();
       expect(speech.state.phase, SpeechInputPhase.listening);
       expect(letters, findsNothing);
       expect(tester.getSize(button).width, 360);
       expect(tester.getSize(progress).width, 360);
       expect(find.byKey(const ValueKey('voice-answer-time')), findsOneWidget);
-      await hold.up();
-      await tester.pump();
-      expect(progress, findsNothing);
+      await tester.tap(button);
+      await tester.pump(SpeechInputCubit.releaseTail);
+      expect(native.starts, 1);
+      expect(native.stops, 0);
+      expect(progress, findsOneWidget);
       expect(speech.state.phase, SpeechInputPhase.listening);
       native.error!(SpeechRecognitionError('error_network', true));
       await tester.pump();
       expect(letters, findsNothing);
-      final retry = await tester.startGesture(tester.getCenter(button));
+      await tester.tap(button);
       await tester.pump();
       native.say('cevap');
-      await tester.pump();
-      await retry.up();
       await tester.pump();
       expect(speech.state.phase, SpeechInputPhase.completed);
       expect(letters, findsNothing);
@@ -354,13 +637,15 @@ void main() {
       expect(find.text('Basılı tut'), findsNothing);
       expect(tester.widget<FilledButton>(button).onPressed, isNull);
       await mount(0, submissionFailed: true);
+      await tester.pumpAndSettle();
       expect(tester.widget<FilledButton>(button).onPressed, isNotNull);
       expect(letters, findsNothing);
       expect(progress, findsNothing);
       await mount(1);
+      await tester.pumpAndSettle();
       expect(letters, findsOneWidget);
       expect(progress, findsNothing);
-      expect(find.text('Basılı tut'), findsOneWidget);
+      expect(find.text('Basılı tut'), findsNothing);
       expect(tester.getSize(button).width, 174);
       await tester.pumpWidget(const SizedBox());
       await speech.close();
@@ -369,7 +654,7 @@ void main() {
   );
 
   testWidgets(
-    'matching speech submits and resets progress during hold; background cancels',
+    'matching speech submits after a tap and resets progress; background cancels',
     (tester) async {
       final native = FakeNativeSpeech();
       final speech = SpeechInputCubit(recognizer: native);
@@ -399,9 +684,9 @@ void main() {
         ),
       );
       await mount(0);
-      final gesture = await tester.startGesture(
-        tester.getCenter(find.byKey(const ValueKey('answer-action'))),
-      );
+      await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('answer-action')));
       await tester.pump();
       native.say('gönder', finalResult: false);
       await tester.pump();
@@ -420,20 +705,18 @@ void main() {
             .onPressed,
         isNull,
       );
-      await gesture.up();
       native.say('göndermek');
       await tester.pump();
       expect(submitted, hasLength(1));
       await mount(1);
-      final next = await tester.startGesture(
-        tester.getCenter(find.byKey(const ValueKey('answer-action'))),
-      );
+      await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('answer-action')));
       await tester.pump();
       expect(native.starts, 2);
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
       await tester.pump();
       native.say('geç cevap');
-      await next.up();
       await tester.pump();
       expect(submitted, hasLength(1));
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
@@ -466,9 +749,8 @@ void main() {
           ),
         ),
       );
-      final hold = await tester.startGesture(
-        tester.getCenter(find.byKey(const ValueKey('answer-action'))),
-      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('answer-action')));
       await tester.pump();
       native.say(
         'cevap göndermektir',
@@ -485,7 +767,6 @@ void main() {
       expect(diagnostic, contains('bir düşüneyim'));
       expect(submitted, isEmpty);
       expect(answer.text, isEmpty);
-      await hold.up();
       await tester.pumpWidget(const SizedBox());
       await speech.close();
       answer.dispose();

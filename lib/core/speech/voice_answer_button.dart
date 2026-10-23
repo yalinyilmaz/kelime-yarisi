@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../theme/app_colors.dart';
+import '../monitoring/error_reporter.dart';
 import 'speech_input_cubit.dart';
 
 Future<bool> prepareSpeechInput(BuildContext context) async {
@@ -34,6 +36,7 @@ class VoiceAnswerButton extends StatefulWidget {
     required this.answerController,
     required this.onAnswer,
     required this.onMicrophoneChanged,
+    this.onPrepareMicrophone,
     this.contextualPhrases = const [],
     this.matchesAnswer,
     this.letterAction,
@@ -47,6 +50,7 @@ class VoiceAnswerButton extends StatefulWidget {
   final TextEditingController answerController;
   final ValueChanged<List<String>> onAnswer;
   final Future<void> Function(bool active) onMicrophoneChanged;
+  final Future<void> Function()? onPrepareMicrophone;
   final List<String> contextualPhrases;
   final bool Function(String)? matchesAnswer;
   final Widget? letterAction;
@@ -62,14 +66,16 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
   late SpeechInputCubit _speech;
   late StreamSubscription<SpeechInputState> _subscription;
   Object? _questionKey;
-  int? _pointer;
   bool _ownsSession = false;
-  bool _released = false;
   bool _foreground = true;
   bool _answerStartedForQuestion = false;
   bool _answeredForQuestion = false;
   bool _showProgress = false;
   bool _hasListened = false;
+  final _startupClock = Stopwatch();
+  Object _audioOwner = Object();
+  int _warmEpoch = 0;
+  bool _warmingAudio = false;
 
   @override
   void initState() {
@@ -77,6 +83,10 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
     WidgetsBinding.instance.addObserver(this);
     _speech = context.read<SpeechInputCubit>();
     _subscription = _speech.stream.listen(_onSpeech);
+    _warmingAudio = widget.enabled;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) unawaited(_warmAudio());
+    });
   }
 
   @override
@@ -94,12 +104,45 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
     if (oldWidget.questionKey != widget.questionKey || !widget.enabled) {
       _cancel();
     }
+    if (oldWidget.questionKey != widget.questionKey ||
+        (!oldWidget.enabled && widget.enabled) ||
+        (widget.retryFailedAttempts &&
+            widget.submissionFailed &&
+            !oldWidget.submissionFailed)) {
+      _audioOwner = Object();
+      unawaited(_warmAudio());
+    }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _foreground = state == AppLifecycleState.resumed;
-    if (!_foreground) _cancel();
+    if (!_foreground) {
+      _cancel();
+    } else {
+      _audioOwner = Object();
+      unawaited(_warmAudio());
+    }
+  }
+
+  Future<void> _warmAudio() async {
+    if (!widget.enabled ||
+        _answeredForQuestion ||
+        !_foreground ||
+        _ownsSession) {
+      _warmingAudio = false;
+      return;
+    }
+    final epoch = ++_warmEpoch;
+    final owner = _audioOwner;
+    setState(() => _warmingAudio = true);
+    try {
+      await widget.onPrepareMicrophone?.call();
+      if (!mounted || epoch != _warmEpoch || !_foreground) return;
+      await _speech.prepareAudioBuffer(owner);
+    } finally {
+      if (mounted && epoch == _warmEpoch) setState(() => _warmingAudio = false);
+    }
   }
 
   Future<void> _start() async {
@@ -111,55 +154,68 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
       return;
     }
     _ownsSession = true;
+    _startupClock
+      ..reset()
+      ..start();
     _hasListened = false;
     setState(() {
       _answerStartedForQuestion = true;
       _showProgress = true;
     });
-    _released = false;
     _questionKey = widget.questionKey;
     widget.answerController.clear();
+    final buffered = _speech.beginAudioBuffer(_audioOwner);
     await widget.onMicrophoneChanged(true);
+    if (kDebugMode) {
+      debugPrint(
+        'speech.startup audio_stop_ms=${_startupClock.elapsedMilliseconds}',
+      );
+    }
     if (!mounted || !_ownsSession || !widget.enabled || !_foreground) return;
     await _speech.start(
       contextualPhrases: widget.contextualPhrases,
       matchesAnswer: widget.matchesAnswer,
+      bufferedAudio: buffered,
     );
-    if (_released && mounted && _ownsSession) _speech.release();
-  }
-
-  void _stop() {
-    _pointer = null;
-    _released = true;
-    setState(() => _showProgress = false);
-    if (_ownsSession) _speech.release();
   }
 
   void _cancel() {
-    _pointer = null;
-    _released = true;
+    ++_warmEpoch;
+    _warmingAudio = false;
     _showProgress = false;
-    if (!_ownsSession) return;
+    if (!_ownsSession) {
+      unawaited(_speech.releaseAudioBuffer(_audioOwner));
+      return;
+    }
     _ownsSession = false;
-    unawaited(_speech.cancel());
+    unawaited(_speech.cancel(audioOwner: _audioOwner));
     unawaited(widget.onMicrophoneChanged(false));
   }
 
   void _onSpeech(SpeechInputState state) {
     if (!mounted || !_ownsSession || _questionKey != widget.questionKey) return;
-    if (state.phase == SpeechInputPhase.listening) _hasListened = true;
+    if (state.phase == SpeechInputPhase.listening && !_hasListened) {
+      _hasListened = true;
+      _startupClock.stop();
+      if (kDebugMode) {
+        debugPrint(
+          'speech.startup tap_to_ready_ms=${_startupClock.elapsedMilliseconds}',
+        );
+      }
+      unawaited(_signalReady());
+    }
     if (state.phase == SpeechInputPhase.completed ||
         state.phase == SpeechInputPhase.failed) {
       final consumed =
           state.phase == SpeechInputPhase.completed ||
           (!widget.retryFailedAttempts && _hasListened);
       _ownsSession = false;
-      _pointer = null;
       setState(() {
         _showProgress = false;
         _answeredForQuestion = consumed;
       });
       unawaited(widget.onMicrophoneChanged(false));
+      unawaited(_speech.releaseAudioBuffer(_audioOwner));
       if (consumed && widget.enabled && _foreground) {
         widget.onAnswer(
           state.phase == SpeechInputPhase.completed
@@ -167,6 +223,15 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
               : const [],
         );
       }
+      if (!consumed && widget.enabled && _foreground) unawaited(_warmAudio());
+    }
+  }
+
+  Future<void> _signalReady() async {
+    try {
+      await HapticFeedback.lightImpact();
+    } catch (error, stack) {
+      ErrorReporter.report(error, stack, operation: 'speech.ready_haptic');
     }
   }
 
@@ -185,11 +250,12 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
     builder: (context, state) {
       final listening = state.phase == SpeechInputPhase.listening;
       final speaking = _ownsSession && _showProgress && listening;
-      final waiting = _ownsSession && !speaking;
+      final waiting = _warmingAudio || (_ownsSession && !speaking);
       final canStart =
           widget.enabled &&
           !_answeredForQuestion &&
           !_ownsSession &&
+          !_warmingAudio &&
           !state.busy;
       final label = speaking
           ? 'Konuş…'
@@ -244,62 +310,44 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
           Semantics(
             button: true,
             enabled: canStart,
-            label: canStart ? 'Cevapla. Basılı tutup Türkçe söyle.' : label,
+            label: canStart ? 'Cevapla. Dokunup Türkçe söyle.' : label,
             // A screen-reader activation opens the same three-second window.
             onTap: canStart ? _start : null,
-            child: Listener(
-              onPointerDown: (event) {
-                if (_pointer != null || !canStart) return;
-                _pointer = event.pointer;
-                unawaited(_start());
-              },
-              onPointerUp: (event) {
-                if (_pointer == event.pointer) _stop();
-              },
-              onPointerCancel: (event) {
-                if (_pointer == event.pointer) _cancel();
-              },
-              child: ExcludeSemantics(
-                child: FilledButton(
-                  key: const ValueKey('answer-action'),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                  ),
-                  onPressed: canStart ? () {} : null,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (waiting)
-                        const SizedBox.square(
-                          dimension: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      else
-                        const Icon(Icons.mic_rounded, size: 20),
-                      const SizedBox(width: 8),
-                      Flexible(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(label, textAlign: TextAlign.center),
+            child: ExcludeSemantics(
+              child: FilledButton(
+                key: const ValueKey('answer-action'),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                ),
+                onPressed: canStart ? _start : null,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (waiting)
+                      const SizedBox.square(
+                        dimension: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    else
+                      const Icon(Icons.mic_rounded, size: 20),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(label, textAlign: TextAlign.center),
+                          if (speaking) ...[
                             const SizedBox(height: 4),
-                            if (speaking)
-                              Text(
-                                '${(SpeechInputCubit.answerDuration.inMilliseconds * (1 - state.progress) / 1000).toStringAsFixed(1).replaceAll('.', ',')} sn',
-                                key: const ValueKey('voice-answer-time'),
-                                style: const TextStyle(fontSize: 10),
-                              )
-                            else if (canStart)
-                              const Text(
-                                'Basılı tut',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 10),
-                              ),
+                            Text(
+                              '${(SpeechInputCubit.answerDuration.inMilliseconds * (1 - state.progress) / 1000).toStringAsFixed(1).replaceAll('.', ',')} sn',
+                              key: const ValueKey('voice-answer-time'),
+                              style: const TextStyle(fontSize: 10),
+                            ),
                           ],
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

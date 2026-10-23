@@ -59,7 +59,14 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
   static const releaseTail = Duration(milliseconds: 450);
   static const finalResultTimeout = Duration(seconds: 2);
   final SpeechToText _recognizer;
-  final _clock = Stopwatch();
+  Stopwatch _clock = Stopwatch();
+  Stopwatch? _bufferClock;
+  Object? _audioOwner;
+  bool _audioReady = false;
+  Future<void> _audioWork = Future.value();
+  final _startupClock = Stopwatch();
+  int _cleanupMs = 0;
+  int _prepareMs = 0;
   Timer? _progressTimer;
   Timer? _finalTimer;
   Timer? _startupTimer;
@@ -76,6 +83,68 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
   bool _released = false;
   bool _completing = false;
 
+  /// Native capture only while a foreground answer widget owns the microphone.
+  Future<bool> prepareAudioBuffer(Object owner) {
+    _audioOwner = owner;
+    final cleanup = _cleanup;
+    var ready = false;
+    final work = _audioWork.then((_) async {
+      if (isClosed || !identical(_audioOwner, owner)) return;
+      try {
+        await cleanup;
+        if (!await prepare() || isClosed || !identical(_audioOwner, owner)) {
+          return;
+        }
+        await _stopAudioBuffer();
+        ready = await _recognizer.prepareAudioBuffer();
+        if (isClosed || !identical(_audioOwner, owner)) {
+          await _recognizer.stopAudioBuffer();
+          ready = false;
+        } else {
+          _audioReady = ready;
+          if (kDebugMode) debugPrint('speech.buffer prepared=$ready');
+        }
+      } catch (error, stack) {
+        _audioReady = false;
+        ErrorReporter.report(error, stack, operation: 'speech.buffer_prepare');
+        await _stopAudioBuffer();
+      }
+    });
+    _audioWork = work;
+    return work.then((_) => ready);
+  }
+
+  /// Called at tap time, before waiting for game sounds or recognizer setup.
+  Future<bool> beginAudioBuffer(Object owner) async {
+    if (!_audioReady || !identical(_audioOwner, owner)) return false;
+    _bufferClock = Stopwatch()..start();
+    try {
+      final armed = await _recognizer.beginAudioBuffer();
+      if (!armed) await releaseAudioBuffer(owner);
+      if (kDebugMode) debugPrint('speech.buffer armed=$armed');
+      return armed;
+    } catch (error, stack) {
+      ErrorReporter.report(error, stack, operation: 'speech.buffer_begin');
+      await releaseAudioBuffer(owner);
+      return false;
+    }
+  }
+
+  Future<void> releaseAudioBuffer([Object? owner]) {
+    if (owner != null && !identical(_audioOwner, owner)) return Future.value();
+    _audioOwner = null;
+    _audioReady = false;
+    return _audioWork = _audioWork.then((_) => _stopAudioBuffer());
+  }
+
+  Future<void> _stopAudioBuffer() async {
+    try {
+      await _recognizer.stopAudioBuffer();
+    } catch (error, stack) {
+      ErrorReporter.report(error, stack, operation: 'speech.buffer_stop');
+    }
+  }
+
   Future<bool> prepare() {
     if (_locale != null) return Future.value(true);
     return _preparation ??= _prepare().whenComplete(() => _preparation = null);
@@ -84,6 +153,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
   Future<bool> _prepare() async {
     _publish(SpeechInputPhase.preparing);
     try {
+      if (kDebugMode) debugPrint('speech.prepare initialize_begin');
       final available = await _recognizer.initialize(
         onStatus: _onStatus,
         onError: _onError,
@@ -91,6 +161,9 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
         finalTimeout: Duration.zero,
         options: [SpeechToText.androidNoBluetooth],
       );
+      if (kDebugMode) {
+        debugPrint('speech.prepare initialize_done available=$available');
+      }
       if (isClosed) return false;
       if (!available) {
         _fail(
@@ -101,7 +174,11 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
         );
         return false;
       }
+      if (kDebugMode) debugPrint('speech.prepare locales_begin');
       final locales = await _recognizer.locales();
+      if (kDebugMode) {
+        debugPrint('speech.prepare locales_done count=${locales.length}');
+      }
       if (isClosed) return false;
       final turkish = locales
           .where(
@@ -146,14 +223,22 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
   Future<void> start({
     List<String> contextualPhrases = const [],
     bool Function(String)? matchesAnswer,
+    Future<bool>? bufferedAudio,
   }) async {
     if (isClosed || state.busy) return;
     final session = ++_session;
+    final buffered = bufferedAudio != null && await bufferedAudio;
+    if (isClosed || session != _session) return;
+    _startupClock
+      ..reset()
+      ..start();
     await _cleanup;
+    _cleanupMs = _startupClock.elapsedMilliseconds;
     if (!await prepare() || isClosed || session != _session) return;
+    _prepareMs = _startupClock.elapsedMilliseconds - _cleanupMs;
     _released = false;
     _completing = false;
-    _clock.reset();
+    _clock = buffered ? _bufferClock! : Stopwatch();
     _latestAlternatives = const [];
     _matchesAnswer = matchesAnswer;
     _publish(
@@ -162,6 +247,7 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
       progress: 0,
       debugTranscripts: const [],
     );
+    if (buffered) _beginAnswerWindow();
     _startupTimer = Timer(const Duration(seconds: 5), () {
       if (state.phase == SpeechInputPhase.starting) {
         _fail('start-timeout', 'Mikrofon açılamadı. Tekrar dene.');
@@ -180,12 +266,13 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
                     .toSet()
                     .take(100)
                     .toList(growable: false),
-          listenFor: answerDuration,
-          pauseFor: answerDuration,
+          listenFor: buffered ? null : answerDuration,
+          pauseFor: buffered ? null : answerDuration,
           listenMode: ListenMode.dictation,
           partialResults: true,
           cancelOnError: false,
           autoPunctuation: false,
+          enableHapticFeedback: true,
           // Use the native recognizer; it may use the OS vendor's network service.
           onDevice: false,
         ),
@@ -206,27 +293,48 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
     if (status == SpeechToText.listeningStatus &&
         state.phase == SpeechInputPhase.starting) {
       _startupTimer?.cancel();
-      _clock.start();
-      _publish(SpeechInputPhase.listening);
-      _deadlineTimer = Timer(answerDuration, () {
-        _publish(SpeechInputPhase.listening, progress: 1);
-        unawaited(stop());
-      });
-      _progressTimer = Timer.periodic(const Duration(milliseconds: 30), (_) {
-        final progress =
-            (_clock.elapsedMicroseconds / answerDuration.inMicroseconds).clamp(
-              0.0,
-              1.0,
-            );
-        _publish(SpeechInputPhase.listening, progress: progress);
-        if (progress >= 1) unawaited(stop());
-      });
+      _startupClock.stop();
+      if (kDebugMode) {
+        debugPrint(
+          'speech.startup cleanup_ms=$_cleanupMs '
+          'prepare_ms=$_prepareMs '
+          'native_ready_ms=${_startupClock.elapsedMilliseconds - _cleanupMs - _prepareMs}',
+        );
+      }
+      _beginAnswerWindow();
       if (_released) release();
     } else if ((status == SpeechToText.doneStatus ||
             status == SpeechToText.notListeningStatus) &&
         state.phase == SpeechInputPhase.listening) {
       unawaited(stop());
     }
+  }
+
+  void _beginAnswerWindow() {
+    _clock.start();
+    _publish(
+      SpeechInputPhase.listening,
+      progress: (_clock.elapsedMicroseconds / answerDuration.inMicroseconds)
+          .clamp(0.0, 1.0),
+    );
+    final remaining = answerDuration - _clock.elapsed;
+    _deadlineTimer = Timer(
+      remaining.isNegative ? Duration.zero : remaining,
+      () {
+        if (state.phase != SpeechInputPhase.listening) return;
+        _publish(SpeechInputPhase.listening, progress: 1);
+        unawaited(stop());
+      },
+    );
+    _progressTimer = Timer.periodic(const Duration(milliseconds: 30), (_) {
+      final progress =
+          (_clock.elapsedMicroseconds / answerDuration.inMicroseconds).clamp(
+            0.0,
+            1.0,
+          );
+      _publish(SpeechInputPhase.listening, progress: progress);
+      if (progress >= 1) unawaited(stop());
+    });
   }
 
   void _onResult(int session, SpeechRecognitionResult result) {
@@ -395,24 +503,27 @@ class SpeechInputCubit extends Cubit<SpeechInputState> {
     _cleanup = _cancelNative();
   }
 
-  Future<void> cancel() async {
+  Future<void> cancel({Object? audioOwner}) async {
+    if (audioOwner != null && !identical(_audioOwner, audioOwner)) return;
     if (isClosed || state.phase == SpeechInputPhase.cancelling) return;
     ++_session;
     _matchesAnswer = null;
     _stopTimers();
     _publish(SpeechInputPhase.cancelling, transcript: '', progress: 0);
-    try {
-      await _cleanup;
+    final previousCleanup = _cleanup;
+    final release = releaseAudioBuffer(audioOwner);
+    final session = _session;
+    _cleanup = (() async {
+      await release;
+      await previousCleanup;
       await _cancelNative();
-    } catch (error, stack) {
-      ErrorReporter.report(error, stack, operation: 'speech.cancel');
-    } finally {
-      if (!isClosed) {
+      if (!isClosed && session == _session) {
         _publish(
           _locale == null ? SpeechInputPhase.idle : SpeechInputPhase.ready,
         );
       }
-    }
+    })();
+    await _cleanup;
   }
 
   Future<void> _cancelNative() async {

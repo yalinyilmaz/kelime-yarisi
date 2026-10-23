@@ -236,6 +236,8 @@ class SoloGameCubit extends Cubit<SoloGameState> {
     return _sounds.setForeground(_foreground && !listening);
   }
 
+  Future<void> prepareMicrophone() => _sounds.prepareMicrophone();
+
   void leave() {
     _timer?.cancel();
     _feedbackTimer?.cancel();

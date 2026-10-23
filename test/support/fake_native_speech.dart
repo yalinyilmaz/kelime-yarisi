@@ -20,8 +20,38 @@ class FakeNativeSpeech extends Fake implements SpeechToText {
   Completer<bool>? permissionGate;
   Completer<void>? cancelGate;
   int starts = 0;
+  int initializations = 0;
+  bool autoReady = true;
   int stops = 0;
   int cancels = 0;
+  bool bufferSupported = false;
+  bool bufferActive = false;
+  bool bufferArmed = false;
+  int bufferPreparations = 0;
+  int bufferStops = 0;
+  Completer<bool>? bufferGate;
+
+  @override
+  Future<bool> prepareAudioBuffer() async {
+    bufferPreparations++;
+    bufferActive = bufferGate == null
+        ? bufferSupported
+        : await bufferGate!.future;
+    return bufferActive;
+  }
+
+  @override
+  Future<bool> beginAudioBuffer() async {
+    bufferArmed = bufferActive;
+    return bufferArmed;
+  }
+
+  @override
+  Future<void> stopAudioBuffer() async {
+    bufferStops++;
+    bufferActive = false;
+    bufferArmed = false;
+  }
 
   @override
   Future<bool> initialize({
@@ -31,6 +61,7 @@ class FakeNativeSpeech extends Fake implements SpeechToText {
     Duration finalTimeout = SpeechToText.defaultFinalTimeout,
     List<SpeechConfigOption>? options,
   }) async {
+    initializations++;
     error = onError;
     status = onStatus;
     return permissionGate == null ? available : permissionGate!.future;
@@ -56,7 +87,7 @@ class FakeNativeSpeech extends Fake implements SpeechToText {
     starts++;
     result = onResult;
     lastOptions = listenOptions;
-    status?.call(SpeechToText.listeningStatus);
+    if (autoReady) status?.call(SpeechToText.listeningStatus);
   }
 
   void say(

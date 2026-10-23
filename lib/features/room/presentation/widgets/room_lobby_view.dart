@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/speech/voice_answer_button.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../../../game/presentation/widgets/game_confirmation_dialogs.dart';
 import '../../data/firebase_room_service.dart';
@@ -26,6 +30,39 @@ class RoomLobbyView extends StatefulWidget {
 
 class _RoomLobbyViewState extends State<RoomLobbyView> {
   bool _confirmingLeave = false;
+  bool _preparingSpeech = false;
+  Future<bool>? _speechPreparation;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) unawaited(_prepareSpeech());
+    });
+  }
+
+  Future<bool> _prepareSpeech() => _speechPreparation ??= (() async {
+    setState(() => _preparingSpeech = true);
+    try {
+      return await prepareSpeechInput(context);
+    } finally {
+      _speechPreparation = null;
+      if (mounted) setState(() => _preparingSpeech = false);
+    }
+  })();
+
+  Future<void> _toggleReady(bool alreadyReady) async {
+    if (!alreadyReady && !await _prepareSpeech()) return;
+    if (mounted) {
+      await context.read<RoomLobbyCubit>().toggleCurrentPlayerReady();
+    }
+  }
+
+  Future<void> _startGame() async {
+    if (await _prepareSpeech() && mounted) {
+      await context.read<RoomLobbyCubit>().startGame();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,13 +228,14 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                                 FilledButton.icon(
                                   onPressed:
                                       currentPlayer == null ||
+                                          _preparingSpeech ||
                                           room.status != RoomStatus.lobby ||
                                           state.isStartingGame ||
                                           state.isLeaving
                                       ? null
-                                      : context
-                                            .read<RoomLobbyCubit>()
-                                            .toggleCurrentPlayerReady,
+                                      : () => _toggleReady(
+                                          currentPlayer!.isReady,
+                                        ),
                                   style: FilledButton.styleFrom(
                                     backgroundColor:
                                         currentPlayer?.isReady == true
@@ -227,12 +265,11 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                                   const SizedBox(height: 12),
                                   OutlinedButton.icon(
                                     onPressed:
-                                        context
-                                            .read<RoomLobbyCubit>()
-                                            .canStartGame
-                                        ? context
-                                              .read<RoomLobbyCubit>()
-                                              .startGame
+                                        !_preparingSpeech &&
+                                            context
+                                                .read<RoomLobbyCubit>()
+                                                .canStartGame
+                                        ? _startGame
                                         : null,
                                     icon: state.isStartingGame
                                         ? const SizedBox.square(

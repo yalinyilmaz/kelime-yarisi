@@ -32,6 +32,7 @@ class GameSoundController {
   final AudioPlayer _wrongPlayer;
   final Future<void> Function() _hintHaptic;
   final Future<void> Function() _wrongHaptic;
+  final Map<AudioPlayer, int> _pendingPlayers = {};
   GameState? _previous;
   Future<void>? _initialization;
   int? _lastTickSecond;
@@ -66,6 +67,9 @@ class GameSoundController {
   }
 
   Future<void> initialize() => _initialization ??= _prepare();
+
+  Future<void> prepareMicrophone() =>
+      initialize().timeout(const Duration(milliseconds: 300), onTimeout: () {});
 
   Future<void> _prepare() async {
     try {
@@ -185,6 +189,7 @@ class GameSoundController {
 
   Future<void> _play(AudioPlayer player) async {
     final generation = _playbackGeneration;
+    _pendingPlayers.update(player, (count) => count + 1, ifAbsent: () => 1);
     try {
       await player.stop();
       if (!_disposed &&
@@ -200,6 +205,12 @@ class GameSoundController {
         operation: 'game_sound_controller._play',
       );
       debugPrint('Oyun sesi çalınamadı.');
+    } finally {
+      if (_pendingPlayers[player] == 1) {
+        _pendingPlayers.remove(player);
+      } else {
+        _pendingPlayers.update(player, (count) => count - 1);
+      }
     }
   }
 
@@ -222,10 +233,15 @@ class GameSoundController {
     if (_disposed) return;
     try {
       await Future.wait([
-        _hintPlayer.stop(),
-        _tickPlayer.stop(),
-        _correctPlayer.stop(),
-        _wrongPlayer.stop(),
+        for (final player in [
+          _hintPlayer,
+          _tickPlayer,
+          _correctPlayer,
+          _wrongPlayer,
+        ])
+          if (_pendingPlayers.containsKey(player) ||
+              player.state == PlayerState.playing)
+            player.stop(),
       ]);
     } catch (error, stackTrace) {
       ErrorReporter.report(

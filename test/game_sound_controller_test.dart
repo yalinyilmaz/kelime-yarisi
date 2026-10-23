@@ -20,6 +20,9 @@ class FakeEffectPlayer extends Fake implements AudioPlayer {
   bool failLoading = false;
   String? asset;
   Future<void>? stopBarrier;
+  PlayerState _state = PlayerState.stopped;
+  @override
+  PlayerState get state => _state;
   @override
   Future<void> setAudioContext(AudioContext context) async {}
   @override
@@ -36,11 +39,13 @@ class FakeEffectPlayer extends Fake implements AudioPlayer {
 
   @override
   Future<void> resume() async {
+    _state = PlayerState.playing;
     plays++;
   }
 
   @override
   Future<void> stop() async {
+    _state = PlayerState.stopped;
     stops++;
     await stopBarrier;
   }
@@ -86,6 +91,31 @@ GameState soundState({
 );
 
 void main() {
+  Future<void> flush() => Future<void>.delayed(Duration.zero);
+  test(
+    'microphone preparation skips idle players and stops active sounds',
+    () async {
+      final players = List.generate(4, (_) => FakeEffectPlayer());
+      final audio = GameSoundController(
+        hintPlayer: players[0],
+        tickPlayer: players[1],
+        correctPlayer: players[2],
+        wrongPlayer: players[3],
+      );
+      await audio.initialize();
+      await audio.setForeground(false);
+      expect(players.map((p) => p.stops), everyElement(0));
+      await audio.setForeground(true);
+      audio.playClockTick();
+      await flush();
+      expect(players[1].state, PlayerState.playing);
+      final idleStops = players[0].stops;
+      await audio.setForeground(false);
+      expect(players[1].state, PlayerState.stopped);
+      expect(players[0].stops, idleStops);
+      await audio.dispose();
+    },
+  );
   late FakeEffectPlayer hint;
   late FakeEffectPlayer tick;
   late FakeEffectPlayer correct;
@@ -93,7 +123,6 @@ void main() {
   int hintVibrations = 0;
   int wrongVibrations = 0;
   late GameSoundController sounds;
-  Future<void> flush() => Future<void>.delayed(Duration.zero);
   setUp(() async {
     hint = FakeEffectPlayer();
     tick = FakeEffectPlayer();
@@ -341,7 +370,7 @@ void main() {
     sounds.update(soundState(seconds: 5, revealed: 1));
     await flush();
     expect(hint.plays + tick.plays, 0);
-    expect(hint.stops, greaterThan(0));
+    expect(hint.stops + tick.stops, 0); // Both players were already idle.
     await sounds.setEnabled(true);
     sounds.update(soundState(seconds: 5, revealed: 1));
     await flush();

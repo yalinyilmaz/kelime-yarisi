@@ -34,6 +34,7 @@ class GameActions extends StatelessWidget {
         ],
       ],
       onMicrophoneChanged: context.read<GameAudioCubit>().setSpeechListening,
+      onPrepareMicrophone: context.read<GameAudioCubit>().prepareMicrophone,
       onAnswer: (transcripts) {
         final game = context.read<GameCubit>();
         if (!game.state.canAct ||

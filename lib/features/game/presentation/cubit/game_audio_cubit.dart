@@ -35,6 +35,8 @@ class GameAudioCubit extends Cubit<bool> {
     return _sounds.setForeground(_foreground && !listening);
   }
 
+  Future<void> prepareMicrophone() => _sounds.prepareMicrophone();
+
   @override
   Future<void> close() async {
     await Future.wait([

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Cevapla düğmesine basılı tutarken sesli cevabını almak için mikrofon kullanılır.</string>
+	<string>Oyun ekranında sesli yanıtının başlangıcını kaçırmamak için mikrofon hazır tutulur. Cevapla düğmesine dokunduğunda kısa başlangıç sesiyle birlikte yanıtın tanınır.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Türkçe söylediğin cevabı yazıya çevirip oyunda değerlendirmek için konuşma tanıma kullanılır.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
