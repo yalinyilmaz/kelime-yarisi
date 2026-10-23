@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../../../game/presentation/widgets/answer_feedback_banner.dart';
-import '../../../game/presentation/widgets/game_clue_hints.dart';
+import '../../../game/presentation/widgets/game_clue_hint_button.dart';
 import '../../../game/presentation/widgets/game_question_content.dart';
 import '../../../game/presentation/widgets/word_pin_input.dart';
 import '../cubit/solo_game_cubit.dart';

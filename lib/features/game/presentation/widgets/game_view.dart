@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/widgets/studio_components.dart';
 import '../../../room/domain/entities/game_room.dart';
-import '../../domain/game_progress.dart';
 import '../cubit/game_audio_cubit.dart';
 import '../cubit/game_cubit.dart';
 import '../cubit/game_state.dart';
@@ -78,22 +77,11 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) =>
-      BlocSelector<GameCubit, GameState, _ViewSelection>(
+      BlocSelector<GameCubit, GameState, (bool, String, bool)>(
         selector: (state) => (
-          room: state.room,
-          progress: state.progress,
-          questionIndex: state.questionIndex,
-          canAct: state.canAct,
-          canEditAnswer: state.canEditAnswer,
-          hasExpired: state.hasExpired,
-          isConnected: state.isConnected,
-          isLeaving: state.isLeaving,
-          isSaving: state.isSaving,
-          isVoting: state.isVoting,
-          isRequestingClueHint: state.isRequestingClueHint,
-          feedback: state.feedback,
-          errorMessage: state.errorMessage,
-          isHistoryReady: state.isHistoryReady,
+          state.isLeaving,
+          state.room.name,
+          state.room.status == RoomStatus.results,
         ),
         builder: (context, _) {
           final state = context.read<GameCubit>().state;
@@ -114,30 +102,9 @@ class _GameViewState extends State<GameView> with WidgetsBindingObserver {
                 title: Text(isResults ? 'Yarışma tamamlandı' : state.room.name),
                 actions: const [GameSoundButton()],
               ),
-              body: GameBoard(
-                state: state,
-                answerController: _answer,
-                onSubmit: _submit,
-              ),
+              body: GameBoard(answerController: _answer, onSubmit: _submit),
             ),
           );
         },
       );
 }
-
-typedef _ViewSelection = ({
-  GameRoom room,
-  GameProgress progress,
-  int questionIndex,
-  bool canAct,
-  bool canEditAnswer,
-  bool hasExpired,
-  bool isConnected,
-  bool isLeaving,
-  bool isSaving,
-  bool isVoting,
-  bool isRequestingClueHint,
-  String? feedback,
-  String? errorMessage,
-  bool isHistoryReady,
-});

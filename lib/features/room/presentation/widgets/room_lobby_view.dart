@@ -10,13 +10,12 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/speech/voice_answer_button.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../../../game/presentation/widgets/game_confirmation_dialogs.dart';
-import '../../data/firebase_room_service.dart';
 import '../../domain/entities/game_room.dart';
 import '../../domain/entities/room_player.dart';
 import '../cubit/room_lobby_cubit.dart';
 import '../cubit/room_lobby_state.dart';
 import '../widgets/room_code_card.dart';
-import '../widgets/room_countdown_card.dart';
+import 'room_lobby_countdown.dart';
 import '../widgets/room_empty_player_tile.dart';
 import '../widgets/room_player_tile.dart';
 import 'question_capacity_card.dart';
@@ -30,7 +29,7 @@ class RoomLobbyView extends StatefulWidget {
 
 class _RoomLobbyViewState extends State<RoomLobbyView> {
   bool _confirmingLeave = false;
-  bool _preparingSpeech = false;
+  final _preparingSpeech = ValueNotifier(false);
   Future<bool>? _speechPreparation;
 
   @override
@@ -42,12 +41,12 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
   }
 
   Future<bool> _prepareSpeech() => _speechPreparation ??= (() async {
-    setState(() => _preparingSpeech = true);
+    _preparingSpeech.value = true;
     try {
       return await prepareSpeechInput(context);
     } finally {
       _speechPreparation = null;
-      if (mounted) setState(() => _preparingSpeech = false);
+      if (mounted) _preparingSpeech.value = false;
     }
   })();
 
@@ -65,8 +64,21 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
   }
 
   @override
+  void dispose() {
+    _preparingSpeech.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<RoomLobbyCubit, RoomLobbyState>(
+      buildWhen: (a, b) =>
+          a.room != b.room ||
+          a.isLeaving != b.isLeaving ||
+          a.isStartingGame != b.isStartingGame ||
+          a.questionCapacity != b.questionCapacity ||
+          a.isLoadingQuestionCapacity != b.isLoadingQuestionCapacity ||
+          a.collectiveCapacity != b.collectiveCapacity,
       listenWhen: (previous, current) =>
           previous.errorMessage != current.errorMessage ||
           previous.room.status != current.room.status,
@@ -85,7 +97,7 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
       },
       builder: (context, state) {
         final room = state.room;
-        final currentUserId = context.read<FirebaseRoomService>().currentUserId;
+        final currentUserId = context.read<RoomLobbyCubit>().currentUserId;
         RoomPlayer? currentPlayer;
         for (final player in room.players) {
           if (player.id == currentUserId) {
@@ -167,9 +179,7 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                                 ],
                                 if (room.status == RoomStatus.countdown) ...[
                                   const SizedBox(height: 16),
-                                  RoomCountdownCard(
-                                    seconds: state.countdownSeconds ?? 0,
-                                  ),
+                                  const RoomLobbyCountdown(),
                                 ],
                                 const SizedBox(height: 24),
                                 Row(
@@ -222,75 +232,80 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                             decoration: const BoxDecoration(
                               color: AppColors.background,
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                FilledButton.icon(
-                                  onPressed:
-                                      currentPlayer == null ||
-                                          _preparingSpeech ||
-                                          room.status != RoomStatus.lobby ||
-                                          state.isStartingGame ||
-                                          state.isLeaving
-                                      ? null
-                                      : () => _toggleReady(
-                                          currentPlayer!.isReady,
-                                        ),
-                                  style: FilledButton.styleFrom(
-                                    backgroundColor:
-                                        currentPlayer?.isReady == true
-                                        ? AppColors.surfaceMuted
-                                        : AppColors.ready,
-                                    foregroundColor:
-                                        currentPlayer?.isReady == true
-                                        ? AppColors.textPrimary
-                                        : AppColors.onReady,
-                                  ),
-                                  icon: Icon(
-                                    currentPlayer?.isReady == true
-                                        ? Icons.undo_rounded
-                                        : Icons.check_rounded,
-                                  ),
-                                  label: Text(switch (room.status) {
-                                    RoomStatus.lobby =>
-                                      currentPlayer?.isReady == true
-                                          ? 'Hazır Değilim'
-                                          : 'Hazırım',
-                                    RoomStatus.countdown => 'Oyun başlıyor',
-                                    RoomStatus.playing => 'Oyun başladı',
-                                    RoomStatus.results => 'Oyun tamamlandı',
-                                  }),
-                                ),
-                                if (room.hostId == currentUserId) ...[
-                                  const SizedBox(height: 12),
-                                  OutlinedButton.icon(
+                            child: ValueListenableBuilder(
+                              valueListenable: _preparingSpeech,
+                              builder: (context, preparing, _) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  FilledButton.icon(
                                     onPressed:
-                                        !_preparingSpeech &&
-                                            context
-                                                .read<RoomLobbyCubit>()
-                                                .canStartGame
-                                        ? _startGame
-                                        : null,
-                                    icon: state.isStartingGame
-                                        ? const SizedBox.square(
-                                            dimension: 20,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 2.5,
+                                        currentPlayer == null ||
+                                            preparing ||
+                                            room.status != RoomStatus.lobby ||
+                                            state.isStartingGame ||
+                                            state.isLeaving
+                                        ? null
+                                        : () => _toggleReady(
+                                            currentPlayer!.isReady,
+                                          ),
+                                    style: FilledButton.styleFrom(
+                                      backgroundColor:
+                                          currentPlayer?.isReady == true
+                                          ? AppColors.surfaceMuted
+                                          : AppColors.ready,
+                                      foregroundColor:
+                                          currentPlayer?.isReady == true
+                                          ? AppColors.textPrimary
+                                          : AppColors.onReady,
+                                    ),
+                                    icon: Icon(
+                                      currentPlayer?.isReady == true
+                                          ? Icons.undo_rounded
+                                          : Icons.check_rounded,
+                                    ),
+                                    label: Text(switch (room.status) {
+                                      RoomStatus.lobby =>
+                                        currentPlayer?.isReady == true
+                                            ? 'Hazır Değilim'
+                                            : 'Hazırım',
+                                      RoomStatus.countdown => 'Oyun başlıyor',
+                                      RoomStatus.playing => 'Oyun başladı',
+                                      RoomStatus.results => 'Oyun tamamlandı',
+                                    }),
+                                  ),
+                                  if (room.hostId == currentUserId) ...[
+                                    const SizedBox(height: 12),
+                                    OutlinedButton.icon(
+                                      onPressed:
+                                          !preparing &&
+                                              context
+                                                  .read<RoomLobbyCubit>()
+                                                  .canStartGame
+                                          ? _startGame
+                                          : null,
+                                      icon: state.isStartingGame
+                                          ? const SizedBox.square(
+                                              dimension: 20,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2.5,
+                                              ),
+                                            )
+                                          : const Icon(
+                                              Icons.play_arrow_rounded,
                                             ),
-                                          )
-                                        : const Icon(Icons.play_arrow_rounded),
-                                    label: const Text('Oyunu Başlat'),
+                                      label: const Text('Oyunu Başlat'),
+                                    ),
+                                  ],
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    _statusText(room),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: AppColors.textSecondary,
+                                    ),
                                   ),
                                 ],
-                                const SizedBox(height: 12),
-                                Text(
-                                  _statusText(room),
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ],
@@ -315,7 +330,7 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
         context,
         isHost:
             cubit.state.room.hostId ==
-            context.read<FirebaseRoomService>().currentUserId,
+            context.read<RoomLobbyCubit>().currentUserId,
         onLeave: () async {
           await cubit.leaveRoom();
           return !cubit.isClosed && cubit.state.isLeaving

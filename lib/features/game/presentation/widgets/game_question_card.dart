@@ -6,11 +6,11 @@ import '../../../../core/widgets/studio_components.dart';
 import '../../domain/game_answer_feedback.dart';
 import '../../domain/game_progress.dart';
 import '../cubit/game_feedback_cubit.dart';
-import '../cubit/game_cubit.dart';
 import '../cubit/game_state.dart';
 import 'answer_feedback_banner.dart';
 import 'word_pin_input.dart';
-import 'game_clue_hints.dart';
+import 'game_clue_hint_action.dart';
+import 'game_visible_clue_hints.dart';
 import 'game_question_content.dart';
 
 class GameQuestionCard extends StatelessWidget {
@@ -58,24 +58,13 @@ class GameQuestionCard extends StatelessWidget {
                           'SORU ${state.questionIndex + 1} / ${state.questions.length}',
                         ),
                       ),
-                      if (question.hints.length == 2 &&
-                          state.remainingClueHints > 0)
-                        Flexible(
-                          flex: 3,
-                          child: GameClueHintButton(
-                            remaining: state.remainingClueHints,
-                            used: state.currentClueHintCount,
-                            isLoading: state.isRequestingClueHint,
-                            onPressed: state.canRequestClueHint
-                                ? context.read<GameCubit>().requestClueHint
-                                : null,
-                          ),
-                        ),
+                      const Flexible(flex: 3, child: GameClueHintAction()),
                     ],
                   ),
                 ),
                 clue: question.clue,
-                hints: state.visibleClueHints,
+                hints: const [],
+                hintContent: const GameVisibleClueHints(),
                 answer: WordPinInput(
                   voiceOnly: true,
                   question: question,

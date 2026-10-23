@@ -143,37 +143,17 @@ class GameCubit extends Cubit<GameState> {
     _tick();
   }
 
-  Future<void> requestClueHint() async {
-    _tick();
-    if (!state.canRequestClueHint) return;
-    final index = state.questionIndex;
-    final count = state.currentClueHintCount;
-    emit(state.copyWith(isRequestingClueHint: true, clearError: true));
-    try {
-      await _service.playRace(
-        state.room.id,
-        action: 'clueHint',
-        questionIndex: index,
-        expectedHintCount: count,
-      );
-    } catch (error, stackTrace) {
-      ErrorReporter.report(
-        error,
-        stackTrace,
-        operation: 'game_cubit.requestClueHint',
-      );
-      if (!isClosed) {
-        emit(
-          state.copyWith(
-            errorMessage: error is RoomServiceException
-                ? error.message
-                : 'İpucu alınamadı. Bağlantını kontrol edip tekrar dene.',
-          ),
-        );
-      }
-    } finally {
-      if (!isClosed) emit(state.copyWith(isRequestingClueHint: false));
-    }
+  void requestClueHint() {
+    if (isClosed || !state.canRequestClueHint) return;
+    // Hint text is already in the question. Usage belongs to this local game.
+    emit(
+      state.copyWith(
+        clueHintUsage: Map.unmodifiable({
+          ...state.clueHintUsage,
+          state.questionIndex: state.currentClueHintCount + 1,
+        }),
+      ),
+    );
   }
 
   Future<void> submitAnswer(String input, {int? questionIndex}) async {
@@ -202,7 +182,13 @@ class GameCubit extends Cubit<GameState> {
 
   Future<void> _raceAction(String action, {String? input}) async {
     final voting = action == 'hint';
-    emit(state.copyWith(isSaving: !voting, isVoting: voting, clearError: true));
+    emit(
+      state.copyWith(
+        isSaving: voting ? null : true,
+        isVoting: voting ? true : null,
+        clearError: true,
+      ),
+    );
     try {
       await _service.playRace(
         state.room.id,
@@ -227,7 +213,14 @@ class GameCubit extends Cubit<GameState> {
         );
       }
     } finally {
-      if (!isClosed) emit(state.copyWith(isSaving: false, isVoting: false));
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            isSaving: voting ? null : false,
+            isVoting: voting ? false : null,
+          ),
+        );
+      }
     }
   }
 

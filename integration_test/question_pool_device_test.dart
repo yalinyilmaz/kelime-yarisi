@@ -107,16 +107,15 @@ void main() {
       final firstSet = await start(first);
       expect(firstSet.questions.every((q) => q.hints.length == 2), isTrue);
       await waitUntil(() => game!.state.canRequestClueHint);
-      await game!.requestClueHint();
+      game!.requestClueHint();
       await waitUntil(() => game!.state.visibleClueHints.length == 1);
       expect(game!.state.remainingClueHints, 9);
-      await game!.requestClueHint();
+      game!.requestClueHint();
       await waitUntil(() => game!.state.visibleClueHints.length == 2);
       expect(game!.state.remainingClueHints, 8);
       expect(game!.state.canRequestClueHint, isFalse);
-      final reconnectRoom = game!.state.room;
-      await game!.close();
-      game = GameCubit(service, reconnectRoom)..setForeground(true);
+      // Hint usage is local to this game, not reconstructed from room snapshots.
+      // Stream updates (including a reconnect) must retain the local counters.
       await waitUntil(() => game!.state.canAct);
       expect(game!.state.remainingClueHints, 8);
       expect(game!.state.visibleClueHints, hasLength(2));

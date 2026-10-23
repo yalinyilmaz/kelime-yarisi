@@ -18,7 +18,7 @@ class GameState extends Equatable {
     this.isConnected = false,
     this.isSaving = false,
     this.isVoting = false,
-    this.isRequestingClueHint = false,
+    this.clueHintUsage = const {},
     this.currentUserId = '',
     this.isLeaving = false,
     this.feedback,
@@ -36,7 +36,7 @@ class GameState extends Equatable {
   final bool isConnected;
   final bool isSaving;
   final bool isVoting;
-  final bool isRequestingClueHint;
+  final Map<int, int> clueHintUsage;
   final String currentUserId;
   final bool isLeaving;
   final String? feedback;
@@ -79,9 +79,7 @@ class GameState extends Equatable {
       : (question!.letterCount - hints.revealedCount) * 100;
   bool get hasAnsweredCurrent => progress.questionIndex > questionIndex;
   bool get hasVoted => hints.firstVoterId == currentUserId;
-  bool get canVote => canAct && !hasVoted && questionValue > 100;
-  Map<int, int> get clueHintUsage =>
-      room.clueHintUsage[currentUserId] ?? const {};
+  bool get canVote => canAct && !isVoting && !hasVoted && questionValue > 100;
   int get currentClueHintCount => clueHintUsage[questionIndex] ?? 0;
   int get remainingClueHints =>
       (10 - clueHintUsage.values.fold<int>(0, (sum, count) => sum + count))
@@ -130,7 +128,7 @@ class GameState extends Equatable {
           : room.gameplayVersion == 'sync-v1') &&
       question != null;
 
-  bool get canAct => canEditAnswer && !isVoting && !isRequestingClueHint;
+  bool get canAct => canEditAnswer;
 
   bool get isHost => room.hostId == currentUserId;
 
@@ -170,7 +168,7 @@ class GameState extends Equatable {
     bool? isConnected,
     bool? isSaving,
     bool? isVoting,
-    bool? isRequestingClueHint,
+    Map<int, int>? clueHintUsage,
     bool? isLeaving,
     String? feedback,
     String? errorMessage,
@@ -188,7 +186,7 @@ class GameState extends Equatable {
     isConnected: isConnected ?? this.isConnected,
     isSaving: isSaving ?? this.isSaving,
     isVoting: isVoting ?? this.isVoting,
-    isRequestingClueHint: isRequestingClueHint ?? this.isRequestingClueHint,
+    clueHintUsage: clueHintUsage ?? this.clueHintUsage,
     currentUserId: currentUserId,
     isLeaving: isLeaving ?? this.isLeaving,
     feedback: clearFeedback ? null : feedback ?? this.feedback,
@@ -210,7 +208,7 @@ class GameState extends Equatable {
     isConnected,
     isSaving,
     isVoting,
-    isRequestingClueHint,
+    clueHintUsage,
     currentUserId,
     isLeaving,
     feedback,

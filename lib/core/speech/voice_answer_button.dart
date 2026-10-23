@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../theme/app_colors.dart';
 import '../monitoring/error_reporter.dart';
 import 'speech_input_cubit.dart';
+import 'voice_answer_progress.dart';
+import 'voice_answer_time.dart';
 
 Future<bool> prepareSpeechInput(BuildContext context) async {
   final speech = context.read<SpeechInputCubit>();
@@ -76,6 +78,17 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
   Object _audioOwner = Object();
   int _warmEpoch = 0;
   bool _warmingAudio = false;
+  final _presentation = ValueNotifier((false, false, false, false, false));
+
+  void _refreshUi() {
+    _presentation.value = (
+      _warmingAudio,
+      _ownsSession,
+      _answeredForQuestion,
+      _showProgress,
+      _answerStartedForQuestion,
+    );
+  }
 
   @override
   void initState() {
@@ -84,6 +97,7 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
     _speech = context.read<SpeechInputCubit>();
     _subscription = _speech.stream.listen(_onSpeech);
     _warmingAudio = widget.enabled;
+    _refreshUi();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) unawaited(_warmAudio());
     });
@@ -135,13 +149,17 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
     }
     final epoch = ++_warmEpoch;
     final owner = _audioOwner;
-    setState(() => _warmingAudio = true);
+    _warmingAudio = true;
+    _refreshUi();
     try {
       await widget.onPrepareMicrophone?.call();
       if (!mounted || epoch != _warmEpoch || !_foreground) return;
       await _speech.prepareAudioBuffer(owner);
     } finally {
-      if (mounted && epoch == _warmEpoch) setState(() => _warmingAudio = false);
+      if (mounted && epoch == _warmEpoch) {
+        _warmingAudio = false;
+        _refreshUi();
+      }
     }
   }
 
@@ -158,10 +176,9 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
       ..reset()
       ..start();
     _hasListened = false;
-    setState(() {
-      _answerStartedForQuestion = true;
-      _showProgress = true;
-    });
+    _answerStartedForQuestion = true;
+    _showProgress = true;
+    _refreshUi();
     _questionKey = widget.questionKey;
     widget.answerController.clear();
     final buffered = _speech.beginAudioBuffer(_audioOwner);
@@ -210,10 +227,9 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
           state.phase == SpeechInputPhase.completed ||
           (!widget.retryFailedAttempts && _hasListened);
       _ownsSession = false;
-      setState(() {
-        _showProgress = false;
-        _answeredForQuestion = consumed;
-      });
+      _showProgress = false;
+      _answeredForQuestion = consumed;
+      _refreshUi();
       unawaited(widget.onMicrophoneChanged(false));
       unawaited(_speech.releaseAudioBuffer(_audioOwner));
       if (consumed && widget.enabled && _foreground) {
@@ -240,130 +256,123 @@ class _VoiceAnswerButtonState extends State<VoiceAnswerButton>
     WidgetsBinding.instance.removeObserver(this);
     _cancel();
     unawaited(_subscription.cancel());
+    _presentation.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(
-    BuildContext context,
-  ) => BlocBuilder<SpeechInputCubit, SpeechInputState>(
-    builder: (context, state) {
-      final listening = state.phase == SpeechInputPhase.listening;
-      final speaking = _ownsSession && _showProgress && listening;
-      final waiting = _warmingAudio || (_ownsSession && !speaking);
-      final canStart =
-          widget.enabled &&
-          !_answeredForQuestion &&
-          !_ownsSession &&
-          !_warmingAudio &&
-          !state.busy;
-      final label = speaking
-          ? 'Konuş…'
-          : waiting
-          ? 'Bekle…'
-          : 'Cevapla';
-      final answer = Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (kDebugMode &&
-              !listening &&
-              state.phase != SpeechInputPhase.starting &&
-              state.debugTranscripts.isNotEmpty) ...[
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 110),
-              child: SingleChildScrollView(
-                child: Text(
-                  key: const ValueKey('voice-heard-alternatives'),
-                  'Duyulanlar (debug):\n${state.debugTranscripts.map((text) => '• $text').join('\n')}',
-                  style: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 11,
+  Widget build(BuildContext context) => ValueListenableBuilder(
+    valueListenable: _presentation,
+    builder: (context, _, child) => BlocBuilder<SpeechInputCubit, SpeechInputState>(
+      buildWhen: (a, b) =>
+          a.phase != b.phase ||
+          a.error != b.error ||
+          !listEquals(a.debugTranscripts, b.debugTranscripts),
+      builder: (context, state) {
+        final listening = state.phase == SpeechInputPhase.listening;
+        final speaking = _ownsSession && _showProgress && listening;
+        final waiting = _warmingAudio || (_ownsSession && !speaking);
+        final canStart =
+            widget.enabled &&
+            !_answeredForQuestion &&
+            !_ownsSession &&
+            !_warmingAudio &&
+            !state.busy;
+        final label = speaking
+            ? 'Konuş…'
+            : waiting
+            ? 'Bekle…'
+            : 'Cevapla';
+        final answer = Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (kDebugMode &&
+                !listening &&
+                state.phase != SpeechInputPhase.starting &&
+                state.debugTranscripts.isNotEmpty) ...[
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 110),
+                child: SingleChildScrollView(
+                  child: Text(
+                    key: const ValueKey('voice-heard-alternatives'),
+                    'Duyulanlar (debug):\n${state.debugTranscripts.map((text) => '• $text').join('\n')}',
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 11,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+            ],
+            if (state.error != null) ...[
+              Text(
+                _answeredForQuestion && !widget.retryFailedAttempts
+                    ? 'Cevap alınamadı. Bu sorudaki deneme hakkın bitti.'
+                    : state.error!,
+                style: const TextStyle(color: AppColors.warning, fontSize: 11),
+              ),
+              const SizedBox(height: 6),
+            ],
+            if (_showProgress && _ownsSession) ...[
+              const VoiceAnswerProgress(),
+              const SizedBox(height: 6),
+            ],
+            Semantics(
+              button: true,
+              enabled: canStart,
+              label: canStart ? 'Cevapla. Dokunup Türkçe söyle.' : label,
+              // A screen-reader activation opens the same three-second window.
+              onTap: canStart ? _start : null,
+              child: ExcludeSemantics(
+                child: FilledButton(
+                  key: const ValueKey('answer-action'),
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                  onPressed: canStart ? _start : null,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (waiting)
+                        const SizedBox.square(
+                          dimension: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      else
+                        const Icon(Icons.mic_rounded, size: 20),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(label, textAlign: TextAlign.center),
+                            if (speaking) ...[
+                              const SizedBox(height: 4),
+                              const VoiceAnswerTime(),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 6),
           ],
-          if (state.error != null) ...[
-            Text(
-              _answeredForQuestion && !widget.retryFailedAttempts
-                  ? 'Cevap alınamadı. Bu sorudaki deneme hakkın bitti.'
-                  : state.error!,
-              style: const TextStyle(color: AppColors.warning, fontSize: 11),
-            ),
-            const SizedBox(height: 6),
+        );
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(child: answer),
+            if (!_answerStartedForQuestion && widget.letterAction != null) ...[
+              const SizedBox(width: 12),
+              Expanded(child: widget.letterAction!),
+            ],
           ],
-          if (_showProgress && _ownsSession) ...[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: LinearProgressIndicator(
-                key: const ValueKey('voice-answer-progress'),
-                minHeight: 4,
-                value: listening ? state.progress : 0,
-                backgroundColor: AppColors.surfaceMuted,
-                color: AppColors.cyan,
-              ),
-            ),
-            const SizedBox(height: 6),
-          ],
-          Semantics(
-            button: true,
-            enabled: canStart,
-            label: canStart ? 'Cevapla. Dokunup Türkçe söyle.' : label,
-            // A screen-reader activation opens the same three-second window.
-            onTap: canStart ? _start : null,
-            child: ExcludeSemantics(
-              child: FilledButton(
-                key: const ValueKey('answer-action'),
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                ),
-                onPressed: canStart ? _start : null,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (waiting)
-                      const SizedBox.square(
-                        dimension: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    else
-                      const Icon(Icons.mic_rounded, size: 20),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(label, textAlign: TextAlign.center),
-                          if (speaking) ...[
-                            const SizedBox(height: 4),
-                            Text(
-                              '${(SpeechInputCubit.answerDuration.inMilliseconds * (1 - state.progress) / 1000).toStringAsFixed(1).replaceAll('.', ',')} sn',
-                              key: const ValueKey('voice-answer-time'),
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(child: answer),
-          if (!_answerStartedForQuestion && widget.letterAction != null) ...[
-            const SizedBox(width: 12),
-            Expanded(child: widget.letterAction!),
-          ],
-        ],
-      );
-    },
+        );
+      },
+    ),
   );
 }

@@ -24,6 +24,8 @@ class FakeGameSounds extends Fake implements GameSoundController {
   @override
   Future<void> initialize() async {}
   @override
+  Future<void> prepareMicrophone() async {}
+  @override
   void update(GameState state) {}
   @override
   Future<void> setForeground(bool foreground) async {}
@@ -66,10 +68,10 @@ void main() {
           );
           service.offsets.add(0);
           service.connections.add(true);
-          await tester.pump();
+          await tester.pumpAndSettle();
           expect(find.byType(TextField), findsNothing);
           expect(tester.testTextInput.isVisible, isFalse);
-          final hold = await tester.startGesture(
+          await tester.tapAt(
             tester.getCenter(find.byKey(const ValueKey('answer-action'))),
           );
           await tester.pump();
@@ -93,7 +95,6 @@ void main() {
           );
           expect(service.saves, isEmpty);
           if (!correct) {
-            await hold.up();
             await tester.pump();
           }
           native.say(
@@ -105,7 +106,6 @@ void main() {
           await tester.pumpAndSettle();
           expect(service.saves.single.score, correct ? 400 : 0);
           if (correct) {
-            await hold.up();
             native.say('kapı');
             await tester.pump();
             expect(service.saves, hasLength(1));

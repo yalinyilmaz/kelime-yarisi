@@ -14,6 +14,7 @@ class GameQuestionContent extends StatefulWidget {
     required this.hints,
     required this.answer,
     this.feedback,
+    this.hintContent,
     super.key,
   });
 
@@ -23,6 +24,7 @@ class GameQuestionContent extends StatefulWidget {
   final List<String> hints;
   final Widget answer;
   final Widget? feedback;
+  final Widget? hintContent;
 
   @override
   State<GameQuestionContent> createState() => _GameQuestionContentState();
@@ -148,7 +150,7 @@ class _GameQuestionContentState extends State<GameQuestionContent>
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              GameClueHints(hints: widget.hints),
+              widget.hintContent ?? GameClueHints(hints: widget.hints),
               const SizedBox(height: 24),
               Focus(
                 canRequestFocus: false,

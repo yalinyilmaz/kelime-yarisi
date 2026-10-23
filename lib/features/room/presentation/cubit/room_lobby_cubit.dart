@@ -35,6 +35,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
   }
 
   final FirebaseRoomService _roomService;
+  String get currentUserId => _roomService.currentUserId;
   StreamSubscription<GameRoom>? _roomSubscription;
   StreamSubscription<int>? _offsetSubscription;
   Timer? _countdownTimer;

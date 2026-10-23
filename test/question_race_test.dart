@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'support/fake_native_speech.dart';
 
 import 'package:flutter/material.dart';
@@ -70,6 +72,112 @@ GameRoom winnerRoom(GameRoom room, int nextAt) => room.copyWith(
 );
 
 void main() {
+  test(
+    'answer and letter requests finish independently when both are in flight',
+    () async {
+      final service = RaceRoomService()..room = raceRoom(1000);
+      final letterGate = Completer<void>();
+      final answerGate = Completer<void>();
+      service.onPlay = () => service.actions.last.action == 'hint'
+          ? letterGate.future
+          : answerGate.future;
+      final game = GameCubit(service, service.room, nowMs: () => 1500);
+      service.offsets.add(0);
+      service.connections.add(true);
+      try {
+        final letter = game.revealLetter();
+        expect(game.state.isVoting, isTrue);
+        final answer = game.submitAnswer('KAPI');
+        expect(game.state.isSaving, isTrue);
+        letterGate.complete();
+        await letter;
+        expect(game.state.isVoting, isFalse);
+        expect(game.state.isSaving, isTrue);
+        answerGate.complete();
+        await answer;
+        expect(game.state.isSaving, isFalse);
+        expect(game.state.canAct, isFalse);
+      } finally {
+        await game.close();
+        await service.disposeStreams();
+      }
+    },
+  );
+
+  test('clue hints are synchronous, local and limited to two per question and ten per game', () async {
+    final service = RaceRoomService()..room = raceRoom(1000);
+    final game = GameCubit(service, service.room, nowMs: () => 1500);
+    service.offsets.add(0);
+    service.connections.add(true);
+    try {
+      for (var index = 0; index < 6; index++) {
+        service.publish(
+          service.room.copyWith(
+            race: QuestionRace(questionIndex: index, startedAtMs: 1000),
+            progress: {'guest': GameProgress(questionIndex: index)},
+          ),
+        );
+        game.requestClueHint();
+        game.requestClueHint();
+        game.requestClueHint();
+        expect(game.state.currentClueHintCount, index < 5 ? 2 : 0);
+        expect(game.state.remainingClueHints, index < 5 ? 8 - index * 2 : 0);
+        expect(game.state.visibleClueHints.length, index < 5 ? 2 : 0);
+        expect(game.state.canAct, isTrue);
+      }
+      expect(service.actions, isEmpty);
+      expect(service.room.clueHintUsage, isEmpty);
+    } finally {
+      await game.close();
+      await service.disposeStreams();
+    }
+  });
+
+  testWidgets(
+    'letter request leaves answer and prepared microphone untouched',
+    (tester) async {
+      final service = RaceRoomService()
+        ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000);
+      final native = FakeNativeSpeech()..bufferSupported = true;
+      final gate = Completer<void>();
+      service.onPlay = () => gate.future;
+      await tester.pumpWidget(
+        withSpeech(
+          RepositoryProvider<FirebaseRoomService>.value(
+            value: service,
+            child: MaterialApp(
+              theme: AppTheme.dark,
+              home: GamePage(room: service.room, sounds: FakeGameSounds()),
+            ),
+          ),
+          recognizer: native,
+        ),
+      );
+      service.offsets.add(0);
+      service.connections.add(true);
+      await tester.pumpAndSettle();
+      final answer = find.byKey(const ValueKey('answer-action'));
+      final original = tester.widget<FilledButton>(answer);
+      final prepares = native.bufferPreparations;
+      final stops = native.bufferStops;
+      await tester.tap(find.byKey(const ValueKey('hint-action')));
+      await tester.pump();
+      final game = tester.element(answer).read<GameCubit>();
+      expect(game.state.isVoting, isTrue);
+      expect(game.state.canAct, isTrue);
+      expect(identical(tester.widget<FilledButton>(answer), original), isTrue);
+      expect(tester.widget<FilledButton>(answer).onPressed, isNotNull);
+      expect(native.bufferPreparations, prepares);
+      expect(native.bufferStops, stops);
+      expect(native.bufferActive, isTrue);
+      gate.complete();
+      await tester.pumpAndSettle();
+      expect(game.state.isVoting, isFalse);
+      await tester.pumpWidget(const SizedBox());
+      await service.disposeStreams();
+    },
+  );
+
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
     for (final ending in ['timeout', 'winner', 'all-wrong']) {
       testWidgets(
@@ -107,13 +215,13 @@ void main() {
           );
           service.offsets.add(0);
           service.connections.add(true);
-          await tester.pump();
+          await tester.pumpAndSettle();
           final button = find.byKey(const ValueKey('answer-action'));
-          final hold = await tester.startGesture(tester.getCenter(button));
+          await tester.tapAt(tester.getCenter(button));
           await tester.pump();
           native.say('yanlış kelime');
           await tester.pump();
-          await hold.up();
+
           await tester.pumpAndSettle();
           expect(find.text('Yanlış cevap'), findsOneWidget);
           expect(find.text('Doğru cevap: KAPI'), findsNothing);
@@ -192,10 +300,10 @@ void main() {
           );
           service.offsets.add(0);
           service.connections.add(true);
-          await tester.pump();
+          await tester.pumpAndSettle();
           final button = find.byKey(const ValueKey('answer-action'));
           final game = tester.element(button).read<GameCubit>();
-          final hold = await tester.startGesture(tester.getCenter(button));
+          await tester.tapAt(tester.getCenter(button));
           await tester.pump();
           expect(native.starts, 1);
           if (outcome == 'unmatched') {
@@ -207,7 +315,7 @@ void main() {
             native.error!(SpeechRecognitionError('error_network', true));
           }
           await tester.pump(const Duration(seconds: 2));
-          await hold.up();
+
           await tester.pump();
           expect(
             service.actions.where((a) => a.action == 'answer'),
@@ -217,9 +325,9 @@ void main() {
           expect(game.state.errorMessage, isNotNull);
           expect(game.state.canAct, isFalse);
           expect(tester.widget<FilledButton>(button).onPressed, isNull);
-          final retry = await tester.startGesture(tester.getCenter(button));
+          await tester.tapAt(tester.getCenter(button));
           await tester.pump();
-          await retry.up();
+
           await game.submitAnswer('kapi');
           await game.revealLetter();
           expect(native.starts, 1);
@@ -243,7 +351,7 @@ void main() {
               },
             ),
           );
-          await tester.pump();
+          await tester.pumpAndSettle();
           expect(game.state.canAct, isTrue);
           expect(tester.widget<FilledButton>(button).onPressed, isNotNull);
           await tester.pumpWidget(const SizedBox());
@@ -259,19 +367,7 @@ void main() {
       (tester) async {
         final service = RaceRoomService()
           ..room = raceRoom(DateTime.now().millisecondsSinceEpoch - 1000);
-        final native = FakeNativeSpeech();
-        service.onPlay = () async {
-          if (service.actions.last.action == 'clueHint') {
-            final used = service.room.clueHintUsage[service.uid]?[0] ?? 0;
-            service.publish(
-              service.room.copyWith(
-                clueHintUsage: {
-                  service.uid: {0: used + 1},
-                },
-              ),
-            );
-          }
-        };
+        final native = FakeNativeSpeech()..bufferSupported = true;
         await tester.pumpWidget(
           withSpeech(
             RepositoryProvider<FirebaseRoomService>.value(
@@ -286,7 +382,16 @@ void main() {
         );
         service.offsets.add(0);
         service.connections.add(true);
-        await tester.pump();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        final originalPin = tester.widget<WordPinInput>(
+          find.byType(WordPinInput),
+        );
+        final originalAnswer = tester.widget<FilledButton>(
+          find.byKey(const ValueKey('answer-action')),
+        );
+        final preparations = native.bufferPreparations;
+        final stops = native.bufferStops;
         for (var i = 0; i < 2; i++) {
           final hint = find.byKey(const ValueKey('clue-hint-action'));
           await tester.ensureVisible(hint);
@@ -294,6 +399,30 @@ void main() {
           await tester.tap(hint);
           await tester.pumpAndSettle();
         }
+        expect(
+          service.actions,
+          isEmpty,
+          reason: 'Clue hints must never call the server.',
+        );
+        expect(
+          identical(
+            tester.widget<WordPinInput>(find.byType(WordPinInput)),
+            originalPin,
+          ),
+          isTrue,
+        );
+        expect(
+          identical(
+            tester.widget<FilledButton>(
+              find.byKey(const ValueKey('answer-action')),
+            ),
+            originalAnswer,
+          ),
+          isTrue,
+        );
+        expect(native.bufferPreparations, preparations);
+        expect(native.bufferStops, stops);
+        expect(native.bufferActive, isTrue);
         final game = tester
             .element(find.byType(WordPinInput))
             .read<GameCubit>();
@@ -305,7 +434,7 @@ void main() {
           ),
           findsOneWidget,
         );
-        final hold = await tester.startGesture(
+        await tester.tapAt(
           tester.getCenter(find.byKey(const ValueKey('answer-action'))),
         );
         await tester.pump();
@@ -316,7 +445,7 @@ void main() {
         await tester.pump();
         expect(service.actions.last.action, 'answer');
         expect(service.actions.last.input, 'KAPI');
-        await hold.up();
+
         native.say('kapı');
         await tester.pump();
         expect(
@@ -408,8 +537,8 @@ void main() {
         );
         service.offsets.add(0);
         service.connections.add(true);
-        await tester.pump();
-        final hold = await tester.startGesture(
+        await tester.pumpAndSettle();
+        await tester.tapAt(
           tester.getCenter(find.byKey(const ValueKey('answer-action'))),
         );
         await tester.pump();
@@ -450,7 +579,7 @@ void main() {
         await tester.pump();
         await tester.pump();
         native.say('kapıdır');
-        await hold.up();
+
         await tester.pump();
         expect(service.actions.where((a) => a.action == 'answer'), isEmpty);
         expect(

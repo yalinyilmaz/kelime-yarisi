@@ -261,7 +261,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('hint-action')));
       await tester.pump();
       expect(game.state.revealedCount, 1);
-      final hold = await tester.startGesture(
+      await tester.tapAt(
         tester.getCenter(find.byKey(const ValueKey('answer-action'))),
       );
       await tester.pump();
@@ -282,7 +282,6 @@ void main() {
       native.say('cevap kapıdır', finalResult: false);
       await tester.pump();
       expect(game.state.progress.score, 300);
-      await hold.up();
       native.say('kapı');
       await tester.pump();
       expect(game.state.progress.score, 300);

@@ -50,7 +50,6 @@ class _WordPinInputState extends State<WordPinInput>
   void initState() {
     super.initState();
     _text.addListener(_inputChanged);
-    _focus.addListener(_focusChanged);
     if (_showAnswer) _fillAnswer();
   }
 
@@ -62,10 +61,7 @@ class _WordPinInputState extends State<WordPinInput>
 
   void _inputChanged() {
     _publishAnswer();
-    setState(() {});
   }
-
-  void _focusChanged() => setState(() {});
 
   void _routeStatusChanged(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
@@ -183,7 +179,6 @@ class _WordPinInputState extends State<WordPinInput>
   void dispose() {
     _routeAnimation?.removeStatusListener(_routeStatusChanged);
     _text.removeListener(_inputChanged);
-    _focus.removeListener(_focusChanged);
     _text.dispose();
     _focus.dispose();
     super.dispose();
@@ -234,100 +229,112 @@ class _WordPinInputState extends State<WordPinInput>
         ),
       );
     }
-    final hiddenPositions = _hiddenPositions(widget.revealedMask);
-    final focusedIndex = _text.text.length < hiddenPositions.length
-        ? _text.text.length
-        : hiddenPositions.length - 1;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final count = widget.question.letterCount;
-        final spacing =
-            ((constraints.maxWidth - count * 32) / math.max(1, count - 1))
-                .clamp(3.0, 6.0)
-                .toDouble();
-        final cellWidth = math.min(
-          32.0,
-          (constraints.maxWidth - spacing * (count - 1)) / count,
-        );
-        return Stack(
-          children: [
-            IgnorePointer(
-              child: Row(
-                spacing: spacing,
-                children: [
-                  for (var i = 0; i < count; i++)
-                    WordLetterCell(
-                      key: ValueKey('${widget.questionIndex}-$i'),
-                      width: cellWidth,
-                      index: i,
-                      outcome: widget.outcome,
-                      character:
-                          _showAnswer || (widget.revealedMask & (1 << i)) != 0
-                          ? widget.question.letters[i]
-                          : hiddenPositions.indexOf(i) < _text.text.length
-                          ? _text.text[hiddenPositions.indexOf(i)]
-                          : null,
-                      revealed: (widget.revealedMask & (1 << i)) != 0,
-                      focused:
-                          widget.enabled &&
-                          _focus.hasFocus &&
-                          hiddenPositions.indexOf(i) == focusedIndex,
-                    ),
-                ],
-              ),
-            ),
-            // A normal-sized native field owns one stable keyboard connection.
-            // Transparent text preserves PIN visuals without a tiny/offstage editable.
-            Positioned.fill(
-              child: TextField(
-                controller: _text,
-                focusNode: _focus,
-                // Dismiss on release so keyboard resizing cannot move a button
-                // away from the finger before its tap completes.
-                onTapOutside: (event) => _outsideTapPosition = event.position,
-                onTapUpOutside: (event) {
-                  final start = _outsideTapPosition;
-                  _outsideTapPosition = null;
-                  if (start == null ||
-                      (event.position - start).distance <= kTouchSlop) {
-                    _focus.unfocus();
-                  }
-                },
-                readOnly: !widget.enabled && !_focus.hasFocus,
-                showCursor: false,
-                enableInteractiveSelection: false,
-                autocorrect: false,
-                enableSuggestions: false,
-                smartDashesType: SmartDashesType.disabled,
-                smartQuotesType: SmartQuotesType.disabled,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                textCapitalization: TextCapitalization.characters,
-                scrollPadding: EdgeInsets.zero,
-                style: const TextStyle(color: Colors.transparent, fontSize: 20),
-                cursorColor: Colors.transparent,
-                decoration: const InputDecoration(
-                  filled: false,
-                  isDense: true,
-                  contentPadding: EdgeInsets.zero,
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
+    return ListenableBuilder(
+      listenable: Listenable.merge([_text, _focus]),
+      builder: (context, _) {
+        final hiddenPositions = _hiddenPositions(widget.revealedMask);
+        final focusedIndex = _text.text.length < hiddenPositions.length
+            ? _text.text.length
+            : hiddenPositions.length - 1;
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final count = widget.question.letterCount;
+            final spacing =
+                ((constraints.maxWidth - count * 32) / math.max(1, count - 1))
+                    .clamp(3.0, 6.0)
+                    .toDouble();
+            final cellWidth = math.min(
+              32.0,
+              (constraints.maxWidth - spacing * (count - 1)) / count,
+            );
+            return Stack(
+              children: [
+                IgnorePointer(
+                  child: Row(
+                    spacing: spacing,
+                    children: [
+                      for (var i = 0; i < count; i++)
+                        WordLetterCell(
+                          key: ValueKey('${widget.questionIndex}-$i'),
+                          width: cellWidth,
+                          index: i,
+                          outcome: widget.outcome,
+                          character:
+                              _showAnswer ||
+                                  (widget.revealedMask & (1 << i)) != 0
+                              ? widget.question.letters[i]
+                              : hiddenPositions.indexOf(i) < _text.text.length
+                              ? _text.text[hiddenPositions.indexOf(i)]
+                              : null,
+                          revealed: (widget.revealedMask & (1 << i)) != 0,
+                          focused:
+                              widget.enabled &&
+                              _focus.hasFocus &&
+                              hiddenPositions.indexOf(i) == focusedIndex,
+                        ),
+                    ],
+                  ),
                 ),
-                inputFormatters: [
-                  if (!widget.enabled)
-                    TextInputFormatter.withFunction((oldValue, _) => oldValue),
-                  WordLetterFormatter(widget.question, hiddenPositions),
-                  LengthLimitingTextInputFormatter(hiddenPositions.length),
-                ],
-                onEditingComplete: () {},
-                onSubmitted: (_) {
-                  if (widget.enabled) widget.onSubmitted();
-                },
-              ),
-            ),
-          ],
+                // A normal-sized native field owns one stable keyboard connection.
+                // Transparent text preserves PIN visuals without a tiny/offstage editable.
+                Positioned.fill(
+                  child: TextField(
+                    controller: _text,
+                    focusNode: _focus,
+                    // Dismiss on release so keyboard resizing cannot move a button
+                    // away from the finger before its tap completes.
+                    onTapOutside: (event) =>
+                        _outsideTapPosition = event.position,
+                    onTapUpOutside: (event) {
+                      final start = _outsideTapPosition;
+                      _outsideTapPosition = null;
+                      if (start == null ||
+                          (event.position - start).distance <= kTouchSlop) {
+                        _focus.unfocus();
+                      }
+                    },
+                    readOnly: !widget.enabled && !_focus.hasFocus,
+                    showCursor: false,
+                    enableInteractiveSelection: false,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    smartDashesType: SmartDashesType.disabled,
+                    smartQuotesType: SmartQuotesType.disabled,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    textCapitalization: TextCapitalization.characters,
+                    scrollPadding: EdgeInsets.zero,
+                    style: const TextStyle(
+                      color: Colors.transparent,
+                      fontSize: 20,
+                    ),
+                    cursorColor: Colors.transparent,
+                    decoration: const InputDecoration(
+                      filled: false,
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                    ),
+                    inputFormatters: [
+                      if (!widget.enabled)
+                        TextInputFormatter.withFunction(
+                          (oldValue, _) => oldValue,
+                        ),
+                      WordLetterFormatter(widget.question, hiddenPositions),
+                      LengthLimitingTextInputFormatter(hiddenPositions.length),
+                    ],
+                    onEditingComplete: () {},
+                    onSubmitted: (_) {
+                      if (widget.enabled) widget.onSubmitted();
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
         );
       },
     );

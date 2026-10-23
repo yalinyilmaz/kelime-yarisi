@@ -1,3 +1,5 @@
+import 'studio_glow.dart';
+
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
@@ -39,38 +41,15 @@ class StudioBackground extends StatelessWidget {
         const Positioned(
           top: -170,
           left: -130,
-          child: _Glow(color: AppColors.primary, size: 360),
+          child: StudioGlow(color: AppColors.primary, size: 360),
         ),
         const Positioned(
           right: -160,
           bottom: -180,
-          child: _Glow(color: AppColors.violet, size: 400),
+          child: StudioGlow(color: AppColors.violet, size: 400),
         ),
         child,
       ],
-    );
-  }
-}
-
-class _Glow extends StatelessWidget {
-  const _Glow({required this.color, required this.size});
-
-  final Color color;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: RadialGradient(
-            colors: [color.withValues(alpha: 0.16), Colors.transparent],
-          ),
-        ),
-      ),
     );
   }
 }
