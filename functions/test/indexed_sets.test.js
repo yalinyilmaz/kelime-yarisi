@@ -121,3 +121,53 @@ test('solo selection is authenticated, ID-only and reads no rooms or allocations
  assert.equal(database.value('questionAllocations'),null);
  await assert.rejects(service.solo('user0',{history:history([selected.id])}),e=>e.code==='resource-exhausted');
 });
+
+for (const count of [2,3,5]) {
+ test(`host starts a six-capacity room with ${count} ready players`,async()=>{
+  const {database,service,prepare}=setup(1);await prepare();
+  database.put('rooms/abc234/targetPlayerCount',6);
+  for(let i=count;i<5;i++)database.put(`rooms/abc234/players/user${i}`,null);
+  await service.start('user0',{roomId:'abc234'});
+  const started=database.value('rooms/abc234');
+  assert.equal(started.status,'countdown');assert.equal(started.targetPlayerCount,6);
+  assert.equal(Object.keys(started.players).length,count);
+ });
+}
+
+test('partial rooms require every present player ready and online, stay within capacity and reject nonhosts',async()=>{
+ for(const mode of ['unready','offline','over-capacity','nonhost']) {
+  const {database,service,prepare}=setup(1);await prepare();
+  if(mode==='unready')database.put('rooms/abc234/players/user1/isReady',false);
+  if(mode==='offline')database.put('rooms/abc234/players/user1/isOnline',false);
+  if(mode==='over-capacity')database.put('rooms/abc234/targetPlayerCount',2);
+  await assert.rejects(service.start(mode==='nonhost'?'user1':'user0',{roomId:'abc234'}),e=>e.code===(mode==='nonhost'?'permission-denied':'failed-precondition'));
+  assert.equal(database.value('rooms/abc234/status'),'lobby');
+  assert.equal(database.value('questionAllocations'),null);
+ }
+});
+
+test('one player needs both the dev-only debug permission and an explicit debug request',async()=>{
+ for(const allowDebugSolo of [false,true])for(const debugSolo of [false,true]) {
+  const {database,options,prepare}=setup(1);await prepare();
+  for(let i=1;i<5;i++)database.put(`rooms/abc234/players/user${i}`,null);
+  database.put('rooms/abc234/targetPlayerCount',6);
+  const service=new QuestionService({...options,allowDebugSolo});
+  if(allowDebugSolo&&debugSolo) {
+   await service.start('user0',{roomId:'abc234',debugSolo});
+   assert.equal(database.value('rooms/abc234/status'),'countdown');
+  }else{
+   await assert.rejects(service.start('user0',{roomId:'abc234',debugSolo}),e=>e.code==='failed-precondition');
+   assert.equal(database.value('questionAllocations'),null);
+  }
+ }
+});
+
+test('a player becoming unready during set selection aborts manual start',async()=>{
+ const {database,options,prepare}=setup(1);await prepare();
+ const service=new QuestionService({...options,loadSet:async id=>{
+  const selected=await options.loadSet(id);database.put('rooms/abc234/players/user1/isReady',false);return selected;
+ }});
+ await assert.rejects(service.start('user0',{roomId:'abc234'}),e=>e.code==='aborted');
+ assert.equal(database.value('rooms/abc234/status'),'lobby');
+ assert.equal(Object.keys(database.value('questionAllocations/sessions')??{}).length,0);
+});

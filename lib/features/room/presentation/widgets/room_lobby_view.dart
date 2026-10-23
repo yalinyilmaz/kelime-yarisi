@@ -178,18 +178,11 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                                   ? AppColors.textPrimary
                                   : AppColors.onReady,
                             ),
-                            icon: state.isStartingGame
-                                ? const SizedBox.square(
-                                    dimension: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2.5,
-                                    ),
-                                  )
-                                : Icon(
-                                    currentPlayer?.isReady == true
-                                        ? Icons.undo_rounded
-                                        : Icons.check_rounded,
-                                  ),
+                            icon: Icon(
+                              currentPlayer?.isReady == true
+                                  ? Icons.undo_rounded
+                                  : Icons.check_rounded,
+                            ),
                             label: Text(switch (room.status) {
                               RoomStatus.lobby =>
                                 currentPlayer?.isReady == true
@@ -200,16 +193,12 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                               RoomStatus.results => 'Oyun tamamlandı',
                             }),
                           ),
-                          if (kDebugMode && room.hostId == currentUserId) ...[
+                          if (room.hostId == currentUserId) ...[
                             const SizedBox(height: 12),
                             OutlinedButton.icon(
                               onPressed:
-                                  room.status == RoomStatus.lobby &&
-                                      !state.isStartingGame &&
-                                      !state.isLeaving
-                                  ? context
-                                        .read<RoomLobbyCubit>()
-                                        .startDebugGame
+                                  context.read<RoomLobbyCubit>().canStartGame
+                                  ? context.read<RoomLobbyCubit>().startGame
                                   : null,
                               icon: state.isStartingGame
                                   ? const SizedBox.square(
@@ -219,7 +208,7 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
                                       ),
                                     )
                                   : const Icon(Icons.play_arrow_rounded),
-                              label: const Text('Oyunu Başlat · Debug'),
+                              label: const Text('Oyunu Başlat'),
                             ),
                           ],
                           const SizedBox(height: 12),
@@ -268,9 +257,11 @@ class _RoomLobbyViewState extends State<RoomLobbyView> {
 
   String _statusText(GameRoom room) {
     return switch (room.status) {
-      RoomStatus.lobby when room.players.length < room.targetPlayerCount =>
-        'Odanın dolması bekleniyor.',
-      RoomStatus.lobby => 'Herkes hazır olduğunda 3–2–1 başlar.',
+      RoomStatus.lobby when room.players.length < 2 && !kDebugMode =>
+        'Oyunun başlaması için en az 2 oyuncu gerekli.',
+      RoomStatus.lobby when !room.everyoneIsReady =>
+        'Oyuncuların hazır olması bekleniyor.',
+      RoomStatus.lobby => 'Oda sahibinin oyunu başlatması bekleniyor.',
       RoomStatus.countdown => 'Tüm cihazlar aynı sunucu saatini kullanıyor.',
       RoomStatus.playing => 'Yarışma başladı.',
       RoomStatus.results => 'Sonuçlar hazır.',

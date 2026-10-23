@@ -311,7 +311,9 @@ class GameCubit extends Cubit<GameState> {
                   ? AnswerOutcome.correct
                   : AnswerOutcome.beaten
             : race.isResolved
-            ? AnswerOutcome.timeout
+            ? race.reason == 'all-wrong'
+                  ? AnswerOutcome.wrong
+                  : AnswerOutcome.timeout
             : ownAnswer
             ? progress.lastOutcome
             : null;

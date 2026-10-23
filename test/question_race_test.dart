@@ -71,7 +71,7 @@ GameRoom winnerRoom(GameRoom room, int nextAt) => room.copyWith(
 
 void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
-    for (final ending in ['timeout', 'winner']) {
+    for (final ending in ['timeout', 'winner', 'all-wrong']) {
       testWidgets(
         '$platform: wrong answer stays red and hidden until $ending resolves the shared round',
         (tester) async {
@@ -136,6 +136,7 @@ void main() {
                 nextAtMs: now + 2000,
                 winnerId: ending == 'winner' ? 'host' : null,
                 winnerName: ending == 'winner' ? 'Arman' : null,
+                reason: ending == 'all-wrong' ? 'all-wrong' : null,
               ),
             ),
           );
@@ -146,7 +147,11 @@ void main() {
           expect(cells.map((c) => c.character).join(), 'KAPI');
           expect(find.text('Doğru cevap: KAPI'), findsOneWidget);
           expect(
-            find.text(ending == 'winner' ? 'Arman bildi 😔' : 'Süre doldu'),
+            find.text(switch (ending) {
+              'winner' => 'Arman bildi 😔',
+              'all-wrong' => 'Yanlış cevap',
+              _ => 'Süre doldu',
+            }),
             findsOneWidget,
           );
           expect(tester.widget<FilledButton>(button).onPressed, isNull);

@@ -43,6 +43,77 @@ test('wrong answer costs no points and cannot claim a winner later', () => {
   assert.equal(r.progress.yalin.skippedCount, 0);
 });
 
+test('last incorrect answer immediately reveals for everyone without changing earned scores', () => {
+  let r = room();
+  r.targetPlayerCount = 3;
+  r.players.ayse = {displayName:'Ayşe'};
+  r.progress = {arman:{score:400}, yalin:{score:700}, ayse:{score:100}};
+  r = reduceRace(r, 'arman', answer(0, 'saat'), 1100);
+  assert.equal(r.race.nextAtMs, undefined);
+  r = reduceRace(r, 'yalin', answer(0, ''), 1200);
+  assert.equal(r.race.nextAtMs, undefined); // One remaining player still has a chance.
+  const before = structuredClone(r);
+  r = reduceRace(r, 'ayse', answer(0, 'aaaa'), 1300);
+  assert.equal(before.race.nextAtMs, undefined); // RTDB callback input is immutable.
+  assert.equal(r.race.reason, 'all-wrong');
+  assert.equal(r.race.resolvedAtMs, 1300);
+  assert.equal(r.race.nextAtMs, 1300 + REVEAL_MS);
+  assert.equal(r.race.winnerId, undefined);
+  assert.deepEqual(Object.values(r.progress).map(p => p.score), [400,700,100]);
+  for (const progress of Object.values(r.progress)) {
+    assert.equal(progress.wrongCount, 1);
+    assert.equal(progress.lastOutcome, 'wrong');
+    assert.equal(progress.lastScoreDelta, 0);
+  }
+  assert.deepEqual(reduceRace(r, 'arman', answer(0, 'kapi'), 1400), r);
+  assert.deepEqual(reduceRace(r, 'ayse', answer(0, ''), 1401), r);
+  assert.equal(reduceRace(r, 'yalin', {action:'sync'}, 1300 + REVEAL_MS - 1).race.questionIndex, 0);
+  const next = reduceRace(r, 'yalin', {action:'sync'}, 1300 + REVEAL_MS);
+  assert.equal(next.race.questionIndex, 1);
+  assert.equal(next.race.startedAtMs, 1300 + REVEAL_MS);
+  assert.equal(next.race.nextAtMs, undefined);
+  assert.deepEqual(Object.values(next.progress).map(p => p.wrongCount), [1,1,1]);
+});
+
+test('offline players keep their chance; a departed player no longer delays the remaining attempts', () => {
+  let r = room();
+  r.players.arman.isOnline = false;
+  r = reduceRace(r, 'yalin', answer(0, ''), 1100);
+  assert.equal(reduceRace(r, 'yalin', {action:'sync'}, 1200).race.nextAtMs, undefined);
+  delete r.players.arman;
+  const resolved = reduceRace(r, 'yalin', {action:'sync'}, 1300);
+  assert.equal(resolved.race.reason, 'all-wrong');
+  assert.equal(resolved.race.resolvedAtMs, 1300);
+  assert.equal(resolved.race.nextAtMs, 1300 + REVEAL_MS);
+});
+
+test('sync resolves already exhausted rounds and retries do not move the reveal deadline', () => {
+  const r = room();
+  r.progress = {arman:{questionIndex:1,score:0,wrongCount:1,lastOutcome:'wrong'},
+    yalin:{questionIndex:1,score:0,wrongCount:1,lastOutcome:'wrong'}};
+  const resolved = reduceRace(r, 'arman', {action:'sync'}, 1400);
+  assert.equal(resolved.race.reason, 'all-wrong');
+  assert.equal(resolved.race.nextAtMs, 1400 + REVEAL_MS);
+  assert.deepEqual(reduceRace(resolved, 'yalin', {action:'sync'}, 1500), resolved);
+});
+
+test('all incorrect on the last question reveals then ends without waiting for its deadline', () => {
+  let r = room();
+  r.race.questionIndex = r.questions.length - 1;
+  r = reduceRace(r, 'arman', answer(r.race.questionIndex, ''), 1100);
+  r = reduceRace(r, 'yalin', answer(r.race.questionIndex, ''), 1200);
+  assert.equal(r.race.reason, 'all-wrong');
+  assert.equal(r.status, 'playing');
+  for (const progress of Object.values(r.progress)) {
+    assert.equal(progress.finished, true);
+    assert.equal(progress.wrongCount, 1);
+    assert.equal(progress.score, 0);
+  }
+  const finished = reduceRace(r, 'arman', {action:'sync'}, 1200 + REVEAL_MS);
+  assert.equal(finished.status, 'results');
+  assert.equal(finished.race.questionIndex, r.questions.length);
+});
+
 test('server deadline rejects late answers, reveals for two seconds and catches up offline rooms', () => {
   const expired = reduceRace(room(), 'arman', answer(0, 'kapi'), 26000);
   assert.equal(expired.race.reason, 'timeout');
@@ -124,6 +195,7 @@ test('Turkish ASCII, spaces and approved synonyms work on the server; countdown 
 
 test('four-player votes require two distinct players and winning locks further votes', () => {
   const base = room(); base.targetPlayerCount = 4;
+  base.players.ayse = {displayName:'Ayşe'}; base.players.ali = {displayName:'Ali'};
   const a = reduceRace(base, 'arman', {action:'hint',questionIndex:0,expectedRevealedCount:0}, 1001);
   assert.equal(a.hints[0].revealedCount, 0);
   assert.equal(a.hints[0].firstVoterId, 'arman');
@@ -168,4 +240,31 @@ test('ten-right limit survives reconnect and spans questions; late or resolved r
  assert.deepEqual(reduceRace(wrong,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},1200),wrong);
  const absent=room();delete absent.questions[0].hints;
  assert.deepEqual(reduceRace(absent,'arman',{action:'clueHint',questionIndex:0,expectedHintCount:0},1100),absent);
+});
+
+test('hint quorum follows the real player count, not the room capacity',()=>{
+ const base=room();base.targetPlayerCount=6;
+ const hinted=reduceRace(base,'arman',{action:'hint',questionIndex:0,expectedRevealedCount:0},1100);
+ assert.equal(hinted.hints[0].revealedCount,1);
+});
+
+test('demo starts accept partially filled rooms and permit single-player only for explicit dev debug',async()=>{
+ for(const count of [1,2,3])for(const debugSolo of [false,true])for(const allowDebugSolo of [false,true]) {
+  let current={...room(),hostId:'arman',status:'lobby',gameMode:'classic',targetPlayerCount:6};
+  delete current.gameplayVersion;delete current.race;
+  if(count===1)delete current.players.yalin;
+  if(count===3)current.players.ayse={displayName:'Ayşe'};
+  for(const player of Object.values(current.players))Object.assign(player,{isReady:true,isOnline:true});
+  const database={ref:()=>({on:(_,notify)=>notify(),off:()=>{},transaction:async update=>{
+   const next=update(current);if(next===undefined)return {committed:false};current=next;return {committed:true};
+  }})};
+  const service=new RaceService({database,demoQuestions:demo,now:()=>1000,allowDebugSolo});
+  if(count===1&&!(debugSolo&&allowDebugSolo)) {
+   await assert.rejects(service.startDemo('arman',{roomId:'abc234',debugSolo}),e=>e.code==='failed-precondition');
+   assert.equal(current.status,'lobby');
+  }else{
+   await service.startDemo('arman',{roomId:'abc234',debugSolo});
+   assert.equal(current.status,'countdown');assert.equal(current.targetPlayerCount,6);
+  }
+ }
 });

@@ -65,8 +65,9 @@ export class QuestionService {
     const participantIds = Object.keys(room.players).sort();
     if(this.loadSetIds&&room.gameMode!=='classic')throw new ServiceError('failed-precondition','Yalnız klasik oyun destekleniyor.');
     const solo = (this.allowSolo || (this.allowDebugSolo&&debugSolo===true)) && participantIds.length === 1;
-    if (!solo && (participantIds.length !== room.targetPlayerCount || participantIds.some(id => !room.players[id].isReady || !room.players[id].isOnline))) {
-      throw new ServiceError('failed-precondition', 'Tüm oyuncular hazır ve bağlı olmalı.');
+    if ((!solo && participantIds.length < 2) || participantIds.length > room.targetPlayerCount ||
+        participantIds.some(id => !room.players[id].isReady || !room.players[id].isOnline)) {
+      throw new ServiceError('failed-precondition', 'En az iki oyuncu gerekli; odadaki tüm oyuncular hazır ve bağlı olmalı.');
     }
     const preparations = await Promise.all(participantIds.map(async id => (await this.database.ref(`questionPreparations/${id}`).get()).val()));
     if (preparations.some(p => p?.roomKey !== sessionId || p.expiresAtMs <= this.now())) {
@@ -113,7 +114,8 @@ export class QuestionService {
       if (current.questionSetId === `pool-v1:${sessionId}`) return current;
       if (current.status !== 'lobby' || current.gameMode !== room.gameMode ||
           JSON.stringify(Object.keys(current.players ?? {}).sort()) !== JSON.stringify(participantIds) ||
-          (!solo && participantIds.some(id => !current.players[id].isReady || !current.players[id].isOnline))) return undefined;
+          participantIds.length > current.targetPlayerCount ||
+          participantIds.some(id => !current.players[id].isReady || !current.players[id].isOnline)) return undefined;
       return {...current, questionSetId: `pool-v1:${sessionId}`, ...(session.contentSetId?{contentSetId:session.contentSetId}:{}),questions: session.questions,
         startsAtMs: session.startsAtMs, gameplayVersion: 'race-v1', status: 'countdown',
         race: {questionIndex: 0, startedAtMs: session.startsAtMs},

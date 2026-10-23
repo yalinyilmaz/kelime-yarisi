@@ -66,7 +66,7 @@ void main() {
         final seed = testRoom();
         final room = seed.copyWith(
           status: RoomStatus.lobby,
-          players: [seed.players.first],
+          players: [seed.players.first.copyWith(isReady: true)],
         );
         service.room = room;
         final router = createAppRouter();
@@ -83,10 +83,7 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        final button = find.widgetWithText(
-          OutlinedButton,
-          'Oyunu Başlat · Debug',
-        );
+        final button = find.widgetWithText(OutlinedButton, 'Oyunu Başlat');
         await tester.scrollUntilVisible(button, 200);
         await tester.tap(button);
         await tester.pump();
@@ -234,7 +231,7 @@ void main() {
       final seed = testRoom();
       final room = seed.copyWith(
         status: RoomStatus.lobby,
-        players: [seed.players.first],
+        players: [seed.players.first.copyWith(isReady: true)],
       );
       service.room = room;
       final router = createAppRouter();
@@ -251,10 +248,11 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(room.everyoneIsReady, isFalse);
+      expect(room.everyoneIsReady, isTrue);
+      expect(service.starts, 0);
       expect(find.byType(RoomLobbyPage), findsOneWidget);
-      await tester.scrollUntilVisible(find.text('Oyunu Başlat · Debug'), 200);
-      await tester.tap(find.text('Oyunu Başlat · Debug'));
+      await tester.scrollUntilVisible(find.text('Oyunu Başlat'), 200);
+      await tester.tap(find.text('Oyunu Başlat'));
       await tester.pump();
       expect(service.starts, 1);
       expect(service.room.status, RoomStatus.countdown);

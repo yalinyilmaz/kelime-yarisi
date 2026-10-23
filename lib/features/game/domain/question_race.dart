@@ -7,6 +7,7 @@ class QuestionRace extends Equatable {
     this.nextAtMs,
     this.winnerId,
     this.winnerName,
+    this.reason,
   });
 
   final int questionIndex;
@@ -14,6 +15,7 @@ class QuestionRace extends Equatable {
   final int? nextAtMs;
   final String? winnerId;
   final String? winnerName;
+  final String? reason;
   bool get isResolved => nextAtMs != null;
 
   factory QuestionRace.fromMap(Map<Object?, Object?> map) => QuestionRace(
@@ -22,6 +24,7 @@ class QuestionRace extends Equatable {
     nextAtMs: (map['nextAtMs'] as num?)?.toInt(),
     winnerId: map['winnerId'] as String?,
     winnerName: map['winnerName'] as String?,
+    reason: map['reason'] as String?,
   );
 
   @override
@@ -31,5 +34,6 @@ class QuestionRace extends Equatable {
     nextAtMs,
     winnerId,
     winnerName,
+    reason,
   ];
 }

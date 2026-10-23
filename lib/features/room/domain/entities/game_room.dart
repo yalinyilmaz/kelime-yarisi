@@ -54,7 +54,7 @@ class GameRoom extends Equatable {
   bool get isRace => gameplayVersion == 'race-v1';
   bool get usesQuestionPool => questionSetId?.startsWith('pool-v1:') ?? false;
 
-  int get requiredHintVotes => targetPlayerCount <= 3 ? 1 : 2;
+  int get requiredHintVotes => players.length <= 3 ? 1 : 2;
 
   int? get endsAtMs => startsAtMs == null
       ? null
@@ -62,7 +62,15 @@ class GameRoom extends Equatable {
 
   bool get isFull => players.length >= targetPlayerCount;
   bool get everyoneIsReady =>
-      isFull && players.every((player) => player.isReady && player.isOnline);
+      players.isNotEmpty &&
+      players.every((player) => player.isReady && player.isOnline);
+
+  bool canStart({required String playerId, bool allowSolo = false}) =>
+      status == RoomStatus.lobby &&
+      hostId == playerId &&
+      players.length >= (allowSolo ? 1 : 2) &&
+      players.length <= targetPlayerCount &&
+      everyoneIsReady;
 
   GameRoom copyWith({
     List<RoomPlayer>? players,

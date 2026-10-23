@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class GameRulesInfo extends StatelessWidget {
-  const GameRulesInfo({
-    required this.requiredHintVotes,
-    this.isRace = true,
-    super.key,
-  });
+  const GameRulesInfo({this.requiredHintVotes, this.isRace = true, super.key});
 
-  final int requiredHintVotes;
+  final int? requiredHintVotes;
   final bool isRace;
 
   @override
@@ -30,8 +26,9 @@ class GameRulesInfo extends StatelessWidget {
             spacing: 8,
             children: [
               Text(
-                '$requiredHintVotes farklı oyuncunun oyuyla aynı harf herkeste açılır. '
-                'Her harf soru değerini 100 azaltır.',
+                requiredHintVotes == null
+                    ? '2–3 oyuncuda bir oy, 4–6 oyuncuda iki farklı oyuncunun oyuyla aynı harf herkeste açılır. Her harf soru değerini 100 azaltır.'
+                    : '$requiredHintVotes farklı oyuncunun oyuyla aynı harf herkeste açılır. Her harf soru değerini 100 azaltır.',
               ),
               Text(
                 isRace

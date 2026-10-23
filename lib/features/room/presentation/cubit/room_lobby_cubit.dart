@@ -108,15 +108,14 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
     }
   }
 
-  Future<void> startDebugGame() async {
-    if (!kDebugMode ||
-        state.isLeaving ||
-        state.room.status != RoomStatus.lobby ||
-        state.room.hostId != _roomService.currentUserId) {
-      return;
-    }
-    await _startCountdown();
-  }
+  bool get canStartGame =>
+      !isClosed &&
+      !state.isLeaving &&
+      !state.isStartingGame &&
+      state.room.canStart(
+        playerId: _roomService.currentUserId,
+        allowSolo: kDebugMode,
+      );
 
   Future<void> toggleCurrentPlayerReady() async {
     if (isClosed || state.isLeaving) return;
@@ -193,15 +192,10 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       unawaited(_offsetSubscription?.cancel());
       return;
     }
-
-    final isHost = room.hostId == _roomService.currentUserId;
-    if (isHost && room.status == RoomStatus.lobby && room.everyoneIsReady) {
-      unawaited(_startCountdown());
-    }
   }
 
-  Future<void> _startCountdown() async {
-    if (isClosed || state.isStartingGame || state.isLeaving) return;
+  Future<void> startGame() async {
+    if (!canStartGame) return;
     emit(state.copyWith(isStartingGame: true, clearError: true));
     try {
       await _roomService.startCountdown(
@@ -214,7 +208,7 @@ class RoomLobbyCubit extends Cubit<RoomLobbyState> {
       ErrorReporter.report(
         error,
         stackTrace,
-        operation: 'room_lobby_cubit._startCountdown',
+        operation: 'room_lobby_cubit.startGame',
       );
       if (isClosed) return;
       emit(

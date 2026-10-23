@@ -30,13 +30,20 @@ function score(room, uid, outcome, at) {
   };
 }
 
-function resolve(room, winnerId, at) {
+function resolve(room, winnerId, at, reason = winnerId ? 'correct' : 'timeout') {
   for (const uid of Object.keys(room.players)) {
     score(room, uid, winnerId ? (uid === winnerId ? 'correct' : 'beaten') : 'timeout', at);
   }
   Object.assign(room.race, {resolvedAtMs: at, nextAtMs: at + REVEAL_MS,
-    reason: winnerId ? 'correct' : 'timeout',
+    reason,
     ...(winnerId ? {winnerId, winnerName: room.players[winnerId].displayName} : {})});
+}
+
+function resolveIfAllAnswered(room, now) {
+  const index = room.race.questionIndex;
+  if (Object.keys(room.players).every(uid => (room.progress?.[uid]?.questionIndex ?? 0) > index)) {
+    resolve(room, null, now, 'all-wrong');
+  }
 }
 
 // Pure reducer: RTDB reruns it against the latest committed room on contention.
@@ -53,6 +60,7 @@ export function reduceRace(current, uid, {action = 'sync', questionIndex, input,
   while (room.race.questionIndex < room.questions.length) {
     const race = room.race;
     if (!race.nextAtMs && now >= race.startedAtMs + QUESTION_MS) resolve(room, null, race.startedAtMs + QUESTION_MS);
+    if (!race.nextAtMs) resolveIfAllAnswered(room, now);
     if (!race.nextAtMs || now < race.nextAtMs) break;
     room.race = {questionIndex: race.questionIndex + 1, startedAtMs: race.nextAtMs};
   }
@@ -76,7 +84,7 @@ export function reduceRace(current, uid, {action = 'sync', questionIndex, input,
     const old = room.hints?.[index] ?? {questionIndex: index, revealedCount: 0};
     if (old.revealedCount !== expectedRevealedCount) return room;
     if (old.revealedCount >= letters(room.questions[index].answer).length - 1 || old.firstVoterId === uid) return room;
-    const next = room.targetPlayerCount <= 3 || old.firstVoterId
+    const next = Object.keys(room.players).length <= 3 || old.firstVoterId
       ? {questionIndex: index, revealedCount: old.revealedCount + 1}
       : {...old, firstVoterId: uid};
     room.hints ??= {};
@@ -87,7 +95,10 @@ export function reduceRace(current, uid, {action = 'sync', questionIndex, input,
     if (input !== '' && letters(input).length !== letters(question.answer).length) throw new ServiceError('invalid-argument', 'Tüm boş harfleri doldur.');
     if (input !== '' && [question.answer, ...(question.acceptedAnswers ?? [])].some(a => comparison(a) === comparison(input))) {
       resolve(room, uid, now);
-    } else score(room, uid, 'wrong', now);
+    } else {
+      score(room, uid, 'wrong', now);
+      resolveIfAllAnswered(room, now);
+    }
   }
   return room;
 }
@@ -122,8 +133,9 @@ export class RaceService {
       }
       const players = Object.values(room.players ?? {});
       const solo = this.allowDebugSolo && debugSolo === true && players.length === 1;
-      if (!solo && (players.length !== room.targetPlayerCount || players.some(p => !p.isReady || !p.isOnline))) {
-        throw new ServiceError('failed-precondition', 'Tüm oyuncular hazır ve bağlı olmalı.');
+      if ((!solo && players.length < 2) || players.length > room.targetPlayerCount ||
+          players.some(p => !p.isReady || !p.isOnline)) {
+        throw new ServiceError('failed-precondition', 'En az iki oyuncu gerekli; odadaki tüm oyuncular hazır ve bağlı olmalı.');
       }
       const startsAtMs = this.now() + 4000;
       return {...room, startsAtMs, gameplayVersion: 'race-v1', status: 'countdown',

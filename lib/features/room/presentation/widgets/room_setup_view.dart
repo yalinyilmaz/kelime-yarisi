@@ -65,7 +65,7 @@ class RoomSetupView extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          const StudioSectionLabel('Oyuncu sayısı'),
+                          const StudioSectionLabel('Maksimum oyuncu sayısı'),
                           const SizedBox(height: 12),
                           SizedBox(
                             width: double.infinity,
@@ -127,11 +127,7 @@ class RoomSetupView extends StatelessWidget {
                         ],
                         const SizedBox(height: 24),
                         if (isCreate) ...[
-                          GameRulesInfo(
-                            requiredHintVotes: state.targetPlayerCount <= 3
-                                ? 1
-                                : 2,
-                          ),
+                          const GameRulesInfo(),
                           const SizedBox(height: 16),
                         ],
                         FilledButton.icon(
