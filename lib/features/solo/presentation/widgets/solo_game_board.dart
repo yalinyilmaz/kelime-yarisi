@@ -15,11 +15,15 @@ class SoloGameBoard extends StatelessWidget {
     required this.answerController,
     required this.onSubmit,
     required this.onLeave,
+    required this.keyboardMode,
+    required this.onKeyboardModeChanged,
     super.key,
   });
   final TextEditingController answerController;
   final VoidCallback onSubmit;
   final VoidCallback onLeave;
+  final bool keyboardMode;
+  final ValueChanged<bool> onKeyboardModeChanged;
 
   @override
   Widget build(
@@ -100,7 +104,9 @@ class SoloGameBoard extends StatelessWidget {
                         GameNotice(state.errorMessage!, error: true),
                       if (playing && state.question != null) ...[
                         SoloQuestionCard(
+                          key: const ValueKey('solo-question-card'),
                           state: state,
+                          keyboardMode: keyboardMode,
                           answerController: answerController,
                           onSubmit: onSubmit,
                         ),
@@ -123,6 +129,8 @@ class SoloGameBoard extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
                     child: SoloGameActions(
                       state: state,
+                      keyboardMode: keyboardMode,
+                      onKeyboardModeChanged: onKeyboardModeChanged,
                       onSubmit: onSubmit,
                       answerController: answerController,
                     ),

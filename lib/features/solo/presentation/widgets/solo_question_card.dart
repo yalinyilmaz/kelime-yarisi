@@ -15,11 +15,13 @@ class SoloQuestionCard extends StatelessWidget {
     required this.state,
     required this.answerController,
     required this.onSubmit,
+    this.keyboardMode = false,
     super.key,
   });
   final SoloGameState state;
   final TextEditingController answerController;
   final VoidCallback onSubmit;
+  final bool keyboardMode;
 
   @override
   Widget build(BuildContext context) => Card(
@@ -60,7 +62,8 @@ class SoloQuestionCard extends StatelessWidget {
             clue: state.question!.clue,
             hints: state.visibleHints,
             answer: WordPinInput(
-              voiceOnly: true,
+              key: ValueKey(keyboardMode),
+              voiceOnly: !keyboardMode,
               question: state.question!,
               questionIndex: state.questionIndex,
               revealedMask: state.revealedMask,

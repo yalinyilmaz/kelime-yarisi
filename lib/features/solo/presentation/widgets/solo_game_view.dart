@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/speech/speech_input_cubit.dart';
 import '../../../../core/widgets/studio_components.dart';
 import '../cubit/solo_game_cubit.dart';
 import '../cubit/solo_game_state.dart';
@@ -18,6 +19,7 @@ class SoloGameView extends StatefulWidget {
 class _SoloGameViewState extends State<SoloGameView>
     with WidgetsBindingObserver {
   final _answer = TextEditingController();
+  final _keyboardMode = ValueNotifier(false);
   bool _leaving = false;
 
   @override
@@ -36,6 +38,18 @@ class _SoloGameViewState extends State<SoloGameView>
       .setForeground(state == AppLifecycleState.resumed);
 
   void _submit() => context.read<SoloGameCubit>().submitAnswer(_answer.text);
+
+  void _setKeyboardMode(bool enabled) {
+    if (_keyboardMode.value == enabled) return;
+    if (enabled &&
+        (!context.read<SoloGameCubit>().state.canAct ||
+            context.read<SpeechInputCubit>().state.busy)) {
+      return;
+    }
+    FocusManager.instance.primaryFocus?.unfocus();
+    _answer.clear();
+    _keyboardMode.value = enabled;
+  }
 
   Future<void> _leave() async {
     if (_leaving) return;
@@ -65,6 +79,7 @@ class _SoloGameViewState extends State<SoloGameView>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _keyboardMode.dispose();
     _answer.dispose();
     super.dispose();
   }
@@ -99,10 +114,15 @@ class _SoloGameViewState extends State<SoloGameView>
                 ),
               ],
             ),
-            body: SoloGameBoard(
-              answerController: _answer,
-              onSubmit: _submit,
-              onLeave: _leave,
+            body: ValueListenableBuilder(
+              valueListenable: _keyboardMode,
+              builder: (context, keyboardMode, _) => SoloGameBoard(
+                answerController: _answer,
+                onSubmit: _submit,
+                onLeave: _leave,
+                keyboardMode: keyboardMode,
+                onKeyboardModeChanged: _setKeyboardMode,
+              ),
             ),
           ),
         ),

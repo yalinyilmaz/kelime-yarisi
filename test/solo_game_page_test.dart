@@ -25,6 +25,106 @@ import 'solo_game_test.dart'
 
 void main() {
   for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    testWidgets('$platform: solo keyboard toggles and submits without speech', (
+      tester,
+    ) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(320, 640);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      addTearDown(tester.view.resetViewInsets);
+      final service = SoloTestService();
+      final best = SoloBestScoreCubit(storage: MemoryScoreStorage());
+      final recognizer = FakeNativeSpeech()..bufferSupported = true;
+      final router = _router();
+      await _mount(
+        tester,
+        service,
+        best,
+        router,
+        platform: platform,
+        recognizer: recognizer,
+        textScaler: const TextScaler.linear(1.6),
+      );
+      await tester.pumpAndSettle();
+      final game = tester
+          .element(find.byType(SoloGameView))
+          .read<SoloGameCubit>();
+      final open = find.byKey(const ValueKey('open-keyboard-action'));
+      final submit = find.byKey(const ValueKey('answer-action'));
+      final letter = find.byKey(const ValueKey('hint-action'));
+      final close = find.byKey(const ValueKey('close-keyboard-action'));
+      expect(tester.getCenter(open).dy, lessThan(tester.getCenter(submit).dy));
+      expect(find.byType(TextField), findsNothing);
+      await tester.tap(open);
+      await tester.pumpAndSettle();
+      expect(tester.testTextInput.isVisible, isTrue);
+      expect(find.byIcon(Icons.mic_rounded), findsNothing);
+      expect(open, findsNothing);
+      expect(close, findsOneWidget);
+      expect(recognizer.bufferActive, isFalse);
+      expect(
+        tester.getCenter(close).dx,
+        greaterThan(tester.getCenter(submit).dx),
+      );
+      expect(tester.getCenter(close).dx, lessThan(tester.getCenter(letter).dx));
+      tester.view.viewInsets = const FakeViewPadding(bottom: 280);
+      await tester.pumpAndSettle();
+      expect(tester.getBottomRight(submit).dy, lessThanOrEqualTo(360));
+      expect(tester.getBottomRight(letter).dy, lessThanOrEqualTo(360));
+      await tester.enterText(find.byType(TextField), 'A');
+      await tester.pump();
+      await tester.tap(submit);
+      await tester.pumpAndSettle();
+      expect(game.state.feedback, isNull);
+      expect(game.state.errorMessage, 'Tüm boş harfleri doldur.');
+      await tester.enterText(
+        find.byType(TextField),
+        game.state.question!.answer,
+      );
+      await tester.pump();
+      await tester.tap(letter);
+      await tester.pumpAndSettle();
+      expect(game.state.revealedCount, 1);
+      expect(tester.testTextInput.isVisible, isTrue);
+      expect(
+        tester
+            .widget<WordPinInput>(find.byType(WordPinInput))
+            .answerController
+            .text,
+        game.state.question!.answer,
+      );
+      await tester.tap(submit);
+      await tester.pump();
+      expect(game.state.progress.score, 300);
+      expect(recognizer.starts, 0);
+      expect(tester.widget<FilledButton>(submit).onPressed, isNull);
+      await tester.pump(const Duration(milliseconds: 1200));
+      await tester.pumpAndSettle();
+      expect(game.state.questionIndex, 1);
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).controller!.text,
+        '',
+      );
+      await tester.tap(close);
+      await tester.pumpAndSettle();
+      expect(find.byType(TextField), findsNothing);
+      expect(tester.testTextInput.isVisible, isFalse);
+      expect(open, findsOneWidget);
+      expect(find.byIcon(Icons.mic_rounded), findsOneWidget);
+      expect(recognizer.starts, 0);
+      await tester.tap(open);
+      await tester.pumpAndSettle();
+      expect(tester.testTextInput.isVisible, isTrue);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      router.dispose();
+      await best.close();
+      await service.disposeStreams();
+    });
+  }
+
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
     for (final compact in [false, true]) {
       testWidgets(
         '$platform: hints and letter cells stay in the card without a keyboard; compact=$compact',
